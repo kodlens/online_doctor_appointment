@@ -48,7 +48,7 @@ html{
 @import "~bulma/sass/utilities/_all";
 //
 ////Set your colors
-$primary: hsl(260, 93%, 33%);
+$primary: #3163DA;
 $primary-light: findLightColor($primary);
 $primary-dark: findDarkColor($primary);
 $primary-invert: findColorInvert($primary);
@@ -161,8 +161,12 @@ $navbar-item-img-max-height: 4rem;
     background-color: #2a2a2a;
 }
 
-
-
+.debug{
+    border: 1px solid red;
+}
+.w-container{
+    margin: 80px 100px;
+}
 
 
 

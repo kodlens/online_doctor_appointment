@@ -9,9 +9,9 @@
 
                     <div class="panel-body">
 
-                        <div class="img-container">
+                        <!-- <div class="img-container">
                             <img class="img" src="/img/qrlogo.png" />
-                        </div>
+                        </div> -->
                         <b-field label="Username" label-position="on-border"
                             :type="this.errors.username ? 'is-danger':''"
                             :message="this.errors.username ? this.errors.username[0] : ''">
@@ -23,7 +23,7 @@
                         </b-field>
 
                         <div class="buttons">
-                            <button :class="btnClass">LOGIN</button>
+                            <button  :class="btnClass">LOGIN</button>
                         </div>
                     </div>
                 </div>
