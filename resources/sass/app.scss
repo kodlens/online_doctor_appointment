@@ -168,6 +168,18 @@ $navbar-item-img-max-height: 4rem;
     margin: 80px 100px;
 }
 
+.box-header{
+    display: flex;
+}
+
+.m-flex-right{
+    margin-right: auto;
+}
+
+.m-flex-left{
+    margin-left: auto;
+}
+
 .box-header-text{
     font-weight: bold;
     font-size: 1.6em;

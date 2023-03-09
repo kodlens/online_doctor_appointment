@@ -9,6 +9,12 @@
                             <div class="box-header-text">
                                 Register here...
                             </div>
+
+                            <div class="box-header-right m-flex-left">
+                                <b-button icon-left="home" tag="a"
+                                    type="is-info is-outlined"
+                                    href="/"></b-button>
+                            </div>
                         </div>
                         <div class="columns">
                             <div class="column">
@@ -133,7 +139,16 @@
                                     </b-input>
                                 </b-field>
                             </div>
+                        </div><!-- cols -->
+
+                        <div class="buttons">
+                            <b-button
+                                label="Register"
+                                type="is-primary is-outlined"
+                                icon-left="account">
+                            </b-button>
                         </div>
+
                     </div> <!--box -->
                 </div> <!--col-->
             </div> <!--cols --> 
@@ -187,5 +202,6 @@ export default {
 </script>
 
 <style>
-   
+
+    
 </style>

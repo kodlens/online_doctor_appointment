@@ -25,6 +25,12 @@
                                 Doctor Schedule
                             </div>
 
+                            <b-field label="Pick date">
+                                <b-datepicker v-model="appointment_date"
+                                    @input="loadSchedules">
+                                </b-datepicker>
+                            </b-field>
+
                             <div class="schedule-item" v-for="(item, index) in schedules"
                                 :key="index">
                                 <div class="schedule-item-time">{{ item.time_from | formatTime }} - {{ item.time_end | formatTime }}</div>
@@ -35,37 +41,61 @@
                                     </b-radio>
                                 </div>
                             </div>
+
+                            <div class="buttons">
+                                <b-button
+                                    class="mt-5"
+                                    label="Apply for appointment"
+                                    icon-left="calendar"
+                                    type="is-primary is-outlined"></b-button>
+                            </div>
                         </div>
                     </div>
 
                     <div class="login-box" v-else>
                         <div class="login-header">
                             <div class="login-header-text">
-                                Login here...
+                                Login here
                             </div>
+                            <p>
+                                Or click <a href="/register-page">register here</a> to register an account.
+                            </p>
                         </div>
+                        
                         <div>
-                            <b-field label="Username">
+                            <b-field label="Username"
+                                :type="this.errors.username ? 'is-danger':''"
+                                :message="this.errors.username ? this.errors.username[0] : ''">
                                 <b-input type="text" 
                                     v-model="fields.username"
                                     required
                                     placeholder="Username"></b-input>
                             </b-field>
-                            <b-field label="Password">
+                            <b-field label="Password"
+                                :type="this.errors.password ? 'is-danger':''"
+                                :message="this.errors.password ? this.errors.password[0] : ''">
                                 <b-input type="password"
                                     password-reveal 
                                     v-model="fields.password"
                                     required
-                                    placeholder="Password"></b-input>
+                                    placeholder="Password"></b-input> 
                             </b-field>
 
                             <div class="buttons">
-                                <b-button type="is-primary is-outlined"
+                                <b-button :class=btnClass
                                     label="Login"
+                                    @click="submit"
                                     icon-left="login"></b-button>
+
+                                <b-button tag="a" type="is-info is-outlined"
+                                    label="Register here..."
+                                    href="/register-page"
+                                    icon-left="account"></b-button>
                             </div>
+                            
                         </div>
-                    </div>
+                       
+                    </div> <!--login box -->
                 </div>
             </div>
         </div>
@@ -88,16 +118,57 @@ export default {
             fields: {},
             errors: {},
 
+            appointment_date: new Date(),
+
 
             schedules: [],
             schedule_id: 0,
+
+
+            btnClass: {
+                'is-primary': true,
+                'is-outlined': true,
+                'is-loading': false,
+                'button': true
+            },
         }
     },
 
     methods: {
+        
         loadOpenSchedules(){
-            axios.get('/load-open-schedules').then(res=>{
+             const params = [
+                `sort_by=${this.sortField}.${this.sortOrder}`,
+                `appdate=${this.appointment_date}`,
+                `perpage=${this.perPage}`,
+                `page=${this.page}`
+            ].join('&')
+
+            axios.get(`/load-open-schedules?${params}`).then(res=>{
                 this.schedules = res.data
+            })
+        },
+
+        submit(){
+            this.btnClass['is-loading'] = true;
+
+            axios.post('/login', this.fields).then(res=>{
+            this.btnClass['is-loading'] = false;
+
+                console.log(res.data)
+
+                if(res.data.role === 'ADMINISTRATOR'){
+                    window.location = '/dashboard';
+                }
+
+                if(res.data.role === 'USER'){
+                    window.location = '/';
+                }
+                
+            }).catch(err=>{
+            this.btnClass['is-loading'] = false;
+                this.errors = err.response.data.errors;
+
             })
         }
     },
@@ -143,6 +214,7 @@ export default {
     .doctor-schedule-header{
         font-weight: bold;
         font-size: 1.2em;
+        margin: 15px 0;
     }
 
     .schedule-item{

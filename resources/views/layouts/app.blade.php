@@ -35,7 +35,11 @@
 <body>
     <div id="app">
         
-        <navbar-component></navbar-component>
+        @auth
+            <navbar-component :is-login="true"></navbar-component>   
+        @else
+            <navbar-component :is-login="false"></navbar-component>   
+        @endauth
 
     <div>
         @yield('content')

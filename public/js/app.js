@@ -8802,6 +8802,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: {
+    isLogin: {
+      type: Boolean,
+      "default": false
+    }
+  },
   data: function data() {
     return {
       open: false,
@@ -8833,6 +8839,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -9104,6 +9125,36 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
     isLogin: {
@@ -9115,16 +9166,44 @@ __webpack_require__.r(__webpack_exports__);
     return {
       fields: {},
       errors: {},
+      appointment_date: new Date(),
       schedules: [],
-      schedule_id: 0
+      schedule_id: 0,
+      btnClass: {
+        'is-primary': true,
+        'is-outlined': true,
+        'is-loading': false,
+        'button': true
+      }
     };
   },
   methods: {
     loadOpenSchedules: function loadOpenSchedules() {
       var _this = this;
 
-      axios.get('/load-open-schedules').then(function (res) {
+      var params = ["sort_by=".concat(this.sortField, ".").concat(this.sortOrder), "appdate=".concat(this.appointment_date), "perpage=".concat(this.perPage), "page=".concat(this.page)].join('&');
+      axios.get("/load-open-schedules?".concat(params)).then(function (res) {
         _this.schedules = res.data;
+      });
+    },
+    submit: function submit() {
+      var _this2 = this;
+
+      this.btnClass['is-loading'] = true;
+      axios.post('/login', this.fields).then(function (res) {
+        _this2.btnClass['is-loading'] = false;
+        console.log(res.data);
+
+        if (res.data.role === 'ADMINISTRATOR') {
+          window.location = '/dashboard';
+        }
+
+        if (res.data.role === 'USER') {
+          window.location = '/';
+        }
+      })["catch"](function (err) {
+        _this2.btnClass['is-loading'] = false;
+        _this2.errors = err.response.data.errors;
       });
     }
   },
@@ -27528,7 +27607,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.welcome-title[data-v-a4d20914]{\n    font-size: 3em;\n    font-weight: bolder;\n}\n.welcome-subtitle[data-v-a4d20914]{\n    font-size: 1.5em;\n    font-weight: bold;\n}\n.welcome-content[data-v-a4d20914]{\n    margin: 50px 0;\n    font-size: 1.4em;\n    text-align: justify;\n}\n.schedule-box[data-v-a4d20914]{\n    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;\n    max-width: 600px;\n    margin: auto;\n    padding: 25px;\n}\n.doctor-schedule[data-v-a4d20914]{\n    max-width: 500px;\n    margin: 15px auto;\n}\n.doctor-schedule-header[data-v-a4d20914]{\n    font-weight: bold;\n    font-size: 1.2em;\n}\n.schedule-item[data-v-a4d20914]{\n    display: flex;\n    padding: 15px;\n    margin: 5px;\n    background: rgb(233, 233, 233);\n}\n.schedule-item-radio[data-v-a4d20914]{\n    margin-left: auto;\n}\n.login-box[data-v-a4d20914]{\n    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;\n    max-width: 600px;\n    margin: auto;\n    padding: 25px;\n}\n.login-header[data-v-a4d20914]{\n    border-bottom: 1px solid blue;\n    padding: 0 0 15px 0;\n    margin: 0 0 10px 0;\n}\n.login-header-text[data-v-a4d20914]{\n    font-weight: bold; \n    font-size: 1.2em;\n}\n\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.welcome-title[data-v-a4d20914]{\n    font-size: 3em;\n    font-weight: bolder;\n}\n.welcome-subtitle[data-v-a4d20914]{\n    font-size: 1.5em;\n    font-weight: bold;\n}\n.welcome-content[data-v-a4d20914]{\n    margin: 50px 0;\n    font-size: 1.4em;\n    text-align: justify;\n}\n.schedule-box[data-v-a4d20914]{\n    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;\n    max-width: 600px;\n    margin: auto;\n    padding: 25px;\n}\n.doctor-schedule[data-v-a4d20914]{\n    max-width: 500px;\n    margin: 15px auto;\n}\n.doctor-schedule-header[data-v-a4d20914]{\n    font-weight: bold;\n    font-size: 1.2em;\n    margin: 15px 0;\n}\n.schedule-item[data-v-a4d20914]{\n    display: flex;\n    padding: 15px;\n    margin: 5px;\n    background: rgb(233, 233, 233);\n}\n.schedule-item-radio[data-v-a4d20914]{\n    margin-left: auto;\n}\n.login-box[data-v-a4d20914]{\n    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;\n    max-width: 600px;\n    margin: auto;\n    padding: 25px;\n}\n.login-header[data-v-a4d20914]{\n    border-bottom: 1px solid blue;\n    padding: 0 0 15px 0;\n    margin: 0 0 10px 0;\n}\n.login-header-text[data-v-a4d20914]{\n    font-weight: bold; \n    font-size: 1.2em;\n}\n\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -31782,25 +31861,24 @@ var render = function () {
         fn: function () {
           return [
             _c("b-navbar-item", { attrs: { tag: "div" } }, [
-              _c("div", { staticClass: "buttons" }, [
-                _c(
-                  "a",
-                  {
-                    staticClass: "button is-primary",
-                    attrs: { href: "/register-page" },
-                  },
-                  [_c("strong", [_vm._v("Register")])]
-                ),
-                _vm._v(" "),
-                _c(
-                  "a",
-                  {
-                    staticClass: "button is-light",
-                    attrs: { tag: "a", href: "/login" },
-                  },
-                  [_vm._v("\n                    Log in\n                ")]
-                ),
-              ]),
+              _vm.isLogin
+                ? _c(
+                    "div",
+                    { staticClass: "buttons" },
+                    [
+                      _c(
+                        "b-button",
+                        {
+                          staticClass: "button is-danger is-outlined",
+                          attrs: { "icon-left": "logout" },
+                          on: { click: _vm.logout },
+                        },
+                        [_c("strong", [_vm._v("Log out")])]
+                      ),
+                    ],
+                    1
+                  )
+                : _vm._e(),
             ]),
           ]
         },
@@ -31837,7 +31915,29 @@ var render = function () {
       _c("div", { staticClass: "columns is-centered" }, [
         _c("div", { staticClass: "column is-6" }, [
           _c("div", { staticClass: "box" }, [
-            _vm._m(0),
+            _c("div", { staticClass: "box-header" }, [
+              _c("div", { staticClass: "box-header-text" }, [
+                _vm._v(
+                  "\n                            Register here...\n                        "
+                ),
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "box-header-right m-flex-left" },
+                [
+                  _c("b-button", {
+                    attrs: {
+                      "icon-left": "home",
+                      tag: "a",
+                      type: "is-info is-outlined",
+                      href: "/",
+                    },
+                  }),
+                ],
+                1
+              ),
+            ]),
             _vm._v(" "),
             _c("div", { staticClass: "columns" }, [
               _c(
@@ -32312,26 +32412,28 @@ var render = function () {
                 1
               ),
             ]),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "buttons" },
+              [
+                _c("b-button", {
+                  attrs: {
+                    label: "Register",
+                    type: "is-primary is-outlined",
+                    "icon-left": "account",
+                  },
+                }),
+              ],
+              1
+            ),
           ]),
         ]),
       ]),
     ]),
   ])
 }
-var staticRenderFns = [
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "box-header" }, [
-      _c("div", { staticClass: "box-header-text" }, [
-        _vm._v(
-          "\n                            Register here...\n                        "
-        ),
-      ]),
-    ])
-  },
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -32372,6 +32474,24 @@ var render = function () {
                       ),
                     ]),
                     _vm._v(" "),
+                    _c(
+                      "b-field",
+                      { attrs: { label: "Pick date" } },
+                      [
+                        _c("b-datepicker", {
+                          on: { input: _vm.loadSchedules },
+                          model: {
+                            value: _vm.appointment_date,
+                            callback: function ($$v) {
+                              _vm.appointment_date = $$v
+                            },
+                            expression: "appointment_date",
+                          },
+                        }),
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
                     _vm._l(_vm.schedules, function (item, index) {
                       return _c(
                         "div",
@@ -32408,6 +32528,22 @@ var render = function () {
                         ]
                       )
                     }),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "buttons" },
+                      [
+                        _c("b-button", {
+                          staticClass: "mt-5",
+                          attrs: {
+                            label: "Apply for appointment",
+                            "icon-left": "calendar",
+                            type: "is-primary is-outlined",
+                          },
+                        }),
+                      ],
+                      1
+                    ),
                   ],
                   2
                 ),
@@ -32420,7 +32556,15 @@ var render = function () {
                   [
                     _c(
                       "b-field",
-                      { attrs: { label: "Username" } },
+                      {
+                        attrs: {
+                          label: "Username",
+                          type: this.errors.username ? "is-danger" : "",
+                          message: this.errors.username
+                            ? this.errors.username[0]
+                            : "",
+                        },
+                      },
                       [
                         _c("b-input", {
                           attrs: {
@@ -32442,7 +32586,15 @@ var render = function () {
                     _vm._v(" "),
                     _c(
                       "b-field",
-                      { attrs: { label: "Password" } },
+                      {
+                        attrs: {
+                          label: "Password",
+                          type: this.errors.password ? "is-danger" : "",
+                          message: this.errors.password
+                            ? this.errors.password[0]
+                            : "",
+                        },
+                      },
                       [
                         _c("b-input", {
                           attrs: {
@@ -32468,10 +32620,18 @@ var render = function () {
                       { staticClass: "buttons" },
                       [
                         _c("b-button", {
+                          class: _vm.btnClass,
+                          attrs: { label: "Login", "icon-left": "login" },
+                          on: { click: _vm.submit },
+                        }),
+                        _vm._v(" "),
+                        _c("b-button", {
                           attrs: {
-                            type: "is-primary is-outlined",
-                            label: "Login",
-                            "icon-left": "login",
+                            tag: "a",
+                            type: "is-info is-outlined",
+                            label: "Register here...",
+                            href: "/register-page",
+                            "icon-left": "account",
                           },
                         }),
                       ],
@@ -32518,8 +32678,16 @@ var staticRenderFns = [
     return _c("div", { staticClass: "login-header" }, [
       _c("div", { staticClass: "login-header-text" }, [
         _vm._v(
-          "\n                            Login here...\n                        "
+          "\n                            Login here\n                        "
         ),
+      ]),
+      _vm._v(" "),
+      _c("p", [
+        _vm._v("\n                            Or click "),
+        _c("a", { attrs: { href: "/register-page" } }, [
+          _vm._v("register here"),
+        ]),
+        _vm._v(" to register an account.\n                        "),
       ]),
     ])
   },

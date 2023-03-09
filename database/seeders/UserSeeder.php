@@ -33,7 +33,7 @@ class UserSeeder extends Seeder
             ],
 
             [
-                'username' => 'doctor',
+                'username' => 'user01',
                 'lname' => 'DELA CRUZ',
                 'fname' => 'JUAN',
                 'mname' => 'P',
@@ -44,7 +44,7 @@ class UserSeeder extends Seeder
                 'street' => 'P-6',
                 //'email' => 'doctor@dev.com',
                 'contact_no' => '09216548742',
-                'role' => 'DOCTOR',
+                'role' => 'USER',
                 'password' => Hash::make('a')
             ],
             

@@ -24,13 +24,13 @@
 
         <template #end>
             <b-navbar-item tag="div">
-                <div class="buttons">
-                    <a class="button is-primary" href="/register-page">
-                        <strong>Register</strong>
-                    </a>
-                    <a class="button is-light" tag="a" href="/login">
-                        Log in
-                    </a>
+                <div class="buttons" v-if="isLogin">
+                    <b-button
+                        @click="logout"
+                        icon-left="logout"
+                        class="button is-danger is-outlined">
+                        <strong>Log out</strong>
+                    </b-button>
                 </div>
             </b-navbar-item>
         </template>
@@ -40,6 +40,14 @@
 
 <script>
 export default {
+
+     props: {
+        isLogin: {
+            type: Boolean,
+            default: false
+        }
+    },
+
     data(){
         return{
             open: false,

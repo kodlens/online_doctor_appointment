@@ -61,11 +61,13 @@ public function showForm()
             return Auth::user();
             // return redirect()->intended('dashboard');
         }
-        return response()->json([
-            'errors' => [
-                'username' => ['Username and password error. Access denied.']
-            ]
-        ], 422);
+        // return response()->json([
+        //     'errors' => [
+        //         'username' => ['Username and password error. Access denied.']
+        //     ]
+        // ], 422);
+
+        return redirect('/');
     }
 
     public function logout(Request $req){
