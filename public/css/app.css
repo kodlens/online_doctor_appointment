@@ -37205,6 +37205,12 @@ a.has-text-danger-dark:hover, a.has-text-danger-dark:focus {
   margin: 80px 100px;
 }
 
+.box-header-text {
+  font-weight: bold;
+  font-size: 1.6em;
+  margin: 0 0 20px 0;
+}
+
 .is-noscroll {
   position: fixed;
   overflow-y: hidden;

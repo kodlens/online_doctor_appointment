@@ -26,7 +26,7 @@ class UserSeeder extends Seeder
                 'city' => '104215',
                 'barangay' => '104215027',
                 'street' => 'P-6',
-                'email' => 'joyce@dev.com',
+                //'email' => 'joyce@dev.com',
                 'contact_no' => '09163789585',
                 'role' => 'ADMINISTRATOR',
                 'password' => Hash::make('a')
@@ -42,7 +42,7 @@ class UserSeeder extends Seeder
                 'city' => '104215',
                 'barangay' => '104215027',
                 'street' => 'P-6',
-                'email' => 'doctor@dev.com',
+                //'email' => 'doctor@dev.com',
                 'contact_no' => '09216548742',
                 'role' => 'DOCTOR',
                 'password' => Hash::make('a')

@@ -2,6 +2,10 @@
 
 @section('content')
 
-    <welcome-page></welcome-page>
+    @auth
+        <welcome-page :is-login="true"></welcome-page>
+    @else
+        <welcome-page :is-login="false"></welcome-page>
+    @endauth
     
 @endsection

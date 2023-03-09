@@ -19,22 +19,50 @@
                     </div>
                 </div>
                 <div class="column">
-                    <div class="debug">
+                    <div class="schedule-box" v-if="isLogin">
                         <div class="doctor-schedule">
                             <div class="doctor-schedule-header">
-                                Schedule
+                                Doctor Schedule
                             </div>
 
                             <div class="schedule-item" v-for="(item, index) in schedules"
                                 :key="index">
-                                {{ item.time_from | formatTime }} - {{ item.time_end | formatTime }}
-
-                                <div>
+                                <div class="schedule-item-time">{{ item.time_from | formatTime }} - {{ item.time_end | formatTime }}</div>
+                                <div class="schedule-item-radio">
                                     <b-radio v-model="schedule_id"
                                         name="name"
                                         :native-value=item.schedule_id>
                                     </b-radio>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="login-box" v-else>
+                        <div class="login-header">
+                            <div class="login-header-text">
+                                Login here...
+                            </div>
+                        </div>
+                        <div>
+                            <b-field label="Username">
+                                <b-input type="text" 
+                                    v-model="fields.username"
+                                    required
+                                    placeholder="Username"></b-input>
+                            </b-field>
+                            <b-field label="Password">
+                                <b-input type="password"
+                                    password-reveal 
+                                    v-model="fields.password"
+                                    required
+                                    placeholder="Password"></b-input>
+                            </b-field>
+
+                            <div class="buttons">
+                                <b-button type="is-primary is-outlined"
+                                    label="Login"
+                                    icon-left="login"></b-button>
                             </div>
                         </div>
                     </div>
@@ -47,8 +75,20 @@
 <script>
 
 export default {
+
+    props: {
+        isLogin: {
+            type: Boolean,
+            default: false
+        }
+    },
+
     data(){
         return {
+            fields: {},
+            errors: {},
+
+
             schedules: [],
             schedule_id: 0,
         }
@@ -87,9 +127,16 @@ export default {
         text-align: justify;
     }
 
+
+    .schedule-box{
+        box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+        max-width: 600px;
+        margin: auto;
+        padding: 25px;
+    }
+
     .doctor-schedule{
         max-width: 500px;
-        border: 1px solid blue;
         margin: 15px auto;
     }
 
@@ -99,8 +146,33 @@ export default {
     }
 
     .schedule-item{
+        display: flex;
+        padding: 15px;
         margin: 5px;
         background: rgb(233, 233, 233);
+    }
+
+    .schedule-item-radio{
+        margin-left: auto;
+    }
+
+
+
+    .login-box{
+        box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+        max-width: 600px;
+        margin: auto;
+        padding: 25px;
+    }
+
+    .login-header{
+        border-bottom: 1px solid blue;
+        padding: 0 0 15px 0;
+        margin: 0 0 10px 0;
+    }
+    .login-header-text{
+        font-weight: bold; 
+        font-size: 1.2em;
     }
 
 </style>

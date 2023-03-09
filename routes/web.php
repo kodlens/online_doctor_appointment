@@ -31,10 +31,15 @@ Route::get('/login', [App\Http\Controllers\Auth\LoginController::class, 'showFor
 Route::post('/login', [App\Http\Controllers\Auth\LoginController::class, 'login']);
 Route::post('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout']);
 
+
+Route::get('/register-page', [App\Http\Controllers\Auth\RegisterPageController::class, 'index']);
+Route::post('/register-page', [App\Http\Controllers\Auth\RegisterPageController::class, 'store']);
+
+
+
+
 Route::get('/sample',[App\Http\Controllers\SampleController::class,'index']);
-
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
 
 
 //ADDRESS
