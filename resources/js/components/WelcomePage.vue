@@ -27,7 +27,7 @@
 
                             <b-field label="Pick date">
                                 <b-datepicker v-model="appointment_date"
-                                    @input="loadSchedules">
+                                    @input="loadOpenSchedules">
                                 </b-datepicker>
                             </b-field>
 
@@ -137,11 +137,14 @@ export default {
     methods: {
         
         loadOpenSchedules(){
-             const params = [
-                `sort_by=${this.sortField}.${this.sortOrder}`,
-                `appdate=${this.appointment_date}`,
-                `perpage=${this.perPage}`,
-                `page=${this.page}`
+            const appdate = this.appointment_date.getFullYear() + '-' 
+                + (this.appointment_date.getMonth() + 1).toString().padStart(2, "0") + '-' 
+                + (this.appointment_date.getDate()).toString().padStart(2,'0')
+
+                //yyyy-MM-dd
+
+            const params = [
+                `appdate=${appdate}`,
             ].join('&')
 
             axios.get(`/load-open-schedules?${params}`).then(res=>{
@@ -168,7 +171,6 @@ export default {
             }).catch(err=>{
             this.btnClass['is-loading'] = false;
                 this.errors = err.response.data.errors;
-
             })
         }
     },

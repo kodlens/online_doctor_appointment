@@ -9181,7 +9181,9 @@ __webpack_require__.r(__webpack_exports__);
     loadOpenSchedules: function loadOpenSchedules() {
       var _this = this;
 
-      var params = ["sort_by=".concat(this.sortField, ".").concat(this.sortOrder), "appdate=".concat(this.appointment_date), "perpage=".concat(this.perPage), "page=".concat(this.page)].join('&');
+      var appdate = this.appointment_date.getFullYear() + '-' + (this.appointment_date.getMonth() + 1).toString().padStart(2, "0") + '-' + this.appointment_date.getDate().toString().padStart(2, '0'); //yyyy-MM-dd
+
+      var params = ["appdate=".concat(appdate)].join('&');
       axios.get("/load-open-schedules?".concat(params)).then(function (res) {
         _this.schedules = res.data;
       });
@@ -32479,7 +32481,7 @@ var render = function () {
                       { attrs: { label: "Pick date" } },
                       [
                         _c("b-datepicker", {
-                          on: { input: _vm.loadSchedules },
+                          on: { input: _vm.loadOpenSchedules },
                           model: {
                             value: _vm.appointment_date,
                             callback: function ($$v) {
