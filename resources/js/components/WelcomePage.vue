@@ -44,6 +44,7 @@
 
                             <div class="buttons">
                                 <b-button
+                                    @click="applyAppointment"
                                     class="mt-5"
                                     label="Apply for appointment"
                                     icon-left="calendar"
@@ -137,6 +138,7 @@ export default {
     methods: {
         
         loadOpenSchedules(){
+            this.schedule_id = 0;
             const appdate = this.appointment_date.getFullYear() + '-' 
                 + (this.appointment_date.getMonth() + 1).toString().padStart(2, "0") + '-' 
                 + (this.appointment_date.getDate()).toString().padStart(2,'0')
@@ -171,6 +173,24 @@ export default {
             }).catch(err=>{
             this.btnClass['is-loading'] = false;
                 this.errors = err.response.data.errors;
+            })
+        },
+
+
+        applyAppointment(){
+             const appdate = this.appointment_date.getFullYear() + '-' 
+                + (this.appointment_date.getMonth() + 1).toString().padStart(2, "0") + '-' 
+                + (this.appointment_date.getDate()).toString().padStart(2,'0')
+
+                //yyyy-MM-dd
+
+             let appointment = {
+                appointment_date: appdate,
+                schedule_id: this.schedule_id
+             };
+
+            axios.post('/apply-appointment', appointment).then(res=>{
+
             })
         }
     },

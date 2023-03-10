@@ -9155,6 +9155,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
     isLogin: {
@@ -9181,6 +9182,7 @@ __webpack_require__.r(__webpack_exports__);
     loadOpenSchedules: function loadOpenSchedules() {
       var _this = this;
 
+      this.schedule_id = 0;
       var appdate = this.appointment_date.getFullYear() + '-' + (this.appointment_date.getMonth() + 1).toString().padStart(2, "0") + '-' + this.appointment_date.getDate().toString().padStart(2, '0'); //yyyy-MM-dd
 
       var params = ["appdate=".concat(appdate)].join('&');
@@ -9207,6 +9209,15 @@ __webpack_require__.r(__webpack_exports__);
         _this2.btnClass['is-loading'] = false;
         _this2.errors = err.response.data.errors;
       });
+    },
+    applyAppointment: function applyAppointment() {
+      var appdate = this.appointment_date.getFullYear() + '-' + (this.appointment_date.getMonth() + 1).toString().padStart(2, "0") + '-' + this.appointment_date.getDate().toString().padStart(2, '0'); //yyyy-MM-dd
+
+      var appointment = {
+        appointment_date: appdate,
+        schedule_id: this.schedule_id
+      };
+      axios.post('/apply-appointment', appointment).then(function (res) {});
     }
   },
   mounted: function mounted() {
@@ -32542,6 +32553,7 @@ var render = function () {
                             "icon-left": "calendar",
                             type: "is-primary is-outlined",
                           },
+                          on: { click: _vm.applyAppointment },
                         }),
                       ],
                       1
