@@ -56,8 +56,8 @@ files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(
 
  Vue.use(Buefy)
 
-Vue.use(VueQrcodeReader); //https://gruhn.github.io/vue-qrcode-reader/demos/CustomTracking.html
-Vue.component(VueQrcode.name, VueQrcode);
+//Vue.use(VueQrcodeReader); //https://gruhn.github.io/vue-qrcode-reader/demos/CustomTracking.html
+//Vue.component(VueQrcode.name, VueQrcode);
 
 
 Vue.filter('formatTime', function(value) {
@@ -67,6 +67,17 @@ Vue.filter('formatTime', function(value) {
     var ampm = H < 12 ? " AM" : " PM";
     timeString = h + timeString.substr(2, 3) + ampm;
     return timeString;
+});
+
+Vue.filter('formatDateTime', function(value) {
+    let ndate = new Date(value);
+
+    var timeString = ndate.toTimeString();
+    var H = +timeString.substr(0, 2);
+    var h = (H % 12) || 12;
+    var ampm = H < 12 ? " AM" : " PM";
+    timeString = h + timeString.substr(2, 3) + ampm;
+    return ndate.toDateString()+ ' ' + timeString;
 });
 
 

@@ -45,6 +45,7 @@
                             <div class="buttons">
                                 <b-button
                                     @click="applyAppointment"
+                                    :disabled="schedule_id < 1"
                                     class="mt-5"
                                     label="Apply for appointment"
                                     icon-left="calendar"
@@ -83,7 +84,8 @@
                             </b-field>
 
                             <div class="buttons">
-                                <b-button :class=btnClass
+                                <b-button 
+                                    :class="btnClass"
                                     label="Login"
                                     @click="submit"
                                     icon-left="login"></b-button>

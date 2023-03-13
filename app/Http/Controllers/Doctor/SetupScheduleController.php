@@ -11,10 +11,12 @@ class SetupScheduleController extends Controller
     //
 
 
-    public function index(){
-        return view('administrator.setup-schedule');
-    }
+   
 
+
+    public function getSchedules(Request $req){
+
+    }
 
     public function store(){
 
