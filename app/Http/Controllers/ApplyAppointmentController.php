@@ -14,7 +14,8 @@ class ApplyAppointmentController extends Controller
 
 
     public function applyAppointment(Request $req){
-
+        return $req;
+        
         $appdate = date("Y-m-d", strtotime($req->appointment_date));
         $user = Auth::user();
 

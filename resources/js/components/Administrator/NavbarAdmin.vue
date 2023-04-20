@@ -13,7 +13,7 @@
                 Documentation
             </b-navbar-item>
             <b-navbar-dropdown label="Setting">
-                <b-navbar-item href="/setup-schedule">
+                <b-navbar-item href="/schedules">
                     Setup Schedule
                 </b-navbar-item>
                 <b-navbar-item href="#">

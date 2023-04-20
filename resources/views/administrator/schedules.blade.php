@@ -1,6 +1,7 @@
 @extends('layouts.admin')
 
 @section('content')
-    <setup-schedule></setup-schedule>
+    <schedules></schedules>
 @endsection
 
+ 
