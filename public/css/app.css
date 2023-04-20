@@ -1,3 +1,4 @@
+@import url(https://fonts.googleapis.com/css?family=Poppins:400,500,600);
 /* MaterialDesignIcons.com */
 @font-face {
   font-family: "Material Design Icons";
@@ -26631,10 +26632,6 @@
   }
 }
 @charset "UTF-8";
-html {
-  background-color: #f8f8f8 !important;
-}
-
 @media print {
   .mynav {
     display: none;
@@ -37191,6 +37188,12 @@ a.has-text-danger-dark:hover, a.has-text-danger-dark:focus {
 .footer {
   background-color: #fafafa;
   padding: 3rem 1.5rem 6rem;
+}
+
+body {
+  background: #ffffff;
+  font-family: "Poppins", sans-serif;
+  overflow-x: hidden;
 }
 
 .sidebar-content {

@@ -1,14 +1,15 @@
 <template>
     <div>
+        <carousel-images></carousel-images>
         <div class="w-container">
             <div class="columns">
                 <div class="column">
                     <div class="welcome-title">
-                        DOCTOR APPOINTMENT SYSTEM
+                        Book your Appointment Online
                     </div>
 
                     <div class="welcome-subtitle">
-                        Make an appointment in just some clicks.
+                        Convenient, Fast, and Reliable
                     </div>
                     <div class="welcome-content">
                         Lorem ipsum dolor sit, amet consectetur adipisicing elit. Laboriosam 
@@ -104,8 +105,10 @@
 </template>
 
 <script>
+import CarouselImages from './CarouselImages.vue';
 
 export default {
+  components: { CarouselImages },
 
     props: {
         isLogin: {
@@ -202,6 +205,8 @@ export default {
 
 }
 </script>
+
+
 
 <style scoped>
     .welcome-title{
