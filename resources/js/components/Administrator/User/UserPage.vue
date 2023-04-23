@@ -3,101 +3,114 @@
         <div class="section">
             <div class="columns is-centered">
                 <div class="column is-8">
-                    <div class="box">
+                    <div class="w-panel-card">
+                        <div class="w-panel-heading">
+                            <div class="mb-2" style="font-size: 20px; font-weight: bold;">LIST OF USER</div>
+                        </div>
 
-                        <div class="is-flex is-justify-content-center mb-2" style="font-size: 20px; font-weight: bold;">LIST OF USER</div>
 
-                        <div class="level">
-                            <div class="level-left">
-                                <b-field label="Page">
-                                    <b-select v-model="perPage" @input="setPerPage">
-                                        <option value="5">5 per page</option>
-                                        <option value="10">10 per page</option>
-                                        <option value="15">15 per page</option>
-                                        <option value="20">20 per page</option>
-                                    </b-select>
-                                    <b-select v-model="sortOrder" @input="loadAsyncData">
-                                        <option value="asc">ASC</option>
-                                        <option value="desc">DESC</option>
+                        <div class="w-panel-body">
 
-                                    </b-select>
-                                </b-field>
+                            <div class="level">
+                                <div class="level-left">
+                                    
+                                </div>
+    
+                                <div class="level-right">
+                                    <div class="level-item">
+                                        <b-field label="Search">
+                                            <b-input type="text"
+                                                    v-model="search.lname" placeholder="Search Lastname"
+                                                    @keyup.native.enter="loadAsyncData"/>
+                                            <p class="control">
+                                                 <b-tooltip label="Search" type="is-success">
+                                                <b-button type="is-primary" icon-right="account-filter" @click="loadAsyncData"/>
+                                                 </b-tooltip>
+                                            </p>
+                                        </b-field>
+                                    </div>
+                                </div>
                             </div>
-
-                            <div class="level-right">
-                                <div class="level-item">
-                                    <b-field label="Search">
-                                        <b-input type="text"
-                                                 v-model="search.lname" placeholder="Search Lastname"
-                                                 @keyup.native.enter="loadAsyncData"/>
-                                        <p class="control">
-                                             <b-tooltip label="Search" type="is-success">
-                                            <b-button type="is-primary" icon-right="account-filter" @click="loadAsyncData"/>
-                                             </b-tooltip>
-                                        </p>
+    
+                            <b-table class="admin-tables"
+                                :data="data"
+                                :loading="loading"
+                                paginated
+                                backend-pagination
+                                pagination-rounded
+                                :total="total"
+                                :per-page="perPage"
+                                @page-change="onPageChange"
+                                aria-next-label="Next page"
+                                aria-previous-label="Previous page"
+                                aria-page-label="Page"
+                                aria-current-label="Current page"
+                                backend-sorting
+                                :default-sort-direction="defaultSortDirection"
+                                @sort="onSort">
+    
+                                <b-table-column field="user_id" label="ID" v-slot="props">
+                                    {{ props.row.user_id }}
+                                </b-table-column>
+    
+                                <b-table-column field="username" label="USERNAME" v-slot="props">
+                                    {{ props.row.username }}
+                                </b-table-column>
+    
+                                <b-table-column field="name" label="NAME" v-slot="props">
+                                    {{ props.row.lname }}, {{ props.row.fname }} {{ props.row.mname }}
+                                </b-table-column>
+    
+                                <b-table-column field="sex" label="SEX" v-slot="props">
+                                    {{ props.row.sex }}
+                                </b-table-column>
+    
+                                <b-table-column field="email" label="EMAIL" v-slot="props">
+                                    {{ props.row.email }}
+                                </b-table-column>
+    
+                                <b-table-column field="role" label="ROLE" v-slot="props">
+                                    {{ props.row.role }}
+                                </b-table-column>
+    
+                                <b-table-column label="Action" v-slot="props">
+                                    <div class="is-flex">
+                                        <b-tooltip label="Edit" type="is-warning">
+                                            <b-button class="button is-small is-warning is-outlined mr-1" tag="a" icon-right="pencil" @click="getData(props.row.user_id)"></b-button>
+                                        </b-tooltip>
+                                        <b-tooltip label="Delete" type="is-danger">
+                                            <b-button class="button is-small is-danger mr-1 is-outlined" icon-right="delete" @click="confirmDelete(props.row.user_id)"></b-button>
+                                        </b-tooltip>
+                                        <b-tooltip label="Reset Password" type="is-info">
+                                            <b-button class="button is-small mr-1 is-outlined" icon-right="lock" @click="openModalResetPassword(props.row.user_id)"></b-button>
+                                        </b-tooltip>
+                                    </div>
+                                </b-table-column>
+    
+                                <div class="is-flex mb-4">
+                                    <b-field label="Page" label-position="on-border">
+                                        <b-select v-model="perPage" @input="setPerPage">
+                                            <option value="10">10 per page</option>
+                                            <option value="20">20 per page</option>
+                                            <option value="30">30 per page</option>
+                                        </b-select>
+                                        <b-select v-model="sortOrder" @input="loadAsyncData">
+                                            <option value="asc">ASC</option>
+                                            <option value="desc">DESC</option>
+    
+                                        </b-select>
                                     </b-field>
                                 </div>
-                            </div>
-                        </div>
-
-                        <b-table
-                            :data="data"
-                            :loading="loading"
-                            paginated
-                            backend-pagination
-                            :total="total"
-                            :per-page="perPage"
-                            @page-change="onPageChange"
-                            aria-next-label="Next page"
-                            aria-previous-label="Previous page"
-                            aria-page-label="Page"
-                            aria-current-label="Current page"
-                            backend-sorting
-                            :default-sort-direction="defaultSortDirection"
-                            @sort="onSort">
-
-                            <b-table-column field="user_id" label="ID" v-slot="props">
-                                {{ props.row.user_id }}
-                            </b-table-column>
-
-                            <b-table-column field="username" label="Username" v-slot="props">
-                                {{ props.row.username }}
-                            </b-table-column>
-
-                            <b-table-column field="name" label="Name" v-slot="props">
-                                {{ props.row.lname }}, {{ props.row.fname }} {{ props.row.mname }}
-                            </b-table-column>
-
-                            <b-table-column field="sex" label="Sex" v-slot="props">
-                                {{ props.row.sex }}
-                            </b-table-column>
-
-                            <b-table-column field="email" label="Email" v-slot="props">
-                                {{ props.row.email }}
-                            </b-table-column>
-
-                            <b-table-column field="role" label="Role" v-slot="props">
-                                {{ props.row.role }}
-                            </b-table-column>
-
-                            <b-table-column label="Action" v-slot="props">
-                                <div class="is-flex">
-                                    <b-tooltip label="Edit" type="is-warning">
-                                        <b-button class="button is-small is-warning mr-1" tag="a" icon-right="pencil" @click="getData(props.row.user_id)"></b-button>
-                                    </b-tooltip>
-                                    <b-tooltip label="Delete" type="is-danger">
-                                        <b-button class="button is-small is-danger mr-1" icon-right="delete" @click="confirmDelete(props.row.user_id)"></b-button>
-                                    </b-tooltip>
-                                    <b-tooltip label="Reset Password" type="is-info">
-                                        <b-button class="button is-small mr-1" icon-right="lock" @click="openModalResetPassword(props.row.user_id)"></b-button>
-                                    </b-tooltip>
+                                <div class="buttons mt-3">
+                                    <b-button @click="openModal" 
+                                        icon-left="plus" class="is-success">
+                                        ADD USER
+                                    </b-button>
                                 </div>
-                            </b-table-column>
-                        </b-table>
-
-                        <div class="buttons mt-3">
-                            <b-button @click="openModal" icon-right="account-arrow-up-outline" class="is-success">NEW</b-button>
-                        </div>
+                            </b-table>
+    
+                            
+                        </div> <!--panel body-->
 
                     </div>
                 </div><!--col -->
@@ -240,26 +253,6 @@
 
                             </div>
 
-                            <div class="columns">
-                                <div class="column" v-if="fields.role === 'OFFICE'">
-                                    <b-field label="Office" label-position="on-border" expanded
-                                             :type="this.errors.office ? 'is-danger':''"
-                                             :message="this.errors.office ? this.errors.office[0] : ''">
-                                        <b-select v-model="fields.office" expanded>
-                                            <option v-for="(item, index) in offices" :key="index" :value="item.office_id">{{ item.office_name }}</option>
-                                        </b-select>
-                                    </b-field>
-                                </div>
-
-                                <div class="column">
-                                    <b-field label="Remark" label-position="on-border" expanded
-                                             :type="this.errors.remark ? 'is-danger':''"
-                                             :message="this.errors.remark ? this.errors.remark[0] : ''">
-                                        <b-input type="text" v-model="fields.remark" expanded></b-input>
-                                    </b-field>
-                                </div>
-
-                            </div>
 
                             <div class="columns">
                                 <div class="column">
@@ -362,9 +355,6 @@
                         </div>
                     </section>
                     <footer class="modal-card-foot">
-                        <b-button
-                            label="Close"
-                            @click="modalResetPassword=false"/>
                         <button
                             :class="btnClass"
                             label="Save"
@@ -390,7 +380,7 @@ export default{
             sortField: 'user_id',
             sortOrder: 'desc',
             page: 1,
-            perPage: 5,
+            perPage: 10,
             defaultSortDirection: 'asc',
 
 
@@ -409,9 +399,10 @@ export default{
                 username: '',
                 lname: '', fname: '', mname: '',
                 password: '', password_confirmation : '',
-                sex : '', role: '', office: '', remark: '',  email : '', contact_no : '',
+                sex : '', role: '', office: '', email : '', contact_no : '',
                 province: '', city: '', barangay: '', street: ''
             },
+
             errors: {},
             offices: [],
 
@@ -579,13 +570,20 @@ export default{
         },
 
         clearFields(){
-            this.fields = {
-                    username: '',
-                    lname: '', fname: '', mname: '',
-                    password: '', password_confirmation : '',
-                    sex : '', role: '',  email : '', contact_no : '',
-                    province: '', city: '', barangay: '', street: ''
-            };
+            this.fields.username = '';
+            this.fields.lname = '';
+            this.fields.fname = '';
+            this.fields.mname = '';
+            this.fields.suffix = '';
+            this.fields.sex = '';
+            this.fields.password = '';
+            this.fields.password_confirmation = '';
+            this.fields.role = '';
+
+            this.fields.province = '';
+            this.fields.city = '';
+            this.fields.barangay = '';
+            this.fields.street = '';
         },
 
 
@@ -612,13 +610,6 @@ export default{
                 });
             });
         },
-
-        loadOffices(){
-            axios.get('/get-user-offices').then(res=>{
-                this.offices = res.data
-            });
-        },
-
 
         openModalResetPassword(dataId){
             this.modalResetPassword = true;
@@ -654,7 +645,6 @@ export default{
     },
 
     mounted() {
-        this.loadOffices();
         this.loadAsyncData();
         this.loadProvince();
     }

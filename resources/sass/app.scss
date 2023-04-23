@@ -3,7 +3,7 @@
 
 // @import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@300&display=swap');
 
-@import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600');
+//@import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600');
 
 
 
@@ -50,12 +50,15 @@
 @import "~bulma/sass/utilities/_all";
 //
 ////Set your colors
-$primary: #3163DA;
+$primary: #19376D;
 $primary-light: findLightColor($primary);
 $primary-dark: findDarkColor($primary);
 $primary-invert: findColorInvert($primary);
 $twitter: #4099FF;
 $twitter-invert: findColorInvert($twitter);
+
+
+$modal-card-foot-radius: 0;
 
 // Lists and maps
 $custom-colors: null !default;
@@ -159,11 +162,6 @@ $navbar-item-img-max-height: 4rem;
 
 @import "~bulma";
 
-body {
-    background: #ffffff;
-    font-family: 'Poppins', sans-serif;
-    overflow-x: hidden;
-}
 
 .sidebar-content{
     background-color: #2a2a2a;
@@ -194,7 +192,7 @@ body {
     margin: 0 0 20px 0;
 }
 
-
+$input-radius: 0px;
 
 
 @import "~buefy/src/scss/buefy";

@@ -3,100 +3,116 @@
         <div class="section">
             <div class="columns is-centered">
                 <div class="column is-8">
-                    <div class="box">
+                    <div class="w-panel-card">
+                        <div class="w-panel-heading">
+                            <div class="mb-2" style="font-size: 20px; font-weight: bold;">SCHEDULES</div>
+                        </div>
 
-                        <div class="is-flex is-justify-content-center mb-2" style="font-size: 20px; font-weight: bold;">SCHEDULES</div>
+                        <div class="w-panel-body">
 
-                        <div class="level">
-                            <div class="level-left">
-                                <b-field label="Page">
+                            <div class="level">
+                                <div class="level-left">
+                                    
+                                </div>
+    
+                                <div class="level-right">
+                                    <div class="level-item">
+                                        <b-field label="Search">
+                                            <b-input type="text"
+                                                     v-model="search.lname" placeholder="Search Lastname"
+                                                     @keyup.native.enter="loadAsyncData"/>
+                                            <p class="control">
+                                                 <b-tooltip label="Search" type="is-success">
+                                                <b-button type="is-primary" icon-right="account-filter" @click="loadAsyncData"/>
+                                                 </b-tooltip>
+                                            </p>
+                                        </b-field>
+                                    </div>
+                                </div>
+                            </div>
+
+                           
+                            <b-table
+                                class="admin-tables"
+                                :data="data"
+                                :loading="loading"
+                                paginated
+                                backend-pagination
+                                :total="total"
+                                :per-page="perPage"
+                                @page-change="onPageChange"
+                                aria-next-label="Next page"
+                                aria-previous-label="Previous page"
+                                aria-page-label="Page"
+                                aria-current-label="Current page"
+                                backend-sorting
+                                :default-sort-direction="defaultSortDirection"
+                                @sort="onSort">
+    
+                                <div class="buttons mt-3">
+                                    <b-button @click="openModal" 
+                                    icon-left="plus" class="is-success">NEW SCHEDULES</b-button>
+                                </div>
+
+                                <b-field label="Page" label-position="on-border">
                                     <b-select v-model="perPage" @input="setPerPage">
                                         <option value="5">5 per page</option>
                                         <option value="10">10 per page</option>
                                         <option value="15">15 per page</option>
                                         <option value="20">20 per page</option>
                                         <option value="30">30 per page</option>
-
+    
                                     </b-select>
                                     <b-select v-model="sortOrder" @input="loadAsyncData">
                                         <option value="asc">ASC</option>
                                         <option value="desc">DESC</option>
-
+    
                                     </b-select>
                                 </b-field>
-                            </div>
 
-                            <div class="level-right">
-                                <div class="level-item">
-                                    <b-field label="Search">
-                                        <b-input type="text"
-                                                 v-model="search.lname" placeholder="Search Lastname"
-                                                 @keyup.native.enter="loadAsyncData"/>
-                                        <p class="control">
-                                             <b-tooltip label="Search" type="is-success">
-                                            <b-button type="is-primary" icon-right="account-filter" @click="loadAsyncData"/>
-                                             </b-tooltip>
-                                        </p>
-                                    </b-field>
-                                </div>
-                            </div>
-                        </div>
-
-                        <b-table
-                            :data="data"
-                            :loading="loading"
-                            paginated
-                            backend-pagination
-                            :total="total"
-                            :per-page="perPage"
-                            @page-change="onPageChange"
-                            aria-next-label="Next page"
-                            aria-previous-label="Previous page"
-                            aria-page-label="Page"
-                            aria-current-label="Current page"
-                            backend-sorting
-                            :default-sort-direction="defaultSortDirection"
-                            @sort="onSort">
-
-                            <b-table-column field="schedule_id" label="ID" v-slot="props">
-                                {{ props.row.schedule_id }}
-                            </b-table-column>
-
-                            <b-table-column field="time_range" label="Time" v-slot="props">
-                                {{ props.row.time_from | formatTime }} - {{ props.row.time_end | formatTime }}
-                            </b-table-column>
-
-                            <b-table-column field="max_no" label="Name" v-slot="props">
-                                {{ props.row.max_no }}
-                            </b-table-column>
-
-                            <b-table-column field="day" label="Day" v-slot="props">
-                                <span v-if="props.row.mon">M</span>
-                                <span v-if="props.row.tue">T</span>
-                                <span v-if="props.row.wed">W</span>
-                                <span v-if="props.row.thu">TH</span>
-                                <span v-if="props.row.fri">F</span>
-                                <span v-if="props.row.sat">S</span>
-                                <span v-if="props.row.sun">SU</span>
-                            </b-table-column>
-
-
-                            <b-table-column label="Action" v-slot="props">
-                                <div class="is-flex">
-                                    <b-tooltip label="Edit" type="is-warning">
-                                        <b-button class="button is-small is-warning mr-1" tag="a" icon-right="pencil" @click="getData(props.row.schedule_id)"></b-button>
-                                    </b-tooltip>
-                                    <b-tooltip label="Delete" type="is-danger">
-                                        <b-button class="button is-small is-danger mr-1" icon-right="delete" @click="confirmDelete(props.row.schedule_id)"></b-button>
-                                    </b-tooltip>
-                                </div>
-                            </b-table-column>
-                        </b-table>
-
-                        <div class="buttons mt-3">
-                            <b-button @click="openModal" icon-right="account-arrow-up-outline" class="is-success">NEW</b-button>
-                        </div>
-
+        
+                                <b-table-column field="schedule_id" label="ID" v-slot="props">
+                                    {{ props.row.schedule_id }}
+                                </b-table-column>
+    
+                                <b-table-column field="time_range" label="TIME" v-slot="props">
+                                    {{ props.row.time_from | formatTime }} - {{ props.row.time_end | formatTime }}
+                                </b-table-column>
+    
+                                <b-table-column field="max_no" label="NAME" v-slot="props">
+                                    {{ props.row.max_no }}
+                                </b-table-column>
+    
+                                <b-table-column field="day" label="DAY" v-slot="props">
+                                    <span v-if="props.row.mon">M</span>
+                                    <span v-if="props.row.tue">T</span>
+                                    <span v-if="props.row.wed">W</span>
+                                    <span v-if="props.row.thu">TH</span>
+                                    <span v-if="props.row.fri">F</span>
+                                    <span v-if="props.row.sat">S</span>
+                                    <span v-if="props.row.sun">SU</span>
+                                </b-table-column>
+    
+    
+                                <b-table-column label="ACTION" v-slot="props">
+                                    <div class="is-flex">
+                                        <b-tooltip label="Edit" type="is-primary">
+                                            <b-button class="button is-small is-primary mr-1 is-outlined" 
+                                                tag="a" 
+                                                icon-right="pencil" 
+                                                @click="getData(props.row.schedule_id)"></b-button>
+                                        </b-tooltip>
+                                        <b-tooltip label="Delete" type="is-danger">
+                                            <b-button class="button is-small is-danger mr-1 is-outlined" 
+                                                icon-right="delete" 
+                                                @click="confirmDelete(props.row.schedule_id)"></b-button>
+                                        </b-tooltip>
+                                    </div>
+                                </b-table-column>
+                            </b-table>
+    
+                            
+                        </div> <!--panel body-->
                     </div>
                 </div><!--col -->
             </div><!-- cols -->

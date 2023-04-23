@@ -1,0 +1,57 @@
+
+.navbar .navbar-item{
+    color: black;
+}
+
+
+.w-panel-card{
+    --border-radius: 0.75rem;
+    --primary-color: #7257fa;
+    --secondary-color: #3c3852;
+    font-family: "Arial";
+    cursor: pointer;
+    border-radius: var(--border-radius);
+    box-shadow: 0px 8px 16px 0px rgb(0 0 0 / 3%);
+    position: relative;
+    border: 1px solid lightgray;
+}
+
+.w-panel-heading{
+    border-top-left-radius: .75rem;
+    border-top-right-radius: .75rem;
+    padding: 10px 15px;
+    background-color: #19376D;
+    color: white;
+}
+.w-panel-body{
+    padding: 25px 15px;
+}
+
+.admin-tables{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.admin-tables thead tr th{
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bolder;
+    color: #000000; 
+    border-top: 2px solid rgb(128, 128, 128);
+    border-bottom: 2px solid rgb(128, 128, 128);
+
+}
+
+.navbar-item.active {
+    background-color: #2452a7;
+}
+
+.admin-tables tbody tr td {
+    font-weight: bold;
+    color: #6c7e9e;
+}
+
+button, .button{
+    border-radius: 0px;
+    font-weight: bolder;
+    font-size: .9em;
+}
+

@@ -35,11 +35,48 @@
 <body>
     <div id="app">
         
-        @auth
-            <navbar-component :is-login="true"></navbar-component>   
-        @else
-            <navbar-component :is-login="false"></navbar-component>   
-        @endauth
+        <b-navbar>
+            <template #brand>
+                <b-navbar-item class="has-text-weight-bold">
+                    APPOINTMENT SYSTEM
+                </b-navbar-item>
+            </template>
+            <template #start>
+                
+            </template>
+    
+            <template #end>
+                <b-navbar-item href="#">
+                    Home
+                </b-navbar-item>
+                <b-navbar-item href="my-appointment">
+                    My Appointments
+                </b-navbar-item>
+                <b-navbar-dropdown label="{{ Auth::user()->lname }}">
+                    <b-navbar-item href="#">
+                        My Profile
+                    </b-navbar-item>
+                    <b-navbar-item href="#">
+                        Change Password
+                    </b-navbar-item>
+                </b-navbar-dropdown>
+
+                <b-navbar-item tag="div">
+                    @auth()
+                    <div class="buttons">
+                        <b-button
+                            onclick="document.getElementById('logout').submit()"
+                            icon-left="logout"
+                            class="button is-danger is-outlined">
+                            <strong>Log out</strong>
+                        </b-button>
+                    </div>
+                    @endauth
+                </b-navbar-item>
+            </template>
+        </b-navbar>
+
+        <form action="/logout" id="logout" method="post">@csrf</form>
 
     <div>
         @yield('content')

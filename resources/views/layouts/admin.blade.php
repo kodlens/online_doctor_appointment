@@ -18,6 +18,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/admin.css') }}" rel="stylesheet">
 
 
     {{-- <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -25,23 +26,73 @@
     {{-- <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@300&family=Ubuntu:wght@300&display=swap" rel="stylesheet"> --}}
 
     <style>
-        html body{
-            font-family: 'Roboto Slab', serif;
-            font-family: 'Ubuntu', sans-serif;
+
+        
+        @font-face {
+            
+            font-family: 'Signika', sans-serif;
+            src: url('/fonts/vendor/Signika/Signika-VariableFont_wght.ttf') format('truetype'); /* Font file path and format */
+            /* You can add additional src declarations for different font file formats if needed */
         }
+
+        html body{
+            font-family: 'Signika', sans-serif;
+        }
+
     </style>
 
 </head>
 <body>
     <div id="app">
-        
-        @auth
-            <navbar-admin :is-auth=1></navbar-admin>
-        @else
-            <navbar-admin :is-auth=0></navbar-admin>
-        @endauth
 
-        
+        <b-navbar class="is-primary">
+            <template #brand>
+                <b-navbar-item class="has-text-weight-bold">
+                    ADMINISTRATOR
+                </b-navbar-item>
+            </template>
+            <template #start>
+                
+            </template>
+    
+            <template #end>
+                <b-navbar-item href="#">
+                    Home
+                </b-navbar-item>
+                <b-navbar-dropdown label="Setting"
+                    class="{{ (request()->is('schedules*')) ? 'active' : '' }}">
+                    <b-navbar-item href="/schedules">
+                        Setup Schedule
+                    </b-navbar-item>
+                    <b-navbar-item href="#">
+                        Contact
+                    </b-navbar-item>
+                </b-navbar-dropdown>
+                <b-navbar-item href="/users"
+                    class="{{ (request()->is('users*')) ? 'active' : '' }}">
+                    Users
+                </b-navbar-item>
+
+                <b-navbar-item tag="div">
+                    <div class="buttons">
+                    @auth()
+                        <b-button class="button is-danger" 
+                            onclick="document.getElementById('logout').submit()">
+                            <strong>Log out</strong>
+                        </b-button>
+                    @else
+                        <b-button v-else class="button is-primary">
+                            <strong>Log in</strong>
+                        </b-button>
+                    @endauth
+                    </div>
+                </b-navbar-item>
+            </template>
+        </b-navbar>
+
+        <form id="logout" method="post" action="/logout">
+            @csrf
+        </form>
 
     <div>
         @yield('content')
@@ -49,5 +100,6 @@
 
 
     </div>
+
 </body>
 </html>
