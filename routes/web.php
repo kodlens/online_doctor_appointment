@@ -51,6 +51,9 @@ Route::get('/load-open-schedules', [App\Http\Controllers\OpenDataController::cla
 
 Route::middleware(['auth'])->group(function(){
 
+    Route::resource('/my-appointment', App\Http\Controllers\User\MyAppointmentController::class);
+    Route::get('/get-my-appointments', [App\Http\Controllers\User\MyAppointmentController::class, 'getMyAppointments']);
+
     Route::post('/apply-appointment', [App\Http\Controllers\ApplyAppointmentController::class, 'applyAppointment']);
 
 });
@@ -59,7 +62,8 @@ Route::middleware(['auth'])->group(function(){
 
 /*     ADMINSITRATOR          */
 
-Route::middleware(['auth'])->group(function(){
+Route::middleware(['auth', 'admin'])->group(function(){
+
     Route::resource('/dashboard', App\Http\Controllers\Administrator\DashboardController::class);
 
     Route::resource('/users', App\Http\Controllers\Administrator\UserController::class);

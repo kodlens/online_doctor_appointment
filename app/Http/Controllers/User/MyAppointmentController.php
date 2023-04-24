@@ -5,7 +5,6 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use App\Models\AppClock;
 use App\Models\Appointment;
-use App\Models\AppointmentType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -23,13 +22,14 @@ class MyAppointmentController extends Controller
         return view('user.my-appointment');
     }
 
-    public function getMyAppointment(Request $req){
-
+    public function getMyAppointments(Request $req){
         $sort = explode('.', $req->sort_by);
 
         $user =  Auth::user();
 
         $date = $req->appdate;
+
+      
        // $ndate = date('Y-m-d',strtotime($date)); //convert to format time UNIX
 
         if($req->appdate){
@@ -38,15 +38,14 @@ class MyAppointmentController extends Controller
             $ndate = '';
         }
 
-
-        return Appointment::from('appointments as a')
-            ->join('appointment_types as b', 'a.appointment_type_id', 'b.appointment_type_id')
-            ->join('offices as c', 'b.office_id', 'c.office_id')
-            ->where('appointment_user_id', $user->user_id)
-            ->where('app_date', 'like',  $ndate . '%')
+        $data = Appointment::with(['user', 'schedule'])->where('user_id', $user->user_id)
+            ->where('appointment_date', 'like',  $ndate . '%')
             ->orderBy($sort[0], $sort[1])
             ->paginate($req->perpage);
+
+        return $data;
     }
+
 
     public function upcomingAppointment(){
         $data = DB::table('appointments as a')

@@ -46,29 +46,31 @@
             </template>
     
             <template #end>
-                <b-navbar-item href="#">
+                <b-navbar-item href="/">
                     Home
                 </b-navbar-item>
-                <b-navbar-item href="my-appointment">
-                    My Appointments
-                </b-navbar-item>
-                <b-navbar-dropdown label="{{ Auth::user()->lname }}">
-                    <b-navbar-item href="#">
-                        My Profile
+                
+                @auth
+                    <b-navbar-item href="my-appointment">
+                        My Appointments
                     </b-navbar-item>
-                    <b-navbar-item href="#">
-                        Change Password
-                    </b-navbar-item>
-                </b-navbar-dropdown>
+                    <b-navbar-dropdown label="{{ Auth::user()->lname }}">
+                        <b-navbar-item href="#">
+                            My Profile
+                        </b-navbar-item>
+                        <b-navbar-item href="#">
+                            Change Password
+                        </b-navbar-item>
+                    </b-navbar-dropdown>
+                @endauth
 
                 <b-navbar-item tag="div">
-                    @auth()
+                    @auth
                     <div class="buttons">
                         <b-button
                             onclick="document.getElementById('logout').submit()"
                             icon-left="logout"
                             class="button is-danger is-outlined">
-                            <strong>Log out</strong>
                         </b-button>
                     </div>
                     @endauth

@@ -16,4 +16,13 @@ class Appointment extends Model
     protected $fillable = ['user_id', 'schedule_id', 'appointment_date'];
 
 
+    public function user(){
+        return $this->hasOne(User::class, 'user_id', 'user_id');
+    }
+
+    public function schedule(){
+        return $this->hasOne(Schedule::class, 'schedule_id', 'schedule_id');
+    }
+
+    
 }

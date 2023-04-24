@@ -26,7 +26,7 @@
                                 Doctor Schedule
                             </div>
 
-                            <b-field label="Pick date">
+                            <b-field label="Pick date" label-position="on-border">
                                 <b-datepicker v-model="appointment_date"
                                     @input="loadOpenSchedules">
                                 </b-datepicker>
@@ -43,11 +43,16 @@
                                 </div>
                             </div>
 
+                            <b-field class="mt-3" label="Illness Description/History" label-position="on-border">
+                                <b-input type="textarea" placeholder="Illness Description/History"
+                                    v-model="fields.illness_description"></b-input>
+                            </b-field>
+
                             <div class="buttons">
                                 <b-button
                                     @click="applyAppointment"
                                     :disabled="schedule_id < 1"
-                                    class="mt-5"
+                                    class="mt-3"
                                     label="Apply for appointment"
                                     icon-left="calendar"
                                     type="is-primary is-outlined"></b-button>
@@ -176,8 +181,10 @@ export default {
                 }
                 
             }).catch(err=>{
-            this.btnClass['is-loading'] = false;
+                this.btnClass['is-loading'] = false;
                 this.errors = err.response.data.errors;
+
+              
             })
         },
 
@@ -195,7 +202,29 @@ export default {
              };
 
             axios.post('/apply-appointment', appointment).then(res=>{
+                this.$buefy.dialog.alert({
+                    title: 'Saved!',
+                    message: 'Reservation successfully saved.',
+                    type: 'is-success'
+                });
 
+                this.fields = {};
+                this.errors = {};
+
+            }).catch(err=>{
+                //console.log(err.response.data.errors);
+
+                if(err.response.status === 422){
+                    this.errors = err.response.data.errors;
+
+                  if(this.errors.max){
+                      this.$buefy.dialog.alert({
+                          title: 'Limit!',
+                          message: this.errors.max[0],
+                          type: 'is-danger'
+                      });
+                  }
+                }
             })
         }
     },
