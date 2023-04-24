@@ -78,6 +78,19 @@
                                 </b-field>
                             </div>
                             <div class="column">
+                                <b-field label="Extension" label-position="on-border"
+                                    :type="this.errors.extension ? 'is-danger':''"
+                                    :message="this.errors.extension ? this.errors.extension[0] : ''"
+                                >
+                                    <b-input type="text" 
+                                        v-model="fields.extension"
+                                        placeholder="Extension">
+                                    </b-input>
+                                </b-field>
+                            </div>
+                        </div>
+                        <div class="columns">
+                            <div class="column">
                                 <b-field label="Sex" label-position="on-border" expanded
                                     :type="this.errors.sex ? 'is-danger':''"
                                     :message="this.errors.sex ? this.errors.sex[0] : ''"
@@ -88,8 +101,6 @@
                                     </b-select>
                                 </b-field>
                             </div>
-                        </div>
-                        <div class="columns">
                             <div class="column">
                                 <b-field label="Contact No" label-position="on-border"
                                             :type="this.errors.contact_no ? 'is-danger':''"
@@ -99,7 +110,6 @@
                                     </b-input>
                                 </b-field>
                             </div>
-
                         </div>
                         <div class="columns">
                             <div class="column">
@@ -144,6 +154,7 @@
                         <div class="buttons">
                             <b-button
                                 label="Register"
+                                @click="submit"
                                 type="is-primary is-outlined"
                                 icon-left="account">
                             </b-button>
@@ -190,6 +201,22 @@ export default {
         loadBarangay: function(){
             axios.get('/load-barangays?prov=' + this.fields.province + '&city_code='+this.fields.city).then(res=>{
                 this.barangays = res.data;
+            })
+        },
+
+        submit(){
+            axios.post('/register-page', this.fields).then(res=>{
+                if(res.data.status === 'saved'){
+                    this.$buefy.dialog.alert({
+                        title: 'Saved!',
+                        message: 'Account successfully register. You can login using the account.',
+                        type: 'is-success'
+                    })
+                }
+            }).catch(err=>{
+                if(err.response.status === 422){
+                    this.errors = err.response.data.errors
+                }
             })
         },
 

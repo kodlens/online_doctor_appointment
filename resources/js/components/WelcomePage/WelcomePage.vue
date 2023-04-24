@@ -43,9 +43,9 @@
                                 </div>
                             </div>
 
-                            <b-field class="mt-3" label="Illness Description/History" label-position="on-border">
-                                <b-input type="textarea" placeholder="Illness Description/History"
-                                    v-model="fields.illness_description"></b-input>
+                            <b-field class="mt-3" label="Illness Description/History (Optional)" label-position="on-border">
+                                <b-input type="textarea" placeholder="Illness Description/History (Optional)"
+                                    v-model="fields.illness_history"></b-input>
                             </b-field>
 
                             <div class="buttons">
@@ -169,9 +169,6 @@ export default {
 
             axios.post('/login', this.fields).then(res=>{
             this.btnClass['is-loading'] = false;
-
-                console.log(res.data)
-
                 if(res.data.role === 'ADMINISTRATOR'){
                     window.location = '/dashboard';
                 }
@@ -198,18 +195,20 @@ export default {
 
              let appointment = {
                 appointment_date: appdate,
-                schedule_id: this.schedule_id
+                schedule_id: this.schedule_id,
+                illness_history: this.fields.illness_history
              };
 
             axios.post('/apply-appointment', appointment).then(res=>{
-                this.$buefy.dialog.alert({
-                    title: 'Saved!',
-                    message: 'Reservation successfully saved.',
-                    type: 'is-success'
-                });
-
-                this.fields = {};
-                this.errors = {};
+                if(res.data.status === 'saved'){
+                    this.$buefy.dialog.alert({
+                        title: 'Saved!',
+                        message: 'Reservation successfully saved.',
+                        type: 'is-success'
+                    });
+                    this.fields = {};
+                    this.errors = {};
+                }
 
             }).catch(err=>{
                 //console.log(err.response.data.errors);
@@ -217,13 +216,21 @@ export default {
                 if(err.response.status === 422){
                     this.errors = err.response.data.errors;
 
-                  if(this.errors.max){
-                      this.$buefy.dialog.alert({
-                          title: 'Limit!',
-                          message: this.errors.max[0],
-                          type: 'is-danger'
-                      });
-                  }
+                    if(this.errors.max){
+                        this.$buefy.dialog.alert({
+                            title: 'Limit!',
+                            message: this.errors.max[0],
+                            type: 'is-danger'
+                        });
+                    }
+
+                    if(this.errors.exists){
+                        this.$buefy.dialog.alert({
+                            title: 'Exist!',
+                            message: this.errors.exists[0],
+                            type: 'is-danger'
+                        });
+                    }
                 }
             })
         }
@@ -279,7 +286,13 @@ export default {
         display: flex;
         padding: 15px;
         margin: 5px;
-        background: rgb(233, 233, 233);
+        border: 1px solid lightgray;
+        border-radius: 10px;
+        transition: all 0.5s;
+    }
+
+    .schedule-item:hover{
+        border: 1.5px solid rgb(58, 176, 223);
     }
 
     .schedule-item-radio{

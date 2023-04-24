@@ -59,6 +59,9 @@
                 <b-navbar-item href="#">
                     Home
                 </b-navbar-item>
+                <b-navbar-item href="/appointments">
+                    Appointments
+                </b-navbar-item>
                 <b-navbar-dropdown label="Setting"
                     class="{{ (request()->is('schedules*')) ? 'active' : '' }}">
                     <b-navbar-item href="/schedules">

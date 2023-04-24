@@ -5,7 +5,7 @@
                 <div class="column is-8">
                     <div class="w-panel-card">
                         <div class="w-panel-heading">
-                            <div class="mb-2" style="font-size: 20px; font-weight: bold;">MY APPOINTMENTS</div>
+                            <div class="mb-2" style="font-size: 20px; font-weight: bold;">LIST OF APPOINTMENTS</div>
                         </div>
 
 
@@ -79,7 +79,10 @@
                                         label="see more..."></b-button>
                                 </b-table-column>
 
-                                <!-- <b-table-column label="Action" v-slot="props">
+                                <b-table-column field="status" label="Status" v-slot="props">
+                                </b-table-column>
+
+                                <b-table-column label="Action" v-slot="props">
                                     <div class="is-flex">
                                         <b-tooltip label="Edit" type="is-warning">
                                             <b-button class="button is-small is-warning is-outlined mr-1" tag="a" icon-right="pencil" @click="getData(props.row.user_id)"></b-button>
@@ -91,7 +94,7 @@
                                             <b-button class="button is-small mr-1 is-outlined" icon-right="lock" @click="openModalResetPassword(props.row.user_id)"></b-button>
                                         </b-tooltip>
                                     </div>
-                                </b-table-column> -->
+                                </b-table-column>
     
                                 <div class="is-flex mb-4">
                                     <b-field label="Page" label-position="on-border">
@@ -107,7 +110,8 @@
                                     </b-field>
                                 </div>
                                 <div class="buttons mt-3">
-                                    <b-button @click="openModal" 
+                                    <b-button tag="a"
+                                        href="/appointments/create"
                                         icon-left="plus" class="is-success">
                                         ADD APPOINTMENT
                                     </b-button>
@@ -448,7 +452,7 @@ export default{
             ].join('&')
 
             this.loading = true
-            axios.get(`/get-my-appointments?${params}`)
+            axios.get(`/get-appointments?${params}`)
                 .then(({ data }) => {
                     this.data = [];
                     let currentTotal = data.total

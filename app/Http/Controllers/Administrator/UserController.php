@@ -37,8 +37,9 @@ class UserController extends Controller
     }
 
     public function store(Request $req){
+       return $req;
         //this will create random unique QR code
-        $qr_code = substr(md5(time() . $req->lname . $req->fname), -8);
+        //$qr_code = substr(md5(time() . $req->lname . $req->fname), -8);
 
         $validate = $req->validate([
             'username' => ['required', 'max:50', 'unique:users'],
@@ -46,28 +47,23 @@ class UserController extends Controller
             'fname' => ['required', 'string', 'max:100'],
             'mname' => ['required', 'string', 'max:100'],
             'sex' => ['required', 'string', 'max:20'],
-            'email' => ['required', 'unique:users'],
             'password' => ['required', 'string', 'confirmed'],
-            'role' => ['required', 'string'],
-            'remark' => ['required', 'string'],
             'province' => ['required', 'string'],
             'city' => ['required', 'string'],
             'barangay' => ['required', 'string'],
         ]);
 
         User::create([
-            'qr_ref' => $qr_code,
+           
             'username' => $req->username,
             'password' => Hash::make($req->password),
             'lname' => strtoupper($req->lname),
             'fname' => strtoupper($req->fname),
             'mname' => strtoupper($req->mname),
+            'extension' => strtoupper($req->extension),
             'sex' => $req->sex,
-            'email' => $req->email,
             'contact_no' => $req->contact_no,
             'role' => $req->role,
-            'remark' => strtoupper($req->remark),
-            'office_id' => $req->role == 'OFFICE' ? $req->office : 0,
             'province' => $req->province,
             'city' => $req->city,
             'barangay' => $req->barangay,
@@ -86,9 +82,7 @@ class UserController extends Controller
             'fname' => ['required', 'string', 'max:100'],
             'mname' => ['required', 'string', 'max:100'],
             'sex' => ['required', 'string', 'max:20'],
-            'email' => ['required', 'unique:users,email,'.$id.',user_id'],
             'role' => ['required', 'string'],
-            'remark' => ['required', 'string'],
             'province' => ['required', 'string'],
             'city' => ['required', 'string'],
             'barangay' => ['required', 'string'],
@@ -100,10 +94,9 @@ class UserController extends Controller
         $data->fname = strtoupper($req->fname);
         $data->mname = strtoupper($req->mname);
         $data->sex = $req->sex;
-        $data->email = $req->email;
+      
         $data->role = $req->role;
-        $data->remark = strtoupper($req->remark);
-        $data->office_id = $req->role == 'OFFICE' ? $req->office : 0;
+    
         $data->province = $req->province;
         $data->city = $req->city;
         $data->barangay = $req->barangay;
@@ -115,10 +108,6 @@ class UserController extends Controller
         ]);
     }
 
-
-    public function getOffices(){
-        return Office::orderBy('office_name', 'asc')->get();
-    }
 
 
     public function destroy($id){

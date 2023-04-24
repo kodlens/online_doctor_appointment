@@ -65,10 +65,6 @@
                                     {{ props.row.sex }}
                                 </b-table-column>
     
-                                <b-table-column field="email" label="EMAIL" v-slot="props">
-                                    {{ props.row.email }}
-                                </b-table-column>
-    
                                 <b-table-column field="role" label="ROLE" v-slot="props">
                                     {{ props.row.role }}
                                 </b-table-column>
@@ -182,19 +178,29 @@
                                         </b-input>
                                     </b-field>
                                 </div>
-
                                 <div class="column">
-                                    <b-field label="Email" label-position="on-border"
-                                             :type="this.errors.email ? 'is-danger':''"
-                                             :message="this.errors.email ? this.errors.email[0] : ''">
-                                        <b-input type="email" v-model="fields.email"
-                                                 placeholder="Email" required>
+                                    <b-field label="Extension" label-position="on-border"
+                                             :type="this.errors.extension ? 'is-danger':''"
+                                             :message="this.errors.extension ? this.errors.extension[0] : ''">
+                                        <b-input v-model="fields.extension"
+                                                 placeholder="Extension">
                                         </b-input>
                                     </b-field>
                                 </div>
                             </div>
 
                             <div class="columns">
+                                <div class="column">
+                                    <b-field label="Sex" label-position="on-border" expanded
+                                             :type="this.errors.sex ? 'is-danger':''"
+                                             :message="this.errors.sex ? this.errors.sex[0] : ''"
+                                            >
+                                        <b-select v-model="fields.sex" expanded>
+                                            <option value="MALE">MALE</option>
+                                            <option value="FEMALE">FEMALE</option>
+                                        </b-select>
+                                    </b-field>
+                                </div>
                                 <div class="column">
                                     <b-field label="Contact No" label-position="on-border"
                                              :type="this.errors.contact_no ? 'is-danger':''"
@@ -228,18 +234,6 @@
 
 
                             <div class="columns">
-                                <div class="column">
-                                    <b-field label="Sex" label-position="on-border" expanded
-                                             :type="this.errors.sex ? 'is-danger':''"
-                                             :message="this.errors.sex ? this.errors.sex[0] : ''"
-                                            >
-                                        <b-select v-model="fields.sex" expanded>
-                                            <option value="MALE">MALE</option>
-                                            <option value="FEMALE">FEMALE</option>
-                                        </b-select>
-                                    </b-field>
-                                </div>
-
                                 <div class="column">
                                     <b-field label="Role" label-position="on-border" expanded
                                              :type="this.errors.role ? 'is-danger':''"

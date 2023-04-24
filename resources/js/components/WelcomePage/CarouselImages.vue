@@ -2,13 +2,7 @@
     <section>
         
         <b-carousel
-            :arrow="arrow"
-            :repeat="arrowBoth"
-            :arrow-hover="arrowHover"
-            :icon-pack="iconPack"
-            :icon-prev="iconPrev"
-            :icon-next="iconNext"
-            :icon-size="iconSize">
+            :progress="true">
             <b-carousel-item v-for="(carousel, i) in carousels" :key="i"
                 class="carousel-slide"
                 :style="`background-image: url('${carousel.img}');`">

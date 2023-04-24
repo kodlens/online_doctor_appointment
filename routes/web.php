@@ -32,8 +32,8 @@ Route::post('/login', [App\Http\Controllers\Auth\LoginController::class, 'login'
 Route::post('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout']);
 
 
-Route::get('/register-page', [App\Http\Controllers\Auth\RegisterPageController::class, 'index']);
-Route::post('/register-page', [App\Http\Controllers\Auth\RegisterPageController::class, 'store']);
+Route::get('/register-page', [App\Http\Controllers\RegisterController::class, 'index']);
+Route::post('/register-page', [App\Http\Controllers\RegisterController::class, 'store']);
 
 
 
@@ -65,6 +65,11 @@ Route::middleware(['auth'])->group(function(){
 Route::middleware(['auth', 'admin'])->group(function(){
 
     Route::resource('/dashboard', App\Http\Controllers\Administrator\DashboardController::class);
+
+    Route::resource('/appointments', App\Http\Controllers\Administrator\AppointmentController::class);
+    Route::get('/get-appointments', [App\Http\Controllers\Administrator\AppointmentController::class, 'getAppointments']);
+
+
 
     Route::resource('/users', App\Http\Controllers\Administrator\UserController::class);
     Route::get('/get-users', [App\Http\Controllers\Administrator\UserController::class, 'getUsers']);
