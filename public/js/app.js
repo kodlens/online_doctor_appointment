@@ -10667,9 +10667,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -10678,7 +10675,11 @@ __webpack_require__.r(__webpack_exports__);
       provinces: [],
       cities: [],
       barangays: [],
-      street: ''
+      street: '',
+      btnClass: {
+        'is-primary': true,
+        'is-loading': false
+      }
     };
   },
   methods: {
@@ -10702,10 +10703,55 @@ __webpack_require__.r(__webpack_exports__);
       axios.get('/load-barangays?prov=' + this.fields.province + '&city_code=' + this.fields.city).then(function (res) {
         _this3.barangays = res.data;
       });
+    },
+    //get user data
+    getData: function getData(data_id) {
+      var _this4 = this;
+
+      this.btnClass['is-loading'] = true; //nested axios for getting the address 1 by 1 or request by request
+
+      axios.get('/get-my-profile').then(function (res) {
+        _this4.fields = res.data;
+        _this4.fields.province = res.data.province.provCode;
+        var tempData = res.data; //load city first
+
+        axios.get('/load-cities?prov=' + _this4.fields.province).then(function (res) {
+          //load barangay
+          _this4.cities = res.data;
+          _this4.fields.city = tempData.city.citymunCode;
+          axios.get('/load-barangays?prov=' + _this4.fields.province + '&city_code=' + _this4.fields.city).then(function (res) {
+            _this4.barangays = res.data;
+            _this4.fields.barangay = tempData.barangay.brgyCode;
+            _this4.btnClass['is-loading'] = false;
+          });
+        });
+      });
+    },
+    submit: function submit() {
+      var _this5 = this;
+
+      axios.post('/my-profile', this.fields).then(function (res) {
+        if (res.data.status === 'updated') {
+          _this5.$buefy.dialog.alert({
+            title: 'Updated!',
+            message: 'Your information was successfully updated.',
+            type: 'is-success'
+          });
+
+          _this5.getData();
+
+          _this5.errors = {};
+        }
+      })["catch"](function (err) {
+        if (err.response.status === 422) {
+          _this5.errors = err.response.data.errors;
+        }
+      });
     }
   },
   mounted: function mounted() {
     this.loadProvince();
+    this.getData();
   }
 });
 
@@ -10722,6 +10768,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+//
 //
 //
 //
@@ -10801,13 +10848,16 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       axios.post('/user-change-password', this.fields).then(function (res) {
-        if (res.data.status === 'saved') {
+        if (res.data.status === 'updated') {
           _this.$buefy.dialog.alert({
-            title: 'SAVED!',
-            message: 'Successfully saved.',
+            title: 'Updated!',
+            message: 'Password change successfully.',
             type: 'is-success',
             confirmText: 'OK'
           });
+
+          _this.fields = {};
+          _this.errors = {};
         }
       })["catch"](function (err) {
         if (err.response.status === 422) {
@@ -36881,7 +36931,7 @@ var render = function () {
                                   "b-tooltip",
                                   {
                                     attrs: {
-                                      label: "Search",
+                                      label: "Clear",
                                       type: "is-primary",
                                     },
                                   },
@@ -36911,14 +36961,14 @@ var render = function () {
                                   {
                                     attrs: {
                                       label: "Search",
-                                      type: "is-success",
+                                      type: "is-primary",
                                     },
                                   },
                                   [
                                     _c("b-button", {
                                       attrs: {
                                         type: "is-primary",
-                                        "icon-right": "account-filter",
+                                        "icon-right": "magnify",
                                       },
                                       on: { click: _vm.loadAsyncData },
                                     }),
@@ -36980,7 +37030,7 @@ var render = function () {
                     _c("b-table-column", {
                       attrs: {
                         field: "appointment_date",
-                        label: "Appointment Date",
+                        label: "APPOINTMENT DATE",
                       },
                       scopedSlots: _vm._u([
                         {
@@ -37125,7 +37175,7 @@ var render = function () {
                     }),
                     _vm._v(" "),
                     _c("b-table-column", {
-                      attrs: { label: "Action" },
+                      attrs: { label: "ACTION" },
                       scopedSlots: _vm._u([
                         {
                           key: "default",
@@ -37310,6 +37360,10 @@ var render = function () {
                         attrs: {
                           label: "Last Name",
                           "label-position": "on-border",
+                          type: this.errors.lname ? "is-danger" : "",
+                          message: this.errors.lname
+                            ? this.errors.lname[0]
+                            : "",
                         },
                       },
                       [
@@ -37344,6 +37398,10 @@ var render = function () {
                         attrs: {
                           label: "First Name",
                           "label-position": "on-border",
+                          type: this.errors.fname ? "is-danger" : "",
+                          message: this.errors.fname
+                            ? this.errors.fname[0]
+                            : "",
                         },
                       },
                       [
@@ -37448,79 +37506,11 @@ var render = function () {
                       "b-field",
                       {
                         attrs: {
-                          label: "Middle Name",
-                          "label-position": "on-border",
-                        },
-                      },
-                      [
-                        _c("b-input", {
-                          attrs: {
-                            type: "text",
-                            placeholder: "Middle Name",
-                            required: "",
-                          },
-                          model: {
-                            value: _vm.fields.mname,
-                            callback: function ($$v) {
-                              _vm.$set(_vm.fields, "mname", $$v)
-                            },
-                            expression: "fields.mname",
-                          },
-                        }),
-                      ],
-                      1
-                    ),
-                  ],
-                  1
-                ),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  { staticClass: "column" },
-                  [
-                    _c(
-                      "b-field",
-                      {
-                        attrs: {
-                          label: "Extension",
-                          "label-position": "on-border",
-                        },
-                      },
-                      [
-                        _c("b-input", {
-                          attrs: {
-                            type: "text",
-                            placeholder: "Extension",
-                            required: "",
-                          },
-                          model: {
-                            value: _vm.fields.extension,
-                            callback: function ($$v) {
-                              _vm.$set(_vm.fields, "extension", $$v)
-                            },
-                            expression: "fields.extension",
-                          },
-                        }),
-                      ],
-                      1
-                    ),
-                  ],
-                  1
-                ),
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "columns" }, [
-                _c(
-                  "div",
-                  { staticClass: "column" },
-                  [
-                    _c(
-                      "b-field",
-                      {
-                        attrs: {
                           label: "Sex",
                           "label-position": "on-border",
                           expanded: "",
+                          type: this.errors.sex ? "is-danger" : "",
+                          message: this.errors.sex ? this.errors.sex[0] : "",
                         },
                       },
                       [
@@ -37774,6 +37764,22 @@ var render = function () {
                   1
                 ),
               ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "buttons" },
+                [
+                  _c("b-button", {
+                    class: _vm.btnClass,
+                    attrs: {
+                      "icon-left": "note-edit-outline",
+                      label: "Update Information",
+                    },
+                    on: { click: _vm.submit },
+                  }),
+                ],
+                1
+              ),
             ]),
           ]),
         ]),
@@ -37931,7 +37937,11 @@ var render = function () {
                     "b-button",
                     {
                       class: _vm.btnClass,
-                      attrs: { label: "Save", "icon-left": "lock-reset" },
+                      attrs: {
+                        label: "Update password",
+                        "icon-left": "lock-reset",
+                      },
+                      on: { click: _vm.submit },
                     },
                     [_vm._v("Change Password")]
                   ),

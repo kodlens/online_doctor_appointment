@@ -23,13 +23,13 @@
                                                     v-model="search.app_date" placeholder="Search date"
                                                     @keyup.native.enter="loadAsyncData"/>
                                             <p class="control">
-                                                <b-tooltip label="Search" type="is-primary">
+                                                <b-tooltip label="Clear" type="is-primary">
                                                     <b-button class="is-primary is-outlined" icon-right="brush" @click="search.app_date = null"/>
                                                  </b-tooltip>
                                             </p>
                                             <p class="control">
-                                                 <b-tooltip label="Search" type="is-success">
-                                                <b-button type="is-primary" icon-right="account-filter" @click="loadAsyncData"/>
+                                                 <b-tooltip label="Search" type="is-primary">
+                                                <b-button type="is-primary" icon-right="magnify" @click="loadAsyncData"/>
                                                  </b-tooltip>
                                             </p>
                                         </b-field>
@@ -58,7 +58,7 @@
                                     {{ props.row.appointment_id }}
                                 </b-table-column>
 
-                                <b-table-column field="appointment_date" label="Appointment Date" v-slot="props">
+                                <b-table-column field="appointment_date" label="APPOINTMENT DATE" v-slot="props">
                                     {{ new Date(props.row.appointment_date).toDateString() }}
                                 </b-table-column>
     
@@ -86,7 +86,7 @@
                                     <span class="status cancelled" v-if="props.row.status === 2">CANCELLED</span>
                                 </b-table-column>
 
-                                <b-table-column label="Action" v-slot="props">
+                                <b-table-column label="ACTION" v-slot="props">
                                     <div class="is-flex">
                                         <b-tooltip v-if="props.row.status === 0" label="Cancel Appointment" type="is-info">
                                             <b-button class="button is-small is-info is-outlined mr-1" 
@@ -145,10 +145,7 @@ export default{
             perPage: 10,
             defaultSortDirection: 'asc',
 
-
             global_id : 0,
-
-          
 
             search: {
                 lname: '',

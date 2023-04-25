@@ -17,26 +17,36 @@ class MyProfileController extends Controller
         return view('user.my-profile');
     }
 
-    public function getProfile(){
-        return Auth::user();
+    public function getMyProfile(){
+        return User::where('user_id', Auth::user()->user_id)
+            ->with(['province', 'city', 'barangay'])
+            ->first();
     }
 
-    public function update(Request $req, $id){
+    public function store(Request $req){
+
+        $req->validate([
+            'lname' => ['required'],
+            'fname' => ['required'],
+            'sex' => ['required'],
+            'contact_no' => ['required'],
+            'province' => ['required'],
+            'city' => ['required'],
+            'barangay' => ['required'],
+        ]);
+
+        $id = Auth::user()->user_id;
 
         $data = User::find($id);
         $data->lname = strtoupper($req->lname);
         $data->fname = strtoupper($req->fname);
         $data->mname = strtoupper($req->mname);
-        $data->suffix = strtoupper($req->suffix);
+        $data->extension = strtoupper($req->extension);
         $data->sex = strtoupper($req->sex);
-        $data->email = $req->email;
         $data->contact_no = $req->contact_no;
-
-
         $data->province = $req->province;
         $data->city = $req->city;
         $data->barangay = $req->barangay;
-
         $data->save();
 
         return response()->json([

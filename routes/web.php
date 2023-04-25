@@ -60,7 +60,7 @@ Route::middleware(['auth'])->group(function(){
     Route::resource('/user-change-password', App\Http\Controllers\User\UserChangePasswordController::class);
 
     Route::resource('/my-profile', App\Http\Controllers\User\MyProfileController::class);
-
+    Route::get('/get-my-profile', [App\Http\Controllers\User\MyProfileController::class, 'getMyProfile']);
 
 });
 

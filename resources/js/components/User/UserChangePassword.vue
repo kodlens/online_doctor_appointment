@@ -42,7 +42,8 @@
                             <div class="buttons">
                                 <b-button
                                     :class="btnClass"
-                                    label="Save"
+                                    label="Update password"
+                                    @click="submit"
                                     icon-left="lock-reset"
                                 >Change Password</b-button>
                             </div>
@@ -87,13 +88,16 @@ export default{
 
         submit: function(){
             axios.post('/user-change-password', this.fields).then(res=>{
-                if(res.data.status === 'saved'){
+                if(res.data.status === 'updated'){
                     this.$buefy.dialog.alert({
-                        title: 'SAVED!',
-                        message: 'Successfully saved.',
+                        title: 'Updated!',
+                        message: 'Password change successfully.',
                         type: 'is-success',
                         confirmText: 'OK'
                     })
+
+                    this.fields = {}
+                    this.errors = {}
                 }
             }).catch(err=>{
                 if(err.response.status === 422){

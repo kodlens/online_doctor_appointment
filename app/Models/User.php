@@ -52,4 +52,17 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+
+    public function province(){
+        return $this->hasOne(Province::class, 'provCode', 'province');
+    }
+
+    public function city(){
+        return $this->hasOne(City::class, 'citymunCode', 'city');
+    }
+
+    public function barangay(){
+        return $this->hasOne(Barangay::class, 'brgyCode', 'barangay');
+    }
 }

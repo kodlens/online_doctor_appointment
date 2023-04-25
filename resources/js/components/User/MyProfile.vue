@@ -9,14 +9,18 @@
                         <div class="p-4 mt-5">
                             <div class="columns">
                                 <div class="column">
-                                    <b-field label="Last Name" label-position="on-border">
+                                    <b-field label="Last Name" label-position="on-border"
+                                        :type="this.errors.lname ? 'is-danger':''"
+                                        :message="this.errors.lname ? this.errors.lname[0] : ''">
                                         <b-input type="text"
                                             v-model="fields.lname"
                                             placeholder="Last Name" required></b-input>
                                     </b-field>
                                 </div>
                                 <div class="column">
-                                    <b-field label="First Name" label-position="on-border">
+                                    <b-field label="First Name" label-position="on-border"
+                                        :type="this.errors.fname ? 'is-danger':''"
+                                        :message="this.errors.fname ? this.errors.fname[0] : ''">
                                         <b-input type="text"
                                             v-model="fields.fname"
                                             placeholder="First Name" required></b-input>
@@ -41,26 +45,13 @@
                                 </div>
                             </div>
 
-                            <div class="columns">
-                                <div class="column">
-                                    <b-field label="Middle Name" label-position="on-border">
-                                        <b-input type="text"
-                                            v-model="fields.mname"
-                                            placeholder="Middle Name" required></b-input>
-                                    </b-field>
-                                </div>
-                                <div class="column">
-                                    <b-field label="Extension" label-position="on-border">
-                                        <b-input type="text"
-                                            v-model="fields.extension"
-                                            placeholder="Extension" required></b-input>
-                                    </b-field>
-                                </div>
-                            </div>
+                            
 
                             <div class="columns">
                                 <div class="column">
-                                    <b-field label="Sex" label-position="on-border" expanded>
+                                    <b-field label="Sex" label-position="on-border" expanded
+                                        :type="this.errors.sex ? 'is-danger':''"
+                                        :message="this.errors.sex ? this.errors.sex[0] : ''">
                                         <b-select v-model="fields.sex" expanded
                                             placeholder="Sex" required>
                                             <option value="MALE">MALE</option>
@@ -82,8 +73,8 @@
                             <div class="columns">
                                 <div class="column">
                                     <b-field label="Province" label-position="on-border" expanded
-                                             :type="this.errors.province ? 'is-danger':''"
-                                             :message="this.errors.province ? this.errors.province[0] : ''">
+                                        :type="this.errors.province ? 'is-danger':''"
+                                        :message="this.errors.province ? this.errors.province[0] : ''">
                                         <b-select v-model="fields.province" @input="loadCity" expanded>
                                             <option v-for="(item, index) in provinces" :key="index" :value="item.provCode">{{ item.provDesc }}</option>
                                         </b-select>
@@ -92,8 +83,8 @@
 
                                 <div class="column">
                                     <b-field label="City" label-position="on-border" expanded
-                                             :type="this.errors.city ? 'is-danger':''"
-                                             :message="this.errors.city ? this.errors.city[0] : ''">
+                                        :type="this.errors.city ? 'is-danger':''"
+                                        :message="this.errors.city ? this.errors.city[0] : ''">
                                         <b-select v-model="fields.city" @input="loadBarangay" expanded>
                                             <option v-for="(item, index) in cities" :key="index" :value="item.citymunCode">{{ item.citymunDesc }}</option>
                                         </b-select>
@@ -104,8 +95,8 @@
                             <div class="columns">
                                 <div class="column">
                                     <b-field label="Barangay" label-position="on-border" expanded
-                                             :type="this.errors.barangay ? 'is-danger':''"
-                                             :message="this.errors.barangay ? this.errors.barangay[0] : ''">
+                                        :type="this.errors.barangay ? 'is-danger':''"
+                                        :message="this.errors.barangay ? this.errors.barangay[0] : ''">
                                         <b-select v-model="fields.barangay" expanded>
                                             <option v-for="(item, index) in barangays" :key="index" :value="item.brgyCode">{{ item.brgyDesc }}</option>
                                         </b-select>
@@ -114,10 +105,16 @@
                                 <div class="column">
                                     <b-field label="Street" label-position="on-border">
                                         <b-input v-model="fields.street"
-                                                 placeholder="Street">
+                                            placeholder="Street">
                                         </b-input>
                                     </b-field>
                                 </div>
+                            </div>
+
+                            <div class="buttons">
+                                <b-button :class="btnClass"
+                                    @click="submit"
+                                    icon-left="note-edit-outline" label="Update Information"></b-button>
                             </div>
 
 
@@ -132,6 +129,7 @@
 
 <script>
 
+
 export default{
     data(){
         return {
@@ -142,6 +140,11 @@ export default{
             cities: [],
             barangays: [],
             street: '',
+
+            btnClass: {
+                'is-primary': true,
+                'is-loading': false,
+            }
         }
     },
 
@@ -163,10 +166,59 @@ export default{
                 this.barangays = res.data;
             })
         },
+
+
+        //get user data
+        getData: function(data_id){
+            this.btnClass['is-loading'] = true;
+
+            //nested axios for getting the address 1 by 1 or request by request
+            axios.get('/get-my-profile').then(res=>{
+                this.fields = res.data;
+                this.fields.province = res.data.province.provCode
+                let tempData = res.data;
+                //load city first
+                axios.get('/load-cities?prov=' + this.fields.province).then(res=>{
+                    //load barangay
+                    
+                    this.cities = res.data;
+                    this.fields.city = tempData.city.citymunCode
+
+                    axios.get('/load-barangays?prov=' + this.fields.province + '&city_code='+this.fields.city).then(res=>{
+                        this.barangays = res.data;
+                       
+                        this.fields.barangay = tempData.barangay.brgyCode
+                        this.btnClass['is-loading'] = false;
+
+                    });
+                });
+            });
+        },
+
+        submit(){
+            axios.post('/my-profile', this.fields).then(res=>{
+                if(res.data.status === 'updated'){
+
+                    this.$buefy.dialog.alert({
+                        title: 'Updated!',
+                        message: 'Your information was successfully updated.',
+                        type: 'is-success'
+                    });
+                    this.getData()
+
+                    this.errors = {}
+                }
+            }).catch(err=>{
+                if(err.response.status === 422){
+                    this.errors = err.response.data.errors
+                }
+            })
+        }
     },
 
     mounted(){
         this.loadProvince();
+        this.getData()
     }
 }
 </script>
