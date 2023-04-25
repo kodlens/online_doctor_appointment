@@ -10527,6 +10527,304 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/User/MyProfile.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/User/MyProfile.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  data: function data() {
+    return {
+      fields: {},
+      errors: {},
+      provinces: [],
+      cities: [],
+      barangays: [],
+      street: ''
+    };
+  },
+  methods: {
+    loadProvince: function loadProvince() {
+      var _this = this;
+
+      axios.get('/load-provinces').then(function (res) {
+        _this.provinces = res.data;
+      });
+    },
+    loadCity: function loadCity() {
+      var _this2 = this;
+
+      axios.get('/load-cities?prov=' + this.fields.province).then(function (res) {
+        _this2.cities = res.data;
+      });
+    },
+    loadBarangay: function loadBarangay() {
+      var _this3 = this;
+
+      axios.get('/load-barangays?prov=' + this.fields.province + '&city_code=' + this.fields.city).then(function (res) {
+        _this3.barangays = res.data;
+      });
+    }
+  },
+  mounted: function mounted() {
+    this.loadProvince();
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/User/UserChangePassword.vue?vue&type=script&lang=js&":
+/*!******************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/User/UserChangePassword.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  data: function data() {
+    return {
+      fields: {
+        password: '',
+        password_confirmation: ''
+      },
+      errors: {},
+      btnClass: {
+        'is-primary': true,
+        'button': true,
+        'is-loading': false
+      }
+    };
+  },
+  methods: {
+    submit: function submit() {
+      var _this = this;
+
+      axios.post('/user-change-password', this.fields).then(function (res) {
+        if (res.data.status === 'saved') {
+          _this.$buefy.dialog.alert({
+            title: 'SAVED!',
+            message: 'Successfully saved.',
+            type: 'is-success',
+            confirmText: 'OK'
+          });
+        }
+      })["catch"](function (err) {
+        if (err.response.status === 422) {
+          _this.errors = err.response.data.errors;
+        }
+      });
+    },
+    //alert box ask for deletion
+    clearFields: function clearFields() {
+      this.fields.password = '';
+      this.fields.password_confirmation = '';
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/WelcomePage/CarouselImages.vue?vue&type=script&lang=js&":
 /*!*********************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/WelcomePage/CarouselImages.vue?vue&type=script&lang=js& ***!
@@ -31277,6 +31575,84 @@ component.options.__file = "resources/js/components/User/MyAppointment.vue"
 
 /***/ }),
 
+/***/ "./resources/js/components/User/MyProfile.vue":
+/*!****************************************************!*\
+  !*** ./resources/js/components/User/MyProfile.vue ***!
+  \****************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _MyProfile_vue_vue_type_template_id_fc12a0b8___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./MyProfile.vue?vue&type=template&id=fc12a0b8& */ "./resources/js/components/User/MyProfile.vue?vue&type=template&id=fc12a0b8&");
+/* harmony import */ var _MyProfile_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./MyProfile.vue?vue&type=script&lang=js& */ "./resources/js/components/User/MyProfile.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _MyProfile_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _MyProfile_vue_vue_type_template_id_fc12a0b8___WEBPACK_IMPORTED_MODULE_0__.render,
+  _MyProfile_vue_vue_type_template_id_fc12a0b8___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/User/MyProfile.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/User/UserChangePassword.vue":
+/*!*************************************************************!*\
+  !*** ./resources/js/components/User/UserChangePassword.vue ***!
+  \*************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _UserChangePassword_vue_vue_type_template_id_bb0d0342___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./UserChangePassword.vue?vue&type=template&id=bb0d0342& */ "./resources/js/components/User/UserChangePassword.vue?vue&type=template&id=bb0d0342&");
+/* harmony import */ var _UserChangePassword_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./UserChangePassword.vue?vue&type=script&lang=js& */ "./resources/js/components/User/UserChangePassword.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _UserChangePassword_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _UserChangePassword_vue_vue_type_template_id_bb0d0342___WEBPACK_IMPORTED_MODULE_0__.render,
+  _UserChangePassword_vue_vue_type_template_id_bb0d0342___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/User/UserChangePassword.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/components/WelcomePage/CarouselImages.vue":
 /*!****************************************************************!*\
   !*** ./resources/js/components/WelcomePage/CarouselImages.vue ***!
@@ -31532,6 +31908,38 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_MyAppointment_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./MyAppointment.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/User/MyAppointment.vue?vue&type=script&lang=js&");
  /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_MyAppointment_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/User/MyProfile.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************!*\
+  !*** ./resources/js/components/User/MyProfile.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_MyProfile_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./MyProfile.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/User/MyProfile.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_MyProfile_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/User/UserChangePassword.vue?vue&type=script&lang=js&":
+/*!**************************************************************************************!*\
+  !*** ./resources/js/components/User/UserChangePassword.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_UserChangePassword_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./UserChangePassword.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/User/UserChangePassword.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_UserChangePassword_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
@@ -31841,6 +32249,40 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_MyAppointment_vue_vue_type_template_id_08e6ed1a_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
 /* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_MyAppointment_vue_vue_type_template_id_08e6ed1a_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./MyAppointment.vue?vue&type=template&id=08e6ed1a&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/User/MyAppointment.vue?vue&type=template&id=08e6ed1a&scoped=true&");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/User/MyProfile.vue?vue&type=template&id=fc12a0b8&":
+/*!***********************************************************************************!*\
+  !*** ./resources/js/components/User/MyProfile.vue?vue&type=template&id=fc12a0b8& ***!
+  \***********************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_MyProfile_vue_vue_type_template_id_fc12a0b8___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_MyProfile_vue_vue_type_template_id_fc12a0b8___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_MyProfile_vue_vue_type_template_id_fc12a0b8___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./MyProfile.vue?vue&type=template&id=fc12a0b8& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/User/MyProfile.vue?vue&type=template&id=fc12a0b8&");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/User/UserChangePassword.vue?vue&type=template&id=bb0d0342&":
+/*!********************************************************************************************!*\
+  !*** ./resources/js/components/User/UserChangePassword.vue?vue&type=template&id=bb0d0342& ***!
+  \********************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_UserChangePassword_vue_vue_type_template_id_bb0d0342___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_UserChangePassword_vue_vue_type_template_id_bb0d0342___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_UserChangePassword_vue_vue_type_template_id_bb0d0342___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./UserChangePassword.vue?vue&type=template&id=bb0d0342& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/User/UserChangePassword.vue?vue&type=template&id=bb0d0342&");
 
 
 /***/ }),
@@ -36825,6 +37267,685 @@ var staticRenderFns = [
     ])
   },
 ]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/User/MyProfile.vue?vue&type=template&id=fc12a0b8&":
+/*!**************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/User/MyProfile.vue?vue&type=template&id=fc12a0b8& ***!
+  \**************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function () {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c("div", { staticClass: "section" }, [
+      _c("div", { staticClass: "columns is-centered" }, [
+        _c("div", { staticClass: "column is-6-desktop is-8-tablet" }, [
+          _c("div", { staticClass: "panel is-primary" }, [
+            _c("div", { staticClass: "panel-heading is-size-6" }, [
+              _vm._v("My Profile"),
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "p-4 mt-5" }, [
+              _c("div", { staticClass: "columns" }, [
+                _c(
+                  "div",
+                  { staticClass: "column" },
+                  [
+                    _c(
+                      "b-field",
+                      {
+                        attrs: {
+                          label: "Last Name",
+                          "label-position": "on-border",
+                        },
+                      },
+                      [
+                        _c("b-input", {
+                          attrs: {
+                            type: "text",
+                            placeholder: "Last Name",
+                            required: "",
+                          },
+                          model: {
+                            value: _vm.fields.lname,
+                            callback: function ($$v) {
+                              _vm.$set(_vm.fields, "lname", $$v)
+                            },
+                            expression: "fields.lname",
+                          },
+                        }),
+                      ],
+                      1
+                    ),
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "column" },
+                  [
+                    _c(
+                      "b-field",
+                      {
+                        attrs: {
+                          label: "First Name",
+                          "label-position": "on-border",
+                        },
+                      },
+                      [
+                        _c("b-input", {
+                          attrs: {
+                            type: "text",
+                            placeholder: "First Name",
+                            required: "",
+                          },
+                          model: {
+                            value: _vm.fields.fname,
+                            callback: function ($$v) {
+                              _vm.$set(_vm.fields, "fname", $$v)
+                            },
+                            expression: "fields.fname",
+                          },
+                        }),
+                      ],
+                      1
+                    ),
+                  ],
+                  1
+                ),
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "columns" }, [
+                _c(
+                  "div",
+                  { staticClass: "column" },
+                  [
+                    _c(
+                      "b-field",
+                      {
+                        attrs: {
+                          label: "Middle Name",
+                          "label-position": "on-border",
+                        },
+                      },
+                      [
+                        _c("b-input", {
+                          attrs: {
+                            type: "text",
+                            placeholder: "Middle Name",
+                            required: "",
+                          },
+                          model: {
+                            value: _vm.fields.mname,
+                            callback: function ($$v) {
+                              _vm.$set(_vm.fields, "mname", $$v)
+                            },
+                            expression: "fields.mname",
+                          },
+                        }),
+                      ],
+                      1
+                    ),
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "column" },
+                  [
+                    _c(
+                      "b-field",
+                      {
+                        attrs: {
+                          label: "Extension",
+                          "label-position": "on-border",
+                        },
+                      },
+                      [
+                        _c("b-input", {
+                          attrs: {
+                            type: "text",
+                            placeholder: "Extension",
+                            required: "",
+                          },
+                          model: {
+                            value: _vm.fields.extension,
+                            callback: function ($$v) {
+                              _vm.$set(_vm.fields, "extension", $$v)
+                            },
+                            expression: "fields.extension",
+                          },
+                        }),
+                      ],
+                      1
+                    ),
+                  ],
+                  1
+                ),
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "columns" }, [
+                _c(
+                  "div",
+                  { staticClass: "column" },
+                  [
+                    _c(
+                      "b-field",
+                      {
+                        attrs: {
+                          label: "Middle Name",
+                          "label-position": "on-border",
+                        },
+                      },
+                      [
+                        _c("b-input", {
+                          attrs: {
+                            type: "text",
+                            placeholder: "Middle Name",
+                            required: "",
+                          },
+                          model: {
+                            value: _vm.fields.mname,
+                            callback: function ($$v) {
+                              _vm.$set(_vm.fields, "mname", $$v)
+                            },
+                            expression: "fields.mname",
+                          },
+                        }),
+                      ],
+                      1
+                    ),
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "column" },
+                  [
+                    _c(
+                      "b-field",
+                      {
+                        attrs: {
+                          label: "Extension",
+                          "label-position": "on-border",
+                        },
+                      },
+                      [
+                        _c("b-input", {
+                          attrs: {
+                            type: "text",
+                            placeholder: "Extension",
+                            required: "",
+                          },
+                          model: {
+                            value: _vm.fields.extension,
+                            callback: function ($$v) {
+                              _vm.$set(_vm.fields, "extension", $$v)
+                            },
+                            expression: "fields.extension",
+                          },
+                        }),
+                      ],
+                      1
+                    ),
+                  ],
+                  1
+                ),
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "columns" }, [
+                _c(
+                  "div",
+                  { staticClass: "column" },
+                  [
+                    _c(
+                      "b-field",
+                      {
+                        attrs: {
+                          label: "Sex",
+                          "label-position": "on-border",
+                          expanded: "",
+                        },
+                      },
+                      [
+                        _c(
+                          "b-select",
+                          {
+                            attrs: {
+                              expanded: "",
+                              placeholder: "Sex",
+                              required: "",
+                            },
+                            model: {
+                              value: _vm.fields.sex,
+                              callback: function ($$v) {
+                                _vm.$set(_vm.fields, "sex", $$v)
+                              },
+                              expression: "fields.sex",
+                            },
+                          },
+                          [
+                            _c("option", { attrs: { value: "MALE" } }, [
+                              _vm._v("MALE"),
+                            ]),
+                            _vm._v(" "),
+                            _c("option", { attrs: { value: "FEMALE" } }, [
+                              _vm._v("FEMALE"),
+                            ]),
+                          ]
+                        ),
+                      ],
+                      1
+                    ),
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "column" },
+                  [
+                    _c(
+                      "b-field",
+                      {
+                        attrs: {
+                          label: "Contact No.",
+                          "label-position": "on-border",
+                        },
+                      },
+                      [
+                        _c("b-input", {
+                          attrs: {
+                            type: "text",
+                            placeholder: "Contact No.",
+                            required: "",
+                          },
+                          model: {
+                            value: _vm.fields.contact_no,
+                            callback: function ($$v) {
+                              _vm.$set(_vm.fields, "contact_no", $$v)
+                            },
+                            expression: "fields.contact_no",
+                          },
+                        }),
+                      ],
+                      1
+                    ),
+                  ],
+                  1
+                ),
+              ]),
+              _vm._v(" "),
+              _c("hr"),
+              _vm._v(" "),
+              _c("div", { staticClass: "columns" }, [
+                _c(
+                  "div",
+                  { staticClass: "column" },
+                  [
+                    _c(
+                      "b-field",
+                      {
+                        attrs: {
+                          label: "Province",
+                          "label-position": "on-border",
+                          expanded: "",
+                          type: this.errors.province ? "is-danger" : "",
+                          message: this.errors.province
+                            ? this.errors.province[0]
+                            : "",
+                        },
+                      },
+                      [
+                        _c(
+                          "b-select",
+                          {
+                            attrs: { expanded: "" },
+                            on: { input: _vm.loadCity },
+                            model: {
+                              value: _vm.fields.province,
+                              callback: function ($$v) {
+                                _vm.$set(_vm.fields, "province", $$v)
+                              },
+                              expression: "fields.province",
+                            },
+                          },
+                          _vm._l(_vm.provinces, function (item, index) {
+                            return _c(
+                              "option",
+                              {
+                                key: index,
+                                domProps: { value: item.provCode },
+                              },
+                              [_vm._v(_vm._s(item.provDesc))]
+                            )
+                          }),
+                          0
+                        ),
+                      ],
+                      1
+                    ),
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "column" },
+                  [
+                    _c(
+                      "b-field",
+                      {
+                        attrs: {
+                          label: "City",
+                          "label-position": "on-border",
+                          expanded: "",
+                          type: this.errors.city ? "is-danger" : "",
+                          message: this.errors.city ? this.errors.city[0] : "",
+                        },
+                      },
+                      [
+                        _c(
+                          "b-select",
+                          {
+                            attrs: { expanded: "" },
+                            on: { input: _vm.loadBarangay },
+                            model: {
+                              value: _vm.fields.city,
+                              callback: function ($$v) {
+                                _vm.$set(_vm.fields, "city", $$v)
+                              },
+                              expression: "fields.city",
+                            },
+                          },
+                          _vm._l(_vm.cities, function (item, index) {
+                            return _c(
+                              "option",
+                              {
+                                key: index,
+                                domProps: { value: item.citymunCode },
+                              },
+                              [_vm._v(_vm._s(item.citymunDesc))]
+                            )
+                          }),
+                          0
+                        ),
+                      ],
+                      1
+                    ),
+                  ],
+                  1
+                ),
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "columns" }, [
+                _c(
+                  "div",
+                  { staticClass: "column" },
+                  [
+                    _c(
+                      "b-field",
+                      {
+                        attrs: {
+                          label: "Barangay",
+                          "label-position": "on-border",
+                          expanded: "",
+                          type: this.errors.barangay ? "is-danger" : "",
+                          message: this.errors.barangay
+                            ? this.errors.barangay[0]
+                            : "",
+                        },
+                      },
+                      [
+                        _c(
+                          "b-select",
+                          {
+                            attrs: { expanded: "" },
+                            model: {
+                              value: _vm.fields.barangay,
+                              callback: function ($$v) {
+                                _vm.$set(_vm.fields, "barangay", $$v)
+                              },
+                              expression: "fields.barangay",
+                            },
+                          },
+                          _vm._l(_vm.barangays, function (item, index) {
+                            return _c(
+                              "option",
+                              {
+                                key: index,
+                                domProps: { value: item.brgyCode },
+                              },
+                              [_vm._v(_vm._s(item.brgyDesc))]
+                            )
+                          }),
+                          0
+                        ),
+                      ],
+                      1
+                    ),
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "column" },
+                  [
+                    _c(
+                      "b-field",
+                      {
+                        attrs: {
+                          label: "Street",
+                          "label-position": "on-border",
+                        },
+                      },
+                      [
+                        _c("b-input", {
+                          attrs: { placeholder: "Street" },
+                          model: {
+                            value: _vm.fields.street,
+                            callback: function ($$v) {
+                              _vm.$set(_vm.fields, "street", $$v)
+                            },
+                            expression: "fields.street",
+                          },
+                        }),
+                      ],
+                      1
+                    ),
+                  ],
+                  1
+                ),
+              ]),
+            ]),
+          ]),
+        ]),
+      ]),
+    ]),
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/User/UserChangePassword.vue?vue&type=template&id=bb0d0342&":
+/*!***********************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/User/UserChangePassword.vue?vue&type=template&id=bb0d0342& ***!
+  \***********************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function () {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c("div", { staticClass: "section" }, [
+      _c("div", { staticClass: "columns is-centered" }, [
+        _c("div", { staticClass: "column is-4" }, [
+          _c("div", { staticClass: "panel is-primary" }, [
+            _c("div", { staticClass: "panel-heading is-size-6" }, [
+              _vm._v(
+                "\n                        CHANGE PASSWORD\n                    "
+              ),
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "p-4" }, [
+              _c("div", { staticClass: "columns" }, [
+                _c(
+                  "div",
+                  { staticClass: "column" },
+                  [
+                    _c(
+                      "b-field",
+                      {
+                        attrs: {
+                          label: "Old Password",
+                          "label-position": "on-border",
+                          type: this.errors.old_password ? "is-danger" : "",
+                          message: this.errors.old_password
+                            ? this.errors.old_password[0]
+                            : "",
+                        },
+                      },
+                      [
+                        _c("b-input", {
+                          attrs: {
+                            type: "password",
+                            "password-reveal": "",
+                            placeholder: "Password",
+                            required: "",
+                          },
+                          model: {
+                            value: _vm.fields.old_password,
+                            callback: function ($$v) {
+                              _vm.$set(_vm.fields, "old_password", $$v)
+                            },
+                            expression: "fields.old_password",
+                          },
+                        }),
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "b-field",
+                      {
+                        attrs: {
+                          label: "Password",
+                          "label-position": "on-border",
+                          type: this.errors.password ? "is-danger" : "",
+                          message: this.errors.password
+                            ? this.errors.password[0]
+                            : "",
+                        },
+                      },
+                      [
+                        _c("b-input", {
+                          attrs: {
+                            type: "password",
+                            "password-reveal": "",
+                            placeholder: "Password",
+                            required: "",
+                          },
+                          model: {
+                            value: _vm.fields.password,
+                            callback: function ($$v) {
+                              _vm.$set(_vm.fields, "password", $$v)
+                            },
+                            expression: "fields.password",
+                          },
+                        }),
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "b-field",
+                      {
+                        attrs: {
+                          label: "Confirm Password",
+                          "label-position": "on-border",
+                          type: this.errors.password_confirmation
+                            ? "is-danger"
+                            : "",
+                          message: this.errors.password_confirmation
+                            ? this.errors.password_confirmation[0]
+                            : "",
+                        },
+                      },
+                      [
+                        _c("b-input", {
+                          attrs: {
+                            type: "password",
+                            "password-reveal": "",
+                            placeholder: "Confirm Password",
+                            required: "",
+                          },
+                          model: {
+                            value: _vm.fields.password_confirmation,
+                            callback: function ($$v) {
+                              _vm.$set(_vm.fields, "password_confirmation", $$v)
+                            },
+                            expression: "fields.password_confirmation",
+                          },
+                        }),
+                      ],
+                      1
+                    ),
+                  ],
+                  1
+                ),
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "buttons" },
+                [
+                  _c(
+                    "b-button",
+                    {
+                      class: _vm.btnClass,
+                      attrs: { label: "Save", "icon-left": "lock-reset" },
+                    },
+                    [_vm._v("Change Password")]
+                  ),
+                ],
+                1
+              ),
+            ]),
+          ]),
+        ]),
+      ]),
+    ]),
+  ])
+}
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -60728,6 +61849,8 @@ var map = {
 	"./components/Login.vue": "./resources/js/components/Login.vue",
 	"./components/RegisterPage.vue": "./resources/js/components/RegisterPage.vue",
 	"./components/User/MyAppointment.vue": "./resources/js/components/User/MyAppointment.vue",
+	"./components/User/MyProfile.vue": "./resources/js/components/User/MyProfile.vue",
+	"./components/User/UserChangePassword.vue": "./resources/js/components/User/UserChangePassword.vue",
 	"./components/WelcomePage/CarouselImages.vue": "./resources/js/components/WelcomePage/CarouselImages.vue",
 	"./components/WelcomePage/WelcomePage.vue": "./resources/js/components/WelcomePage/WelcomePage.vue"
 };

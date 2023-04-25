@@ -57,6 +57,11 @@ Route::middleware(['auth'])->group(function(){
 
     Route::post('/apply-appointment', [App\Http\Controllers\ApplyAppointmentController::class, 'applyAppointment']);
 
+    Route::resource('/user-change-password', App\Http\Controllers\User\UserChangePasswordController::class);
+
+    Route::resource('/my-profile', App\Http\Controllers\User\MyProfileController::class);
+
+
 });
 
 

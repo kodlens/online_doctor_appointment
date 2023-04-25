@@ -10,10 +10,7 @@ use Illuminate\Support\Facades\Auth;
 class MyProfileController extends Controller
 {
     //
-    public function __construct(){
-        $this->middleware('auth');
-        $this->middleware('user');
-    }
+
 
     public function index()
     {

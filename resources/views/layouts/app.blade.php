@@ -67,10 +67,10 @@
                         My Appointments
                     </b-navbar-item>
                     <b-navbar-dropdown label="{{ Auth::user()->lname }}">
-                        <b-navbar-item href="#">
+                        <b-navbar-item href="/my-profile">
                             My Profile
                         </b-navbar-item>
-                        <b-navbar-item href="#">
+                        <b-navbar-item href="/user-change-password">
                             Change Password
                         </b-navbar-item>
                     </b-navbar-dropdown>
