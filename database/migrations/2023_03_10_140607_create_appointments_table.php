@@ -25,6 +25,7 @@ class CreateAppointmentsTable extends Migration
             
             $table->date('appointment_date')->nullable();
             $table->text('illness_history')->nullable();
+            $table->tinyInteger('status')->default(0);
 
             $table->timestamps();
         });

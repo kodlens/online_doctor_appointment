@@ -53,6 +53,7 @@ Route::middleware(['auth'])->group(function(){
 
     Route::resource('/my-appointment', App\Http\Controllers\User\MyAppointmentController::class);
     Route::get('/get-my-appointments', [App\Http\Controllers\User\MyAppointmentController::class, 'getMyAppointments']);
+    Route::post('/cancel-my-appointment/{id}', [App\Http\Controllers\User\MyAppointmentController::class, 'cancelAppointment']);
 
     Route::post('/apply-appointment', [App\Http\Controllers\ApplyAppointmentController::class, 'applyAppointment']);
 

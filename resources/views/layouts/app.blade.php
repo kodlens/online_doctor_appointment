@@ -26,8 +26,20 @@
 
     <style>
         html body{
-            font-family: 'Roboto Slab', serif;
-            font-family: 'Ubuntu', sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+        }
+
+        .navbar{
+            border-bottom: 2px solid rgb(25, 95, 175);
+        }
+        .navbar .navbar-item, .navbar-link {
+            font-weight: bold;
+            color: #1464a5;
+        }
+        
+        .navbar-dropdown{
+            font-weight: bold;
+            color: #1464a5;
         }
     </style>
 

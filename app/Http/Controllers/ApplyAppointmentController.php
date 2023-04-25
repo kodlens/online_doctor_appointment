@@ -23,24 +23,25 @@ class ApplyAppointmentController extends Controller
         $max_no = $schedule->max_no;
 
 
+        //para sure isa lang ka schedule per day.
         $existSched = Appointment::where('user_id', $user->user_id)
-            ->where('schedule_id', $req->schedule_id)
             ->where('appointment_date', $appdate)
             ->exists();
         if($existSched){
             return response()->json([
                 'errors' => [
-                    'exists' => ['Sorry. You already have a reservation for this schedule.']
+                    'exists' => ['Sorry. You already have a reservation.']
                 ],
                 'message' => "Thie given data was invalid"
             ], 422);
         }
-
         
+
+        //get the max no of the schedule
         $appMax = Appointment::where('schedule_id', $req->schedule_id)
             ->where('appointment_date', $appdate)
             ->count();
-
+        //para sure dili mulapas sa na set up nga max sa schedule
         if($appMax >= $max_no){
             return response()->json([
                 'errors' => [
@@ -50,7 +51,7 @@ class ApplyAppointmentController extends Controller
             ], 422);
         }
 
-
+        //insert into database
         Appointment::create([
             'user_id' => $user->user_id,
             'schedule_id' => $req->schedule_id,

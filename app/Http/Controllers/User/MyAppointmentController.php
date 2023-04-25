@@ -137,9 +137,9 @@ class MyAppointmentController extends Controller
 
     }
 
-    public function cancelMyAppointment($id){
+    public function cancelAppointment($id){
         $data = Appointment::find($id);
-        $data->is_approved = 2;
+        $data->status = 2;
         $data->save();
 
         return response()->json([
