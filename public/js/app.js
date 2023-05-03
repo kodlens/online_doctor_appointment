@@ -7753,6 +7753,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -7898,9 +7904,9 @@ __webpack_require__.r(__webpack_exports__);
       var _this6 = this;
 
       this.$buefy.dialog.confirm({
-        title: 'Cacnel?!',
-        type: 'is-danger',
-        message: 'Are you sure you want to cancel this appointment?',
+        title: 'Set to Pending?!',
+        type: 'is-info',
+        message: 'Are you sure you want to set pending this appointment?',
         confirmText: 'Yes',
         onConfirm: function onConfirm() {
           return _this6.pendingSubmit(id);
@@ -32062,7 +32068,7 @@ var render = function () {
   return _c("div", [
     _c("div", { staticClass: "section" }, [
       _c("div", { staticClass: "columns is-centered" }, [
-        _c("div", { staticClass: "column is-8" }, [
+        _c("div", { staticClass: "column is-10-desktop is-8-tablet" }, [
           _c("div", { staticClass: "w-panel-card" }, [
             _vm._m(0),
             _vm._v(" "),
@@ -32309,6 +32315,28 @@ var render = function () {
                               _vm._v(
                                 "\n                                " +
                                   _vm._s(props.row.appointment_id) +
+                                  "\n                            "
+                              ),
+                            ]
+                          },
+                        },
+                      ]),
+                    }),
+                    _vm._v(" "),
+                    _c("b-table-column", {
+                      attrs: { field: "lname", label: "Name" },
+                      scopedSlots: _vm._u([
+                        {
+                          key: "default",
+                          fn: function (props) {
+                            return [
+                              _vm._v(
+                                "\n                                " +
+                                  _vm._s(props.row.user.lname) +
+                                  ", " +
+                                  _vm._s(props.row.user.fname) +
+                                  " " +
+                                  _vm._s(props.row.user.mname) +
                                   "\n                            "
                               ),
                             ]
@@ -32598,6 +32626,13 @@ var render = function () {
                                             {
                                               attrs: {
                                                 "aria-role": "listitem",
+                                              },
+                                              on: {
+                                                click: function ($event) {
+                                                  return _vm.confirmPending(
+                                                    props.row.appointment_id
+                                                  )
+                                                },
                                               },
                                             },
                                             [_vm._v("Set to Pending")]

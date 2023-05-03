@@ -2,7 +2,7 @@
     <div>
         <div class="section">
             <div class="columns is-centered">
-                <div class="column is-8">
+                <div class="column is-10-desktop is-8-tablet">
                     <div class="w-panel-card">
                         <div class="w-panel-heading">
                             <div class="mb-2" style="font-size: 20px; font-weight: bold;">LIST OF APPOINTMENTS</div>
@@ -85,6 +85,10 @@
                                     {{ props.row.appointment_id }}
                                 </b-table-column>
 
+                                <b-table-column field="lname" label="Name" v-slot="props">
+                                    {{ props.row.user.lname }}, {{ props.row.user.fname }} {{ props.row.user.mname }}
+                                </b-table-column>
+
                                 <b-table-column field="appointment_date" label="Appointment Date" v-slot="props">
                                     {{ new Date(props.row.appointment_date).toDateString() }}
                                 </b-table-column>
@@ -138,7 +142,9 @@
                                                 <b-dropdown-item 
                                                     @click="confirmCancel(props.row.appointment_id)" 
                                                     aria-role="listitem">Cancel Appointment</b-dropdown-item>
-                                                <b-dropdown-item aria-role="listitem">Set to Pending</b-dropdown-item>
+                                                <b-dropdown-item
+                                                    @click="confirmPending(props.row.appointment_id)" 
+                                                    aria-role="listitem">Set to Pending</b-dropdown-item>
                                             </b-dropdown>
                                             
                                         </b-tooltip>
@@ -316,9 +322,9 @@ export default{
         //alert box ask for cancel
         confirmPending(id) {
             this.$buefy.dialog.confirm({
-                title: 'Cacnel?!',
-                type: 'is-danger',
-                message: 'Are you sure you want to cancel this appointment?',
+                title: 'Set to Pending?!',
+                type: 'is-info',
+                message: 'Are you sure you want to set pending this appointment?',
                 confirmText: 'Yes',
                 onConfirm: () => this.pendingSubmit(id)
             });
