@@ -74,7 +74,11 @@ Route::middleware(['auth', 'admin'])->group(function(){
 
     Route::resource('/appointments', App\Http\Controllers\Administrator\AppointmentController::class);
     Route::get('/get-appointments', [App\Http\Controllers\Administrator\AppointmentController::class, 'getAppointments']);
+    Route::post('/appointment-approve/{id}', [App\Http\Controllers\Administrator\AppointmentController::class, 'approveAppointment']);
+    Route::post('/appointment-cancel/{id}', [App\Http\Controllers\Administrator\AppointmentController::class, 'cancelAppointment']);
+    Route::post('/appointment-pending/{id}', [App\Http\Controllers\Administrator\AppointmentController::class, 'pendingAppointment']);
 
+   
 
 
     Route::resource('/users', App\Http\Controllers\Administrator\UserController::class);

@@ -417,18 +417,5 @@ export default{
         padding: 0; /* Reset padding */
     }
 
-    .status{
-        font-weight: bold;
-        font-size: .8em;
-    }
-    .cancelled{
-        color: red;
-    }
-    .approved{
-        color:green;
-    }
-    .pending{
-        color: rgb(61, 117, 190);
-    }
 
 </style>

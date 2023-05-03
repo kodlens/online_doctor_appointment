@@ -11,33 +11,48 @@
 
                         <div class="w-panel-body">
 
-                            <div class="level">
-                                <div class="level-left">
-                                    
+                            <div class="columns">
+                                <div class="column">
+                                    <b-field label="Date Filter" label-position="on-border">
+                                        <b-datepicker v-model="search.start_date" placeholder="Start date"></b-datepicker>
+                                        <b-datepicker v-model="search.end_date" placeholder="End date"></b-datepicker>
+                                    </b-field>
                                 </div>
-    
-                                <div class="level-right">
-                                    <div class="level-item">
-                                        <b-field label="Search" label-position="on-border">
-                                            <b-datepicker
-                                                    v-model="search.app_date" placeholder="Search date"
-                                                    @keyup.native.enter="loadAsyncData"/>
-                                            <p class="control">
-                                                <b-tooltip label="Search" type="is-primary">
-                                                    <b-button class="is-primary is-outlined" icon-right="brush" @click="search.app_date = null"/>
-                                                 </b-tooltip>
-                                            </p>
-                                            <p class="control">
-                                                 <b-tooltip label="Search" type="is-success">
-                                                <b-button type="is-primary" icon-right="account-filter" @click="loadAsyncData"/>
-                                                 </b-tooltip>
-                                            </p>
-                                        </b-field>
+                                <div class="column">
+                                    <b-field label="Search Name" 
+                                        label-position="on-border"
+                                        class="is-pulled-right-desktop">
+                                        <b-input type="text"
+                                            v-model="search.name" placeholder="Search Name"
+                                            @keyup.native.enter="loadAsyncData" />
+                                        
+                                        <p class="control">
+                                            <b-tooltip label="Search Name" type="is-success">
+                                                <b-button type="is-primary" icon-right="filter" @click="loadAsyncData"/>
+                                            </b-tooltip>
+                                        </p>
+                                    </b-field>
+                                </div>  <!-- col -->
+                            </div> <!-- cols -->
+
+                            <div class="columns">
+                                <div class="column">
+                                    <div class="buttons">
+                                        <b-button tag="a"
+                                            href="/appointments/create"
+                                            icon-left="plus" class="is-success">
+                                            ADD APPOINTMENT
+                                        </b-button>
                                     </div>
                                 </div>
+                                
                             </div>
+                            
+
+
+                            <hr>
     
-                            <b-table class="user-tables"
+                            <b-table class="admin-tables"
                                 :data="data"
                                 :loading="loading"
                                 paginated
@@ -53,6 +68,18 @@
                                 backend-sorting
                                 :default-sort-direction="defaultSortDirection"
                                 @sort="onSort">
+
+                                <b-field label="Page" label-position="on-border">
+                                    <b-select v-model="perPage" @input="setPerPage">
+                                        <option value="10">10 per page</option>
+                                        <option value="20">20 per page</option>
+                                        <option value="30">30 per page</option>
+                                    </b-select>
+                                    <b-select v-model="sortOrder" @input="loadAsyncData">
+                                        <option value="asc">ASC</option>
+                                        <option value="desc">DESC</option>
+                                    </b-select>
+                                </b-field>
     
                                 <b-table-column field="appointment_id" label="ID" v-slot="props">
                                     {{ props.row.appointment_id }}
@@ -72,14 +99,20 @@
                                             {{ props.row.illness_history }}
                                         </p>
                                     </div>
-                                    <b-button
-                                         class="is-small is-outlined is-info" 
-                                        v-if="props.row.illness_history.length > 100" 
-                                        @click="seeMore(props.row.illness_history)"
-                                        label="see more..."></b-button>
+                                    <div v-if="props.row.illness_history">
+                                        <b-button
+                                            class="is-small is-outlined is-info" 
+                                            v-if="props.row.illness_history.length > 100" 
+                                            @click="seeMore(props.row.illness_history)"
+                                            label="see more..."></b-button>
+                                    </div>
+                                    
                                 </b-table-column>
 
-                                <b-table-column field="status" label="Status" v-slot="props">
+                                <b-table-column field="status" label="STATUS" v-slot="props">
+                                    <span class="status pending" v-if="props.row.status === 0">PENDING</span>
+                                    <span class="status approved" v-if="props.row.status === 1">APPROVED</span>
+                                    <span class="status cancelled" v-if="props.row.status === 2">CANCELLED</span>
                                 </b-table-column>
 
                                 <b-table-column label="Action" v-slot="props">
@@ -90,32 +123,27 @@
                                         <b-tooltip label="Delete" type="is-danger">
                                             <b-button class="button is-small is-danger mr-1 is-outlined" icon-right="delete" @click="confirmDelete(props.row.user_id)"></b-button>
                                         </b-tooltip>
-                                        <b-tooltip label="Reset Password" type="is-info">
-                                            <b-button class="button is-small mr-1 is-outlined" icon-right="lock" @click="openModalResetPassword(props.row.user_id)"></b-button>
+                                        <b-tooltip label="Options" type="is-info">
+                                            <b-dropdown aria-role="list">
+                                                <template #trigger="{ active }">
+                                                    <b-button
+                                                        label="..."
+                                                        type="is-primary"
+                                                        class="is-outliend is-small"
+                                                        :icon-right="active ? 'menu-up' : 'menu-down'" />
+                                                </template>
+
+                                                <b-dropdown-item @click="confirmApprove(props.row.appointment_id)" 
+                                                    aria-role="listitem">Approve</b-dropdown-item>
+                                                <b-dropdown-item 
+                                                    @click="confirmCancel(props.row.appointment_id)" 
+                                                    aria-role="listitem">Cancel Appointment</b-dropdown-item>
+                                                <b-dropdown-item aria-role="listitem">Set to Pending</b-dropdown-item>
+                                            </b-dropdown>
+                                            
                                         </b-tooltip>
                                     </div>
                                 </b-table-column>
-    
-                                <div class="is-flex mb-4">
-                                    <b-field label="Page" label-position="on-border">
-                                        <b-select v-model="perPage" @input="setPerPage">
-                                            <option value="10">10 per page</option>
-                                            <option value="20">20 per page</option>
-                                            <option value="30">30 per page</option>
-                                        </b-select>
-                                        <b-select v-model="sortOrder" @input="loadAsyncData">
-                                            <option value="asc">ASC</option>
-                                            <option value="desc">DESC</option>
-                                        </b-select>
-                                    </b-field>
-                                </div>
-                                <div class="buttons mt-3">
-                                    <b-button tag="a"
-                                        href="/appointments/create"
-                                        icon-left="plus" class="is-success">
-                                        ADD APPOINTMENT
-                                    </b-button>
-                                </div>
                             </b-table>
                         </div> <!--panel body-->
 
@@ -124,253 +152,6 @@
             </div><!-- cols -->
         </div><!--section div-->
 
-
-
-        <!--modal create-->
-        <b-modal v-model="isModalCreate" has-modal-card
-                 trap-focus
-                 :width="640"
-                 aria-role="dialog"
-                 aria-label="Modal"
-                 aria-modal>
-
-            <form @submit.prevent="submit">
-                <div class="modal-card">
-                    <header class="modal-card-head">
-                        <p class="modal-card-title">User Information</p>
-                        <button
-                            type="button"
-                            class="delete"
-                            @click="isModalCreate = false"/>
-                    </header>
-
-                    <section class="modal-card-body">
-                        <div class="">
-                            <div class="columns">
-                                <div class="column">
-                                    <b-field label="Username" label-position="on-border"
-                                             :type="this.errors.username ? 'is-danger':''"
-                                             :message="this.errors.username ? this.errors.username[0] : ''">
-                                        <b-input v-model="fields.username"
-                                                 placeholder="Username" required>
-                                        </b-input>
-                                    </b-field>
-                                </div>
-                            </div>
-
-                            <div class="columns">
-                                <div class="column">
-                                    <b-field label="Last Name" label-position="on-border"
-                                             :type="this.errors.lname ? 'is-danger':''"
-                                             :message="this.errors.lname ? this.errors.lname[0] : ''">
-                                        <b-input v-model="fields.lname"
-                                                 placeholder="Last Name" required>
-                                        </b-input>
-                                    </b-field>
-                                </div>
-                                <div class="column">
-                                    <b-field label="First Name" label-position="on-border"
-                                             :type="this.errors.fname ? 'is-danger':''"
-                                             :message="this.errors.fname ? this.errors.fname[0] : ''">
-                                        <b-input v-model="fields.fname"
-                                                 placeholder="First Name" required>
-                                        </b-input>
-                                    </b-field>
-                                </div>
-                            </div>
-
-                            <div class="columns">
-                                <div class="column">
-                                    <b-field label="Middle Name" label-position="on-border"
-                                             :type="this.errors.mname ? 'is-danger':''"
-                                             :message="this.errors.mname ? this.errors.mname[0] : ''">
-                                        <b-input v-model="fields.mname"
-                                                 placeholder="Middle Name">
-                                        </b-input>
-                                    </b-field>
-                                </div>
-
-                                <div class="column">
-                                    <b-field label="Email" label-position="on-border"
-                                             :type="this.errors.email ? 'is-danger':''"
-                                             :message="this.errors.email ? this.errors.email[0] : ''">
-                                        <b-input type="email" v-model="fields.email"
-                                                 placeholder="Email" required>
-                                        </b-input>
-                                    </b-field>
-                                </div>
-                            </div>
-
-                            <div class="columns">
-                                <div class="column">
-                                    <b-field label="Contact No" label-position="on-border"
-                                             :type="this.errors.contact_no ? 'is-danger':''"
-                                             :message="this.errors.contact_no ? this.errors.contact_no[0] : ''">
-                                        <b-input type="number" v-model="fields.contact_no"
-                                                 placeholder="Contact No" required>
-                                        </b-input>
-                                    </b-field>
-                                </div>
-                            </div>
-                            <div class="columns" v-if="global_id < 1">
-                                <div class="column">
-                                    <b-field label="Password" label-position="on-border"
-                                             :type="this.errors.password ? 'is-danger':''"
-                                             :message="this.errors.password ? this.errors.password[0] : ''">
-                                        <b-input type="password" password-reveal v-model="fields.password"
-                                                 placeholder="Password" required>
-                                        </b-input>
-                                    </b-field>
-                                </div>
-                                <div class="column">
-                                    <b-field label="Confirm Password" label-position="on-border"
-                                             :type="this.errors.password_confirmation ? 'is-danger':''"
-                                             :message="this.errors.password_confirmation ? this.errors.password_confirmation[0] : ''">
-                                        <b-input type="password" v-model="fields.password_confirmation"
-                                                 placeholder="Confirm Password" required>
-                                        </b-input>
-                                    </b-field>
-                                </div>
-                            </div>
-
-
-                            <div class="columns">
-                                <div class="column">
-                                    <b-field label="Sex" label-position="on-border" expanded
-                                             :type="this.errors.sex ? 'is-danger':''"
-                                             :message="this.errors.sex ? this.errors.sex[0] : ''"
-                                            >
-                                        <b-select v-model="fields.sex" expanded>
-                                            <option value="MALE">MALE</option>
-                                            <option value="FEMALE">FEMALE</option>
-                                        </b-select>
-                                    </b-field>
-                                </div>
-
-                                <div class="column">
-                                    <b-field label="Role" label-position="on-border" expanded
-                                             :type="this.errors.role ? 'is-danger':''"
-                                             :message="this.errors.role ? this.errors.role[0] : ''">
-                                        <b-select v-model="fields.role" expanded>
-                                            <option value="ADMINISTRATOR">ADMINISTRATOR</option>
-                                            <option value="USER">USER</option>
-                                        </b-select>
-                                    </b-field>
-                                </div>
-
-                            </div>
-
-
-                            <div class="columns">
-                                <div class="column">
-                                    <b-field label="Province" label-position="on-border" expanded
-                                             :type="this.errors.province ? 'is-danger':''"
-                                             :message="this.errors.province ? this.errors.province[0] : ''">
-                                        <b-select v-model="fields.province" @input="loadCity" expanded>
-                                            <option v-for="(item, index) in provinces" :key="index" :value="item.provCode">{{ item.provDesc }}</option>
-                                        </b-select>
-                                    </b-field>
-                                </div>
-
-                                <div class="column">
-                                    <b-field label="City" label-position="on-border" expanded
-                                             :type="this.errors.city ? 'is-danger':''"
-                                             :message="this.errors.city ? this.errors.city[0] : ''">
-                                        <b-select v-model="fields.city" @input="loadBarangay" expanded>
-                                            <option v-for="(item, index) in cities" :key="index" :value="item.citymunCode">{{ item.citymunDesc }}</option>
-                                        </b-select>
-                                    </b-field>
-                                </div>
-                            </div>
-
-                            <div class="columns">
-                                <div class="column">
-                                    <b-field label="Barangay" label-position="on-border" expanded
-                                             :type="this.errors.barangay ? 'is-danger':''"
-                                             :message="this.errors.barangay ? this.errors.barangay[0] : ''">
-                                        <b-select v-model="fields.barangay" expanded>
-                                            <option v-for="(item, index) in barangays" :key="index" :value="item.brgyCode">{{ item.brgyDesc }}</option>
-                                        </b-select>
-                                    </b-field>
-                                </div>
-                                <div class="column">
-                                    <b-field label="Street" label-position="on-border">
-                                        <b-input v-model="fields.street"
-                                                 placeholder="Street">
-                                        </b-input>
-                                    </b-field>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-                    <footer class="modal-card-foot">
-                        <b-button
-                            label="Close"
-                            @click="isModalCreate=false"/>
-                        <button
-                            :class="btnClass"
-                            label="Save"
-                            type="is-success">SAVE</button>
-                    </footer>
-                </div>
-            </form><!--close form-->
-        </b-modal>
-        <!--close modal-->
-
-
-
-
-        <!--modal reset password-->
-        <b-modal v-model="modalResetPassword" has-modal-card
-                 trap-focus
-                 :width="640"
-                 aria-role="dialog"
-                 aria-label="Modal"
-                 aria-modal>
-
-            <form @submit.prevent="resetPassword">
-                <div class="modal-card">
-                    <header class="modal-card-head">
-                        <p class="modal-card-title">Change Password</p>
-                        <button
-                            type="button"
-                            class="delete"
-                            @click="modalResetPassword = false"/>
-                    </header>
-
-                    <section class="modal-card-body">
-                        <div class="">
-                            <div class="columns">
-                                <div class="column">
-                                    <b-field label="Password" label-position="on-border"
-                                             :type="this.errors.password ? 'is-danger':''"
-                                             :message="this.errors.password ? this.errors.password[0] : ''">
-                                        <b-input type="password" v-model="fields.password" password-reveal
-                                                 placeholder="Password" required>
-                                        </b-input>
-                                    </b-field>
-                                    <b-field label="Confirm Password" label-position="on-border"
-                                             :type="this.errors.password_confirmation ? 'is-danger':''"
-                                             :message="this.errors.password_confirmation ? this.errors.password_confirmation[0] : ''">
-                                        <b-input type="password" v-model="fields.password_confirmation"
-                                                 password-reveal
-                                                 placeholder="Confirm Password" required>
-                                        </b-input>
-                                    </b-field>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-                    <footer class="modal-card-foot">
-                        <button
-                            :class="btnClass"
-                            label="Save"
-                            type="is-success">SAVE</button>
-                    </footer>
-                </div>
-            </form><!--close form-->
-        </b-modal>
-        <!--close modal-->
 
 
     </div>
@@ -398,22 +179,15 @@ export default{
 
             search: {
                 lname: '',
-                app_date: null
+                start_date: new Date(new Date().getFullYear(), new Date().getMonth(), 1),
+                end_date: new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0)
             },
-            app_date: '',
 
             isModalCreate: false,
 
-            fields: {
-                username: '',
-                lname: '', fname: '', mname: '',
-                password: '', password_confirmation : '',
-                sex : '', role: '', office: '', email : '', contact_no : '',
-                province: '', city: '', barangay: '', street: ''
-            },
-
+            fields: {},
             errors: {},
-            offices: [],
+         
 
             btnClass: {
                 'is-success': true,
@@ -432,21 +206,11 @@ export default{
         /*
         * Load async data
         */
-
         loadAsyncData() {
-
-            if(!!this.search.app_date){
-                let d = new Date(this.search.app_date)
-                this.app_date = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate()
-            }else{
-                console.log('wala date');
-                this.app_date = '';
-            }
-            
-
             const params = [
                 `sort_by=${this.sortField}.${this.sortOrder}`,
-                `appdate=${this.app_date}`,
+                `start=${this.$formatDate(this.search.start_date)}`,
+                `end=${this.$formatDate(this.search.end_date)}`,
                 `perpage=${this.perPage}`,
                 `page=${this.page}`
             ].join('&')
@@ -504,89 +268,21 @@ export default{
                 message: stringN,
                 type: 'is-info',
             })
+
         },
 
-        loadProvince: function(){
-            axios.get('/load-provinces').then(res=>{
-                this.provinces = res.data;
-            })
-        },
-
-        loadCity: function(){
-            axios.get('/load-cities?prov=' + this.fields.province).then(res=>{
-                this.cities = res.data;
-            })
-        },
-
-        loadBarangay: function(){
-            axios.get('/load-barangays?prov=' + this.fields.province + '&city_code='+this.fields.city).then(res=>{
-                this.barangays = res.data;
-            })
-        },
-
-
-        submit: function(){
-            if(this.global_id > 0){
-                //update
-                axios.put('/users/'+this.global_id, this.fields).then(res=>{
-                    if(res.data.status === 'updated'){
-                        this.$buefy.dialog.alert({
-                            title: 'UPDATED!',
-                            message: 'Successfully updated.',
-                            type: 'is-success',
-                            onConfirm: () => {
-                                this.loadAsyncData();
-                                this.clearFields();
-                                this.global_id = 0;
-                                this.isModalCreate = false;
-                            }
-                        })
-                    }
-                }).catch(err=>{
-                    if(err.response.status === 422){
-                        this.errors = err.response.data.errors;
-                    }
-                })
-            }else{
-                //INSERT HERE
-                axios.post('/users', this.fields).then(res=>{
-                    if(res.data.status === 'saved'){
-                        this.$buefy.dialog.alert({
-                            title: 'SAVED!',
-                            message: 'Successfully saved.',
-                            type: 'is-success',
-                            confirmText: 'OK',
-                            onConfirm: () => {
-                                this.isModalCreate = false;
-                                this.loadAsyncData();
-                                this.clearFields();
-                                this.global_id = 0;
-                            }
-                        })
-                    }
-                }).catch(err=>{
-                    if(err.response.status === 422){
-                        this.errors = err.response.data.errors;
-                    }
-                });
-            }
-        },
-
-
-        //alert box ask for deletion
-        confirmDelete(delete_id) {
+        //alert box ask for approve
+        confirmApprove(id) {
             this.$buefy.dialog.confirm({
-                title: 'DELETE!',
-                type: 'is-danger',
-                message: 'Are you sure you want to delete this data?',
-                cancelText: 'Cancel',
-                confirmText: 'Delete user account?',
-                onConfirm: () => this.deleteSubmit(delete_id)
+                title: 'Approve?!',
+                type: 'is-info',
+                message: 'Are you sure you want to approve this appointment?',
+                confirmText: 'Yes',
+                onConfirm: () => this.approveSubmit(id)
             });
         },
-        //execute delete after confirming
-        deleteSubmit(delete_id) {
-            axios.delete('/users/' + delete_id).then(res => {
+        approveSubmit(id) {
+            axios.post('/appointment-approve/' + id).then(res => {
                 this.loadAsyncData();
             }).catch(err => {
                 if (err.response.status === 422) {
@@ -595,84 +291,56 @@ export default{
             });
         },
 
-        clearFields(){
-            this.fields.username = '';
-            this.fields.lname = '';
-            this.fields.fname = '';
-            this.fields.mname = '';
-            this.fields.suffix = '';
-            this.fields.sex = '';
-            this.fields.password = '';
-            this.fields.password_confirmation = '';
-            this.fields.role = '';
 
-            this.fields.province = '';
-            this.fields.city = '';
-            this.fields.barangay = '';
-            this.fields.street = '';
+        //alert box ask for cancel
+        confirmCancel(id) {
+            this.$buefy.dialog.confirm({
+                title: 'Cacnel?!',
+                type: 'is-danger',
+                message: 'Are you sure you want to cancel this appointment?',
+                confirmText: 'Yes',
+                onConfirm: () => this.cancelSubmit(id)
+            });
         },
-
-
-        //update code here
-        getData: function(data_id){
-            this.clearFields();
-            this.global_id = data_id;
-            this.isModalCreate = true;
-
-
-            //nested axios for getting the address 1 by 1 or request by request
-            axios.get('/users/'+data_id).then(res=>{
-                this.fields = res.data;
-                this.fields.office = res.data.office_id;
-                let tempData = res.data;
-                //load city first
-                axios.get('/load-cities?prov=' + this.fields.province).then(res=>{
-                    //load barangay
-                    this.cities = res.data;
-                    axios.get('/load-barangays?prov=' + this.fields.province + '&city_code='+this.fields.city).then(res=>{
-                        this.barangays = res.data;
-                        this.fields = tempData;
-                    });
-                });
+        cancelSubmit(id) {
+            axios.post('/appointment-cancel/' + id).then(res => {
+                this.loadAsyncData();
+            }).catch(err => {
+                if (err.response.status === 422) {
+                    this.errors = err.response.data.errors;
+                }
             });
         },
 
-        openModalResetPassword(dataId){
-            this.modalResetPassword = true;
-            this.fields = {};
-            this.errors = {};
-            this.global_id = dataId;
+
+        //alert box ask for cancel
+        confirmPending(id) {
+            this.$buefy.dialog.confirm({
+                title: 'Cacnel?!',
+                type: 'is-danger',
+                message: 'Are you sure you want to cancel this appointment?',
+                confirmText: 'Yes',
+                onConfirm: () => this.pendingSubmit(id)
+            });
         },
-
-        resetPassword(){
-            axios.post('/reset-password/' + this.global_id, this.fields).then(res=>{
-
-                if(res.data.status === 'changed'){
-                    this.$buefy.dialog.alert({
-                        title: 'PASSWORD CHANGED',
-                        type: 'is-success',
-                        message: 'Password changed successfully.',
-                        confirmText: 'OK',
-                        onConfirm: () => {
-                            this.modalResetPassword = false;
-                            this.fields = {};
-                            this.errors = {};
-                            this.loadAsyncData()
-                        }
-                    });
+        pendingSubmit(id) {
+            axios.post('/appointment-pending/' + id).then(res => {
+                this.loadAsyncData();
+            }).catch(err => {
+                if (err.response.status === 422) {
+                    this.errors = err.response.data.errors;
                 }
-
-            }).catch(err=>{
-                this.errors = err.response.data.errors;
-            })
+            });
         },
+
+
+
 
 
     },
 
     mounted() {
         this.loadAsyncData();
-        this.loadProvince();
     }
 }
 </script>

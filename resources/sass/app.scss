@@ -192,6 +192,23 @@ $navbar-item-img-max-height: 4rem;
     margin: 0 0 20px 0;
 }
 
+
+
+.status{
+    font-weight: bold;
+    font-size: .8em;
+}
+.cancelled{
+    color: red;
+}
+.approved{
+    color:green;
+}
+.pending{
+    color: rgb(61, 117, 190);
+}
+
+
 $input-radius: 0px;
 
 

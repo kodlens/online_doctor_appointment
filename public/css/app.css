@@ -37219,6 +37219,23 @@ a.has-text-danger-dark:hover, a.has-text-danger-dark:focus {
   margin: 0 0 20px 0;
 }
 
+.status {
+  font-weight: bold;
+  font-size: 0.8em;
+}
+
+.cancelled {
+  color: red;
+}
+
+.approved {
+  color: green;
+}
+
+.pending {
+  color: #3d75be;
+}
+
 .is-noscroll {
   position: fixed;
   overflow-y: hidden;

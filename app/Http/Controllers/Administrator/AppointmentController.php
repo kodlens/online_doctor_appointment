@@ -52,4 +52,42 @@ class AppointmentController extends Controller
 
     }
 
+
+
+
+
+    //appoved appointment
+    public function approveAppointment($id){
+        $data = Appointment::find($id);
+        $data->status = 1;
+        $data->save();
+
+        return response()->json([
+            'status' => 'saved'
+        ], 200);
+    }
+
+
+    public function cancelAppointment($id){
+        $data = Appointment::find($id);
+        $data->status = 2;
+        $data->save();
+
+        return response()->json([
+            'status' => 'saved'
+        ], 200);
+    }
+
+    public function pendingAppointment($id){
+        $data = Appointment::find($id);
+        $data->status = 0;
+        $data->save();
+
+        return response()->json([
+            'status' => 'saved'
+        ], 200);
+    }
+
+
+
 }
