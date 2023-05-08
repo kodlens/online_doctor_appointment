@@ -64,7 +64,7 @@ class ApplyAppointmentController extends Controller
 
         return response()->json([
             'status' => 'saved'
-        ], 200);;
+        ], 200);
     }
 
 

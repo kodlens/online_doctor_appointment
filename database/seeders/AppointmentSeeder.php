@@ -20,36 +20,32 @@ class AppointmentSeeder extends Seeder
             [
                 'schedule_id' => 2,
                 'user_id' => 2,
-                'appointment_date' => '2023-05-04',
+                'appointment_date' => '2023-05-10',
                 'illness_history' => 'sakit tiyan',
                 'status' => 0,
-
             ],
             [
                 'schedule_id' => 2,
-                'user_id' => 2,
-                'appointment_date' => '2023-05-09',
+                'user_id' => 3,
+                'appointment_date' => '2023-05-10',
                 'illness_history' => 'sakit tiyan',
                 'status' => 0,
-
             ],
             [
                 'schedule_id' => 2,
-                'user_id' => 2,
-                'appointment_date' => '2023-05-08',
+                'user_id' => 4,
+                'appointment_date' => '2023-05-10',
                 'illness_history' => 'sakit tiyan',
                 'status' => 0,
-
             ],
 
 
             [
                 'schedule_id' => 2,
                 'user_id' => 2,
-                'appointment_date' => '2023-05-08',
+                'appointment_date' => '2023-05-11',
                 'illness_history' => 'sakit tiyan',
                 'status' => 2,
-
             ],
 
         ];

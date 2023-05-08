@@ -83,7 +83,8 @@ Route::middleware(['auth', 'admin'])->group(function(){
 
     Route::resource('/users', App\Http\Controllers\Administrator\UserController::class);
     Route::get('/get-users', [App\Http\Controllers\Administrator\UserController::class, 'getUsers']);
-
+    Route::get('/get-browse-users', [App\Http\Controllers\Administrator\UserController::class, 'getBrowseUser']);
+    
 
     Route::resource('/schedules', App\Http\Controllers\Administrator\ScheduleController::class);
     Route::get('/get-schedules', [App\Http\Controllers\Administrator\ScheduleController::class, 'getSchedules']);

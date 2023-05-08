@@ -9,6 +9,14 @@
                         </div>
 
                         <div class="w-panel-body">
+                            
+                            <b-field label="Select user" label-position="on-border">
+                                <modal-browse-user :prop-user="user_fullname" 
+                                    @browseUser="emitBrowseUser($event)">
+                                </modal-browse-user>
+                            </b-field>
+                            
+
 
                             <b-field label="Pick date" label-position="on-border">
                                 <b-datepicker v-model="appointment_date"
@@ -67,6 +75,8 @@ export default{
             schedules: [],
             schedule_id: 0,
 
+            user_fullname: '',
+
             global_id: 0,
 
 
@@ -108,6 +118,7 @@ export default{
                 //yyyy-MM-dd
 
              let appointment = {
+                user_id: this.fields.user_id,
                 appointment_date: appdate,
                 schedule_id: this.schedule_id,
                 illness_history: this.fields.illness_history
@@ -117,12 +128,15 @@ export default{
             if(this.global_id > 0){
                 
             }else{
-                axios.post('/apply-appointment', appointment).then(res=>{
+                axios.post('/appointments', appointment).then(res=>{
                     if(res.data.status === 'saved'){
                         this.$buefy.dialog.alert({
                             title: 'Saved!',
                             message: 'Reservation successfully saved.',
-                            type: 'is-success'
+                            type: 'is-success',
+                            onConfirm: ()=>{
+                                window.location = '/appointments'
+                            }
                         });
                         this.fields = {};
                         this.errors = {};
@@ -153,7 +167,13 @@ export default{
                 })
             }
             
-        } 
+        },
+
+        emitBrowseUser(row){
+            //console.log(row)
+            this.fields.user_id =  row.user_id;
+            this.user_fullname = row.lname + ', ' + row.fname + ' ' + row.mname;
+        }
 
 
     },

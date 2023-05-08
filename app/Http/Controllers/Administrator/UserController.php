@@ -132,4 +132,15 @@ class UserController extends Controller
             'status' => 'changed'
         ],200);
     }
+
+
+    public function getBrowseUser(Request $req){
+        $sort = explode('.', $req->sort_by);
+
+        $users = User::where('lname', 'like', $req->lname . '%')
+            ->orderBy($sort[0], $sort[1])
+            ->paginate($req->perpage);
+
+        return $users;
+    }
 }
