@@ -11025,10 +11025,22 @@ __webpack_require__.r(__webpack_exports__);
           _this3.errors = err.response.data.errors;
 
           if (_this3.errors.max) {
-            _this3.$buefy.dialog.alert({
+            //save the new schedule found
+            var msg = _this3.errors.max[0] + ' Do you want to move schedule to ' + _this3.errors.max[2] + ', ' + _this3.$formatTime(_this3.errors.max[1].time_from) + ' - ' + _this3.$formatTime(_this3.errors.max[1].time_end) + '.';
+
+            _this3.$buefy.dialog.confirm({
               title: 'Limit!',
-              message: _this3.errors.max[0],
-              type: 'is-danger'
+              message: msg,
+              type: 'is-info',
+              confirmText: 'Proceed schedule',
+              onConfirm: function onConfirm() {
+                _this3.appointment_date = new Date(_this3.errors.max[2]);
+                var newData = _this3.errors.max[1];
+                _this3.schedule_id = newData.schedule_id;
+
+                _this3.applyAppointment(); //recursive
+
+              }
             });
           }
 
@@ -11131,6 +11143,15 @@ Vue.prototype.$formatDate = function (value) {
   var month = String(date.getMonth() + 1).padStart(2, '0');
   var day = String(date.getDate()).padStart(2, '0');
   return "".concat(year, "-").concat(month, "-").concat(day);
+};
+
+Vue.prototype.$formatTime = function (value) {
+  var timeString = value;
+  var H = +timeString.substr(0, 2);
+  var h = H % 12 || 12;
+  var ampm = H < 12 ? " AM" : " PM";
+  timeString = h + timeString.substr(2, 3) + ampm;
+  return timeString;
 };
 
 var app = new Vue({

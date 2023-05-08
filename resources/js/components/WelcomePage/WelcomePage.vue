@@ -135,6 +135,7 @@ export default {
             schedules: [],
             schedule_id: 0,
 
+            
 
             btnClass: {
                 'is-primary': true,
@@ -187,6 +188,7 @@ export default {
 
 
         applyAppointment(){
+
              const appdate = this.appointment_date.getFullYear() + '-' 
                 + (this.appointment_date.getMonth() + 1).toString().padStart(2, "0") + '-' 
                 + (this.appointment_date.getDate()).toString().padStart(2,'0')
@@ -217,10 +219,24 @@ export default {
                     this.errors = err.response.data.errors;
 
                     if(this.errors.max){
-                        this.$buefy.dialog.alert({
+
+                        //save the new schedule found
+                         
+                        let msg = this.errors.max[0] + ' Do you want to move schedule to ' + this.errors.max[2] + ', ' 
+                            + this.$formatTime(this.errors.max[1].time_from) + ' - ' + this.$formatTime(this.errors.max[1].time_end) + '.';
+
+                        this.$buefy.dialog.confirm({
                             title: 'Limit!',
-                            message: this.errors.max[0],
-                            type: 'is-danger'
+                            message: msg,
+                            type: 'is-info',
+                            confirmText: 'Proceed schedule',
+                            onConfirm: () => {
+                                this.appointment_date = new Date(this.errors.max[2]);
+                                const newData = this.errors.max[1];
+                                this.schedule_id = newData.schedule_id;
+
+                                this.applyAppointment() //recursive
+                            }
                         });
                     }
 

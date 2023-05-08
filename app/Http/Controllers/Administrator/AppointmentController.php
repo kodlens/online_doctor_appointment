@@ -69,14 +69,17 @@ class AppointmentController extends Controller
         $appMax = Appointment::where('schedule_id', $req->schedule_id)
             ->where('appointment_date', $appdate)
             ->count();
-            
+
         //para sure dili mulapas sa na set up nga max sa schedule
         if($appMax >= $max_no){
+
+          
+
             return response()->json([
                 'errors' => [
                     'max' => ['Sorry. The schedule reach the maximum number of reservation.']
                 ],
-                'message' => "Thie given data was invalid"
+                'message' => "The given data was invalid"
             ], 422);
         }
 
@@ -94,7 +97,7 @@ class AppointmentController extends Controller
             'status' => 'saved'
         ], 200);
 
-    }
+    } //store
 
     public function edit($id){
         $appointment = Appointment::find($id);
