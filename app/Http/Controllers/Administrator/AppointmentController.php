@@ -123,9 +123,28 @@ class AppointmentController extends Controller
 
     //appoved appointment
     public function approveAppointment($id){
+
         $data = Appointment::find($id);
         $data->status = 1;
         $data->save();
+
+        $user = User::where('user_id', $data->user_id)->first();
+        $schedule = Schedule::where('schedule_id', $data->schedule_id)->first();
+
+        if(env('ENABLE_SMS') == 1){
+            $timeFrom = date('h:i A', strtotime($schedule->time_start));
+            $timeEnd = date('h:i A', strtotime($schedule->time_end));
+
+
+            $msg = 'Hi '.$user->lname . ', ' . $user->fname . ', your schedule ('. $timeStart .' - ' . $timeEnd. ', ' . $data->appointment_date . ') was approved.';
+            try{
+                Http::withHeaders([
+                    'Content-Type' => 'text/plain'
+                ])->post('http://'. env('IP_SMS_GATEWAY') .'/services/api/messaging?Message='.$msg.'&To='.$user->contact_no.'&Slot=1', []);
+            }catch(\Exception $e){} //just hide the error
+        }
+
+
 
         return response()->json([
             'status' => 'saved'

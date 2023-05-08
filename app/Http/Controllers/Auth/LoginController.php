@@ -44,10 +44,13 @@ class LoginController extends Controller
 //        return view('auth.login');
 //    }
 
-public function showForm()
-{
-    return view('login');
-}
+    public function showForm()
+    {
+        return view('login');
+    }
+
+
+
     public function login(Request $request)
     {
         $credentials = $request->validate([
@@ -61,11 +64,11 @@ public function showForm()
             return Auth::user();
             // return redirect()->intended('dashboard');
         }
-        // return response()->json([
-        //     'errors' => [
-        //         'username' => ['Username and password error. Access denied.']
-        //     ]
-        // ], 422);
+        return response()->json([
+            'errors' => [
+                'username' => ['Username and password error. Access denied.']
+            ]
+        ], 422);
 
         return redirect('/');
     }
