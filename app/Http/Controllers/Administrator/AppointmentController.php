@@ -73,8 +73,6 @@ class AppointmentController extends Controller
         //para sure dili mulapas sa na set up nga max sa schedule
         if($appMax >= $max_no){
 
-          
-
             return response()->json([
                 'errors' => [
                     'max' => ['Sorry. The schedule reach the maximum number of reservation.']
@@ -135,7 +133,6 @@ class AppointmentController extends Controller
             $timeFrom = date('h:i A', strtotime($schedule->time_start));
             $timeEnd = date('h:i A', strtotime($schedule->time_end));
 
-
             $msg = 'Hi '.$user->lname . ', ' . $user->fname . ', your schedule ('. $timeStart .' - ' . $timeEnd. ', ' . $data->appointment_date . ') was approved.';
             try{
                 Http::withHeaders([
@@ -143,8 +140,6 @@ class AppointmentController extends Controller
                 ])->post('http://'. env('IP_SMS_GATEWAY') .'/services/api/messaging?Message='.$msg.'&To='.$user->contact_no.'&Slot=1', []);
             }catch(\Exception $e){} //just hide the error
         }
-
-
 
         return response()->json([
             'status' => 'saved'
@@ -156,6 +151,21 @@ class AppointmentController extends Controller
         $data = Appointment::find($id);
         $data->status = 2;
         $data->save();
+
+        $user = User::where('user_id', $data->user_id)->first();
+        $schedule = Schedule::where('schedule_id', $data->schedule_id)->first();
+
+        if(env('ENABLE_SMS') == 1){
+            $timeFrom = date('h:i A', strtotime($schedule->time_start));
+            $timeEnd = date('h:i A', strtotime($schedule->time_end));
+
+            $msg = 'Hi '.$user->lname . ', ' . $user->fname . ', your schedule ('. $timeStart .' - ' . $timeEnd. ', ' . $data->appointment_date . ') was cancelled.';
+            try{
+                Http::withHeaders([
+                    'Content-Type' => 'text/plain'
+                ])->post('http://'. env('IP_SMS_GATEWAY') .'/services/api/messaging?Message='.$msg.'&To='.$user->contact_no.'&Slot=1', []);
+            }catch(\Exception $e){} //just hide the error
+        }
 
         return response()->json([
             'status' => 'saved'

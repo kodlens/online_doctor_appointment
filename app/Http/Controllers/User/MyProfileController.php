@@ -29,10 +29,12 @@ class MyProfileController extends Controller
             'lname' => ['required'],
             'fname' => ['required'],
             'sex' => ['required'],
-            'contact_no' => ['required'],
+            'contact_no' => ['required', 'regex:/^(09|\+639)\d{9}$/'],
             'province' => ['required'],
             'city' => ['required'],
             'barangay' => ['required'],
+        ],[
+            'contact_no.regex' => 'Please enter a valid Philippine mobile phone number.',
         ]);
 
         $id = Auth::user()->user_id;
