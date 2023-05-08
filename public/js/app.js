@@ -11026,7 +11026,7 @@ __webpack_require__.r(__webpack_exports__);
 
           if (_this3.errors.max) {
             //save the new schedule found
-            var msg = _this3.errors.max[0] + ' Do you want to move schedule to ' + _this3.errors.max[2] + ', ' + _this3.$formatTime(_this3.errors.max[1].time_from) + ' - ' + _this3.$formatTime(_this3.errors.max[1].time_end) + '.';
+            var msg = _this3.errors.max[0] + ' Do you want to move schedule to <b>' + _this3.errors.max[2] + ', ' + _this3.$formatTime(_this3.errors.max[1].time_from) + ' - ' + _this3.$formatTime(_this3.errors.max[1].time_end) + '.</b><br>' + '<span style="font-weight:bold;color:red;">Are you willing to accept the schedule? The date was change from the original.</span>';
 
             _this3.$buefy.dialog.confirm({
               title: 'Limit!',

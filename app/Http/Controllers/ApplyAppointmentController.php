@@ -45,11 +45,11 @@ class ApplyAppointmentController extends Controller
         if($appMax >= $max_no){
 
              //$startDate = '2023-05-01'; // start date
-             $endDate = date('Y-m-d', strtotime($appdate . ' +15 day'));
+            $endDate = date('Y-m-d', strtotime($appdate . ' +15 day'));
 
-             $currentDate = $appdate; // set the current date to the start date
+            $currentDate = $appdate; // set the current date to the start date
 
-             
+            $msgDate = '';
 
             for ($i = 0; strtotime($appdate) <= strtotime($endDate); $i++) {
                 $currentDate = date('Y-m-d', strtotime($appdate . ' +'. $i .' day')); // increment the current date by one day
@@ -69,14 +69,18 @@ class ApplyAppointmentController extends Controller
                     
                     if($appointment->count() < $schedMax){
                         //logic
+                        // wala bakante sa nakuha nga schdules, move 1 day
                         $availableSched = $sched;
                         break;
                     }
+                    // wala bakante sa nakuha nga schdules, move 1 day
                 }
 
                 if($availableSched){
                     break;
                 }
+
+                $msgDate = 'Schedule date changed!';
             }
 
             
@@ -84,7 +88,8 @@ class ApplyAppointmentController extends Controller
                 'errors' => [
                     'max' => ['Sorry. The schedule reach the maximum number of reservation.', 
                             $availableSched, 
-                            $currentDate
+                            $currentDate,
+                            $msgDate
                         ],
                 ],
                 'message' => "Thie given data was invalid."

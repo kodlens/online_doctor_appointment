@@ -221,9 +221,9 @@ export default {
                     if(this.errors.max){
 
                         //save the new schedule found
-                         
-                        let msg = this.errors.max[0] + ' Do you want to move schedule to ' + this.errors.max[2] + ', ' 
-                            + this.$formatTime(this.errors.max[1].time_from) + ' - ' + this.$formatTime(this.errors.max[1].time_end) + '.';
+                        let msg = this.errors.max[0] + ' Do you want to move schedule to <b>' + this.errors.max[2] + ', ' 
+                            + this.$formatTime(this.errors.max[1].time_from) + ' - ' + this.$formatTime(this.errors.max[1].time_end) + '.</b><br>'
+                            + '<span style="font-weight:bold;color:red;">Are you willing to accept the schedule? The date was change from the original.</span>';
 
                         this.$buefy.dialog.confirm({
                             title: 'Limit!',
