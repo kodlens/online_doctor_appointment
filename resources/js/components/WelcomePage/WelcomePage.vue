@@ -1,7 +1,7 @@
 <template>
     <div>
         <carousel-images></carousel-images>
-        <div class="w-container">
+        <div class="section">
             <div class="columns">
                 <div class="column">
                     <div class="welcome-title">
@@ -12,11 +12,13 @@
                         Convenient, Fast, and Reliable
                     </div>
                     <div class="welcome-content">
-                        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Laboriosam 
-                        perspiciatis ipsa quidem laudantium voluptas nam et iure, numquam aliquid quasi quaerat est non ratione 
-                        minima quod praesentium dolorum atque adipisci? Lorem ipsum, dolor sit amet consectetur adipisicing elit. 
-                        Cupiditate, sint dignissimos! Eaque autem dicta in amet omnis nihil sunt. 
-                        Veritatis dicta molestias tenetur incidunt hic ratione nobis, ipsam tempora ducimus?
+                        Our clinic is a healthcare facility that is dedicated to providing high-quality medical care to our patients. 
+                        We pride ourselves on delivering compassionate and personalized care that meets the unique needs of each patient. 
+                        Our team of experienced healthcare professionals are committed to delivering excellent care in a comfortable and welcoming environment. 
+                        We believe in patient-centered care and take the time to listen to our patients and understand their concerns. 
+                        Our clinic is equipped with modern medical equipment and technology to ensure accurate diagnoses and effective treatment. 
+                        We prioritize patient safety, confidentiality, and comfort, and we strive to create a positive healthcare experience for every patient. 
+                        Thank you for considering our clinic for your healthcare needs.
                     </div>
                 </div>
                 <div class="column">
@@ -106,8 +108,31 @@
                        
                     </div> <!--login box -->
                 </div>
-            </div>
+            </div> <!--cols --->
+
+            
         </div>
+
+        <div class="section">
+                <div class="columns">
+                    <div class="column">
+                        <div class="welcome-title">
+                            Services Offered
+                        </div>
+                    </div>
+                </div>
+                <div class="columns">
+                    <div class="column">
+                        <div class="welcome-subtitle">
+                            Diagnostic Services
+                        </div>
+                        <p>
+                            Diagnostic services are medical tests and procedures that help doctors and healthcare providers diagnose health conditions and diseases.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
     </div>
 </template>
 

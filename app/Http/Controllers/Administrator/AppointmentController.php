@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Appointment;
 use App\Models\Schedule;
+use App\Models\User;
+use Illuminate\Support\Facades\Http;
+
 
 class AppointmentController extends Controller
 {
@@ -163,10 +166,10 @@ class AppointmentController extends Controller
         $schedule = Schedule::where('schedule_id', $data->schedule_id)->first();
 
         if(env('ENABLE_SMS') == 1){
-            $timeFrom = date('h:i A', strtotime($schedule->time_start));
+            $timeStart = date('h:i A', strtotime($schedule->time_start));
             $timeEnd = date('h:i A', strtotime($schedule->time_end));
 
-            $msg = 'Hi '.$user->lname . ', ' . $user->fname . ', your schedule ('. $timeStart .' - ' . $timeEnd. ', ' . $data->appointment_date . ') was approved.';
+            $msg = 'Hi '.$user->lname . ', ' . $user->fname . ', your appointment schedule with reference no of '. $id .' ('. $timeStart .' - ' . $timeEnd. ', ' . $data->appointment_date . ') was approved.';
             try{
                 Http::withHeaders([
                     'Content-Type' => 'text/plain'
@@ -189,10 +192,10 @@ class AppointmentController extends Controller
         $schedule = Schedule::where('schedule_id', $data->schedule_id)->first();
 
         if(env('ENABLE_SMS') == 1){
-            $timeFrom = date('h:i A', strtotime($schedule->time_start));
+            $timeStart = date('h:i A', strtotime($schedule->time_start));
             $timeEnd = date('h:i A', strtotime($schedule->time_end));
 
-            $msg = 'Hi '.$user->lname . ', ' . $user->fname . ', your schedule ('. $timeStart .' - ' . $timeEnd. ', ' . $data->appointment_date . ') was cancelled.';
+            $msg = 'Hi '.$user->lname . ', ' . $user->fname . ', your appointment schedule with reference no of '. $id . ' ('. $timeStart .' - ' . $timeEnd. ', ' . $data->appointment_date . ') was cancelled.';
             try{
                 Http::withHeaders([
                     'Content-Type' => 'text/plain'

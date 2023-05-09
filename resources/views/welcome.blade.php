@@ -7,5 +7,8 @@
     @else
         <welcome-page :is-login="false"></welcome-page>
     @endauth
+
+
+    <footer-page></footer-page>
     
 @endsection

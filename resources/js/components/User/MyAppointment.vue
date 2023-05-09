@@ -54,7 +54,7 @@
                                 :default-sort-direction="defaultSortDirection"
                                 @sort="onSort">
     
-                                <b-table-column field="appointment_id" label="ID" v-slot="props">
+                                <b-table-column field="appointment_id" label="Reference No." v-slot="props">
                                     {{ props.row.appointment_id }}
                                 </b-table-column>
 
