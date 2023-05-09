@@ -64,6 +64,19 @@
 <script>
 
 export default{
+    props: {
+        propId: {
+            type: Number,
+            default: 0
+        },
+
+        propAppointment: {
+            type: String,
+            default: '',
+        },
+    },
+    
+
     data() {
         return{
             fields: {},
@@ -77,7 +90,6 @@ export default{
 
             user_fullname: '',
 
-            global_id: 0,
 
 
             btnClass: {
@@ -86,6 +98,8 @@ export default{
                 'is-loading': false,
                 'button': true
             },
+
+            appointment: {},
         }
 
     },
@@ -106,6 +120,9 @@ export default{
 
             axios.get(`/load-open-schedules?${params}`).then(res=>{
                 this.schedules = res.data
+                if(this.propId > 0){
+                    this.schedule_id = this.appointment.schedule_id;
+                }
             })
         },
 
@@ -125,8 +142,45 @@ export default{
              };
 
 
-            if(this.global_id > 0){
-                
+            if(this.propId > 0){
+                //logic
+                axios.put('/appointments/' + this.propId, appointment).then(res=>{
+                    if(res.data.status === 'saved'){
+                        this.$buefy.dialog.alert({
+                            title: 'Saved!',
+                            message: 'Reservation successfully saved.',
+                            type: 'is-success',
+                            onConfirm: ()=>{
+                                window.location = '/appointments'
+                            }
+                        });
+                        this.fields = {};
+                        this.errors = {};
+                    }
+
+                }).catch(err=>{
+                    //console.log(err.response.data.errors);
+
+                    if(err.response.status === 422){
+                        this.errors = err.response.data.errors;
+
+                        if(this.errors.max){
+                            this.$buefy.dialog.alert({
+                                title: 'Limit!',
+                                message: this.errors.max[0],
+                                type: 'is-danger'
+                            });
+                        }
+
+                        if(this.errors.exists){
+                            this.$buefy.dialog.alert({
+                                title: 'Exist!',
+                                message: this.errors.exists[0],
+                                type: 'is-danger'
+                            });
+                        }
+                    }
+                })
             }else{
                 axios.post('/appointments', appointment).then(res=>{
                     if(res.data.status === 'saved'){
@@ -169,6 +223,26 @@ export default{
             
         },
 
+
+        getData(){
+            //console.log(this.propAppointment)
+
+            if(this.propId > 0){
+                this.appointment = JSON.parse(this.propAppointment);
+                console.log(this.appointment)
+
+                this.appointment_date = new Date(this.appointment.appointment_date)
+                this.fields.user_id = this.appointment.user_id;
+                this.fields.illness_history = this.appointment.illness_history;
+
+                this.loadOpenSchedules()
+            
+                this.user_fullname = this.appointment.user.lname + ', ' + this.appointment.user.fname + ' ' + this.appointment.user.mname;
+            }
+
+            
+        },
+
         emitBrowseUser(row){
             //console.log(row)
             this.fields.user_id =  row.user_id;
@@ -179,7 +253,9 @@ export default{
     },
 
     mounted() {
-    }
+        this.getData();
+    },
+
 }
 </script>
 

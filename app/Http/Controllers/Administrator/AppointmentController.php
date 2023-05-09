@@ -98,7 +98,7 @@ class AppointmentController extends Controller
     } //store
 
     public function edit($id){
-        $appointment = Appointment::find($id);
+        $appointment = Appointment::with(['user'])->find($id);
 
         return view('administrator.appointment-create')
             ->with('appointment', $appointment)
@@ -106,7 +106,40 @@ class AppointmentController extends Controller
     }
 
     public function update(Request $req, $id){
-    
+        $appdate = date("Y-m-d", strtotime($req->appointment_date));
+
+        //get Max no per schedule
+        $schedule = Schedule::find($req->schedule_id);
+        $max_no = $schedule->max_no;
+
+
+        //para sure isa lang ka schedule per day.
+        $existSched = Appointment::where('user_id', $req->user_id)
+            ->where('appointment_date', $appdate)
+            ->where('appointment_id', '!=', $id)
+            ->exists();
+
+        if($existSched){
+            return response()->json([
+                'errors' => [
+                    'exists' => ['Sorry. User already have a reservation.']
+                ],
+                'message' => "Thie given data was invalid"
+            ], 422);
+        }
+
+
+        //insert into database
+        Appointment::update([
+            'user_id' => $req->user_id,
+            'schedule_id' => $req->schedule_id,
+            'appointment_date' => $appdate,
+            'illness_history' => $req->illness_history,
+        ]);
+
+        return response()->json([
+            'status' => 'saved'
+        ], 200);
     }
 
 

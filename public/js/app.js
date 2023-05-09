@@ -8010,6 +8010,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: {
+    propId: {
+      type: Number,
+      "default": 0
+    },
+    propAppointment: {
+      type: String,
+      "default": ''
+    }
+  },
   data: function data() {
     return {
       fields: {},
@@ -8018,13 +8028,13 @@ __webpack_require__.r(__webpack_exports__);
       schedules: [],
       schedule_id: 0,
       user_fullname: '',
-      global_id: 0,
       btnClass: {
         'is-primary': true,
         'is-outlined': true,
         'is-loading': false,
         'button': true
-      }
+      },
+      appointment: {}
     };
   },
   methods: {
@@ -8037,6 +8047,10 @@ __webpack_require__.r(__webpack_exports__);
       var params = ["appdate=".concat(appdate)].join('&');
       axios.get("/load-open-schedules?".concat(params)).then(function (res) {
         _this.schedules = res.data;
+
+        if (_this.propId > 0) {
+          _this.schedule_id = _this.appointment.schedule_id;
+        }
       });
     },
     submit: function submit() {
@@ -8051,7 +8065,45 @@ __webpack_require__.r(__webpack_exports__);
         illness_history: this.fields.illness_history
       };
 
-      if (this.global_id > 0) {} else {
+      if (this.propId > 0) {
+        //logic
+        axios.put('/appointments/' + this.propId, appointment).then(function (res) {
+          if (res.data.status === 'saved') {
+            _this2.$buefy.dialog.alert({
+              title: 'Saved!',
+              message: 'Reservation successfully saved.',
+              type: 'is-success',
+              onConfirm: function onConfirm() {
+                window.location = '/appointments';
+              }
+            });
+
+            _this2.fields = {};
+            _this2.errors = {};
+          }
+        })["catch"](function (err) {
+          //console.log(err.response.data.errors);
+          if (err.response.status === 422) {
+            _this2.errors = err.response.data.errors;
+
+            if (_this2.errors.max) {
+              _this2.$buefy.dialog.alert({
+                title: 'Limit!',
+                message: _this2.errors.max[0],
+                type: 'is-danger'
+              });
+            }
+
+            if (_this2.errors.exists) {
+              _this2.$buefy.dialog.alert({
+                title: 'Exist!',
+                message: _this2.errors.exists[0],
+                type: 'is-danger'
+              });
+            }
+          }
+        });
+      } else {
         axios.post('/appointments', appointment).then(function (res) {
           if (res.data.status === 'saved') {
             _this2.$buefy.dialog.alert({
@@ -8090,13 +8142,27 @@ __webpack_require__.r(__webpack_exports__);
         });
       }
     },
+    getData: function getData() {
+      //console.log(this.propAppointment)
+      if (this.propId > 0) {
+        this.appointment = JSON.parse(this.propAppointment);
+        console.log(this.appointment);
+        this.appointment_date = new Date(this.appointment.appointment_date);
+        this.fields.user_id = this.appointment.user_id;
+        this.fields.illness_history = this.appointment.illness_history;
+        this.loadOpenSchedules();
+        this.user_fullname = this.appointment.user.lname + ', ' + this.appointment.user.fname + ' ' + this.appointment.user.mname;
+      }
+    },
     emitBrowseUser: function emitBrowseUser(row) {
       //console.log(row)
       this.fields.user_id = row.user_id;
       this.user_fullname = row.lname + ', ' + row.fname + ' ' + row.mname;
     }
   },
-  mounted: function mounted() {}
+  mounted: function mounted() {
+    this.getData();
+  }
 });
 
 /***/ }),
@@ -32884,7 +32950,7 @@ var render = function () {
                                           "icon-right": "pencil",
                                           href:
                                             "/appointments/" +
-                                            props.appointment_id +
+                                            props.row.appointment_id +
                                             "/edit",
                                         },
                                       }),

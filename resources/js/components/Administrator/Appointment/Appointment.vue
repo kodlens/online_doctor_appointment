@@ -125,7 +125,7 @@
                                             <b-button class="button is-small is-warning is-outlined mr-1" 
                                                 tag="a" 
                                                 icon-right="pencil"
-                                                :href="`/appointments/${props.appointment_id}/edit`"></b-button>
+                                                :href="`/appointments/${props.row.appointment_id}/edit`"></b-button>
                                         </b-tooltip>
                                         <b-tooltip label="Delete" type="is-danger">
                                             <b-button class="button is-small is-danger mr-1 is-outlined" icon-right="delete" @click="confirmDelete(props.row.user_id)"></b-button>

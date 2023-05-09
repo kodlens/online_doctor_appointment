@@ -2,6 +2,9 @@
 
 @section('content')
 
-    <appointment-create></appointment-create>
+    <appointment-create :prop-id="{{$id}}" 
+        prop-appointment='@json($appointment)'
+        prop-appointment-string='@json($appointment)'>
+    </appointment-create>
     
 @endsection
