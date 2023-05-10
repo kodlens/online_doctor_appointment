@@ -165,11 +165,14 @@ class AppointmentController extends Controller
         $user = User::where('user_id', $data->user_id)->first();
         $schedule = Schedule::where('schedule_id', $data->schedule_id)->first();
 
+        $nameTitle = $user->sex == 'MALE' ? 'Mr. ' : 'Ms./Mrs. ';
+
         if(env('ENABLE_SMS') == 1){
             $timeStart = date('h:i A', strtotime($schedule->time_start));
             $timeEnd = date('h:i A', strtotime($schedule->time_end));
 
-            $msg = 'Hi '.$user->lname . ', ' . $user->fname . ', your appointment schedule with reference no of '. $id .' ('. $timeStart .' - ' . $timeEnd. ', ' . $data->appointment_date . ') was approved.';
+            $msg = 'Appointment confirmation: '. $nameTitle . $user->lname . ', ' . $user->fname . ', your appointment with Dr. Tialo on '. date('M-d-Y', strtotime($data->appointment_date)) .', ' . $timeStart. ') has been confirmed/approved.';
+            
             try{
                 Http::withHeaders([
                     'Content-Type' => 'text/plain'
@@ -190,12 +193,18 @@ class AppointmentController extends Controller
 
         $user = User::where('user_id', $data->user_id)->first();
         $schedule = Schedule::where('schedule_id', $data->schedule_id)->first();
+        $nameTitle = $user->sex == 'MALE' ? 'Mr. ' : 'Ms./Mrs. ';
+        /*
+            Appointment confirmation:
+            Ms/Mr/Miss/Mrs Ong, Lensey your appointment with Dr. Tilao on May 15 at 3 pm has been confirmed/Approved.
 
+
+        */
         if(env('ENABLE_SMS') == 1){
             $timeStart = date('h:i A', strtotime($schedule->time_start));
             $timeEnd = date('h:i A', strtotime($schedule->time_end));
 
-            $msg = 'Hi '.$user->lname . ', ' . $user->fname . ', your appointment schedule with reference no of '. $id . ' ('. $timeStart .' - ' . $timeEnd. ', ' . $data->appointment_date . ') was cancelled.';
+            $msg = 'Appointment confirmation: '. $nameTitle . $user->lname . ', ' . $user->fname . ', your appointment with Dr. Tialo on '. date('M-d-Y', strtotime($data->appointment_date)) .', ' . $timeStart. ') has been cancelled.';
             try{
                 Http::withHeaders([
                     'Content-Type' => 'text/plain'

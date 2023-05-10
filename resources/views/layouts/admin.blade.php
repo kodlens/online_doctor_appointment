@@ -67,9 +67,9 @@
                     <b-navbar-item href="/schedules">
                         Setup Schedule
                     </b-navbar-item>
-                    <b-navbar-item href="#">
+                    {{-- <b-navbar-item href="#">
                         Contact
-                    </b-navbar-item>
+                    </b-navbar-item> --}}
                 </b-navbar-dropdown>
                 <b-navbar-item href="/users"
                     class="{{ (request()->is('users*')) ? 'active' : '' }}">

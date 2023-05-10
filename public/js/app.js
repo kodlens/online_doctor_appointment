@@ -11094,6 +11094,27 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
@@ -38383,9 +38404,7 @@ var staticRenderFns = [
       _c("div", { staticClass: "columns" }, [
         _c("div", { staticClass: "column" }, [
           _c("div", { staticClass: "welcome-title" }, [
-            _vm._v(
-              "\n                        Services Offered\n                    "
-            ),
+            _vm._v("\n                    Services Offered\n                "),
           ]),
         ]),
       ]),
@@ -38394,13 +38413,37 @@ var staticRenderFns = [
         _c("div", { staticClass: "column" }, [
           _c("div", { staticClass: "welcome-subtitle" }, [
             _vm._v(
-              "\n                        Diagnostic Services\n                    "
+              "\n                    Diagnostic Services\n                "
             ),
           ]),
           _vm._v(" "),
           _c("p", [
             _vm._v(
-              "\n                        Diagnostic services are medical tests and procedures that help doctors and healthcare providers diagnose health conditions and diseases.\n                    "
+              "\n                    Diagnostic services are medical tests and procedures that help doctors and healthcare providers diagnose health conditions and diseases.\n                "
+            ),
+          ]),
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "column" }, [
+          _c("div", { staticClass: "welcome-subtitle" }, [
+            _vm._v("\n                    Preventive Care\n                "),
+          ]),
+          _vm._v(" "),
+          _c("p", [
+            _vm._v(
+              "\n                    This includes services aimed at preventing health conditions, such as screenings, lifestyle counseling, and immunizations.\n                "
+            ),
+          ]),
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "column" }, [
+          _c("div", { staticClass: "welcome-subtitle" }, [
+            _vm._v("\n                    Pediatric Care\n                "),
+          ]),
+          _vm._v(" "),
+          _c("p", [
+            _vm._v(
+              "\n                    This includes care for children, such as well-child checkups, vaccinations, and treatment for common childhood illnesses.\n                "
             ),
           ]),
         ]),

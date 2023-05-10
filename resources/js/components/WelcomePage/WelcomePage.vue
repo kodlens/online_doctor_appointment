@@ -114,24 +114,45 @@
         </div>
 
         <div class="section">
-                <div class="columns">
-                    <div class="column">
-                        <div class="welcome-title">
-                            Services Offered
-                        </div>
-                    </div>
-                </div>
-                <div class="columns">
-                    <div class="column">
-                        <div class="welcome-subtitle">
-                            Diagnostic Services
-                        </div>
-                        <p>
-                            Diagnostic services are medical tests and procedures that help doctors and healthcare providers diagnose health conditions and diseases.
-                        </p>
+            <div class="columns">
+                <div class="column">
+                    <div class="welcome-title">
+                        Services Offered
                     </div>
                 </div>
             </div>
+            <div class="columns">
+                <div class="column">
+                    <div class="welcome-subtitle">
+                        Diagnostic Services
+                    </div>
+                    <p>
+                        Diagnostic services are medical tests and procedures that help doctors and healthcare providers diagnose health conditions and diseases.
+                    </p>
+                </div>
+
+                <div class="column">
+                    <div class="welcome-subtitle">
+                        Preventive Care
+                    </div>
+                    <p>
+                        This includes services aimed at preventing health conditions, such as screenings, lifestyle counseling, and immunizations.
+                    </p>
+                </div>
+
+                <div class="column">
+                    <div class="welcome-subtitle">
+                        Pediatric Care
+                    </div>
+                    <p>
+                        This includes care for children, such as well-child checkups, vaccinations, and treatment for common childhood illnesses.
+                    </p>
+                </div>
+                        
+            </div>
+
+                
+         </div>
 
     </div>
 </template>
