@@ -17,7 +17,8 @@ class Appointment extends Model
         'schedule_id', 
         'appointment_date', 
         'illness_history', 
-        'status'
+        'status',
+        'is_notify'
     ];
 
 
