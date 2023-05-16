@@ -35,7 +35,10 @@ Route::post('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logou
 Route::get('/register-page', [App\Http\Controllers\RegisterController::class, 'index']);
 Route::post('/register-page', [App\Http\Controllers\RegisterController::class, 'store']);
 
-
+Route::get('/forgot-password', [App\Http\Controllers\CustomForgotPasswordController::class, 'index']);
+Route::post('/request-otp', [App\Http\Controllers\CustomForgotPasswordController::class, 'requestOtp']);
+Route::get('/otp-entry/{user}', [App\Http\Controllers\CustomForgotPasswordController::class, 'otpEntry']);
+Route::post('/reset-password-otp', [App\Http\Controllers\CustomForgotPasswordController::class, 'resetPasswordWithOTP']);
 
 
 Route::get('/sample',[App\Http\Controllers\SampleController::class,'index']);
@@ -66,7 +69,7 @@ Route::middleware(['auth'])->group(function(){
 
 
 
-/*     ADMINSITRATOR          */
+/*ADMINSITRATOR*/
 
 Route::middleware(['auth', 'admin'])->group(function(){
 
@@ -79,8 +82,6 @@ Route::middleware(['auth', 'admin'])->group(function(){
     Route::post('/appointment-pending/{id}', [App\Http\Controllers\Administrator\AppointmentController::class, 'pendingAppointment']);
 
    
-
-
     Route::resource('/users', App\Http\Controllers\Administrator\UserController::class);
     Route::get('/get-users', [App\Http\Controllers\Administrator\UserController::class, 'getUsers']);
     Route::get('/get-browse-users', [App\Http\Controllers\Administrator\UserController::class, 'getBrowseUser']);
@@ -92,6 +93,7 @@ Route::middleware(['auth', 'admin'])->group(function(){
     Route::post('/reset-password/{id}', [App\Http\Controllers\Administrator\UserController::class, 'resetPassword']);
 });
 
+/*ADMINSITRATOR*/
 
 
 

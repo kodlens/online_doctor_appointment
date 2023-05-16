@@ -1,0 +1,16 @@
+Statistics:
+A.	100% is the total number of patients who set an appointment
+	No. of (& percentage) patients with appointments (per day, per month) 
+	No. of patients (& percentage) who missed the appointments
+	No. of patients served (& percentage) (per day)	[throughput]
+	No. of patients (& percentage) unserved for the day (bumped to next day) [monthly, quarterly]
+B.	Demographics
+Location (per city/municipality; in Tangub, per barangay) [per month]
+Duration of consultation per patient [%age nga 10 mins or less; %age nga 11-20 mins; %age nga 21-30 mins or more; %age nga 30 mins or more] == GUI note: button(s) to press every time a patient is done/served (resets every new patient); both button CANNOT be available at the same time
+Waiting time (average per day)  optional 
+Appointment behavior (admin/system maintenance)
+Kapila tigpa-appoint pero mangindyan
+Repeat patients (suki)  number (& %age wrt the total population per quarter)
+
+Archive (monthly folder):
+List of served patients per day (searchable by date) (add time of patient’s arrival  time starts upon key in of appointment number)

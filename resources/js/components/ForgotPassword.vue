@@ -4,7 +4,7 @@
             <form @submit.prevent="submit">
                 <div class="panel is-primary">
                     <div class="panel-heading">
-                        SECURITY CHECK
+                        FORGOT PASSWORD
                     </div>
 
                     <div class="panel-body">
@@ -18,12 +18,22 @@
                             <b-input type="text" v-model="fields.username" placeholder="Username" />
                         </b-field>
 
-                        <b-field label="Password" label-position="on-border">
-                            <b-input type="password" v-model="fields.password" password-reveal placeholder="Password" />
+                        <b-field label="Mobile No." label-position="on-border"
+                            :type="this.errors.contact_no ? 'is-danger':''"
+                            :message="this.errors.contact_no ? this.errors.contact_no[0] : ''"
+                            >
+                            <b-input type="text" v-model="fields.contact_no"  placeholder="Mobile No." />
                         </b-field>
 
+                        <b-notification type="is-danger" 
+                            :auto-close="false"
+                            :active.sync="isActiveNotif"
+                            v-if="this.errors.otp">
+                            {{ errors.otp.unknown[0] }}
+                        </b-notification>
+
                         <div class="buttons">
-                            <button  :class="btnClass">LOGIN</button>
+                            <button  :class="btnClass">SEND CODE</button>
                         </div>
                     </div>
                 </div>
@@ -40,8 +50,10 @@ export default {
         return {
             fields: {
                 username: '',
-                password: '',
+                contact_no: '',
             },
+
+            isActiveNotif: false,
 
             btnClass: {
                 'is-primary': true,
@@ -58,22 +70,29 @@ export default {
         submit: function(){
             this.btnClass['is-loading'] = true;
 
-            axios.post('/login', this.fields).then(res=>{
+            axios.post('/request-otp', this.fields).then(res=>{
             this.btnClass['is-loading'] = false;
-
-                console.log(res.data)
-
-                if(res.data.role === 'ADMINISTRATOR'){
-                    window.location = '/dashboard';
-                }
-
-                if(res.data.role === 'DOCTOR'){
-                    window.location = '/doctor-dashboard';
+                if(res.data.status === 'otp_success'){
+                    this.$buefy.dialog.alert({
+                        title: 'Sent!',
+                        type: 'is-success',
+                        message: 'OTP successfully sent.',
+                        onConfirm: ()=>{
+                            window.location = '/otp-entry/' + this.fields.username
+                        }
+                    });
                 }
                 
             }).catch(err=>{
-            this.btnClass['is-loading'] = false;
-                this.errors = err.response.data.errors;
+                this.btnClass['is-loading'] = false;
+                if(err.response.status === 422){
+                    //console.log('test');
+                    this.errors = err.response.data.errors;
+
+                    if(this.errors.otp){
+                        this.isActiveNotif = true;
+                    }
+                }
 
             })
         }

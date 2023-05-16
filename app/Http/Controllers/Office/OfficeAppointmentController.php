@@ -66,8 +66,7 @@ class OfficeAppointmentController extends Controller
         $data = Appointment::find($id);
         $data->is_approved = 1;
         $data->save();
-
-
+        
         return response()->json([
             'status' => 'approved'
         ],200);

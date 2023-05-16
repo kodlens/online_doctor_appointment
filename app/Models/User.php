@@ -32,6 +32,8 @@ class User extends Authenticatable
         'contact_no', 
         'role',
         'password',
+        'otp',
+        'otp_expiry'
     ];
 
     /**

@@ -102,8 +102,6 @@ class ApplyAppointmentController extends Controller
             'schedule_id' => $req->schedule_id,
             'appointment_date' => $appdate,
             'illness_history' => $req->illness_history,
-
-            
         ]);
 
 

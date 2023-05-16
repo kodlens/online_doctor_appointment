@@ -34,7 +34,7 @@ class MyProfileController extends Controller
             'city' => ['required'],
             'barangay' => ['required'],
         ],[
-            'contact_no.regex' => 'Please enter a valid Philippine mobile phone number.',
+            'contact_no.regex' => 'Please enter a valid Philippines mobile phone number.',
         ]);
 
         $id = Auth::user()->user_id;

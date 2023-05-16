@@ -103,6 +103,10 @@
                                     href="/register-page"
                                     icon-left="account"></b-button>
                             </div>
+
+                            <p>
+                                <a href="/forgot-password">Forgot Password</a>
+                            </p>
                             
                         </div>
                        
@@ -115,9 +119,10 @@
 
         <div class="section">
             <div class="columns">
-                <div class="column">
-                    <div class="welcome-title">
-                        Services Offered
+                <div class="column has-text-centered">
+                    <div style="font-weight: bold; font-size: 1.8em; margin: auto;
+                        border-bottom: 2px solid blue; display: inline-block;">
+                        SERVICE OFFERED
                     </div>
                 </div>
             </div>
@@ -148,8 +153,20 @@
                         This includes care for children, such as well-child checkups, vaccinations, and treatment for common childhood illnesses.
                     </p>
                 </div>
+
+                <div class="column">
+                    <div class="welcome-subtitle">
+                        General Health Check-ups
+                    </div>
+                    <p>
+                        Doctors in clinics provide general health check-ups to assess and maintain a patient's overall health. During a check-up, the doctor may take the patient's medical history, perform a physical examination, and order diagnostic tests such as blood work and urinalysis. 
+                        These check-ups are typically recommended on an annual basis for adults.
+                    </p>
+                </div>
                         
             </div>
+
+            
 
                 
          </div>
@@ -268,12 +285,15 @@ export default {
 
                         //save the new schedule found
                         let msg = this.errors.max[0] + ' Do you want to move schedule to <b>' + this.errors.max[2] + ', ' 
-                            + this.$formatTime(this.errors.max[1].time_from) + ' - ' + this.$formatTime(this.errors.max[1].time_end) + '.</b><br>'
-                            + '<span style="font-weight:bold;color:red;">Are you willing to accept the schedule? The date was change from the original.</span>';
+                            + this.$formatTime(this.errors.max[1].time_from) + ' - ' + this.$formatTime(this.errors.max[1].time_end) + '.</b><br>';
+                        
+                        if(this.errors.max[3]){
+                            msg  +=  '<br><span style="font-weight:bold;color:red;">Are you willing to accept the schedule? The date was change from the original.</span>';
+                        }
 
                         this.$buefy.dialog.confirm({
                             title: 'Limit!',
-                            message: msg,
+                            message: msg ,
                             type: 'is-info',
                             confirmText: 'Proceed schedule',
                             onConfirm: () => {

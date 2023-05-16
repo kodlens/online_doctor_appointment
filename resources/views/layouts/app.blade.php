@@ -41,6 +41,17 @@
             font-weight: bold;
             color: #1464a5;
         }
+
+
+        .fade-in {
+            opacity: 0;
+            transition: opacity .8s ease-out;
+        }
+
+        .fade-in.is-visible {
+            opacity: 1;
+        }
+
     </style>
 
 </head>
@@ -92,11 +103,14 @@
 
         <form action="/logout" id="logout" method="post">@csrf</form>
 
-    <div>
-        @yield('content')
+        <div>
+            @yield('content')
+        </div>
+
+ 
     </div>
 
 
-    </div>
+    
 </body>
 </html>

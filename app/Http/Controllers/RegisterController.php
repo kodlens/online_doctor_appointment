@@ -21,13 +21,13 @@ class RegisterController extends Controller
             'lname' => ['required', 'string', 'max:100'],
             'fname' => ['required', 'string', 'max:100'],
             'sex' => ['required', 'string', 'max:20'],
-            'contact_no' => ['required', 'regex:/^(09|\+639)\d{9}$/'],
+            'contact_no' => ['required', 'regex:/^(09|\+639)\d{9}$/', 'unique:users'],
             'password' => ['required', 'string', 'confirmed'],
             'province' => ['required', 'string'],
             'city' => ['required', 'string'],
             'barangay' => ['required', 'string'],
         ],[
-            'contact_no.regex' => 'Please enter a valid Philippine mobile phone number.',
+            'contact_no.regex' => 'Please enter a valid Philippines mobile phone number.',
         ]);
 
         User::create([

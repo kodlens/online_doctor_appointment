@@ -32,7 +32,9 @@ class UserSeeder extends Seeder
                 'password' => Hash::make('a')
             ],
 
+
             [
+                //1
                 'username' => 'vinz',
                 'lname' => 'SENTIMENT',
                 'fname' => 'VINCENT',
@@ -47,8 +49,9 @@ class UserSeeder extends Seeder
                 'role' => 'USER',
                 'password' => Hash::make('a')
             ],
-
+            
             [
+                //2
                 'username' => 'joel',
                 'lname' => 'LACAPAG',
                 'fname' => 'JOEL',
@@ -65,6 +68,7 @@ class UserSeeder extends Seeder
             ],
 
             [
+                //3
                 'username' => 'lensey',
                 'lname' => 'ONG',
                 'fname' => 'LENSEY',
@@ -80,6 +84,7 @@ class UserSeeder extends Seeder
                 'password' => Hash::make('a')
             ],
             [
+                //4
                 'username' => 'richalle',
                 'lname' => 'PLAZA',
                 'fname' => 'RICHALLE MAE',
@@ -95,6 +100,7 @@ class UserSeeder extends Seeder
                 'password' => Hash::make('a')
             ],
             [
+                //5
                 'username' => 'jessa',
                 'lname' => 'SARAGINA',
                 'fname' => 'JESSA MAE',
@@ -110,6 +116,7 @@ class UserSeeder extends Seeder
                 'password' => Hash::make('a')
             ],
             [
+                //6
                 'username' => 'john',
                 'lname' => 'BARINAN',
                 'fname' => 'JOHN RIVIN',
@@ -121,6 +128,106 @@ class UserSeeder extends Seeder
                 'street' => 'P-6',
                 //'email' => 'doctor@dev.com',
                 'contact_no' => '09216548444',
+                'role' => 'USER',
+                'password' => Hash::make('a')
+            ],
+
+
+
+
+            [
+                //7
+                'username' => 'janjan',
+                'lname' => 'CAGADAS',
+                'fname' => 'JOHN MICHAEL',
+                'mname' => 'O',
+                'sex' => 'MALE',
+                'province' => '1042',
+                'city' => '104215',
+                'barangay' => '104215027',
+                'street' => 'P-6',
+                //'email' => 'doctor@dev.com',
+                'contact_no' => '09706102876',
+                'role' => 'USER',
+                'password' => Hash::make('a')
+            ],
+            [
+                //8
+                'username' => 'roger',
+                'lname' => 'LACAPAG',
+                'fname' => 'ROGER',
+                'mname' => 'O',
+                'sex' => 'MALE',
+                'province' => '1042',
+                'city' => '104215',
+                'barangay' => '104215027',
+                'street' => 'P-6',
+                //'email' => 'doctor@dev.com',
+                'contact_no' => '09706102876',
+                'role' => 'USER',
+                'password' => Hash::make('a')
+            ],
+            [
+                //9
+                'username' => 'charles',
+                'lname' => 'VARG',
+                'fname' => 'CHARLES',
+                'mname' => 'O',
+                'sex' => 'MALE',
+                'province' => '1042',
+                'city' => '104215',
+                'barangay' => '104215027',
+                'street' => 'P-6',
+                //'email' => 'doctor@dev.com',
+                'contact_no' => '09706102876',
+                'role' => 'USER',
+                'password' => Hash::make('a')
+            ],
+            [
+                //10
+                'username' => 'ram',
+                'lname' => 'CORDOVAN',
+                'fname' => 'RAM',
+                'mname' => 'O',
+                'sex' => 'MALE',
+                'province' => '1042',
+                'city' => '104215',
+                'barangay' => '104215027',
+                'street' => 'P-6',
+                //'email' => 'doctor@dev.com',
+                'contact_no' => '09706102876',
+                'role' => 'USER',
+                'password' => Hash::make('a')
+            ],
+            [
+                //11
+                'username' => 'quincy',
+                'lname' => 'CORDOVAN',
+                'fname' => 'QUINCY',
+                'mname' => 'O',
+                'sex' => 'MALE',
+                'province' => '1042',
+                'city' => '104215',
+                'barangay' => '104215027',
+                'street' => 'P-6',
+                //'email' => 'doctor@dev.com',
+                'contact_no' => '09706102876',
+                'role' => 'USER',
+                'password' => Hash::make('a')
+            ],
+            [
+                //12
+                'username' => 'jenny',
+                'lname' => 'SIMBAJON',
+                'fname' => 'JENNY',
+                'mname' => 'O',
+                'sex' => 'MALE',
+                'province' => '1042',
+                'city' => '104215',
+                'barangay' => '104215027',
+                'street' => 'P-6',
+                //'email' => 'doctor@dev.com',
+                'contact_no' => '09706102876',
                 'role' => 'USER',
                 'password' => Hash::make('a')
             ],
