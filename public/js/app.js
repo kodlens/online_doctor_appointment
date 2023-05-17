@@ -11414,6 +11414,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
@@ -11481,7 +11492,7 @@ __webpack_require__.r(__webpack_exports__);
       var appointment = {
         appointment_date: appdate,
         schedule_id: this.schedule_id,
-        illness_history: this.fields.illness_history
+        patients: this.fields.patients
       };
       axios.post('/apply-appointment', appointment).then(function (res) {
         if (res.data.status === 'saved') {
@@ -11541,6 +11552,17 @@ __webpack_require__.r(__webpack_exports__);
         sex: '',
         age: 0,
         illness: ''
+      });
+    },
+    removePatient: function removePatient(index) {
+      var _this4 = this;
+
+      this.$buefy.dialog.confirm({
+        title: 'DELETE?',
+        message: 'Are you sure you want to remove this?',
+        onConfirm: function onConfirm() {
+          _this4.fields.patients.splice(index, 1);
+        }
       });
     }
   },
@@ -39029,8 +39051,8 @@ var render = function () {
                         ),
                       ]),
                       _vm._v(" "),
-                      _vm._l(_vm.fields.patients, function (i, ix) {
-                        return _c("div", { key: ix }, [
+                      _vm._l(_vm.fields.patients, function (patient, pIndex) {
+                        return _c("div", { key: pIndex }, [
                           _c("div", { staticClass: "columns" }, [
                             _c(
                               "div",
@@ -39051,15 +39073,11 @@ var render = function () {
                                         placeholder: "Patient Last Name",
                                       },
                                       model: {
-                                        value: _vm.fields.patients.lname,
+                                        value: patient.lname,
                                         callback: function ($$v) {
-                                          _vm.$set(
-                                            _vm.fields.patients,
-                                            "lname",
-                                            $$v
-                                          )
+                                          _vm.$set(patient, "lname", $$v)
                                         },
-                                        expression: "fields.patients.lname",
+                                        expression: "patient.lname",
                                       },
                                     }),
                                   ],
@@ -39088,15 +39106,11 @@ var render = function () {
                                         placeholder: "Patient First Name",
                                       },
                                       model: {
-                                        value: _vm.fields.patients.fname,
+                                        value: patient.fname,
                                         callback: function ($$v) {
-                                          _vm.$set(
-                                            _vm.fields.patients,
-                                            "fname",
-                                            $$v
-                                          )
+                                          _vm.$set(patient, "fname", $$v)
                                         },
-                                        expression: "fields.patients.fname",
+                                        expression: "patient.fname",
                                       },
                                     }),
                                   ],
@@ -39127,15 +39141,11 @@ var render = function () {
                                         placeholder: "Patient Middle Name",
                                       },
                                       model: {
-                                        value: _vm.fields.patients.lname,
+                                        value: patient.lname,
                                         callback: function ($$v) {
-                                          _vm.$set(
-                                            _vm.fields.patients,
-                                            "lname",
-                                            $$v
-                                          )
+                                          _vm.$set(patient, "lname", $$v)
                                         },
-                                        expression: "fields.patients.lname",
+                                        expression: "patient.lname",
                                       },
                                     }),
                                   ],
@@ -39163,15 +39173,11 @@ var render = function () {
                                       {
                                         attrs: { placeholder: "Sex" },
                                         model: {
-                                          value: _vm.fields.patients.sex,
+                                          value: patient.sex,
                                           callback: function ($$v) {
-                                            _vm.$set(
-                                              _vm.fields.patients,
-                                              "sex",
-                                              $$v
-                                            )
+                                            _vm.$set(patient, "sex", $$v)
                                           },
-                                          expression: "fields.patients.sex",
+                                          expression: "patient.sex",
                                         },
                                       },
                                       [
@@ -39208,21 +39214,18 @@ var render = function () {
                                     },
                                   },
                                   [
-                                    _c("b-numerinput", {
+                                    _c("b-numberinput", {
                                       attrs: {
                                         type: "text",
                                         placeholder: "Age",
+                                        controls: false,
                                       },
                                       model: {
-                                        value: _vm.fields.patients.age,
+                                        value: patient.age,
                                         callback: function ($$v) {
-                                          _vm.$set(
-                                            _vm.fields.patients,
-                                            "age",
-                                            $$v
-                                          )
+                                          _vm.$set(patient, "age", $$v)
                                         },
-                                        expression: "fields.patients.age",
+                                        expression: "patient.age",
                                       },
                                     }),
                                   ],
@@ -39232,12 +39235,73 @@ var render = function () {
                               1
                             ),
                           ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "columns" }, [
+                            _c(
+                              "div",
+                              { staticClass: "column" },
+                              [
+                                _c(
+                                  "b-field",
+                                  {
+                                    staticClass: "mt-3",
+                                    attrs: {
+                                      label:
+                                        "Illness Description/History (Optional)",
+                                      "label-position": "on-border",
+                                    },
+                                  },
+                                  [
+                                    _c("b-input", {
+                                      attrs: {
+                                        type: "textarea",
+                                        placeholder:
+                                          "Illness Description/History (Optional)",
+                                      },
+                                      model: {
+                                        value: patient.illness,
+                                        callback: function ($$v) {
+                                          _vm.$set(patient, "illness", $$v)
+                                        },
+                                        expression: "patient.illness",
+                                      },
+                                    }),
+                                  ],
+                                  1
+                                ),
+                              ],
+                              1
+                            ),
+                          ]),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            { staticClass: "buttons" },
+                            [
+                              _c("b-button", {
+                                staticClass: "is-small",
+                                attrs: {
+                                  label: "",
+                                  "icon-left": "delete",
+                                  type: "is-danger",
+                                },
+                                on: {
+                                  click: function ($event) {
+                                    return _vm.removePatient(pIndex)
+                                  },
+                                },
+                              }),
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c("hr"),
                         ])
                       }),
                       _vm._v(" "),
                       _c(
                         "div",
-                        { staticClass: "buttons" },
+                        { staticClass: "buttons mt-5" },
                         [
                           _c(
                             "b-button",
@@ -39316,34 +39380,6 @@ var render = function () {
                           ]
                         )
                       }),
-                      _vm._v(" "),
-                      _c(
-                        "b-field",
-                        {
-                          staticClass: "mt-3",
-                          attrs: {
-                            label: "Illness Description/History (Optional)",
-                            "label-position": "on-border",
-                          },
-                        },
-                        [
-                          _c("b-input", {
-                            attrs: {
-                              type: "textarea",
-                              placeholder:
-                                "Illness Description/History (Optional)",
-                            },
-                            model: {
-                              value: _vm.fields.illness_history,
-                              callback: function ($$v) {
-                                _vm.$set(_vm.fields, "illness_history", $$v)
-                              },
-                              expression: "fields.illness_history",
-                            },
-                          }),
-                        ],
-                        1
-                      ),
                       _vm._v(" "),
                       _c(
                         "div",

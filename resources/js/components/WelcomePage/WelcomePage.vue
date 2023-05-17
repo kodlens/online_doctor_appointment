@@ -27,17 +27,17 @@
                             <div class="doctor-schedule-header">
                                 Patient Information
                             </div>
-                            <div v-for="(i, ix) in fields.patients" :key="ix">
+                            <div v-for="(patient, pIndex) in fields.patients" :key="pIndex">
                                 <div class="columns">
                                     <div class="column">
                                         <b-field label="Patient Last Name" label-position="on-border">
-                                            <b-input type="text" v-model="fields.patients.lname" placeholder="Patient Last Name">
+                                            <b-input type="text" v-model="patient.lname" placeholder="Patient Last Name">
                                             </b-input>
                                         </b-field>
                                     </div>
                                     <div class="column">
                                         <b-field label="Patient First Name" label-position="on-border">
-                                            <b-input type="text" v-model="fields.patients.fname" placeholder="Patient First Name">
+                                            <b-input type="text" v-model="patient.fname" placeholder="Patient First Name">
                                             </b-input>
                                         </b-field>
                                     </div>
@@ -46,13 +46,13 @@
                                 <div class="columns">
                                     <div class="column">
                                         <b-field label="Patient Middle Name" label-position="on-border">
-                                            <b-input type="text" v-model="fields.patients.lname" placeholder="Patient Middle Name">
+                                            <b-input type="text" v-model="patient.lname" placeholder="Patient Middle Name">
                                             </b-input>
                                         </b-field>
                                     </div>
                                     <div class="column">
                                         <b-field label="Sex" label-position="on-border">
-                                            <b-select v-model="fields.patients.sex" placeholder="Sex">
+                                            <b-select v-model="patient.sex" placeholder="Sex">
                                                 <option value="MALE">MALE</option>
                                                 <option value="FEMALE">FEMALE</option>
                                             </b-select>
@@ -61,19 +61,35 @@
 
                                     <div class="column">
                                         <b-field label="Age" label-position="on-border">
-                                            <b-numerinput type="text" v-model="fields.patients.age" placeholder="Age">
-                                            </b-numerinput>
+                                            <b-numberinput type="text" v-model="patient.age" 
+                                                placeholder="Age"
+                                                :controls="false">
+                                            </b-numberinput>
                                         </b-field>
                                     </div>
                                 </div>
+
+                                <div class="columns">
+                                    <div class="column">
+                                        <b-field class="mt-3" label="Illness Description/History (Optional)" label-position="on-border">
+                                            <b-input type="textarea" placeholder="Illness Description/History (Optional)"
+                                                v-model="patient.illness"></b-input>
+                                        </b-field>
+                                    </div>
+                                </div>
+
+                                <div class="buttons">
+                                    <b-button label="" icon-left="delete" type="is-danger"
+                                        class="is-small"
+                                        @click="removePatient(pIndex)"></b-button>
+                                </div>
                                 
+                                <hr>
                             </div> <!--loop-->
 
-                            <div class="buttons">
+                            <div class="buttons mt-5">
                                 <b-button class="button is-small is-info" @click="addPatient">Add</b-button>
                             </div>
-                            
-
 
                             <div class="doctor-schedule-header">
                                 Doctor Schedule
@@ -95,11 +111,6 @@
                                     </b-radio>
                                 </div>
                             </div>
-
-                            <b-field class="mt-3" label="Illness Description/History (Optional)" label-position="on-border">
-                                <b-input type="textarea" placeholder="Illness Description/History (Optional)"
-                                    v-model="fields.illness_history"></b-input>
-                            </b-field>
 
                             <div class="buttons">
                                 <b-button
@@ -244,6 +255,7 @@ export default {
             fields: {
                 patients: [],
             },
+
             errors: {},
 
             appointment_date: new Date(),
@@ -251,8 +263,6 @@ export default {
 
             schedules: [],
             schedule_id: 0,
-
-            
 
             btnClass: {
                 'is-primary': true,
@@ -315,7 +325,7 @@ export default {
              let appointment = {
                 appointment_date: appdate,
                 schedule_id: this.schedule_id,
-                illness_history: this.fields.illness_history
+                patients: this.fields.patients
              };
 
             axios.post('/apply-appointment', appointment).then(res=>{
@@ -379,6 +389,16 @@ export default {
                 sex: '',
                 age: 0,
                 illness: '',
+            });
+        },
+
+        removePatient(index){
+            this.$buefy.dialog.confirm({
+                title: 'DELETE?',
+                message: 'Are you sure you want to remove this?',
+                onConfirm: ()=>{
+                    this.fields.patients.splice(index, 1);
+                }
             });
         }
     },

@@ -59,13 +59,26 @@
                 <b-navbar-item href="#">
                     Home
                 </b-navbar-item>
-                <b-navbar-item href="/appointments">
+                <b-navbar-item href="/appointments"
+                    class="{{ (request()->is('appointments*')) ? 'active' : '' }}">
                     Appointments
                 </b-navbar-item>
                 <b-navbar-dropdown label="Setting"
                     class="{{ (request()->is('schedules*')) ? 'active' : '' }}">
                     <b-navbar-item href="/schedules">
                         Setup Schedule
+                    </b-navbar-item>
+                    {{-- <b-navbar-item href="#">
+                        Contact
+                    </b-navbar-item> --}}
+                </b-navbar-dropdown>
+                <b-navbar-dropdown label="Reports"
+                    class="{{ (request()->is('reports*')) ? 'active' : '' }}">
+                    <b-navbar-item href="/reports-appointments">
+                        Appointments
+                    </b-navbar-item>
+                    <b-navbar-item href="/reports-appointments">
+                        Patient Appointment By Date
                     </b-navbar-item>
                     {{-- <b-navbar-item href="#">
                         Contact
