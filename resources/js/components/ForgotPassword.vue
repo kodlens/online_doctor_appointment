@@ -4,7 +4,7 @@
             <form @submit.prevent="submit">
                 <div class="panel is-primary">
                     <div class="panel-heading">
-                        FORGOT PASSWORD
+                        Request OTP
                     </div>
 
                     <div class="panel-body">
@@ -15,14 +15,14 @@
                         <b-field label="Username" label-position="on-border"
                             :type="this.errors.username ? 'is-danger':''"
                             :message="this.errors.username ? this.errors.username[0] : ''">
-                            <b-input type="text" v-model="fields.username" placeholder="Username" />
+                            <b-input type="text" v-model="fields.username" placeholder="Username" required />
                         </b-field>
 
                         <b-field label="Mobile No." label-position="on-border"
                             :type="this.errors.contact_no ? 'is-danger':''"
                             :message="this.errors.contact_no ? this.errors.contact_no[0] : ''"
                             >
-                            <b-input type="text" v-model="fields.contact_no"  placeholder="Mobile No." />
+                            <b-input type="text" v-model="fields.contact_no"  placeholder="Mobile No." required/>
                         </b-field>
 
                         <b-notification type="is-danger" 
@@ -82,7 +82,6 @@ export default {
                         }
                     });
                 }
-                
             }).catch(err=>{
                 this.btnClass['is-loading'] = false;
                 if(err.response.status === 422){

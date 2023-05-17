@@ -25,6 +25,57 @@
                     <div class="schedule-box" v-if="isLogin">
                         <div class="doctor-schedule">
                             <div class="doctor-schedule-header">
+                                Patient Information
+                            </div>
+                            <div v-for="(i, ix) in fields.patients" :key="ix">
+                                <div class="columns">
+                                    <div class="column">
+                                        <b-field label="Patient Last Name" label-position="on-border">
+                                            <b-input type="text" v-model="fields.patients.lname" placeholder="Patient Last Name">
+                                            </b-input>
+                                        </b-field>
+                                    </div>
+                                    <div class="column">
+                                        <b-field label="Patient First Name" label-position="on-border">
+                                            <b-input type="text" v-model="fields.patients.fname" placeholder="Patient First Name">
+                                            </b-input>
+                                        </b-field>
+                                    </div>
+                                </div>
+
+                                <div class="columns">
+                                    <div class="column">
+                                        <b-field label="Patient Middle Name" label-position="on-border">
+                                            <b-input type="text" v-model="fields.patients.lname" placeholder="Patient Middle Name">
+                                            </b-input>
+                                        </b-field>
+                                    </div>
+                                    <div class="column">
+                                        <b-field label="Sex" label-position="on-border">
+                                            <b-select v-model="fields.patients.sex" placeholder="Sex">
+                                                <option value="MALE">MALE</option>
+                                                <option value="FEMALE">FEMALE</option>
+                                            </b-select>
+                                        </b-field>
+                                    </div>
+
+                                    <div class="column">
+                                        <b-field label="Age" label-position="on-border">
+                                            <b-numerinput type="text" v-model="fields.patients.age" placeholder="Age">
+                                            </b-numerinput>
+                                        </b-field>
+                                    </div>
+                                </div>
+                                
+                            </div> <!--loop-->
+
+                            <div class="buttons">
+                                <b-button class="button is-small is-info" @click="addPatient">Add</b-button>
+                            </div>
+                            
+
+
+                            <div class="doctor-schedule-header">
                                 Doctor Schedule
                             </div>
 
@@ -73,6 +124,7 @@
                         </div>
                         
                         <div>
+                            
                             <b-field label="Username"
                                 :type="this.errors.username ? 'is-danger':''"
                                 :message="this.errors.username ? this.errors.username[0] : ''">
@@ -189,7 +241,9 @@ export default {
 
     data(){
         return {
-            fields: {},
+            fields: {
+                patients: [],
+            },
             errors: {},
 
             appointment_date: new Date(),
@@ -315,6 +369,17 @@ export default {
                     }
                 }
             })
+        },
+
+        addPatient(){
+            this.fields.patients.push({
+                lname: '',
+                fname: '',
+                mname: '',
+                sex: '',
+                age: 0,
+                illness: '',
+            });
         }
     },
 

@@ -11362,6 +11362,58 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
@@ -11375,7 +11427,9 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      fields: {},
+      fields: {
+        patients: []
+      },
       errors: {},
       appointment_date: new Date(),
       schedules: [],
@@ -11477,6 +11531,16 @@ __webpack_require__.r(__webpack_exports__);
             });
           }
         }
+      });
+    },
+    addPatient: function addPatient() {
+      this.fields.patients.push({
+        lname: '',
+        fname: '',
+        mname: '',
+        sex: '',
+        age: 0,
+        illness: ''
       });
     }
   },
@@ -36499,7 +36563,7 @@ var render = function () {
         [
           _c("div", { staticClass: "panel is-primary" }, [
             _c("div", { staticClass: "panel-heading" }, [
-              _vm._v("\n                    FORGOT PASSWORD\n                "),
+              _vm._v("\n                    Request OTP\n                "),
             ]),
             _vm._v(" "),
             _c(
@@ -36520,7 +36584,11 @@ var render = function () {
                   },
                   [
                     _c("b-input", {
-                      attrs: { type: "text", placeholder: "Username" },
+                      attrs: {
+                        type: "text",
+                        placeholder: "Username",
+                        required: "",
+                      },
                       model: {
                         value: _vm.fields.username,
                         callback: function ($$v) {
@@ -36547,7 +36615,11 @@ var render = function () {
                   },
                   [
                     _c("b-input", {
-                      attrs: { type: "text", placeholder: "Mobile No." },
+                      attrs: {
+                        type: "text",
+                        placeholder: "Mobile No.",
+                        required: "",
+                      },
                       model: {
                         value: _vm.fields.contact_no,
                         callback: function ($$v) {
@@ -38951,6 +39023,234 @@ var render = function () {
                     "div",
                     { staticClass: "doctor-schedule" },
                     [
+                      _c("div", { staticClass: "doctor-schedule-header" }, [
+                        _vm._v(
+                          "\n                            Patient Information\n                        "
+                        ),
+                      ]),
+                      _vm._v(" "),
+                      _vm._l(_vm.fields.patients, function (i, ix) {
+                        return _c("div", { key: ix }, [
+                          _c("div", { staticClass: "columns" }, [
+                            _c(
+                              "div",
+                              { staticClass: "column" },
+                              [
+                                _c(
+                                  "b-field",
+                                  {
+                                    attrs: {
+                                      label: "Patient Last Name",
+                                      "label-position": "on-border",
+                                    },
+                                  },
+                                  [
+                                    _c("b-input", {
+                                      attrs: {
+                                        type: "text",
+                                        placeholder: "Patient Last Name",
+                                      },
+                                      model: {
+                                        value: _vm.fields.patients.lname,
+                                        callback: function ($$v) {
+                                          _vm.$set(
+                                            _vm.fields.patients,
+                                            "lname",
+                                            $$v
+                                          )
+                                        },
+                                        expression: "fields.patients.lname",
+                                      },
+                                    }),
+                                  ],
+                                  1
+                                ),
+                              ],
+                              1
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              { staticClass: "column" },
+                              [
+                                _c(
+                                  "b-field",
+                                  {
+                                    attrs: {
+                                      label: "Patient First Name",
+                                      "label-position": "on-border",
+                                    },
+                                  },
+                                  [
+                                    _c("b-input", {
+                                      attrs: {
+                                        type: "text",
+                                        placeholder: "Patient First Name",
+                                      },
+                                      model: {
+                                        value: _vm.fields.patients.fname,
+                                        callback: function ($$v) {
+                                          _vm.$set(
+                                            _vm.fields.patients,
+                                            "fname",
+                                            $$v
+                                          )
+                                        },
+                                        expression: "fields.patients.fname",
+                                      },
+                                    }),
+                                  ],
+                                  1
+                                ),
+                              ],
+                              1
+                            ),
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "columns" }, [
+                            _c(
+                              "div",
+                              { staticClass: "column" },
+                              [
+                                _c(
+                                  "b-field",
+                                  {
+                                    attrs: {
+                                      label: "Patient Middle Name",
+                                      "label-position": "on-border",
+                                    },
+                                  },
+                                  [
+                                    _c("b-input", {
+                                      attrs: {
+                                        type: "text",
+                                        placeholder: "Patient Middle Name",
+                                      },
+                                      model: {
+                                        value: _vm.fields.patients.lname,
+                                        callback: function ($$v) {
+                                          _vm.$set(
+                                            _vm.fields.patients,
+                                            "lname",
+                                            $$v
+                                          )
+                                        },
+                                        expression: "fields.patients.lname",
+                                      },
+                                    }),
+                                  ],
+                                  1
+                                ),
+                              ],
+                              1
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              { staticClass: "column" },
+                              [
+                                _c(
+                                  "b-field",
+                                  {
+                                    attrs: {
+                                      label: "Sex",
+                                      "label-position": "on-border",
+                                    },
+                                  },
+                                  [
+                                    _c(
+                                      "b-select",
+                                      {
+                                        attrs: { placeholder: "Sex" },
+                                        model: {
+                                          value: _vm.fields.patients.sex,
+                                          callback: function ($$v) {
+                                            _vm.$set(
+                                              _vm.fields.patients,
+                                              "sex",
+                                              $$v
+                                            )
+                                          },
+                                          expression: "fields.patients.sex",
+                                        },
+                                      },
+                                      [
+                                        _c(
+                                          "option",
+                                          { attrs: { value: "MALE" } },
+                                          [_vm._v("MALE")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "option",
+                                          { attrs: { value: "FEMALE" } },
+                                          [_vm._v("FEMALE")]
+                                        ),
+                                      ]
+                                    ),
+                                  ],
+                                  1
+                                ),
+                              ],
+                              1
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              { staticClass: "column" },
+                              [
+                                _c(
+                                  "b-field",
+                                  {
+                                    attrs: {
+                                      label: "Age",
+                                      "label-position": "on-border",
+                                    },
+                                  },
+                                  [
+                                    _c("b-numerinput", {
+                                      attrs: {
+                                        type: "text",
+                                        placeholder: "Age",
+                                      },
+                                      model: {
+                                        value: _vm.fields.patients.age,
+                                        callback: function ($$v) {
+                                          _vm.$set(
+                                            _vm.fields.patients,
+                                            "age",
+                                            $$v
+                                          )
+                                        },
+                                        expression: "fields.patients.age",
+                                      },
+                                    }),
+                                  ],
+                                  1
+                                ),
+                              ],
+                              1
+                            ),
+                          ]),
+                        ])
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "buttons" },
+                        [
+                          _c(
+                            "b-button",
+                            {
+                              staticClass: "button is-small is-info",
+                              on: { click: _vm.addPatient },
+                            },
+                            [_vm._v("Add")]
+                          ),
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
                       _c("div", { staticClass: "doctor-schedule-header" }, [
                         _vm._v(
                           "\n                            Doctor Schedule\n                        "
