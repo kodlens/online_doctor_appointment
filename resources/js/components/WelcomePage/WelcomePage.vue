@@ -27,6 +27,9 @@
                             <div class="doctor-schedule-header">
                                 Patient Information
                             </div>
+                            <b-field
+                                :type="this.errors.patients ? 'is-danger':''"
+                                :message="this.errors.patients ? this.errors.patients[0] : ''"></b-field>
                             
                             <div v-for="(patient, pIndex) in fields.patients" :key="`patient${pIndex}`">
                                 <div class="columns">
@@ -79,6 +82,43 @@
                                     </div>
                                 </div>
 
+                                <div class="columns">
+                                    <div class="column">
+                                        <b-field label="Province" label-position="on-border" expanded>
+                                            <b-select v-model="patient.province" @focus="loadProvince" expanded>
+                                                <option v-for="(item, index) in provinces" :key="index" :value="item.provCode">{{ item.provDesc }}</option>
+                                            </b-select>
+                                        </b-field>
+                                    </div>
+
+                                    <div class="column">
+                                        <b-field label="City" label-position="on-border" expanded>
+                                            <b-select v-model="patient.city" @focus="loadCities(patient.province)" expanded>
+                                                <option v-for="(item, index) in cities" :key="index" :value="item.citymunCode">{{ item.citymunDesc }}</option>
+                                            </b-select>
+                                        </b-field>
+                                    </div>
+                                </div>
+                                 
+
+                                <div class="columns">
+                                    <div class="column">
+                                        <b-field label="Barangay" label-position="on-border" expanded>
+                                            <b-select v-model="patient.barangay" expanded @focus="loadBarangays(patient.province, patient.city)">
+                                                <option v-for="(item, index) in barangays" :key="index" :value="item.brgyCode">{{ item.brgyDesc }}</option>
+                                            </b-select>
+                                        </b-field>
+                                    </div>
+                                    <div class="column">
+                                        <b-field label="Street" label-position="on-border">
+                                            <b-input v-model="fields.street"
+                                                    placeholder="Street">
+                                            </b-input>
+                                        </b-field>
+                                    </div>
+                                </div>
+                               
+
                                 <div class="buttons">
                                     <b-button label="" icon-left="delete" type="is-danger"
                                         class="is-small"
@@ -89,7 +129,9 @@
                             </div> <!--loop-->
 
                             <div class="buttons mt-5">
-                                <b-button class="button is-small is-info" @click="addPatient">Add</b-button>
+                                <b-button class="button is-small is-info" 
+                                    @click="addPatient"
+                                    :disabled="fields.patients.length >= max">Add</b-button>
                             </div>
 
                             <div class="doctor-schedule-header">
@@ -177,8 +219,6 @@
                     </div> <!--login box -->
                 </div>
             </div> <!--cols --->
-
-            
         </div>
 
         <div class="section">
@@ -255,12 +295,24 @@ export default {
         return {
             fields: {
                 patients: [],
+                
             },
 
+            patients: [
+                {
+                    provinces: [],
+                    cities: [],
+                    barangays: [],
+                    street: '',
+                }
+            ],
             errors: {},
 
             appointment_date: new Date(),
 
+            max: 0,
+
+           
 
             schedules: [],
             schedule_id: 0,
@@ -349,6 +401,9 @@ export default {
 
                 if(err.response.status === 422){
                     this.errors = err.response.data.errors;
+                    if(this.errors.patients){
+                        this.errors.patients[0] = 'Please add patient.';
+                    }
 
                     if(this.errors.max){
 
@@ -395,6 +450,8 @@ export default {
                 age: 0,
                 illness: '',
             });
+
+         
         },
 
         removePatient(index){
@@ -405,11 +462,36 @@ export default {
                     this.fields.patients.splice(index, 1);
                 }
             });
+        },
+
+        loadProvince: function(){
+            axios.get('/load-provinces').then(res=>{
+                this.provinces = res.data;
+            })
+        },
+
+        loadCities: function(prov){
+            axios.get('/load-cities?prov=' + prov).then(res=>{
+                this.cities = res.data;
+            })
+        },
+
+        loadBarangays: function(prov, city){
+            axios.get('/load-barangays?prov=' + prov + '&city_code='+ city).then(res=>{
+                this.barangays = res.data;
+            })
+        },
+
+        loadMaxPatient(){
+            axios.get('/load-max-no').then(res=>{
+                this.max = res.data.max
+            })
         }
     },
 
     mounted(){
         this.loadOpenSchedules()
+        this.loadMaxPatient();
     }
 
 }

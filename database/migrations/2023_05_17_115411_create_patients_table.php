@@ -27,6 +27,13 @@ class CreatePatientsTable extends Migration
             $table->string('extension', 20)->nullable();
             $table->string('sex', 20)->nullable();
             $table->string('age', 20)->nullable();
+
+            $table->string('province')->nullable();
+            $table->string('city')->nullable();
+            $table->string('barangay')->nullable();
+            $table->string('street')->nullable();
+
+            
             $table->text('illness')->nullable();
 
             $table->timestamps();

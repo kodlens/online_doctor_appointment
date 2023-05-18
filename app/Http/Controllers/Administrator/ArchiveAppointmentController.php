@@ -53,9 +53,21 @@ class ArchiveAppointmentController extends Controller
         ], 200);
     }
 
-    public function restoreArchived(Request $req){
+    public function restoreArchivesAppointments(Request $req){
 
         $appointment = Appointment::whereBetween('created_at', [$req->start_date, $req->end_date])
+            ->update([
+                'is_archived' => 0
+            ]);
+
+        return response()->json([
+            'status' => 'restored'
+        ], 200);
+    }
+
+    public function restoreArchiveAppointment($id){
+
+        $appointment = Appointment::where('appointment_id', $id)
             ->update([
                 'is_archived' => 0
             ]);

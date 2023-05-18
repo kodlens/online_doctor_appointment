@@ -29,6 +29,12 @@ class CreateAppointmentsTable extends Migration
 
             $table->tinyInteger('is_archived')->default(0);
 
+            $table->tinyInteger('is_arrived')->default(0);
+            $table->dateTime('arrival_datetime')->nullable();
+
+            $table->tinyInteger('is_served')->default(0);
+            $table->dateTime('served_datetime')->nullable();
+
             $table->timestamps();
         });
     }

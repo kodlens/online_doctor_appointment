@@ -14,6 +14,15 @@ class ApplyAppointmentController extends Controller
     //
     public function applyAppointment(Request $req){
 
+        //return $req;
+
+        $req->validate([
+            'patients' => ['required'],
+            'patients.*.lname' => ['required'],
+            'patients.*.fname' => ['required'],
+            'patients.*.age' => ['required'],
+            'patients.*.sex' => ['required']
+        ]);
  
         $appdate = date("Y-m-d", strtotime($req->appointment_date));
         $user = Auth::user();
@@ -26,6 +35,7 @@ class ApplyAppointmentController extends Controller
         //para sure isa lang ka schedule per day.
         $existSched = Appointment::where('user_id', $user->user_id)
             ->where('appointment_date', $appdate)
+            ->where('status', '!=', 2)
             ->exists();
         if($existSched){
             return response()->json([
@@ -87,10 +97,10 @@ class ApplyAppointmentController extends Controller
             return response()->json([
                 'errors' => [
                     'max' => ['Sorry. The schedule reach the maximum number of reservation.', 
-                            $availableSched, 
-                            $currentDate,
-                            $msgDate
-                        ],
+                        $availableSched, 
+                        $currentDate,
+                        $msgDate
+                    ],
                 ],
                 'message' => "Thie given data was invalid."
             ], 422);

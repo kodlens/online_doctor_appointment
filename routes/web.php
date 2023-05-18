@@ -51,6 +51,9 @@ Route::get('/load-cities', [App\Http\Controllers\AddressController::class, 'load
 Route::get('/load-barangays', [App\Http\Controllers\AddressController::class, 'loadBarangays']);
 Route::get('/load-open-schedules', [App\Http\Controllers\OpenDataController::class, 'loadOpenScehdules']);
 
+//open
+Route::get('/load-max-no', [App\Http\Controllers\OpenDataController::class, 'loadMaxNo']);
+
 
 Route::middleware(['auth'])->group(function(){
 
@@ -80,6 +83,7 @@ Route::middleware(['auth', 'staff'])->group(function(){
     Route::post('/appointment-approve/{id}', [App\Http\Controllers\Administrator\AppointmentController::class, 'approveAppointment']);
     Route::post('/appointment-cancel/{id}', [App\Http\Controllers\Administrator\AppointmentController::class, 'cancelAppointment']);
     Route::post('/appointment-pending/{id}', [App\Http\Controllers\Administrator\AppointmentController::class, 'pendingAppointment']);
+    Route::post('/appointment-archive/{id}', [App\Http\Controllers\Administrator\AppointmentController::class, 'archiveAppointment']);
 });
 
 Route::middleware(['auth', 'admin'])->group(function(){
@@ -99,6 +103,8 @@ Route::middleware(['auth', 'admin'])->group(function(){
     
     Route::resource('/archive-appointments', App\Http\Controllers\Administrator\ArchiveAppointmentController::class);
     Route::get('/get-archive-appointments', [App\Http\Controllers\Administrator\ArchiveAppointmentController::class, 'getArchiveAppointments']);
+    Route::post('/archive-appointment-restore/{id}', [App\Http\Controllers\Administrator\ArchiveAppointmentController::class, 'restoreArchiveAppointment']);
+    Route::post('/archives-appointments-restore', [App\Http\Controllers\Administrator\ArchiveAppointmentController::class, 'restoreArchivesAppointments']);
 
 
     Route::post('/reset-password/{id}', [App\Http\Controllers\Administrator\UserController::class, 'resetPassword']);

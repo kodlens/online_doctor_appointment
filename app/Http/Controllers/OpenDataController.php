@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Schedule;
+use App\Models\MaxPatient;
 
 class OpenDataController extends Controller
 {
@@ -17,5 +18,9 @@ class OpenDataController extends Controller
         return Schedule::where($day, 1) //select * from table where wed = 1
             ->orderBy('schedule_id', 'asc')
             ->get();
+    }
+
+    public function loadMaxNo(){
+        return MaxPatient::where('id', 1)->first();
     }
 }

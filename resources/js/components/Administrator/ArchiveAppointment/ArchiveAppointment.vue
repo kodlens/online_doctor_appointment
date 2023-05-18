@@ -123,39 +123,13 @@
 
                                 <b-table-column label="Action" v-slot="props">
                                     <div class="is-flex">
-                                        <b-tooltip label="Reschedule" type="is-info">
+                                        <b-tooltip label="Restore" type="is-info">
                                             <b-button class="button is-small is-info is-outlined mr-1" 
                                                 tag="a" 
-                                                icon-right="calendar"
-                                                :href="`/appointments/${props.row.appointment_id}/edit`"></b-button>
+                                                icon-right="archive-arrow-up-outline"
+                                                @click="restoreArchive(props.row.appointment_id)"></b-button>
                                         </b-tooltip>
-                                        <b-tooltip label="Delete" type="is-danger">
-                                            <b-button class="button is-small is-danger mr-1 is-outlined" icon-right="delete" @click="confirmDelete(props.row.user_id)"></b-button>
-                                        </b-tooltip>
-                                        <b-tooltip label="Options" type="is-info">
-                                            <b-dropdown aria-role="list">
-                                                <template #trigger="{ active }">
-                                                    <b-button
-                                                        label=""
-                                                        type="is-primary"
-                                                        class="is-outliend is-small"
-                                                        :icon-right="active ? 'menu-up' : 'menu-down'" />
-                                                </template>
-
-                                                <b-dropdown-item @click="confirmApprove(props.row.appointment_id)" 
-                                                    aria-role="listitem">Approve</b-dropdown-item>
-                                                <b-dropdown-item 
-                                                    @click="confirmCancel(props.row.appointment_id)" 
-                                                    aria-role="listitem">Cancel Appointment</b-dropdown-item>
-                                                <b-dropdown-item
-                                                    @click="confirmPending(props.row.appointment_id)" 
-                                                    aria-role="listitem">Set to Pending</b-dropdown-item>
-                                                <b-dropdown-item
-                                                    @click="confirmArchive(props.row.appointment_id)" 
-                                                    aria-role="listitem">Archive</b-dropdown-item>
-                                            </b-dropdown>
-                                            
-                                        </b-tooltip>
+                                        
                                     </div>
                                 </b-table-column>
 
@@ -306,17 +280,17 @@ export default{
         },
 
         //alert box ask for approve
-        confirmApprove(id) {
+        restoreArchive(id) {
             this.$buefy.dialog.confirm({
-                title: 'Approve?!',
+                title: 'Restore?!',
                 type: 'is-info',
-                message: 'Are you sure you want to approve this appointment?',
+                message: 'Are you sure you want to restore this?',
                 confirmText: 'Yes',
-                onConfirm: () => this.approveSubmit(id)
+                onConfirm: () => this.approveRestore(id)
             });
         },
-        approveSubmit(id) {
-            axios.post('/appointment-approve/' + id).then(res => {
+        approveRestore(id) {
+            axios.post('/archive-appointment-restore/' + id).then(res => {
                 this.loadAsyncData();
             }).catch(err => {
                 if (err.response.status === 422) {
@@ -325,66 +299,7 @@ export default{
             });
         },
 
-        confirmArchive(){
-            this.$buefy.dialog.confirm({
-                title: 'Archive?!',
-                type: 'is-info',
-                message: 'Are you sure you want to archive this appointment?',
-                confirmText: 'Yes',
-                onConfirm: () => this.archiveSubmit(id)
-            });
-        },
-        archiveSubmit(){
-            axios.post('/archive-appointment/' + id).then(res => {
-                this.loadAsyncData();
-            }).catch(err => {
-                if (err.response.status === 422) {
-                    this.errors = err.response.data.errors;
-                }
-            });
-        },
-
-
-        //alert box ask for cancel
-        confirmCancel(id) {
-            this.$buefy.dialog.confirm({
-                title: 'Cacnel?!',
-                type: 'is-danger',
-                message: 'Are you sure you want to cancel this appointment?',
-                confirmText: 'Yes',
-                onConfirm: () => this.cancelSubmit(id)
-            });
-        },
-        cancelSubmit(id) {
-            axios.post('/appointment-cancel/' + id).then(res => {
-                this.loadAsyncData();
-            }).catch(err => {
-                if (err.response.status === 422) {
-                    this.errors = err.response.data.errors;
-                }
-            });
-        },
-
-
-        //alert box ask for cancel
-        confirmPending(id) {
-            this.$buefy.dialog.confirm({
-                title: 'Set to Pending?!',
-                type: 'is-info',
-                message: 'Are you sure you want to set pending this appointment?',
-                confirmText: 'Yes',
-                onConfirm: () => this.pendingSubmit(id)
-            });
-        },
-        pendingSubmit(id) {
-            axios.post('/appointment-pending/' + id).then(res => {
-                this.loadAsyncData();
-            }).catch(err => {
-                if (err.response.status === 422) {
-                    this.errors = err.response.data.errors;
-                }
-            });
-        },
+        
 
 
     },

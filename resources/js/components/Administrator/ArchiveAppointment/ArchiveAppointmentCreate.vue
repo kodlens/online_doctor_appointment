@@ -129,10 +129,10 @@ export default{
              };
 
 
-             axios.post('/archive-appointments', appointment).then(res=>{
+             axios.post('/archives-appointments-restore', appointment).then(res=>{
                 if(res.data.status === 'restored'){
                     this.$buefy.dialog.alert({
-                        title: 'Archived!',
+                        title: 'Restored!',
                         message: 'Successfully restored.',
                         type: 'is-success',
                         onConfirm: ()=>{
@@ -149,13 +149,10 @@ export default{
         },
 
 
-       
-
-
     },
 
     mounted() {
-        this.getData();
+        
     },
 
 }

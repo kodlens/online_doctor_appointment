@@ -132,9 +132,9 @@
                                                 icon-right="calendar"
                                                 :href="`/appointments/${props.row.appointment_id}/edit`"></b-button>
                                         </b-tooltip>
-                                        <b-tooltip label="Delete" type="is-danger">
+                                        <!-- <b-tooltip label="Delete" type="is-danger">
                                             <b-button class="button is-small is-danger mr-1 is-outlined" icon-right="delete" @click="confirmDelete(props.row.user_id)"></b-button>
-                                        </b-tooltip>
+                                        </b-tooltip> -->
                                         <b-tooltip label="Options" type="is-info">
                                             <b-dropdown aria-role="list">
                                                 <template #trigger="{ active }">
@@ -328,7 +328,7 @@ export default{
             });
         },
 
-        confirmArchive(){
+        confirmArchive(id){
             this.$buefy.dialog.confirm({
                 title: 'Archive?!',
                 type: 'is-info',
@@ -337,8 +337,8 @@ export default{
                 onConfirm: () => this.archiveSubmit(id)
             });
         },
-        archiveSubmit(){
-            axios.post('/archive-appointment/' + id).then(res => {
+        archiveSubmit(id){
+            axios.post('/appointment-archive/' + id).then(res => {
                 this.loadAsyncData();
             }).catch(err => {
                 if (err.response.status === 422) {

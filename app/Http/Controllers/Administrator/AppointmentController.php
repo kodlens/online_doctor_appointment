@@ -184,6 +184,7 @@ class AppointmentController extends Controller
 
     //appoved appointment
     public function approveAppointment($id){
+        //return $req;
 
         $data = Appointment::find($id);
         $data->status = 1;
@@ -195,7 +196,7 @@ class AppointmentController extends Controller
         $nameTitle = $user->sex == 'MALE' ? 'Mr. ' : 'Ms./Mrs. ';
 
         if(env('ENABLE_SMS') == 1){
-            $timeStart = date('h:i A', strtotime($schedule->time_start));
+            $timeStart = date('h:i A', strtotime($schedule->time_from));
             $timeEnd = date('h:i A', strtotime($schedule->time_end));
 
             $msg = 'Appointment confirmation: '. $nameTitle . $user->lname . ', ' . $user->fname . ', your appointment with Dr. Tilao on '. date('M-d-Y', strtotime($data->appointment_date)) .', ' . $timeStart. ') has been confirmed/approved.';
@@ -228,7 +229,7 @@ class AppointmentController extends Controller
 
         */
         if(env('ENABLE_SMS') == 1){
-            $timeStart = date('h:i A', strtotime($schedule->time_start));
+            $timeStart = date('h:i A', strtotime($schedule->time_from));
             $timeEnd = date('h:i A', strtotime($schedule->time_end));
 
             $msg = 'Appointment confirmation: '. $nameTitle . $user->lname . ', ' . $user->fname . ', your appointment with Dr. Tilao on '. date('M-d-Y', strtotime($data->appointment_date)) .', ' . $timeStart. ') has been cancelled.';
@@ -251,6 +252,16 @@ class AppointmentController extends Controller
 
         return response()->json([
             'status' => 'saved'
+        ], 200);
+    }
+
+    public function archiveAppointment($id){
+        $data = Appointment::find($id);
+        $data->is_archived = 1;
+        $data->save();
+
+        return response()->json([
+            'status' => 'archived'
         ], 200);
     }
 
