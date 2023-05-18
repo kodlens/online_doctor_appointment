@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class OfficeMiddleware
+class StaffMiddleware
 {
     /**
      * Handle an incoming request.
@@ -15,10 +15,12 @@ class OfficeMiddleware
      * @param  \Closure  $next
      * @return mixed
      */
+
     public function handle(Request $request, Closure $next)
     {
         $role = Auth::user()->role;
-        if($role === 'OFFICE'){
+
+        if($role == 'STAFF' || $role == 'ADMINISTRATOR'){
             return $next($request);
         }
 

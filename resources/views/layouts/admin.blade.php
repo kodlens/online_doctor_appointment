@@ -42,6 +42,9 @@
 
 </head>
 <body>
+    @php
+        $role = Auth::user()->role;
+    @endphp
     <div id="app">
 
         <b-navbar class="is-primary">
@@ -62,18 +65,25 @@
                     class="{{ (request()->is('appointments*')) ? 'active' : '' }}">
                     Appointments
                 </b-navbar-item>
-                <b-navbar-dropdown label="Setting"
-                    class="{{ (request()->is('schedules*')) ? 'active' : '' }}">
-                    <b-navbar-item href="/schedules">
-                        Setup Schedule
-                    </b-navbar-item>
-                    <b-navbar-item href="/max-patients">
-                        Set Max Patient
-                    </b-navbar-item>
-                    {{-- <b-navbar-item href="#">
-                        Contact
-                    </b-navbar-item> --}}
-                </b-navbar-dropdown>
+                @if($role == 'ADMINISTRATOR')
+                    <b-navbar-dropdown label="Setting"
+                        class="{{ (request()->is('schedules*')) ? 'active' : '' }}">
+                        <b-navbar-item href="/schedules">
+                            Setup Schedule
+                        </b-navbar-item>
+                        <b-navbar-item href="/max-patients">
+                            Set Max Patient
+                        </b-navbar-item>
+                        <b-navbar-item href="/archive-appointments">
+                            Archive Appointment
+                        </b-navbar-item>
+                        {{-- <b-navbar-item href="#">
+                            Contact
+                        </b-navbar-item> --}}
+                    </b-navbar-dropdown>
+                @endif
+
+
                 <b-navbar-dropdown label="Reports"
                     class="{{ (request()->is('reports*')) ? 'active' : '' }}">
                     <b-navbar-item href="/reports-appointments">
@@ -86,11 +96,13 @@
                         Contact
                     </b-navbar-item> --}}
                 </b-navbar-dropdown>
-                <b-navbar-item href="/users"
-                    class="{{ (request()->is('users*')) ? 'active' : '' }}">
-                    Users
-                </b-navbar-item>
-
+                @if($role == 'ADMINISTRATOR')
+                    <b-navbar-item href="/users"
+                        class="{{ (request()->is('users*')) ? 'active' : '' }}">
+                        Users
+                    </b-navbar-item>
+                @endif
+                
                 <b-navbar-item tag="div">
                     <div class="buttons">
                     @auth()

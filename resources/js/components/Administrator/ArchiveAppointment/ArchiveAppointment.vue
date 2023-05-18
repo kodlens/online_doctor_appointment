@@ -5,7 +5,7 @@
                 <div class="column is-10-desktop is-8-tablet">
                     <div class="w-panel-card">
                         <div class="w-panel-heading">
-                            <div class="mb-2" style="font-size: 20px; font-weight: bold;">LIST OF APPOINTMENTS</div>
+                            <div class="mb-2" style="font-size: 20px; font-weight: bold;">ARCHIVE APPOINTMENTS</div>
                         </div>
 
 
@@ -39,16 +39,13 @@
                                 <div class="column">
                                     <div class="buttons">
                                         <b-button tag="a"
-                                            href="/appointments/create"
-                                            icon-left="plus" class="is-success">
-                                            ADD APPOINTMENT
+                                            href="/archive-appointments/create"
+                                            icon-left="archive" class="is-success">
+                                            ARCHIVE/RESTORE APPOINTMENT
                                         </b-button>
                                     </div>
                                 </div>
-                                
                             </div>
-                            
-
 
                             <hr>
     
@@ -253,7 +250,7 @@ export default{
             ].join('&')
 
             this.loading = true
-            axios.get(`/get-appointments?${params}`)
+            axios.get(`/get-archive-appointments?${params}`)
                 .then(({ data }) => {
                     this.data = [];
                     let currentTotal = data.total
@@ -388,9 +385,6 @@ export default{
                 }
             });
         },
-
-
-
 
 
     },

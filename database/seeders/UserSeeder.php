@@ -26,12 +26,11 @@ class UserSeeder extends Seeder
                 'city' => '104215',
                 'barangay' => '104215027',
                 'street' => 'P-6',
-                //'email' => 'joyce@dev.com',
                 'contact_no' => '09163789585',
                 'role' => 'ADMINISTRATOR',
-                'password' => Hash::make('a')
+                'password' => Hash::make('admin')
             ],
-
+            
 
             [
                 //1
@@ -79,7 +78,7 @@ class UserSeeder extends Seeder
                 'barangay' => '104215027',
                 'street' => 'P-6',
                 //'email' => 'doctor@dev.com',
-                'contact_no' => '09216548123',
+                'contact_no' => '09706102876',
                 'role' => 'USER',
                 'password' => Hash::make('a')
             ],
@@ -231,6 +230,26 @@ class UserSeeder extends Seeder
                 'role' => 'USER',
                 'password' => Hash::make('a')
             ],
+
+
+
+            //staff account default
+            [
+                'username' => 'staff',
+                'lname' => 'ONG',
+                'fname' => 'LENSEY',
+                'mname' => 'P',
+                'sex' => 'FEMALE',
+                'province' => '1042',
+                'city' => '104215',
+                'barangay' => '104215027',
+                'street' => 'P-6',
+                'contact_no' => '09163789585',
+                'role' => 'STAFF',
+                'password' => Hash::make('staff')
+            ],
+
+
 
             
             

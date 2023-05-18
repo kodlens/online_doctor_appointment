@@ -71,7 +71,7 @@ Route::middleware(['auth'])->group(function(){
 
 /*ADMINSITRATOR*/
 
-Route::middleware(['auth', 'admin'])->group(function(){
+Route::middleware(['auth', 'staff'])->group(function(){
 
     Route::resource('/dashboard', App\Http\Controllers\Administrator\DashboardController::class);
 
@@ -80,19 +80,25 @@ Route::middleware(['auth', 'admin'])->group(function(){
     Route::post('/appointment-approve/{id}', [App\Http\Controllers\Administrator\AppointmentController::class, 'approveAppointment']);
     Route::post('/appointment-cancel/{id}', [App\Http\Controllers\Administrator\AppointmentController::class, 'cancelAppointment']);
     Route::post('/appointment-pending/{id}', [App\Http\Controllers\Administrator\AppointmentController::class, 'pendingAppointment']);
+});
 
-   
-    Route::resource('/users', App\Http\Controllers\Administrator\UserController::class);
-    Route::get('/get-users', [App\Http\Controllers\Administrator\UserController::class, 'getUsers']);
-    Route::get('/get-browse-users', [App\Http\Controllers\Administrator\UserController::class, 'getBrowseUser']);
-    
+Route::middleware(['auth', 'admin'])->group(function(){
 
     Route::resource('/schedules', App\Http\Controllers\Administrator\ScheduleController::class);
     Route::get('/get-schedules', [App\Http\Controllers\Administrator\ScheduleController::class, 'getSchedules']);
-    
+
+
+
+    Route::resource('/users', App\Http\Controllers\Administrator\UserController::class);
+    Route::get('/get-users', [App\Http\Controllers\Administrator\UserController::class, 'getUsers']);
+    Route::get('/get-browse-users', [App\Http\Controllers\Administrator\UserController::class, 'getBrowseUser']);
+
     Route::resource('/max-patients', App\Http\Controllers\Administrator\MaxPatientController::class);
     Route::post('/update-max-patient', [App\Http\Controllers\Administrator\MaxPatientController::class, 'updateMaxPatient']);
     Route::get('/get-max-patients', [App\Http\Controllers\Administrator\MaxPatientController::class, 'getMaxPatients']);
+    
+    Route::resource('/archive-appointments', App\Http\Controllers\Administrator\ArchiveAppointmentController::class);
+    Route::get('/get-archive-appointments', [App\Http\Controllers\Administrator\ArchiveAppointmentController::class, 'getArchiveAppointments']);
 
 
     Route::post('/reset-password/{id}', [App\Http\Controllers\Administrator\UserController::class, 'resetPassword']);

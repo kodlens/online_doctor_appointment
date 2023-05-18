@@ -298,7 +298,7 @@ export default {
 
             axios.post('/login', this.fields).then(res=>{
             this.btnClass['is-loading'] = false;
-                if(res.data.role === 'ADMINISTRATOR'){
+                if(res.data.role === 'ADMINISTRATOR' || res.data.role === 'STAFF'){
                     window.location = '/dashboard';
                 }
 

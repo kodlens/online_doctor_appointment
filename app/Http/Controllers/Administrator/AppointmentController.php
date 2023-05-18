@@ -33,6 +33,7 @@ class AppointmentController extends Controller
 
         $data = Appointment::with(['user', 'schedule', 'patients'])
             ->where('appointment_date', 'like',  $ndate . '%')
+            ->where('is_archived', 0)
             ->orderBy($sort[0], $sort[1])
             ->paginate($req->perpage);
 
@@ -57,6 +58,7 @@ class AppointmentController extends Controller
         //para sure isa lang ka schedule per day.
         $existSched = Appointment::where('user_id', $req->user_id)
             ->where('appointment_date', $appdate)
+            ->where('is_archived', 0)
             ->exists();
         if($existSched){
             return response()->json([
@@ -71,6 +73,7 @@ class AppointmentController extends Controller
         //get the max no of the schedule
         $appMax = Appointment::where('schedule_id', $req->schedule_id)
             ->where('appointment_date', $appdate)
+            ->where('is_archived', 0)
             ->count();
 
         //para sure dili mulapas sa na set up nga max sa schedule
@@ -89,8 +92,6 @@ class AppointmentController extends Controller
             'user_id' => $req->user_id,
             'schedule_id' => $req->schedule_id,
             'appointment_date' => $appdate,
-            'illness_history' => $req->illness_history,
-            
         ]);
 
 
@@ -120,6 +121,7 @@ class AppointmentController extends Controller
         $existSched = Appointment::where('user_id', $req->user_id)
             ->where('appointment_date', $appdate)
             ->where('appointment_id', '!=', $id)
+            ->where('is_archived', 0)
             ->exists();
 
         if($existSched){
@@ -131,32 +133,42 @@ class AppointmentController extends Controller
             ], 422);
         }
 
+        $app = Appointment::with(['user'])->where('appointment_id', $id);
+        $user = $app->first()->user;
 
-        //insert into database
-        Appointment::update([
+        $app->update([
             'user_id' => $req->user_id,
             'schedule_id' => $req->schedule_id,
             'appointment_date' => $appdate,
-            'illness_history' => $req->illness_history,
         ]);
 
-        //unfinished
+        $newSchedule = Appointment::with('schedule')
+            ->where('appointment_id', $id)
+            ->first();
+
+        //return $newSchedule;
+
 
         if(env('ENABLE_SMS') == 1){
-            $timeStart = date('h:i A', strtotime($schedule->time_start));
-            $timeEnd = date('h:i A', strtotime($schedule->time_end));
+            $timeStart = date('h:i A', strtotime($newSchedule->schedule->time_from));
+            $timeEnd = date('h:i A', strtotime($newSchedule->schedule->time_end));
 
-            $msg = 'Appointment confirmation: '. $nameTitle . $user->lname . ', ' . $user->fname . ', your appointment with Dr. Tilao on '. date('M-d-Y', strtotime($data->appointment_date)) .', ' . $timeStart. ') has been confirmed/approved.';
+            $msg = 'Reschedule Notice: '. ' Your appointment with Dr. Tilao has been moved to '. date('M-d-Y', strtotime($appdate)) .', ' . $timeStart. '.';
             
             try{
                 Http::withHeaders([
                     'Content-Type' => 'text/plain'
                 ])->post('http://'. env('IP_SMS_GATEWAY') .'/services/api/messaging?Message='.$msg.'&To='.$user->contact_no.'&Slot=1', []);
-            }catch(\Exception $e){} //just hide the error
+            }catch(\Exception $e){
+                return response()->json([
+                    'error' => $e->getMessage()
+                ], 422);
+
+            } //just hide the error
         }
 
         return response()->json([
-            'status' => 'saved'
+            'status' => 'updated'
         ], 200);
     }
 

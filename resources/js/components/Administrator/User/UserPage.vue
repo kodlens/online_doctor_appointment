@@ -68,6 +68,10 @@
                                 <b-table-column field="role" label="ROLE" v-slot="props">
                                     {{ props.row.role }}
                                 </b-table-column>
+
+                                <b-table-column field="contact_no" label="Contact No." v-slot="props">
+                                    {{ props.row.contact_no }}
+                                </b-table-column>
     
                                 <b-table-column label="Action" v-slot="props">
                                     <div class="is-flex">
@@ -240,6 +244,7 @@
                                              :message="this.errors.role ? this.errors.role[0] : ''">
                                         <b-select v-model="fields.role" expanded>
                                             <option value="ADMINISTRATOR">ADMINISTRATOR</option>
+                                            <option value="STAFF">STAFF</option>
                                             <option value="USER">USER</option>
                                         </b-select>
                                     </b-field>

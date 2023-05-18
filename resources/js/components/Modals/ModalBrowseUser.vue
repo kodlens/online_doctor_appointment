@@ -2,13 +2,13 @@
     <div>
         <b-field>
             <b-input :value="valueFullname" expanded  icon="account-outline" 
-                placeholder="Select user" required readonly>
+                placeholder="Scheduler" required readonly>
             </b-input>
-            <p class="control">
+            <!-- <p class="control">
                 <b-button class="button is-primary"
                 icon-left="magnify"
                 @click="openModal"></b-button>
-            </p>
+            </p> -->
         </b-field>
 
 

@@ -48,9 +48,12 @@ class UserController extends Controller
             'mname' => ['required', 'string', 'max:100'],
             'sex' => ['required', 'string', 'max:20'],
             'password' => ['required', 'string', 'confirmed'],
+            'contact_no' => ['required', 'regex:/^(09|\+639)\d{9}$/', 'unique:users'],
             'province' => ['required', 'string'],
             'city' => ['required', 'string'],
             'barangay' => ['required', 'string'],
+        ],[
+            'contact_no.regex' => 'Please enter a valid Philippines mobile phone number.',
         ]);
 
         User::create([
@@ -82,10 +85,13 @@ class UserController extends Controller
             'fname' => ['required', 'string', 'max:100'],
             'mname' => ['required', 'string', 'max:100'],
             'sex' => ['required', 'string', 'max:20'],
+            'contact_no' => ['required', 'regex:/^(09|\+639)\d{9}$/', 'unique:users'],
             'role' => ['required', 'string'],
             'province' => ['required', 'string'],
             'city' => ['required', 'string'],
             'barangay' => ['required', 'string'],
+        ],[
+            'contact_no.regex' => 'Please enter a valid Philippines mobile phone number.',
         ]);
 
         $data = User::find($id);
@@ -94,9 +100,8 @@ class UserController extends Controller
         $data->fname = strtoupper($req->fname);
         $data->mname = strtoupper($req->mname);
         $data->sex = $req->sex;
-      
+        $data->contact_no = $req->contact_no;
         $data->role = $req->role;
-    
         $data->province = $req->province;
         $data->city = $req->city;
         $data->barangay = $req->barangay;

@@ -27,6 +27,8 @@ class CreateAppointmentsTable extends Migration
             $table->tinyInteger('status')->default(0);
             $table->tinyInteger('is_notify')->default(0);
 
+            $table->tinyInteger('is_archived')->default(0);
+
             $table->timestamps();
         });
     }

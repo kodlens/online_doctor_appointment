@@ -10,7 +10,7 @@
 
                         <div class="w-panel-body">
                             
-                            <b-field label="Select user" label-position="on-border">
+                            <b-field label="Scheduler" label-position="on-border">
                                 <modal-browse-user :prop-user="user_fullname" 
                                     @browseUser="emitBrowseUser($event)">
                                 </modal-browse-user>
@@ -35,17 +35,12 @@
                                 </div>
                             </div>
 
-                            <b-field class="mt-3" label="Illness Description/History (Optional)" label-position="on-border">
-                                <b-input type="textarea" placeholder="Illness Description/History (Optional)"
-                                    v-model="fields.illness_history"></b-input>
-                            </b-field>
-
                             <div class="buttons">
                                 <b-button
                                     @click="submit"
                                     :disabled="schedule_id < 1"
                                     class="mt-3"
-                                    label="Apply for appointment"
+                                    label="Save Schedule"
                                     icon-left="calendar"
                                     type="is-primary is-outlined"></b-button>
                             </div>
@@ -138,14 +133,13 @@ export default{
                 user_id: this.fields.user_id,
                 appointment_date: appdate,
                 schedule_id: this.schedule_id,
-                illness_history: this.fields.illness_history
              };
 
 
             if(this.propId > 0){
                 //logic
                 axios.put('/appointments/' + this.propId, appointment).then(res=>{
-                    if(res.data.status === 'saved'){
+                    if(res.data.status === 'updated'){
                         this.$buefy.dialog.alert({
                             title: 'Saved!',
                             message: 'Reservation successfully saved.',
@@ -233,10 +227,7 @@ export default{
 
                 this.appointment_date = new Date(this.appointment.appointment_date)
                 this.fields.user_id = this.appointment.user_id;
-                this.fields.illness_history = this.appointment.illness_history;
-
                 this.loadOpenSchedules()
-            
                 this.user_fullname = this.appointment.user.lname + ', ' + this.appointment.user.fname + ' ' + this.appointment.user.mname;
             }
 
