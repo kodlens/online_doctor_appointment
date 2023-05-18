@@ -16,8 +16,8 @@ class CreatePatientsTable extends Migration
         Schema::create('patients', function (Blueprint $table) {
             $table->id('patient_id');
 
-            $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('user_id')->on('users')
+            $table->unsignedBigInteger('appointment_id');
+            $table->foreign('appointment_id')->references('appointment_id')->on('appointments')
                 ->onUpdate('cascade')->onDelete('cascade');
 
 

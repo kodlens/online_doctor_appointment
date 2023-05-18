@@ -44,6 +44,7 @@
                                 backend-pagination
                                 pagination-rounded
                                 :total="total"
+                                detailed
                                 :per-page="perPage"
                                 @page-change="onPageChange"
                                 aria-next-label="Next page"
@@ -110,12 +111,21 @@
                                         </b-select>
                                     </b-field>
                                 </div>
-                                <!-- <div class="buttons mt-3">
-                                    <b-button @click="openModal" 
-                                        icon-left="plus" class="is-success">
-                                        ADD APPOINTMENT
-                                    </b-button>
-                                </div> -->
+                                
+                                <template #detail="props">
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Age</th>
+                                        <th>Illness</th>
+                                    </tr>
+                                    <tr>
+                                        <td>{{ props.row.patients.lname }}, {{ props.row.patients.fname }} {{ props.row.patients.mname }}</td>
+                                        <td>{{ props.row.patients.age }}</td>
+                                        <td>{{ props.row.patients.illness }}</td>
+                                    </tr>
+                                </template>
+
+                                
                             </b-table>
                         </div> <!--panel body-->
 

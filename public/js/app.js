@@ -7762,6 +7762,27 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -10614,6 +10635,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -11523,6 +11554,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
@@ -11600,7 +11632,9 @@ __webpack_require__.r(__webpack_exports__);
             type: 'is-success'
           });
 
-          _this3.fields = {};
+          _this3.fields = {
+            patients: []
+          };
           _this3.errors = {};
         }
       })["catch"](function (err) {
@@ -33710,6 +33744,7 @@ var render = function () {
                       data: _vm.data,
                       loading: _vm.loading,
                       paginated: "",
+                      detailed: "",
                       "backend-pagination": "",
                       "pagination-rounded": "",
                       total: _vm.total,
@@ -33722,6 +33757,48 @@ var render = function () {
                       "default-sort-direction": _vm.defaultSortDirection,
                     },
                     on: { "page-change": _vm.onPageChange, sort: _vm.onSort },
+                    scopedSlots: _vm._u([
+                      {
+                        key: "detail",
+                        fn: function (props) {
+                          return [
+                            props.row.patients
+                              ? _c("div", [
+                                  _c("tr", [
+                                    _c("th", [_vm._v("Name")]),
+                                    _vm._v(" "),
+                                    _c("th", [_vm._v("Age")]),
+                                    _vm._v(" "),
+                                    _c("th", [_vm._v("Illness")]),
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("tr", [
+                                    _c("td", [
+                                      _vm._v(
+                                        _vm._s(props.row.patients.lname) +
+                                          ", " +
+                                          _vm._s(props.row.patients.fname) +
+                                          " " +
+                                          _vm._s(props.row.patients.mname)
+                                      ),
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("td", [
+                                      _vm._v(_vm._s(props.row.patients.age)),
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("td", [
+                                      _vm._v(
+                                        _vm._s(props.row.patients.illness)
+                                      ),
+                                    ]),
+                                  ]),
+                                ])
+                              : _vm._e(),
+                          ]
+                        },
+                      },
+                    ]),
                   },
                   [
                     _c(
@@ -38251,6 +38328,7 @@ var render = function () {
                       "backend-pagination": "",
                       "pagination-rounded": "",
                       total: _vm.total,
+                      detailed: "",
                       "per-page": _vm.perPage,
                       "aria-next-label": "Next page",
                       "aria-previous-label": "Previous page",
@@ -38260,6 +38338,42 @@ var render = function () {
                       "default-sort-direction": _vm.defaultSortDirection,
                     },
                     on: { "page-change": _vm.onPageChange, sort: _vm.onSort },
+                    scopedSlots: _vm._u([
+                      {
+                        key: "detail",
+                        fn: function (props) {
+                          return [
+                            _c("tr", [
+                              _c("th", [_vm._v("Name")]),
+                              _vm._v(" "),
+                              _c("th", [_vm._v("Age")]),
+                              _vm._v(" "),
+                              _c("th", [_vm._v("Illness")]),
+                            ]),
+                            _vm._v(" "),
+                            _c("tr", [
+                              _c("td", [
+                                _vm._v(
+                                  _vm._s(props.row.patients.lname) +
+                                    ", " +
+                                    _vm._s(props.row.patients.fname) +
+                                    " " +
+                                    _vm._s(props.row.patients.mname)
+                                ),
+                              ]),
+                              _vm._v(" "),
+                              _c("td", [
+                                _vm._v(_vm._s(props.row.patients.age)),
+                              ]),
+                              _vm._v(" "),
+                              _c("td", [
+                                _vm._v(_vm._s(props.row.patients.illness)),
+                              ]),
+                            ]),
+                          ]
+                        },
+                      },
+                    ]),
                   },
                   [
                     _c("b-table-column", {
@@ -39315,7 +39429,7 @@ var render = function () {
                       ]),
                       _vm._v(" "),
                       _vm._l(_vm.fields.patients, function (patient, pIndex) {
-                        return _c("div", { key: pIndex }, [
+                        return _c("div", { key: "patient" + pIndex }, [
                           _c("div", { staticClass: "columns" }, [
                             _c(
                               "div",
@@ -39404,11 +39518,11 @@ var render = function () {
                                         placeholder: "Patient Middle Name",
                                       },
                                       model: {
-                                        value: patient.lname,
+                                        value: patient.mname,
                                         callback: function ($$v) {
-                                          _vm.$set(patient, "lname", $$v)
+                                          _vm.$set(patient, "mname", $$v)
                                         },
-                                        expression: "patient.lname",
+                                        expression: "patient.mname",
                                       },
                                     }),
                                   ],

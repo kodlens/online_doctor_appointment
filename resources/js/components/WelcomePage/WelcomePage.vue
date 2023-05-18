@@ -27,7 +27,8 @@
                             <div class="doctor-schedule-header">
                                 Patient Information
                             </div>
-                            <div v-for="(patient, pIndex) in fields.patients" :key="pIndex">
+                            
+                            <div v-for="(patient, pIndex) in fields.patients" :key="`patient${pIndex}`">
                                 <div class="columns">
                                     <div class="column">
                                         <b-field label="Patient Last Name" label-position="on-border">
@@ -46,7 +47,7 @@
                                 <div class="columns">
                                     <div class="column">
                                         <b-field label="Patient Middle Name" label-position="on-border">
-                                            <b-input type="text" v-model="patient.lname" placeholder="Patient Middle Name">
+                                            <b-input type="text" v-model="patient.mname" placeholder="Patient Middle Name">
                                             </b-input>
                                         </b-field>
                                     </div>
@@ -335,7 +336,11 @@ export default {
                         message: 'Reservation successfully saved.',
                         type: 'is-success'
                     });
-                    this.fields = {};
+                    
+                    this.fields = {
+                        patients: []
+                    };
+
                     this.errors = {};
                 }
 

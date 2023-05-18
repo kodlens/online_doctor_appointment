@@ -24,7 +24,6 @@ class CreateAppointmentsTable extends Migration
                 ->onUpdate('cascade')->onDelete('cascade');
             
             $table->date('appointment_date')->nullable();
-            $table->text('illness_history')->nullable();
             $table->tinyInteger('status')->default(0);
             $table->tinyInteger('is_notify')->default(0);
 

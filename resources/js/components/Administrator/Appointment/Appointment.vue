@@ -56,6 +56,7 @@
                                 :data="data"
                                 :loading="loading"
                                 paginated
+                                detailed
                                 backend-pagination
                                 pagination-rounded
                                 :total="total"
@@ -153,6 +154,26 @@
                                         </b-tooltip>
                                     </div>
                                 </b-table-column>
+
+
+
+
+                                <template #detail="props">
+                                    <div v-if="props.row.patients">
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Age</th>
+                                            <th>Illness</th>
+                                        </tr>
+                                        <tr>
+                                            <td>{{ props.row.patients.lname }}, {{ props.row.patients.fname }} {{ props.row.patients.mname }}</td>
+                                            <td>{{ props.row.patients.age }}</td>
+                                            <td>{{ props.row.patients.illness }}</td>
+                                        </tr>
+                                    </div>
+                                    
+                                </template>
+
                             </b-table>
                         </div> <!--panel body-->
 

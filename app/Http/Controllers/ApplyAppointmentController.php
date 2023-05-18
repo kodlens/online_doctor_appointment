@@ -6,15 +6,15 @@ use Illuminate\Http\Request;
 use Auth;
 use App\Models\Schedule;
 use App\Models\Appointment;
+use App\Models\Patient;
 
 
 class ApplyAppointmentController extends Controller
 {
     //
-
-
     public function applyAppointment(Request $req){
 
+ 
         $appdate = date("Y-m-d", strtotime($req->appointment_date));
         $user = Auth::user();
 
@@ -97,13 +97,27 @@ class ApplyAppointmentController extends Controller
         }
 
         //insert into database
-        Appointment::create([
+        $appointment = Appointment::create([
             'user_id' => $user->user_id,
             'schedule_id' => $req->schedule_id,
             'appointment_date' => $appdate,
-            'illness_history' => $req->illness_history,
         ]);
 
+        $patient = [];
+        foreach($req->patients as $item){
+            array_push($patient, [
+                'appointment_id' => $appointment->appointment_id,
+                'lname' => strtoupper($item['lname']),
+                'fname' => strtoupper($item['fname']),
+                'mname' => strtoupper($item['mname']),
+                'sex' => strtoupper($item['sex']),
+                'age' => $item['age'],
+                'illness' => $item['illness'],
+
+            ]);
+        }
+
+        Patient::insert($patient);
 
         return response()->json([
             'status' => 'saved'

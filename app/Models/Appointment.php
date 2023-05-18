@@ -30,5 +30,9 @@ class Appointment extends Model
         return $this->hasOne(Schedule::class, 'schedule_id', 'schedule_id');
     }
 
+    public function patients(){
+        return $this->hasOne(Patient::class, 'appointment_id', 'appointment_id');
+    }
+
     
 }

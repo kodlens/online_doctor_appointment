@@ -101,7 +101,6 @@ Route::middleware(['auth', 'admin'])->group(function(){
 /*ADMINSITRATOR*/
 
 
-
 Route::get('/session', function(){
     return Session::all();
 });

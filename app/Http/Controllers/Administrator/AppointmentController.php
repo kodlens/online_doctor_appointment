@@ -31,7 +31,7 @@ class AppointmentController extends Controller
             $ndate = '';
         }
 
-        $data = Appointment::with(['user', 'schedule'])
+        $data = Appointment::with(['user', 'schedule', 'patients'])
             ->where('appointment_date', 'like',  $ndate . '%')
             ->orderBy($sort[0], $sort[1])
             ->paginate($req->perpage);
