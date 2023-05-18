@@ -41,8 +41,6 @@
             <navbar-doctor :is-auth=0></navbar-doctor>
         @endauth
 
-        
-
     <div>
         @yield('content')
     </div>

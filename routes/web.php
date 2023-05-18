@@ -90,6 +90,11 @@ Route::middleware(['auth', 'admin'])->group(function(){
     Route::resource('/schedules', App\Http\Controllers\Administrator\ScheduleController::class);
     Route::get('/get-schedules', [App\Http\Controllers\Administrator\ScheduleController::class, 'getSchedules']);
     
+    Route::resource('/max-patients', App\Http\Controllers\Administrator\MaxPatientController::class);
+    Route::post('/update-max-patient', [App\Http\Controllers\Administrator\MaxPatientController::class, 'updateMaxPatient']);
+    Route::get('/get-max-patients', [App\Http\Controllers\Administrator\MaxPatientController::class, 'getMaxPatients']);
+
+
     Route::post('/reset-password/{id}', [App\Http\Controllers\Administrator\UserController::class, 'resetPassword']);
 });
 

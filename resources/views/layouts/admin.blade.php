@@ -27,7 +27,6 @@
 
     <style>
 
-        
         @font-face {
             
             font-family: 'Signika', sans-serif;
@@ -67,6 +66,9 @@
                     class="{{ (request()->is('schedules*')) ? 'active' : '' }}">
                     <b-navbar-item href="/schedules">
                         Setup Schedule
+                    </b-navbar-item>
+                    <b-navbar-item href="/max-patients">
+                        Set Max Patient
                     </b-navbar-item>
                     {{-- <b-navbar-item href="#">
                         Contact
@@ -110,12 +112,12 @@
             @csrf
         </form>
 
-    <div>
-        @yield('content')
-    </div>
+        <div>
+            @yield('content')
+        </div>
 
 
-    </div>
+    </div> <!-- id app -->
 
 </body>
 </html>
