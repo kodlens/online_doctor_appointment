@@ -84,13 +84,26 @@ Route::middleware(['auth', 'staff'])->group(function(){
     Route::post('/appointment-cancel/{id}', [App\Http\Controllers\Administrator\AppointmentController::class, 'cancelAppointment']);
     Route::post('/appointment-pending/{id}', [App\Http\Controllers\Administrator\AppointmentController::class, 'pendingAppointment']);
     Route::post('/appointment-archive/{id}', [App\Http\Controllers\Administrator\AppointmentController::class, 'archiveAppointment']);
+    Route::post('/appointment-set-arrived/{id}', [App\Http\Controllers\Administrator\AppointmentController::class, 'setArrived']);
+    Route::post('/appointment-set-served/{id}', [App\Http\Controllers\Administrator\AppointmentController::class, 'setServed']);
+
+
+    
+    //REPORT
+    Route::get('/report-appointments', [App\Http\Controllers\Administrator\Report\ReportPatientAppointmentController::class, 'index']);
+    Route::get('/get-report-patients-appointments', [App\Http\Controllers\Administrator\Report\ReportPatientAppointmentController::class, 'getDataReportPatientAppointment']);
+    
+    Route::get('/report-no-serve-unserve', [App\Http\Controllers\Administrator\Report\ReportPatientAppointmentController::class, 'indexNoServeUnserve']);
+    Route::get('/get-report-no-serve-unserve', [App\Http\Controllers\Administrator\Report\ReportPatientAppointmentController::class, 'getDataReportServeUnserve']);
+
+
+    
 });
 
 Route::middleware(['auth', 'admin'])->group(function(){
 
     Route::resource('/schedules', App\Http\Controllers\Administrator\ScheduleController::class);
     Route::get('/get-schedules', [App\Http\Controllers\Administrator\ScheduleController::class, 'getSchedules']);
-
 
 
     Route::resource('/users', App\Http\Controllers\Administrator\UserController::class);

@@ -31,7 +31,10 @@ class Appointment extends Model
     }
 
     public function patients(){
-        return $this->hasOne(Patient::class, 'appointment_id', 'appointment_id');
+        return $this->hasMany(Patient::class, 'appointment_id', 'appointment_id')
+            ->leftJoin('provinces', 'patients.province', 'provinces.provCode')
+            ->leftJoin('cities', 'patients.city', 'cities.citymunCode')
+            ->leftJoin('barangays', 'patients.barangay', 'barangays.brgyCode');
     }
 
     

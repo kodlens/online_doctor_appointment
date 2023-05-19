@@ -85,16 +85,16 @@
                                 <div class="columns">
                                     <div class="column">
                                         <b-field label="Province" label-position="on-border" expanded>
-                                            <b-select v-model="patient.province" @focus="loadProvince" expanded>
-                                                <option v-for="(item, index) in provinces" :key="index" :value="item.provCode">{{ item.provDesc }}</option>
+                                            <b-select v-model="patient.province" @focus="loadProvince(pIndex)" expanded>
+                                                <option v-for="(item, index) in patient.provinces" :key="index" :value="item.provCode">{{ item.provDesc }}</option>
                                             </b-select>
                                         </b-field>
                                     </div>
 
                                     <div class="column">
                                         <b-field label="City" label-position="on-border" expanded>
-                                            <b-select v-model="patient.city" @focus="loadCities(patient.province)" expanded>
-                                                <option v-for="(item, index) in cities" :key="index" :value="item.citymunCode">{{ item.citymunDesc }}</option>
+                                            <b-select v-model="patient.city" @focus="loadCities(pIndex, patient.province)" expanded>
+                                                <option v-for="(item, index) in patient.cities" :key="index" :value="item.citymunCode">{{ item.citymunDesc }}</option>
                                             </b-select>
                                         </b-field>
                                     </div>
@@ -104,14 +104,14 @@
                                 <div class="columns">
                                     <div class="column">
                                         <b-field label="Barangay" label-position="on-border" expanded>
-                                            <b-select v-model="patient.barangay" expanded @focus="loadBarangays(patient.province, patient.city)">
-                                                <option v-for="(item, index) in barangays" :key="index" :value="item.brgyCode">{{ item.brgyDesc }}</option>
+                                            <b-select v-model="patient.barangay" expanded @focus="loadBarangays(pIndex, patient.province, patient.city)">
+                                                <option v-for="(item, index) in patient.barangays" :key="index" :value="item.brgyCode">{{ item.brgyDesc }}</option>
                                             </b-select>
                                         </b-field>
                                     </div>
                                     <div class="column">
                                         <b-field label="Street" label-position="on-border">
-                                            <b-input v-model="fields.street"
+                                            <b-input v-model="patient.street"
                                                     placeholder="Street">
                                             </b-input>
                                         </b-field>
@@ -295,17 +295,8 @@ export default {
         return {
             fields: {
                 patients: [],
-                
             },
-
-            patients: [
-                {
-                    provinces: [],
-                    cities: [],
-                    barangays: [],
-                    street: '',
-                }
-            ],
+           
             errors: {},
 
             appointment_date: new Date(),
@@ -449,6 +440,14 @@ export default {
                 sex: '',
                 age: 0,
                 illness: '',
+                province: '',
+                city: '',
+                barangay: '',
+                street: '',
+                provinces: [],
+                cities: [],
+                barangays: [],
+                street: '',
             });
 
          
@@ -464,21 +463,21 @@ export default {
             });
         },
 
-        loadProvince: function(){
+        loadProvince: function(index){
             axios.get('/load-provinces').then(res=>{
-                this.provinces = res.data;
+                this.fields.patients[index].provinces = res.data;
             })
         },
 
-        loadCities: function(prov){
+        loadCities: function(index, prov){
             axios.get('/load-cities?prov=' + prov).then(res=>{
-                this.cities = res.data;
+                this.fields.patients[index].cities = res.data;
             })
         },
 
-        loadBarangays: function(prov, city){
+        loadBarangays: function(index, prov, city){
             axios.get('/load-barangays?prov=' + prov + '&city_code='+ city).then(res=>{
-                this.barangays = res.data;
+                this.fields.patients[index].barangays = res.data;
             })
         },
 

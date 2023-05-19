@@ -1,16 +1,9 @@
 @media print {
-    /*.myDivToPrint {*/
-    /*    background-color: white;*/
-    /*    height: 100%;*/
-    /*    width: 100%;*/
-    /*    position: fixed;*/
-    /*    top: 0;*/
-    /*    left: 0;*/
-    /*    margin: 0;*/
-    /*    padding: 15px;*/
-    /*    font-size: 14px;*/
-    /*    line-height: 18px;*/
-    /*}*/
+    @page {
+        size: 8.5in 11in; /* Set the size to 8.5 inches by 11 inches */
+        /* You can also use other size units like mm, cm, or pt */
+        /* Example: size: 216mm 279mm; */
+    }
 
     .myDivToPrint{
         margin: 0;
@@ -18,8 +11,8 @@
         background-color: #fff;
         font-size: 14px;
         height: 100%;
-
     }
+    
     .nprint{
         display: none;
     }
@@ -27,22 +20,27 @@
         display: none;
     }
 
+    .report{
+        margin: 0;
+        padding: 0;
+    }
+
+    
+
 }
 
 .debug{
     border: 1px solid red;
 }
 
-.printarea{
-    width: 816px;
-    margin: 30px auto 0;
+@page{
+    size: 8.5in 13in;
 }
-
-
 
 .report{
     margin-top: 25px;
     border: 1px solid black;
+    padding: 5px;
 }
 .report-body{
     padding: 15px;
@@ -54,23 +52,23 @@
     padding: 5px 0;
 }
 .report-table {
-    display: flex;
+    font-size: .9em;
 }
-.report-table table{
+.report-table tr{
     margin: 15px auto;
 }
 
-.report-table table  tr th{
-    padding: 15px;
+.report-table  tr th{
+    padding: 10px;
+    border: 1px solid rgb(197, 197, 197);
+
 }
 
-.report-table table  tr{
-    border: 1px solid black;
-}
-.report-table table  tr  td{
+
+.report-table tr  td{
     text-align: left;
-    border: 1px solid black;
-    padding: 15px;
+    border: 1px solid rgb(197, 197, 197);
+    padding: 5px;
 }
 
 .print-title{
@@ -79,9 +77,3 @@
     text-align: center;
 }
 
-.print-cy{
-    font-weight: bold;
-    text-align: center;
-    margin-bottom: 20px;
-
-}

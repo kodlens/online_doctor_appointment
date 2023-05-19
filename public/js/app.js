@@ -7790,6 +7790,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -7934,7 +7938,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this6 = this;
 
       this.$buefy.dialog.confirm({
-        title: 'Cacnel?!',
+        title: 'Cancel?',
         type: 'is-danger',
         message: 'Are you sure you want to cancel this appointment?',
         confirmText: 'Yes',
@@ -7976,6 +7980,54 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (err) {
         if (err.response.status === 422) {
           _this9.errors = err.response.data.errors;
+        }
+      });
+    },
+    confirmArrive: function confirmArrive(id) {
+      var _this10 = this;
+
+      this.$buefy.dialog.confirm({
+        title: 'Set to Arrive?!',
+        type: 'is-info',
+        message: 'Are you sure you want to set arrived this appointment?',
+        confirmText: 'Yes',
+        onConfirm: function onConfirm() {
+          return _this10.submitArrive(id);
+        }
+      });
+    },
+    submitArrive: function submitArrive(id) {
+      var _this11 = this;
+
+      axios.post('/appointment-set-arrived/' + id).then(function (res) {
+        _this11.loadAsyncData();
+      })["catch"](function (err) {
+        if (err.response.status === 422) {
+          _this11.errors = err.response.data.errors;
+        }
+      });
+    },
+    confirmServe: function confirmServe(id) {
+      var _this12 = this;
+
+      this.$buefy.dialog.confirm({
+        title: 'Set to Serve?!',
+        type: 'is-info',
+        message: 'Are you sure you want to set serve this appointment?',
+        confirmText: 'Yes',
+        onConfirm: function onConfirm() {
+          return _this12.submitServe(id);
+        }
+      });
+    },
+    submitServe: function submitServe(id) {
+      var _this13 = this;
+
+      axios.post('/appointment-set-served/' + id).then(function (res) {
+        _this13.loadAsyncData();
+      })["catch"](function (err) {
+        if (err.response.status === 422) {
+          _this13.errors = err.response.data.errors;
         }
       });
     }
@@ -9486,6 +9538,144 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   mounted: function mounted() {
     this.turnCameraOn();
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Administrator/Report/ReportPatientAppointment.vue?vue&type=script&lang=js&":
+/*!****************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Administrator/Report/ReportPatientAppointment.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  data: function data() {
+    return {
+      global_id: 0,
+      modalResetPassword: false,
+      search: {
+        lname: '',
+        start_date: new Date(new Date().getFullYear(), new Date().getMonth(), 1),
+        end_date: new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0)
+      },
+      btnClass: {
+        'is-success': true,
+        'button': true,
+        'is-loading': false
+      },
+      data: []
+    };
+  },
+  methods: {
+    /*
+    * Load async data
+    */
+    loadAsyncData: function loadAsyncData() {
+      var _this = this;
+
+      var params = ["start=".concat(this.$formatDate(this.search.start_date)), "end=".concat(this.$formatDate(this.search.end_date))].join('&');
+      this.loading = true;
+      axios.get("/get-report-patients-appointments?".concat(params)).then(function (res) {
+        _this.data = res.data;
+      })["catch"](function (err) {});
+    },
+    printWindow: function printWindow() {
+      window.print();
+    }
+  },
+  computed: {
+    countPatient: function countPatient() {
+      var count = 0;
+      this.data.forEach(function (el) {
+        if (el.patient_lname) {
+          count += 1;
+        }
+      });
+      return count;
+    }
+  },
+  mounted: function mounted() {
+    this.loadAsyncData();
   }
 });
 
@@ -11111,6 +11301,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -11781,6 +11972,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _CarouselImages_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CarouselImages.vue */ "./resources/js/components/WelcomePage/CarouselImages.vue");
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -12077,12 +12270,6 @@ __webpack_require__.r(__webpack_exports__);
       fields: {
         patients: []
       },
-      patients: [{
-        provinces: [],
-        cities: [],
-        barangays: [],
-        street: ''
-      }],
       errors: {},
       appointment_date: new Date(),
       max: 0,
@@ -12194,14 +12381,21 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     addPatient: function addPatient() {
-      this.fields.patients.push({
+      this.fields.patients.push(_defineProperty({
         lname: '',
         fname: '',
         mname: '',
         sex: '',
         age: 0,
-        illness: ''
-      });
+        illness: '',
+        province: '',
+        city: '',
+        barangay: '',
+        street: '',
+        provinces: [],
+        cities: [],
+        barangays: []
+      }, "street", ''));
     },
     removePatient: function removePatient(index) {
       var _this4 = this;
@@ -12214,25 +12408,25 @@ __webpack_require__.r(__webpack_exports__);
         }
       });
     },
-    loadProvince: function loadProvince() {
+    loadProvince: function loadProvince(index) {
       var _this5 = this;
 
       axios.get('/load-provinces').then(function (res) {
-        _this5.provinces = res.data;
+        _this5.fields.patients[index].provinces = res.data;
       });
     },
-    loadCities: function loadCities(prov) {
+    loadCities: function loadCities(index, prov) {
       var _this6 = this;
 
       axios.get('/load-cities?prov=' + prov).then(function (res) {
-        _this6.cities = res.data;
+        _this6.fields.patients[index].cities = res.data;
       });
     },
-    loadBarangays: function loadBarangays(prov, city) {
+    loadBarangays: function loadBarangays(index, prov, city) {
       var _this7 = this;
 
       axios.get('/load-barangays?prov=' + prov + '&city_code=' + city).then(function (res) {
-        _this7.barangays = res.data;
+        _this7.fields.patients[index].barangays = res.data;
       });
     },
     loadMaxPatient: function loadMaxPatient() {
@@ -30702,6 +30896,30 @@ ___CSS_LOADER_EXPORT___.push([module.id, "\n.validation-success[data-v-2d7d15ee]
 
 /***/ }),
 
+/***/ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Administrator/Report/ReportPatientAppointment.vue?vue&type=style&index=0&id=649d710c&scoped=true&lang=css&":
+/*!************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Administrator/Report/ReportPatientAppointment.vue?vue&type=style&index=0&id=649d710c&scoped=true&lang=css& ***!
+  \************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__);
+// Imports
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, "\n.text-container[data-v-649d710c] {\n    max-width: 200px; /* Set the width of the container to limit the text length */\n    overflow: hidden; /* Hide overflowing text */\n    white-space: nowrap; /* Prevent text from wrapping to new lines */\n    text-overflow: ellipsis; /* Show ellipsis (...) when text overflows */\n}\n.long-text[data-v-649d710c] {\n    max-height: 3em; /* Set the maximum height of the text to limit the number of lines */\n    margin: 0; /* Reset margin */\n    padding: 0; /* Reset padding */\n}\n\n", ""]);
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
 /***/ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/FooterPage.vue?vue&type=style&index=0&lang=css&":
 /*!*************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/FooterPage.vue?vue&type=style&index=0&lang=css& ***!
@@ -32091,6 +32309,36 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 
 /***/ }),
 
+/***/ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Administrator/Report/ReportPatientAppointment.vue?vue&type=style&index=0&id=649d710c&scoped=true&lang=css&":
+/*!****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Administrator/Report/ReportPatientAppointment.vue?vue&type=style&index=0&id=649d710c&scoped=true&lang=css& ***!
+  \****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ReportPatientAppointment_vue_vue_type_style_index_0_id_649d710c_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !!../../../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./ReportPatientAppointment.vue?vue&type=style&index=0&id=649d710c&scoped=true&lang=css& */ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Administrator/Report/ReportPatientAppointment.vue?vue&type=style&index=0&id=649d710c&scoped=true&lang=css&");
+
+            
+
+var options = {};
+
+options.insert = "head";
+options.singleton = false;
+
+var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ReportPatientAppointment_vue_vue_type_style_index_0_id_649d710c_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_1__["default"], options);
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ReportPatientAppointment_vue_vue_type_style_index_0_id_649d710c_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_1__["default"].locals || {});
+
+/***/ }),
+
 /***/ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/FooterPage.vue?vue&type=style&index=0&lang=css&":
 /*!*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/FooterPage.vue?vue&type=style&index=0&lang=css& ***!
@@ -33010,6 +33258,47 @@ component.options.__file = "resources/js/components/Administrator/QRScanner/QrSc
 
 /***/ }),
 
+/***/ "./resources/js/components/Administrator/Report/ReportPatientAppointment.vue":
+/*!***********************************************************************************!*\
+  !*** ./resources/js/components/Administrator/Report/ReportPatientAppointment.vue ***!
+  \***********************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _ReportPatientAppointment_vue_vue_type_template_id_649d710c_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ReportPatientAppointment.vue?vue&type=template&id=649d710c&scoped=true& */ "./resources/js/components/Administrator/Report/ReportPatientAppointment.vue?vue&type=template&id=649d710c&scoped=true&");
+/* harmony import */ var _ReportPatientAppointment_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ReportPatientAppointment.vue?vue&type=script&lang=js& */ "./resources/js/components/Administrator/Report/ReportPatientAppointment.vue?vue&type=script&lang=js&");
+/* harmony import */ var _ReportPatientAppointment_vue_vue_type_style_index_0_id_649d710c_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ReportPatientAppointment.vue?vue&type=style&index=0&id=649d710c&scoped=true&lang=css& */ "./resources/js/components/Administrator/Report/ReportPatientAppointment.vue?vue&type=style&index=0&id=649d710c&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! !../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+;
+
+
+/* normalize component */
+
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+  _ReportPatientAppointment_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _ReportPatientAppointment_vue_vue_type_template_id_649d710c_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render,
+  _ReportPatientAppointment_vue_vue_type_template_id_649d710c_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  "649d710c",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/Administrator/Report/ReportPatientAppointment.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/components/Administrator/User/UserPage.vue":
 /*!*****************************************************************!*\
   !*** ./resources/js/components/Administrator/User/UserPage.vue ***!
@@ -33654,6 +33943,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/Administrator/Report/ReportPatientAppointment.vue?vue&type=script&lang=js&":
+/*!************************************************************************************************************!*\
+  !*** ./resources/js/components/Administrator/Report/ReportPatientAppointment.vue?vue&type=script&lang=js& ***!
+  \************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ReportPatientAppointment_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./ReportPatientAppointment.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Administrator/Report/ReportPatientAppointment.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ReportPatientAppointment_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
 /***/ "./resources/js/components/Administrator/User/UserPage.vue?vue&type=script&lang=js&":
 /*!******************************************************************************************!*\
   !*** ./resources/js/components/Administrator/User/UserPage.vue?vue&type=script&lang=js& ***!
@@ -33907,6 +34212,19 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_QrScanner_vue_vue_type_style_index_0_id_2d7d15ee_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/style-loader/dist/cjs.js!../../../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./QrScanner.vue?vue&type=style&index=0&id=2d7d15ee&scoped=true&lang=css& */ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Administrator/QRScanner/QrScanner.vue?vue&type=style&index=0&id=2d7d15ee&scoped=true&lang=css&");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/Administrator/Report/ReportPatientAppointment.vue?vue&type=style&index=0&id=649d710c&scoped=true&lang=css&":
+/*!********************************************************************************************************************************************!*\
+  !*** ./resources/js/components/Administrator/Report/ReportPatientAppointment.vue?vue&type=style&index=0&id=649d710c&scoped=true&lang=css& ***!
+  \********************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ReportPatientAppointment_vue_vue_type_style_index_0_id_649d710c_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/style-loader/dist/cjs.js!../../../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./ReportPatientAppointment.vue?vue&type=style&index=0&id=649d710c&scoped=true&lang=css& */ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Administrator/Report/ReportPatientAppointment.vue?vue&type=style&index=0&id=649d710c&scoped=true&lang=css&");
 
 
 /***/ }),
@@ -34181,6 +34499,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_QrScanner_vue_vue_type_template_id_2d7d15ee_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
 /* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_QrScanner_vue_vue_type_template_id_2d7d15ee_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./QrScanner.vue?vue&type=template&id=2d7d15ee&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Administrator/QRScanner/QrScanner.vue?vue&type=template&id=2d7d15ee&scoped=true&");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/Administrator/Report/ReportPatientAppointment.vue?vue&type=template&id=649d710c&scoped=true&":
+/*!******************************************************************************************************************************!*\
+  !*** ./resources/js/components/Administrator/Report/ReportPatientAppointment.vue?vue&type=template&id=649d710c&scoped=true& ***!
+  \******************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ReportPatientAppointment_vue_vue_type_template_id_649d710c_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ReportPatientAppointment_vue_vue_type_template_id_649d710c_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ReportPatientAppointment_vue_vue_type_template_id_649d710c_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./ReportPatientAppointment.vue?vue&type=template&id=649d710c&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Administrator/Report/ReportPatientAppointment.vue?vue&type=template&id=649d710c&scoped=true&");
 
 
 /***/ }),
@@ -34591,37 +34926,56 @@ var render = function () {
                         fn: function (props) {
                           return [
                             props.row.patients
-                              ? _c("div", [
-                                  _c("tr", [
-                                    _c("th", [_vm._v("Name")]),
-                                    _vm._v(" "),
-                                    _c("th", [_vm._v("Age")]),
-                                    _vm._v(" "),
-                                    _c("th", [_vm._v("Illness")]),
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("tr", [
-                                    _c("td", [
-                                      _vm._v(
-                                        _vm._s(props.row.patients.lname) +
-                                          ", " +
-                                          _vm._s(props.row.patients.fname) +
-                                          " " +
-                                          _vm._s(props.row.patients.mname)
-                                      ),
+                              ? _c(
+                                  "div",
+                                  [
+                                    _c("tr", [
+                                      _c("th", [_vm._v("Name")]),
+                                      _vm._v(" "),
+                                      _c("th", [_vm._v("Age")]),
+                                      _vm._v(" "),
+                                      _c("th", [_vm._v("Address")]),
+                                      _vm._v(" "),
+                                      _c("th", [_vm._v("Illness")]),
                                     ]),
                                     _vm._v(" "),
-                                    _c("td", [
-                                      _vm._v(_vm._s(props.row.patients.age)),
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("td", [
-                                      _vm._v(
-                                        _vm._s(props.row.patients.illness)
-                                      ),
-                                    ]),
-                                  ]),
-                                ])
+                                    _vm._l(
+                                      props.row.patients,
+                                      function (i, ix) {
+                                        return _c("tr", { key: ix }, [
+                                          _c("td", [
+                                            _vm._v(
+                                              _vm._s(i.lname) +
+                                                ", " +
+                                                _vm._s(i.fname) +
+                                                " " +
+                                                _vm._s(i.mname)
+                                            ),
+                                          ]),
+                                          _vm._v(" "),
+                                          _c("td", [_vm._v(_vm._s(i.age))]),
+                                          _vm._v(" "),
+                                          _c("td", [
+                                            _vm._v(
+                                              "\n                                            " +
+                                                _vm._s(i.provDesc) +
+                                                ", " +
+                                                _vm._s(i.citymunDesc) +
+                                                ", " +
+                                                _vm._s(i.brgyDesc) +
+                                                " " +
+                                                _vm._s(i.street) +
+                                                "\n                                        "
+                                            ),
+                                          ]),
+                                          _vm._v(" "),
+                                          _c("td", [_vm._v(_vm._s(i.illness))]),
+                                        ])
+                                      }
+                                    ),
+                                  ],
+                                  2
+                                )
                               : _vm._e(),
                           ]
                         },
@@ -34800,7 +35154,47 @@ var render = function () {
                     }),
                     _vm._v(" "),
                     _c("b-table-column", {
-                      attrs: { field: "status", label: "STATUS" },
+                      attrs: { field: "is_arrived", label: "Arrived" },
+                      scopedSlots: _vm._u([
+                        {
+                          key: "default",
+                          fn: function (props) {
+                            return [
+                              props.row.is_arrived
+                                ? _c(
+                                    "span",
+                                    { staticClass: "status approved" },
+                                    [_vm._v("YES")]
+                                  )
+                                : _c("span", [_vm._v("NO")]),
+                            ]
+                          },
+                        },
+                      ]),
+                    }),
+                    _vm._v(" "),
+                    _c("b-table-column", {
+                      attrs: { field: "is_served", label: "Served" },
+                      scopedSlots: _vm._u([
+                        {
+                          key: "default",
+                          fn: function (props) {
+                            return [
+                              props.row.is_served
+                                ? _c(
+                                    "span",
+                                    { staticClass: "status approved" },
+                                    [_vm._v("YES")]
+                                  )
+                                : _c("span", [_vm._v("NO")]),
+                            ]
+                          },
+                        },
+                      ]),
+                    }),
+                    _vm._v(" "),
+                    _c("b-table-column", {
+                      attrs: { field: "status", label: "Status" },
                       scopedSlots: _vm._u([
                         {
                           key: "default",
@@ -34978,6 +35372,40 @@ var render = function () {
                                               },
                                             },
                                             [_vm._v("Archive")]
+                                          ),
+                                          _vm._v(" "),
+                                          _c(
+                                            "b-dropdown-item",
+                                            {
+                                              attrs: {
+                                                "aria-role": "listitem",
+                                              },
+                                              on: {
+                                                click: function ($event) {
+                                                  return _vm.confirmArrive(
+                                                    props.row.appointment_id
+                                                  )
+                                                },
+                                              },
+                                            },
+                                            [_vm._v("Mark Arrived")]
+                                          ),
+                                          _vm._v(" "),
+                                          _c(
+                                            "b-dropdown-item",
+                                            {
+                                              attrs: {
+                                                "aria-role": "listitem",
+                                              },
+                                              on: {
+                                                click: function ($event) {
+                                                  return _vm.confirmServe(
+                                                    props.row.appointment_id
+                                                  )
+                                                },
+                                              },
+                                            },
+                                            [_vm._v("Mark Served")]
                                           ),
                                         ],
                                         1
@@ -36936,6 +37364,230 @@ var staticRenderFns = [
           _c("b", [_vm._v(" Scan QR here! ")]),
         ]),
       ]),
+    ])
+  },
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Administrator/Report/ReportPatientAppointment.vue?vue&type=template&id=649d710c&scoped=true&":
+/*!*********************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Administrator/Report/ReportPatientAppointment.vue?vue&type=template&id=649d710c&scoped=true& ***!
+  \*********************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function () {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c("div", { staticClass: "columns is-centered" }, [
+      _c("div", { staticClass: "column is-8-desktop is-12-tablet" }, [
+        _c("div", { staticClass: "w-panel-card nprint" }, [
+          _vm._m(0),
+          _vm._v(" "),
+          _c("div", { staticClass: "w-panel-body" }, [
+            _c("div", { staticClass: "columns" }, [
+              _c(
+                "div",
+                { staticClass: "column" },
+                [
+                  _c(
+                    "b-field",
+                    {
+                      attrs: {
+                        label: "Date Filter",
+                        "label-position": "on-border",
+                      },
+                    },
+                    [
+                      _c("b-datepicker", {
+                        attrs: { placeholder: "Start date" },
+                        model: {
+                          value: _vm.search.start_date,
+                          callback: function ($$v) {
+                            _vm.$set(_vm.search, "start_date", $$v)
+                          },
+                          expression: "search.start_date",
+                        },
+                      }),
+                      _vm._v(" "),
+                      _c("b-datepicker", {
+                        attrs: { placeholder: "End date" },
+                        model: {
+                          value: _vm.search.end_date,
+                          callback: function ($$v) {
+                            _vm.$set(_vm.search, "end_date", $$v)
+                          },
+                          expression: "search.end_date",
+                        },
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "p",
+                        { staticClass: "control" },
+                        [
+                          _c("b-button", {
+                            attrs: {
+                              type: "is-primary",
+                              "icon-right": "magnify",
+                            },
+                            on: { click: _vm.loadAsyncData },
+                          }),
+                        ],
+                        1
+                      ),
+                    ],
+                    1
+                  ),
+                ],
+                1
+              ),
+            ]),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "buttons" },
+              [
+                _c("b-button", {
+                  staticClass: "is-outlined",
+                  attrs: {
+                    label: "Print",
+                    "icon-left": "printer",
+                    type: "is-info",
+                  },
+                  on: { click: _vm.printWindow },
+                }),
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c("hr"),
+          ]),
+        ]),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticStyle: { "font-weight": "bold", "font-size": "1em" } },
+          [
+            _vm._v(
+              "APPOINTMENT SCHEDULE FROM " +
+                _vm._s(new Date(_vm.search.start_date).toLocaleDateString()) +
+                " \n                - \n                " +
+                _vm._s(new Date(_vm.search.end_date).toLocaleDateString())
+            ),
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "table",
+          { staticClass: "report-table" },
+          [
+            _vm._m(1),
+            _vm._v(" "),
+            _vm._l(_vm.data, function (i, ix) {
+              return _c("tr", { key: ix }, [
+                _c("td", [_vm._v(_vm._s(i.appointment_id))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(i.appointment_date))]),
+                _vm._v(" "),
+                _c("td", [
+                  i.lname
+                    ? _c("span", [
+                        _vm._v(
+                          "\n                            " +
+                            _vm._s(i.lname) +
+                            ", " +
+                            _vm._s(i.fname) +
+                            "\n                        "
+                        ),
+                      ])
+                    : _vm._e(),
+                ]),
+                _vm._v(" "),
+                _c("td", [
+                  i.patient_lname
+                    ? _c("span", [
+                        _vm._v(
+                          "\n                            " +
+                            _vm._s(i.patient_lname) +
+                            ", " +
+                            _vm._s(i.patient_fname) +
+                            "\n                        "
+                        ),
+                      ])
+                    : _vm._e(),
+                ]),
+                _vm._v(" "),
+                _c("td", { staticStyle: { width: "130px" } }, [
+                  i.time_from
+                    ? _c("span", [
+                        _vm._v(
+                          "\n                            " +
+                            _vm._s(_vm._f("formatTime")(i.time_from)) +
+                            " - " +
+                            _vm._s(_vm._f("formatTime")(i.time_end)) +
+                            "\n                        "
+                        ),
+                      ])
+                    : _vm._e(),
+                ]),
+              ])
+            }),
+          ],
+          2
+        ),
+        _vm._v(" "),
+        _c("div", [
+          _vm._v(
+            "No. of Patient Appointment: " + _vm._s(_vm.countPatient) + " "
+          ),
+        ]),
+      ]),
+    ]),
+  ])
+}
+var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "w-panel-heading" }, [
+      _c(
+        "div",
+        {
+          staticClass: "mb-2",
+          staticStyle: { "font-size": "20px", "font-weight": "bold" },
+        },
+        [_vm._v("REPORT FILTER")]
+      ),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("tr", [
+      _c("th", [_vm._v("ID")]),
+      _vm._v(" "),
+      _c("th", { staticStyle: { "font-size": ".8em" } }, [
+        _vm._v("Appointment Date"),
+      ]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Account")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Patient")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Schedule")]),
     ])
   },
 ]
@@ -39773,37 +40425,40 @@ var render = function () {
                         fn: function (props) {
                           return [
                             props.row.patients
-                              ? _c("div", [
-                                  _c("tr", [
-                                    _c("th", [_vm._v("Name")]),
-                                    _vm._v(" "),
-                                    _c("th", [_vm._v("Age")]),
-                                    _vm._v(" "),
-                                    _c("th", [_vm._v("Illness")]),
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("tr", [
-                                    _c("td", [
-                                      _vm._v(
-                                        _vm._s(props.row.patients.lname) +
-                                          ", " +
-                                          _vm._s(props.row.patients.fname) +
-                                          " " +
-                                          _vm._s(props.row.patients.mname)
-                                      ),
+                              ? _c(
+                                  "div",
+                                  [
+                                    _c("tr", [
+                                      _c("th", [_vm._v("Name")]),
+                                      _vm._v(" "),
+                                      _c("th", [_vm._v("Age")]),
+                                      _vm._v(" "),
+                                      _c("th", [_vm._v("Illness")]),
                                     ]),
                                     _vm._v(" "),
-                                    _c("td", [
-                                      _vm._v(_vm._s(props.row.patients.age)),
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("td", [
-                                      _vm._v(
-                                        _vm._s(props.row.patients.illness)
-                                      ),
-                                    ]),
-                                  ]),
-                                ])
+                                    _vm._l(
+                                      props.row.patients,
+                                      function (i, ix) {
+                                        return _c("tr", { key: ix }, [
+                                          _c("td", [
+                                            _vm._v(
+                                              _vm._s(i.lname) +
+                                                ", " +
+                                                _vm._s(i.fname) +
+                                                " " +
+                                                _vm._s(i.mname)
+                                            ),
+                                          ]),
+                                          _vm._v(" "),
+                                          _c("td", [_vm._v(_vm._s(i.age))]),
+                                          _vm._v(" "),
+                                          _c("td", [_vm._v(_vm._s(i.illness))]),
+                                        ])
+                                      }
+                                    ),
+                                  ],
+                                  2
+                                )
                               : _vm._e(),
                           ]
                         },
@@ -41114,7 +41769,11 @@ var render = function () {
                                       "b-select",
                                       {
                                         attrs: { expanded: "" },
-                                        on: { focus: _vm.loadProvince },
+                                        on: {
+                                          focus: function ($event) {
+                                            return _vm.loadProvince(pIndex)
+                                          },
+                                        },
                                         model: {
                                           value: patient.province,
                                           callback: function ($$v) {
@@ -41124,7 +41783,7 @@ var render = function () {
                                         },
                                       },
                                       _vm._l(
-                                        _vm.provinces,
+                                        patient.provinces,
                                         function (item, index) {
                                           return _c(
                                             "option",
@@ -41168,6 +41827,7 @@ var render = function () {
                                         on: {
                                           focus: function ($event) {
                                             return _vm.loadCities(
+                                              pIndex,
                                               patient.province
                                             )
                                           },
@@ -41181,7 +41841,7 @@ var render = function () {
                                         },
                                       },
                                       _vm._l(
-                                        _vm.cities,
+                                        patient.cities,
                                         function (item, index) {
                                           return _c(
                                             "option",
@@ -41227,6 +41887,7 @@ var render = function () {
                                         on: {
                                           focus: function ($event) {
                                             return _vm.loadBarangays(
+                                              pIndex,
                                               patient.province,
                                               patient.city
                                             )
@@ -41241,7 +41902,7 @@ var render = function () {
                                         },
                                       },
                                       _vm._l(
-                                        _vm.barangays,
+                                        patient.barangays,
                                         function (item, index) {
                                           return _c(
                                             "option",
@@ -41280,11 +41941,11 @@ var render = function () {
                                     _c("b-input", {
                                       attrs: { placeholder: "Street" },
                                       model: {
-                                        value: _vm.fields.street,
+                                        value: patient.street,
                                         callback: function ($$v) {
-                                          _vm.$set(_vm.fields, "street", $$v)
+                                          _vm.$set(patient, "street", $$v)
                                         },
-                                        expression: "fields.street",
+                                        expression: "patient.street",
                                       },
                                     }),
                                   ],
@@ -65209,6 +65870,7 @@ var map = {
 	"./components/Administrator/Doctor/Schedule/Schedules.vue": "./resources/js/components/Administrator/Doctor/Schedule/Schedules.vue",
 	"./components/Administrator/MaxPatients.vue": "./resources/js/components/Administrator/MaxPatients.vue",
 	"./components/Administrator/QRScanner/QrScanner.vue": "./resources/js/components/Administrator/QRScanner/QrScanner.vue",
+	"./components/Administrator/Report/ReportPatientAppointment.vue": "./resources/js/components/Administrator/Report/ReportPatientAppointment.vue",
 	"./components/Administrator/User/UserPage.vue": "./resources/js/components/Administrator/User/UserPage.vue",
 	"./components/FooterPage.vue": "./resources/js/components/FooterPage.vue",
 	"./components/ForgotPassword.vue": "./resources/js/components/ForgotPassword.vue",

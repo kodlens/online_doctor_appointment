@@ -20,7 +20,11 @@ class Patient extends Model
         'mname', 
         'sex',
         'age',
-        'illness'
+        'illness',
+        'province',
+        'city',
+        'barangay',
+        'street'
     ];
 
 }

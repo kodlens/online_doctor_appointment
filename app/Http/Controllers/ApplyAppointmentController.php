@@ -21,7 +21,10 @@ class ApplyAppointmentController extends Controller
             'patients.*.lname' => ['required'],
             'patients.*.fname' => ['required'],
             'patients.*.age' => ['required'],
-            'patients.*.sex' => ['required']
+            'patients.*.sex' => ['required'],
+            'patients.*.province' => ['required'],
+            'patients.*.city' => ['required'],
+            'patients.*.barangay' => ['required']
         ]);
  
         $appdate = date("Y-m-d", strtotime($req->appointment_date));
@@ -123,7 +126,10 @@ class ApplyAppointmentController extends Controller
                 'sex' => strtoupper($item['sex']),
                 'age' => $item['age'],
                 'illness' => $item['illness'],
-
+                'province' => $item['province'],
+                'city' => $item['city'],
+                'barangay' => $item['barangay'],
+                'street' => $item['street'],
             ]);
         }
 

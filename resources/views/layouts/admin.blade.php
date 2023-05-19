@@ -86,11 +86,11 @@
 
                 <b-navbar-dropdown label="Reports"
                     class="{{ (request()->is('reports*')) ? 'active' : '' }}">
-                    <b-navbar-item href="/reports-appointments">
+                    <b-navbar-item href="/report-appointments">
                         Appointments
                     </b-navbar-item>
-                    <b-navbar-item href="/reports-appointments">
-                        Patient Appointment By Date
+                    <b-navbar-item href="/report-no-serve-unserve">
+                        Patient Served and Unserved
                     </b-navbar-item>
                     {{-- <b-navbar-item href="#">
                         Contact

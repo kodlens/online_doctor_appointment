@@ -266,5 +266,28 @@ class AppointmentController extends Controller
     }
 
 
+    public function setArrived($id){
+        $data = Appointment::find($id);
+        $data->is_arrived = 1;
+        $data->arrival_datetime = date('Y-m-d H:s:i');
+        $data->save();
+
+        return response()->json([
+            'status' => 'arrived'
+        ], 200);
+    }
+
+    public function setServed($id){
+        $data = Appointment::find($id);
+        $data->is_served = 1;
+        $data->served_datetime = date('Y-m-d H:s:i');
+        $data->save();
+
+        return response()->json([
+            'status' => 'arrived'
+        ], 200);
+    }
+
+
 
 }

@@ -113,16 +113,17 @@
                                 </div>
                                 
                                 <template #detail="props">
+                                    
                                     <div v-if="props.row.patients">
                                         <tr>
                                             <th>Name</th>
                                             <th>Age</th>
                                             <th>Illness</th>
                                         </tr>
-                                        <tr>
-                                            <td>{{ props.row.patients.lname }}, {{ props.row.patients.fname }} {{ props.row.patients.mname }}</td>
-                                            <td>{{ props.row.patients.age }}</td>
-                                            <td>{{ props.row.patients.illness }}</td>
+                                        <tr v-for="(i, ix) in props.row.patients" :key="ix">
+                                            <td>{{ i.lname }}, {{ i.fname }} {{ i.mname }}</td>
+                                            <td>{{ i.age }}</td>
+                                            <td>{{ i.illness }}</td>
                                         </tr>
                                     </div>
                                 </template>

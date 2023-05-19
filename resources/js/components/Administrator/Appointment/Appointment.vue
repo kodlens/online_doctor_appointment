@@ -102,23 +102,19 @@
                                     {{ props.row.user.contact_no }}
                                 </b-table-column>
 
-                                <!-- <b-table-column field="illness_history" label="Illness/History" v-slot="props">
-                                    <div class="text-container">
-                                        <p class="long-text">
-                                            {{ props.row.illness_history }}
-                                        </p>
-                                    </div>
-                                    <div v-if="props.row.illness_history">
-                                        <b-button
-                                            class="is-small is-outlined is-info" 
-                                            v-if="props.row.illness_history.length > 100" 
-                                            @click="seeMore(props.row.illness_history)"
-                                            label="see more..."></b-button>
-                                    </div>
-                                    
-                                </b-table-column> -->
+                                <b-table-column field="is_arrived" label="Arrived" v-slot="props">
+                                    <span class="status approved" v-if="props.row.is_arrived">YES</span>
+                                    <span v-else>NO</span>
+                                </b-table-column>
 
-                                <b-table-column field="status" label="STATUS" v-slot="props">
+                                <b-table-column field="is_served" label="Served" v-slot="props">
+                                    <span class="status approved" v-if="props.row.is_served">YES</span>
+                                    <span v-else>NO</span>
+                                </b-table-column>
+
+
+
+                                <b-table-column field="status" label="Status" v-slot="props">
                                     <span class="status pending" v-if="props.row.status === 0">PENDING</span>
                                     <span class="status approved" v-if="props.row.status === 1">APPROVED</span>
                                     <span class="status cancelled" v-if="props.row.status === 2">CANCELLED</span>
@@ -156,26 +152,34 @@
                                                 <b-dropdown-item
                                                     @click="confirmArchive(props.row.appointment_id)" 
                                                     aria-role="listitem">Archive</b-dropdown-item>
+
+                                                <b-dropdown-item
+                                                    @click="confirmArrive(props.row.appointment_id)" 
+                                                    aria-role="listitem">Mark Arrived</b-dropdown-item>
+                                                <b-dropdown-item
+                                                    @click="confirmServe(props.row.appointment_id)" 
+                                                    aria-role="listitem">Mark Served</b-dropdown-item>
                                             </b-dropdown>
                                             
                                         </b-tooltip>
                                     </div>
                                 </b-table-column>
 
-
-
-
                                 <template #detail="props">
                                     <div v-if="props.row.patients">
                                         <tr>
                                             <th>Name</th>
                                             <th>Age</th>
+                                            <th>Address</th>
                                             <th>Illness</th>
                                         </tr>
-                                        <tr>
-                                            <td>{{ props.row.patients.lname }}, {{ props.row.patients.fname }} {{ props.row.patients.mname }}</td>
-                                            <td>{{ props.row.patients.age }}</td>
-                                            <td>{{ props.row.patients.illness }}</td>
+                                        <tr v-for="(i,ix) in props.row.patients" :key="ix">
+                                            <td>{{ i.lname }}, {{ i.fname }} {{ i.mname }}</td>
+                                            <td>{{ i.age }}</td>
+                                            <td>
+                                                {{ i.provDesc }}, {{ i.citymunDesc }}, {{ i.brgyDesc }} {{ i.street }}
+                                            </td>
+                                            <td>{{ i.illness }}</td>
                                         </tr>
                                     </div>
                                     
@@ -351,7 +355,7 @@ export default{
         //alert box ask for cancel
         confirmCancel(id) {
             this.$buefy.dialog.confirm({
-                title: 'Cacnel?!',
+                title: 'Cancel?',
                 type: 'is-danger',
                 message: 'Are you sure you want to cancel this appointment?',
                 confirmText: 'Yes',
@@ -381,6 +385,45 @@ export default{
         },
         pendingSubmit(id) {
             axios.post('/appointment-pending/' + id).then(res => {
+                this.loadAsyncData();
+            }).catch(err => {
+                if (err.response.status === 422) {
+                    this.errors = err.response.data.errors;
+                }
+            });
+        },
+
+
+        confirmArrive(id) {
+            this.$buefy.dialog.confirm({
+                title: 'Set to Arrive?!',
+                type: 'is-info',
+                message: 'Are you sure you want to set arrived this appointment?',
+                confirmText: 'Yes',
+                onConfirm: () => this.submitArrive(id)
+            });
+        },
+        submitArrive(id) {
+            axios.post('/appointment-set-arrived/' + id).then(res => {
+                this.loadAsyncData();
+            }).catch(err => {
+                if (err.response.status === 422) {
+                    this.errors = err.response.data.errors;
+                }
+            });
+        },
+
+        confirmServe(id) {
+            this.$buefy.dialog.confirm({
+                title: 'Set to Serve?!',
+                type: 'is-info',
+                message: 'Are you sure you want to set serve this appointment?',
+                confirmText: 'Yes',
+                onConfirm: () => this.submitServe(id)
+            });
+        },
+        submitServe(id) {
+            axios.post('/appointment-set-served/' + id).then(res => {
                 this.loadAsyncData();
             }).catch(err => {
                 if (err.response.status === 422) {
