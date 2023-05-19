@@ -315,7 +315,7 @@ export default{
         //alert box ask for approve
         confirmApprove(id) {
             this.$buefy.dialog.confirm({
-                title: 'Approve?!',
+                title: 'Approve?',
                 type: 'is-info',
                 message: 'Are you sure you want to approve this appointment?',
                 confirmText: 'Yes',
@@ -334,7 +334,7 @@ export default{
 
         confirmArchive(id){
             this.$buefy.dialog.confirm({
-                title: 'Archive?!',
+                title: 'Archive?',
                 type: 'is-info',
                 message: 'Are you sure you want to archive this appointment?',
                 confirmText: 'Yes',
@@ -376,7 +376,7 @@ export default{
         //alert box ask for cancel
         confirmPending(id) {
             this.$buefy.dialog.confirm({
-                title: 'Set to Pending?!',
+                title: 'Set to Pending?',
                 type: 'is-info',
                 message: 'Are you sure you want to set pending this appointment?',
                 confirmText: 'Yes',
@@ -396,7 +396,7 @@ export default{
 
         confirmArrive(id) {
             this.$buefy.dialog.confirm({
-                title: 'Set to Arrive?!',
+                title: 'Set to Arrived?',
                 type: 'is-info',
                 message: 'Are you sure you want to set arrived this appointment?',
                 confirmText: 'Yes',
@@ -415,7 +415,7 @@ export default{
 
         confirmServe(id) {
             this.$buefy.dialog.confirm({
-                title: 'Set to Serve?!',
+                title: 'Set to Served?',
                 type: 'is-info',
                 message: 'Are you sure you want to set serve this appointment?',
                 confirmText: 'Yes',

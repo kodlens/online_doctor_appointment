@@ -55,6 +55,12 @@ class ReportPatientAppointmentController extends Controller
         $date_start = date('Y-m-d', strtotime($req->start));
         $date_end = date('Y-m-d', strtotime($req->end));
 
+        $data = Appointment::with(['user', 'schedule'])
+            ->whereBetween('appointment_date', [$date_start, $date_end])
+            ->where('is_archived', 0)
+            ->get();
+
+        return $data;
     }
 
 }

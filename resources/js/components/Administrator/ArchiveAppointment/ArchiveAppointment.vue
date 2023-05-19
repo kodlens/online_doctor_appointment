@@ -310,7 +310,6 @@ export default{
 }
 </script>
 
-
     <style scoped>
     .text-container {
         max-width: 200px; /* Set the width of the container to limit the text length */
