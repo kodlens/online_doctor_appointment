@@ -9631,6 +9631,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -9664,6 +9668,9 @@ __webpack_require__.r(__webpack_exports__);
     },
     printWindow: function printWindow() {
       window.print();
+    },
+    goBackToAppointment: function goBackToAppointment() {
+      window.location = '/appointments';
     }
   },
   computed: {
@@ -9778,6 +9785,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -9811,6 +9826,9 @@ __webpack_require__.r(__webpack_exports__);
     },
     printWindow: function printWindow() {
       window.print();
+    },
+    goBackToAppointment: function goBackToAppointment() {
+      window.location = '/appointments';
     }
   },
   computed: {
@@ -9826,6 +9844,211 @@ __webpack_require__.r(__webpack_exports__);
   },
   mounted: function mounted() {
     this.loadAsyncData();
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Administrator/Report/ReportPatientByLocation.vue?vue&type=script&lang=js&":
+/*!***************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Administrator/Report/ReportPatientByLocation.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  data: function data() {
+    return {
+      global_id: 0,
+      modalResetPassword: false,
+      search: {
+        lname: '',
+        start_date: new Date(new Date().getFullYear(), new Date().getMonth(), 1),
+        end_date: new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0),
+        byKey: ''
+      },
+      btnClass: {
+        'is-success': true,
+        'button': true,
+        'is-loading': false
+      },
+      data: []
+    };
+  },
+  methods: {
+    /*
+    * Load async data
+    */
+    loadAsyncData: function loadAsyncData() {
+      var _this = this;
+
+      var params = ["start=".concat(this.$formatDate(this.search.start_date)), "end=".concat(this.$formatDate(this.search.end_date)), "bykey=".concat(this.search.byKey)].join('&');
+      this.loading = true;
+      axios.get("/get-report-patient-by-location?".concat(params)).then(function (res) {
+        _this.data = res.data;
+      })["catch"](function (err) {});
+    },
+    printWindow: function printWindow() {
+      window.print();
+    },
+    goBackToAppointment: function goBackToAppointment() {
+      window.location = '/appointments';
+    },
+    loadProvince: function loadProvince() {
+      var _this2 = this;
+
+      axios.get('/load-provinces').then(function (res) {
+        _this2.provinces = res.data;
+      });
+    },
+    loadCity: function loadCity() {
+      var _this3 = this;
+
+      axios.get('/load-cities?prov=' + this.search.province).then(function (res) {
+        _this3.cities = res.data;
+      });
+    },
+    loadBarangay: function loadBarangay() {
+      var _this4 = this;
+
+      axios.get('/load-barangays?prov=' + this.search.province + '&city_code=' + this.search.city).then(function (res) {
+        _this4.barangays = res.data;
+      });
+    }
+  },
+  computed: {
+    countServed: function countServed() {
+      var count = 0;
+      this.data.forEach(function (el) {
+        if (el.is_served === 1) {
+          count += 1;
+        }
+      });
+      return count;
+    },
+    countUnserved: function countUnserved() {
+      var count = 0;
+      this.data.forEach(function (el) {
+        if (el.is_served === 0) {
+          count += 1;
+        }
+      });
+      return count;
+    }
+  },
+  mounted: function mounted() {
+    this.loadAsyncData();
+    this.loadProvince();
   }
 });
 
@@ -31094,6 +31317,30 @@ ___CSS_LOADER_EXPORT___.push([module.id, "\n.text-container[data-v-649d710c] {\n
 
 /***/ }),
 
+/***/ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Administrator/Report/ReportPatientByLocation.vue?vue&type=style&index=0&id=265ac662&scoped=true&lang=css&":
+/*!***********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Administrator/Report/ReportPatientByLocation.vue?vue&type=style&index=0&id=265ac662&scoped=true&lang=css& ***!
+  \***********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__);
+// Imports
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, "\n.text-container[data-v-265ac662] {\n    max-width: 200px; /* Set the width of the container to limit the text length */\n    overflow: hidden; /* Hide overflowing text */\n    white-space: nowrap; /* Prevent text from wrapping to new lines */\n    text-overflow: ellipsis; /* Show ellipsis (...) when text overflows */\n}\n.long-text[data-v-265ac662] {\n    max-height: 3em; /* Set the maximum height of the text to limit the number of lines */\n    margin: 0; /* Reset margin */\n    padding: 0; /* Reset padding */\n}\n\n", ""]);
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
 /***/ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/FooterPage.vue?vue&type=style&index=0&lang=css&":
 /*!*************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/FooterPage.vue?vue&type=style&index=0&lang=css& ***!
@@ -32543,6 +32790,36 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 
 /***/ }),
 
+/***/ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Administrator/Report/ReportPatientByLocation.vue?vue&type=style&index=0&id=265ac662&scoped=true&lang=css&":
+/*!***************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Administrator/Report/ReportPatientByLocation.vue?vue&type=style&index=0&id=265ac662&scoped=true&lang=css& ***!
+  \***************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ReportPatientByLocation_vue_vue_type_style_index_0_id_265ac662_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !!../../../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./ReportPatientByLocation.vue?vue&type=style&index=0&id=265ac662&scoped=true&lang=css& */ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Administrator/Report/ReportPatientByLocation.vue?vue&type=style&index=0&id=265ac662&scoped=true&lang=css&");
+
+            
+
+var options = {};
+
+options.insert = "head";
+options.singleton = false;
+
+var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ReportPatientByLocation_vue_vue_type_style_index_0_id_265ac662_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_1__["default"], options);
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ReportPatientByLocation_vue_vue_type_style_index_0_id_265ac662_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_1__["default"].locals || {});
+
+/***/ }),
+
 /***/ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/FooterPage.vue?vue&type=style&index=0&lang=css&":
 /*!*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/FooterPage.vue?vue&type=style&index=0&lang=css& ***!
@@ -33544,6 +33821,47 @@ component.options.__file = "resources/js/components/Administrator/Report/ReportP
 
 /***/ }),
 
+/***/ "./resources/js/components/Administrator/Report/ReportPatientByLocation.vue":
+/*!**********************************************************************************!*\
+  !*** ./resources/js/components/Administrator/Report/ReportPatientByLocation.vue ***!
+  \**********************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _ReportPatientByLocation_vue_vue_type_template_id_265ac662_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ReportPatientByLocation.vue?vue&type=template&id=265ac662&scoped=true& */ "./resources/js/components/Administrator/Report/ReportPatientByLocation.vue?vue&type=template&id=265ac662&scoped=true&");
+/* harmony import */ var _ReportPatientByLocation_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ReportPatientByLocation.vue?vue&type=script&lang=js& */ "./resources/js/components/Administrator/Report/ReportPatientByLocation.vue?vue&type=script&lang=js&");
+/* harmony import */ var _ReportPatientByLocation_vue_vue_type_style_index_0_id_265ac662_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ReportPatientByLocation.vue?vue&type=style&index=0&id=265ac662&scoped=true&lang=css& */ "./resources/js/components/Administrator/Report/ReportPatientByLocation.vue?vue&type=style&index=0&id=265ac662&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! !../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+;
+
+
+/* normalize component */
+
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+  _ReportPatientByLocation_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _ReportPatientByLocation_vue_vue_type_template_id_265ac662_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render,
+  _ReportPatientByLocation_vue_vue_type_template_id_265ac662_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  "265ac662",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/Administrator/Report/ReportPatientByLocation.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/components/Administrator/User/UserPage.vue":
 /*!*****************************************************************!*\
   !*** ./resources/js/components/Administrator/User/UserPage.vue ***!
@@ -34220,6 +34538,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/Administrator/Report/ReportPatientByLocation.vue?vue&type=script&lang=js&":
+/*!***********************************************************************************************************!*\
+  !*** ./resources/js/components/Administrator/Report/ReportPatientByLocation.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ReportPatientByLocation_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./ReportPatientByLocation.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Administrator/Report/ReportPatientByLocation.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ReportPatientByLocation_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
 /***/ "./resources/js/components/Administrator/User/UserPage.vue?vue&type=script&lang=js&":
 /*!******************************************************************************************!*\
   !*** ./resources/js/components/Administrator/User/UserPage.vue?vue&type=script&lang=js& ***!
@@ -34499,6 +34833,19 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ReportPatientAppointment_vue_vue_type_style_index_0_id_649d710c_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/style-loader/dist/cjs.js!../../../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./ReportPatientAppointment.vue?vue&type=style&index=0&id=649d710c&scoped=true&lang=css& */ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Administrator/Report/ReportPatientAppointment.vue?vue&type=style&index=0&id=649d710c&scoped=true&lang=css&");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/Administrator/Report/ReportPatientByLocation.vue?vue&type=style&index=0&id=265ac662&scoped=true&lang=css&":
+/*!*******************************************************************************************************************************************!*\
+  !*** ./resources/js/components/Administrator/Report/ReportPatientByLocation.vue?vue&type=style&index=0&id=265ac662&scoped=true&lang=css& ***!
+  \*******************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ReportPatientByLocation_vue_vue_type_style_index_0_id_265ac662_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/style-loader/dist/cjs.js!../../../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./ReportPatientByLocation.vue?vue&type=style&index=0&id=265ac662&scoped=true&lang=css& */ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Administrator/Report/ReportPatientByLocation.vue?vue&type=style&index=0&id=265ac662&scoped=true&lang=css&");
 
 
 /***/ }),
@@ -34807,6 +35154,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ReportPatientAppointment_vue_vue_type_template_id_649d710c_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
 /* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ReportPatientAppointment_vue_vue_type_template_id_649d710c_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./ReportPatientAppointment.vue?vue&type=template&id=649d710c&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Administrator/Report/ReportPatientAppointment.vue?vue&type=template&id=649d710c&scoped=true&");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/Administrator/Report/ReportPatientByLocation.vue?vue&type=template&id=265ac662&scoped=true&":
+/*!*****************************************************************************************************************************!*\
+  !*** ./resources/js/components/Administrator/Report/ReportPatientByLocation.vue?vue&type=template&id=265ac662&scoped=true& ***!
+  \*****************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ReportPatientByLocation_vue_vue_type_template_id_265ac662_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ReportPatientByLocation_vue_vue_type_template_id_265ac662_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ReportPatientByLocation_vue_vue_type_template_id_265ac662_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./ReportPatientByLocation.vue?vue&type=template&id=265ac662&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Administrator/Report/ReportPatientByLocation.vue?vue&type=template&id=265ac662&scoped=true&");
 
 
 /***/ }),
@@ -37758,6 +38122,16 @@ var render = function () {
                   },
                   on: { click: _vm.printWindow },
                 }),
+                _vm._v(" "),
+                _c("b-button", {
+                  staticClass: "is-outlined",
+                  attrs: {
+                    label: "Back",
+                    "icon-left": "arrow-left",
+                    type: "is-info",
+                  },
+                  on: { click: _vm.goBackToAppointment },
+                }),
               ],
               1
             ),
@@ -37830,7 +38204,9 @@ var render = function () {
                     ? _c("span", { staticClass: "status approved" }, [
                         _vm._v("SERVED"),
                       ])
-                    : _c("span", [_vm._v("UNSERVED")]),
+                    : _c("span", { staticClass: "status" }, [
+                        _vm._v("UNSERVED"),
+                      ]),
                 ]),
               ])
             }),
@@ -37973,6 +38349,8 @@ var render = function () {
               ),
             ]),
             _vm._v(" "),
+            _c("div", { staticClass: "columns" }),
+            _vm._v(" "),
             _c(
               "div",
               { staticClass: "buttons" },
@@ -37985,6 +38363,16 @@ var render = function () {
                     type: "is-info",
                   },
                   on: { click: _vm.printWindow },
+                }),
+                _vm._v(" "),
+                _c("b-button", {
+                  staticClass: "is-outlined",
+                  attrs: {
+                    label: "Back",
+                    "icon-left": "arrow-left",
+                    type: "is-info",
+                  },
+                  on: { click: _vm.goBackToAppointment },
                 }),
               ],
               1
@@ -38107,6 +38495,312 @@ var staticRenderFns = [
       _c("th", [_vm._v("Patient")]),
       _vm._v(" "),
       _c("th", [_vm._v("Schedule")]),
+    ])
+  },
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Administrator/Report/ReportPatientByLocation.vue?vue&type=template&id=265ac662&scoped=true&":
+/*!********************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Administrator/Report/ReportPatientByLocation.vue?vue&type=template&id=265ac662&scoped=true& ***!
+  \********************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function () {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c("div", { staticClass: "columns is-centered" }, [
+      _c("div", { staticClass: "column is-8-desktop is-12-tablet" }, [
+        _c("div", { staticClass: "w-panel-card nprint" }, [
+          _vm._m(0),
+          _vm._v(" "),
+          _c("div", { staticClass: "w-panel-body" }, [
+            _c("div", { staticClass: "columns" }, [
+              _c(
+                "div",
+                { staticClass: "column" },
+                [
+                  _c(
+                    "b-field",
+                    {
+                      attrs: {
+                        label: "Date Filter",
+                        "label-position": "on-border",
+                      },
+                    },
+                    [
+                      _c("b-datepicker", {
+                        attrs: { placeholder: "Start date" },
+                        model: {
+                          value: _vm.search.start_date,
+                          callback: function ($$v) {
+                            _vm.$set(_vm.search, "start_date", $$v)
+                          },
+                          expression: "search.start_date",
+                        },
+                      }),
+                      _vm._v(" "),
+                      _c("b-datepicker", {
+                        attrs: { placeholder: "End date" },
+                        model: {
+                          value: _vm.search.end_date,
+                          callback: function ($$v) {
+                            _vm.$set(_vm.search, "end_date", $$v)
+                          },
+                          expression: "search.end_date",
+                        },
+                      }),
+                    ],
+                    1
+                  ),
+                ],
+                1
+              ),
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "columns" }, [
+              _c(
+                "div",
+                { staticClass: "column" },
+                [
+                  _c(
+                    "b-field",
+                    {
+                      attrs: {
+                        label: "Report By",
+                        "label-position": "on-border",
+                        expanded: "",
+                      },
+                    },
+                    [
+                      _c(
+                        "b-select",
+                        {
+                          attrs: { expanded: "" },
+                          on: { input: _vm.loadCity },
+                          model: {
+                            value: _vm.search.byKey,
+                            callback: function ($$v) {
+                              _vm.$set(_vm.search, "byKey", $$v)
+                            },
+                            expression: "search.byKey",
+                          },
+                        },
+                        [
+                          _c("option", { attrs: { value: "province" } }, [
+                            _vm._v("Province"),
+                          ]),
+                          _vm._v(" "),
+                          _c("option", { attrs: { value: "city" } }, [
+                            _vm._v("City"),
+                          ]),
+                          _vm._v(" "),
+                          _c("option", { attrs: { value: "barangay" } }, [
+                            _vm._v("Barangay"),
+                          ]),
+                        ]
+                      ),
+                    ],
+                    1
+                  ),
+                ],
+                1
+              ),
+            ]),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "buttons" },
+              [
+                _c("b-button", {
+                  attrs: {
+                    type: "is-primary",
+                    label: "Search",
+                    "icon-right": "magnify",
+                  },
+                  on: { click: _vm.loadAsyncData },
+                }),
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "buttons" },
+              [
+                _c("b-button", {
+                  staticClass: "is-outlined",
+                  attrs: {
+                    label: "Print",
+                    "icon-left": "printer",
+                    type: "is-info",
+                  },
+                  on: { click: _vm.printWindow },
+                }),
+                _vm._v(" "),
+                _c("b-button", {
+                  staticClass: "is-outlined",
+                  attrs: {
+                    label: "Back",
+                    "icon-left": "arrow-left",
+                    type: "is-info",
+                  },
+                  on: { click: _vm.goBackToAppointment },
+                }),
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c("hr"),
+          ]),
+        ]),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticStyle: { "font-weight": "bold", "font-size": "1em" } },
+          [
+            _vm._v(
+              "DATE FILTER: " +
+                _vm._s(new Date(_vm.search.start_date).toLocaleDateString()) +
+                " \n                - \n                " +
+                _vm._s(new Date(_vm.search.end_date).toLocaleDateString()) +
+                "\n            "
+            ),
+          ]
+        ),
+        _vm._v(" "),
+        _vm.search.province !== ""
+          ? _c("div", [
+              _c(
+                "div",
+                { staticStyle: { "font-weight": "bold", "font-size": "1em" } },
+                [
+                  _vm._v(
+                    "\n                    NO. OF APPOINTMENT IN PROVINCE \n                "
+                  ),
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "table",
+                { staticClass: "report-table" },
+                [
+                  _vm._m(1),
+                  _vm._v(" "),
+                  _vm._l(_vm.data, function (i, ix) {
+                    return _c("tr", { key: ix }, [
+                      _c("td", [_vm._v(_vm._s(i.appointment_id))]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(_vm._s(i.appointment_date))]),
+                      _vm._v(" "),
+                      _c("td", [
+                        i.user.lname
+                          ? _c("span", [
+                              _vm._v(
+                                "\n                                " +
+                                  _vm._s(i.user.lname) +
+                                  ", " +
+                                  _vm._s(i.user.fname) +
+                                  "\n                            "
+                              ),
+                            ])
+                          : _vm._e(),
+                      ]),
+                      _vm._v(" "),
+                      _c("td", { staticStyle: { width: "130px" } }, [
+                        i.schedule.time_from
+                          ? _c("span", [
+                              _vm._v(
+                                "\n                                " +
+                                  _vm._s(
+                                    _vm._f("formatTime")(i.schedule.time_from)
+                                  ) +
+                                  " - " +
+                                  _vm._s(
+                                    _vm._f("formatTime")(i.schedule.time_end)
+                                  ) +
+                                  "\n                            "
+                              ),
+                            ])
+                          : _vm._e(),
+                      ]),
+                      _vm._v(" "),
+                      _c("td", [
+                        i.is_served
+                          ? _c("span", { staticClass: "status approved" }, [
+                              _vm._v("SERVED"),
+                            ])
+                          : _c("span", [_vm._v("UNSERVED")]),
+                      ]),
+                    ])
+                  }),
+                ],
+                2
+              ),
+              _vm._v(" "),
+              _c("div", [
+                _vm._v(
+                  "No. of Appointment Served: " + _vm._s(_vm.countServed) + " "
+                ),
+              ]),
+              _vm._v(" "),
+              _c("div", [
+                _vm._v(
+                  "No. of Appointment Unserved: " +
+                    _vm._s(_vm.countUnserved) +
+                    " "
+                ),
+              ]),
+            ])
+          : _vm._e(),
+      ]),
+    ]),
+  ])
+}
+var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "w-panel-heading" }, [
+      _c(
+        "div",
+        {
+          staticClass: "mb-2",
+          staticStyle: { "font-size": "20px", "font-weight": "bold" },
+        },
+        [_vm._v("REPORT FILTER")]
+      ),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("tr", [
+      _c("th", [_vm._v("ID")]),
+      _vm._v(" "),
+      _c("th", { staticStyle: { "font-size": ".8em" } }, [
+        _vm._v("Appointment Date"),
+      ]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Account")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Schedule")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Status")]),
     ])
   },
 ]
@@ -66391,6 +67085,7 @@ var map = {
 	"./components/Administrator/QRScanner/QrScanner.vue": "./resources/js/components/Administrator/QRScanner/QrScanner.vue",
 	"./components/Administrator/Report/ReportNoServeUnserve.vue": "./resources/js/components/Administrator/Report/ReportNoServeUnserve.vue",
 	"./components/Administrator/Report/ReportPatientAppointment.vue": "./resources/js/components/Administrator/Report/ReportPatientAppointment.vue",
+	"./components/Administrator/Report/ReportPatientByLocation.vue": "./resources/js/components/Administrator/Report/ReportPatientByLocation.vue",
 	"./components/Administrator/User/UserPage.vue": "./resources/js/components/Administrator/User/UserPage.vue",
 	"./components/FooterPage.vue": "./resources/js/components/FooterPage.vue",
 	"./components/ForgotPassword.vue": "./resources/js/components/ForgotPassword.vue",

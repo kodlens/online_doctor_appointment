@@ -97,6 +97,9 @@ Route::middleware(['auth', 'staff'])->group(function(){
     Route::get('/get-report-no-serve-unserve', [App\Http\Controllers\Administrator\Report\ReportPatientAppointmentController::class, 'getDataReportServeUnserve']);
 
 
+    Route::get('/report-patient-by-location', [App\Http\Controllers\Administrator\Report\ReportPatientAppointmentController::class, 'indexReportPatientByLocation']);
+    Route::get('/get-report-patient-by-location', [App\Http\Controllers\Administrator\Report\ReportPatientAppointmentController::class, 'getDataReportPatientByLocation']);
+
     
 });
 

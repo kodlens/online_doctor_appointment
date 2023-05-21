@@ -22,10 +22,18 @@
                             </div>
                         </div> <!-- cols -->
 
+                        <div class="columns">
+                            
+                        </div> <!-- cols -->
+
                         <div class="buttons">
                             <b-button label="Print" icon-left="printer"
                                 type="is-info" class="is-outlined"
                                 @click="printWindow"></b-button>
+
+                            <b-button label="Back" icon-left="arrow-left"
+                                type="is-info" class="is-outlined"
+                                @click="goBackToAppointment"></b-button>
                         </div>
                         <hr>
                     </div> <!--panel body-->
@@ -123,6 +131,10 @@ export default{
 
         printWindow(){
             window.print();
+        },
+
+        goBackToAppointment(){
+            window.location = '/appointments'
         }
     },
 

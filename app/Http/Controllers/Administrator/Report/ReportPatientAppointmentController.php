@@ -63,4 +63,33 @@ class ReportPatientAppointmentController extends Controller
         return $data;
     }
 
+
+
+
+    public function indexReportPatientByLocation(){
+        return view('administrator.report.report-patient-by-location');
+    }
+
+    public function getDataReportPatientByLocation(Request $req){
+        
+        $date_start = date('Y-m-d', strtotime($req->start));
+        $date_end = date('Y-m-d', strtotime($req->end));
+
+        if($req->bykey == 'province'){
+
+            $data = DB::select('select * from patients a
+                join appointments b on a.appointment_id = b.appointment_id
+                join provinces c on a.province = c.provCode
+                join cities d on a.city = d.citymunCode
+                join barangays e on a.barangay = brgyCode
+                where b.appointment_date between ? and ?
+                and b.is_archived = 0 group by a.province
+            ', [$date_start, $date_end]);
+        }
+
+
+        
+        return $data;
+    }
+
 }

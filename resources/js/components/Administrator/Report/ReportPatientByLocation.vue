@@ -15,18 +15,34 @@
                                 <b-field label="Date Filter" label-position="on-border">
                                     <b-datepicker v-model="search.start_date" placeholder="Start date"></b-datepicker>
                                     <b-datepicker v-model="search.end_date" placeholder="End date"></b-datepicker>
-                                    <p class="control">
-                                        <b-button type="is-primary" icon-right="magnify" @click="loadAsyncData"/>
-                                    </p>
                                 </b-field>
                             </div>
                         </div> <!-- cols -->
                         
+
+                        <div class="columns">
+                            <div class="column">
+                                <b-field label="Report By" label-position="on-border" expanded>
+                                    <b-select v-model="search.byKey" @input="loadCity" expanded>
+                                        <option value="province">Province</option>
+                                        <option value="city">City</option>
+                                        <option value="barangay">Barangay</option>
+                                    </b-select>
+                                </b-field>
+                            </div>
+
+                            
+                        </div> <!-- cols -->
+
+                        <div class="buttons">
+                            <b-button type="is-primary" 
+                                label="Search"
+                                icon-right="magnify" @click="loadAsyncData"/>
+                        </div>
                         <div class="buttons">
                             <b-button label="Print" icon-left="printer"
                                 type="is-info" class="is-outlined"
                                 @click="printWindow"></b-button>
-
                             <b-button label="Back" icon-left="arrow-left"
                                 type="is-info" class="is-outlined"
                                 @click="goBackToAppointment"></b-button>
@@ -37,41 +53,50 @@
 
                 <div style="font-weight: bold; font-size: 1em;">DATE FILTER: {{ new Date(search.start_date).toLocaleDateString() }} 
                     - 
-                    {{ new Date(search.end_date).toLocaleDateString() }}</div>
-                
-                <div style="font-weight: bold; font-size: 1em;">NO. OF SERVE/UNSERVE APPOINTMENT 
+                    {{ new Date(search.end_date).toLocaleDateString() }}
                 </div>
+                
+                <!--if there is province -->
+                <div v-if="search.province !== ''">
+                    <div style="font-weight: bold; font-size: 1em;">
+                        NO. OF APPOINTMENT IN PROVINCE 
+                    </div>
 
-                <table class="report-table">
-                    <tr>
-                        <th>ID</th>
-                        <th style="font-size: .8em;">Appointment Date</th>
-                        <th>Account</th>
-                        <th>Schedule</th>
-                        <th>Status</th>
-                    </tr>
-                    <tr v-for="(i, ix) in data" :key="ix">
-                        <td>{{ i.appointment_id }}</td>
-                        <td>{{ i.appointment_date }}</td>
-                        <td>
-                            <span v-if="i.user.lname">
-                                {{ i.user.lname }}, {{ i.user.fname }}
-                            </span>
-                        </td>
-                        <td style="width: 130px;">
-                            <span v-if="i.schedule.time_from">
-                                {{ i.schedule.time_from | formatTime}} - {{ i.schedule.time_end | formatTime}}
-                            </span>
-                        </td>
-                        <td>
-                            <span class="status approved" v-if="i.is_served">SERVED</span>
-                            <span class="status" v-else>UNSERVED</span>
-                        </td>
-                    </tr>
+                    <!-- if province only selected-->
+                    <table class="report-table">
+                        <tr>
+                            <th>ID</th>
+                            <th style="font-size: .8em;">Appointment Date</th>
+                            <th>Account</th>
+                            <th>Schedule</th>
+                            <th>Status</th>
+                        </tr>
+                        <tr v-for="(i, ix) in data" :key="ix">
+                            <td>{{ i.appointment_id }}</td>
+                            <td>{{ i.appointment_date }}</td>
+                            <td>
+                                <span v-if="i.user.lname">
+                                    {{ i.user.lname }}, {{ i.user.fname }}
+                                </span>
+                            </td>
+                            <td style="width: 130px;">
+                                <span v-if="i.schedule.time_from">
+                                    {{ i.schedule.time_from | formatTime}} - {{ i.schedule.time_end | formatTime}}
+                                </span>
+                            </td>
+                            <td>
+                                <span class="status approved" v-if="i.is_served">SERVED</span>
+                                <span v-else>UNSERVED</span>
+                            </td>
+                        </tr>
+                    </table>
 
-                </table>
-                <div>No. of Appointment Served: {{ countServed }} </div>
-                <div>No. of Appointment Unserved: {{ countUnserved }} </div>
+                    <div>No. of Appointment Served: {{ countServed }} </div>
+                    <div>No. of Appointment Unserved: {{ countUnserved }} </div>
+                </div>
+                <!-- if there is province-->
+
+                
 
             </div><!--col -->
         </div><!-- cols -->
@@ -94,8 +119,11 @@ export default{
             search: {
                 lname: '',
                 start_date: new Date(new Date().getFullYear(), new Date().getMonth(), 1),
-                end_date: new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0)
+                end_date: new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0),
+                byKey: '',
             },
+
+           
 
             btnClass: {
                 'is-success': true,
@@ -116,11 +144,13 @@ export default{
             const params = [
                 `start=${this.$formatDate(this.search.start_date)}`,
                 `end=${this.$formatDate(this.search.end_date)}`,
+                `bykey=${this.search.byKey}`,
+
             ].join('&')
 
             this.loading = true
 
-            axios.get(`/get-report-no-serve-unserve?${params}`).then(res=>{
+            axios.get(`/get-report-patient-by-location?${params}`).then(res=>{
                 this.data = res.data
             }).catch(err=>{
             
@@ -134,7 +164,28 @@ export default{
 
         goBackToAppointment(){
             window.location = '/appointments'
-        }
+        },
+
+
+
+        loadProvince: function(){
+            axios.get('/load-provinces').then(res=>{
+                this.provinces = res.data;
+            })
+        },
+
+        loadCity: function(){
+            axios.get('/load-cities?prov=' + this.search.province).then(res=>{
+                this.cities = res.data;
+            })
+        },
+
+        loadBarangay: function(){
+            axios.get('/load-barangays?prov=' + this.search.province + '&city_code='+this.search.city).then(res=>{
+                this.barangays = res.data;
+            })
+        },
+
     },
 
     computed: {
@@ -158,10 +209,12 @@ export default{
             return count;
         },
 
+        
     },
 
     mounted() {
         this.loadAsyncData();
+        this.loadProvince()
     }
 }
 </script>

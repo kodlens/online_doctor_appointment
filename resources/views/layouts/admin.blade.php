@@ -92,6 +92,9 @@
                     <b-navbar-item href="/report-no-serve-unserve">
                         Patient Served and Unserved
                     </b-navbar-item>
+                    <b-navbar-item href="/report-patient-by-location">
+                        Patient By Location
+                    </b-navbar-item>
                     {{-- <b-navbar-item href="#">
                         Contact
                     </b-navbar-item> --}}
