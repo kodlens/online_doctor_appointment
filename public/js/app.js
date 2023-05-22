@@ -8718,11 +8718,34 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {};
   },
-  methods: {}
+  methods: {
+    loadTodayAppointments: function loadTodayAppointments() {
+      var _this = this;
+
+      axios.get('/load-today-appointments').then(function (res) {
+        _this.appointment = res.data;
+      })["catch"](function (err) {});
+    }
+  }
 });
 
 /***/ }),
@@ -36941,9 +36964,32 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div")
+  return _vm._m(0)
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", [
+      _c("div", { staticClass: "section" }, [
+        _c("div", { staticClass: "columns is-centered" }, [
+          _c("div", { staticClass: "column is-4" }, [
+            _c("div", { staticClass: "panel is-primary" }, [
+              _c("div", { staticClass: "panel-heading" }, [
+                _vm._v(
+                  "\n                        TODAY'S APPOINTMENT\n                    "
+                ),
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "panel-body" }),
+            ]),
+          ]),
+        ]),
+      ]),
+    ])
+  },
+]
 render._withStripped = true
 
 
