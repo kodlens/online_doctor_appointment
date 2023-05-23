@@ -9969,36 +9969,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
       global_id: 0,
       modalResetPassword: false,
       search: {
-        lname: '',
         start_date: new Date(new Date().getFullYear(), new Date().getMonth(), 1),
         end_date: new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0),
-        byKey: ''
+        byKey: 'province'
       },
       btnClass: {
         'is-success': true,
@@ -10015,6 +9994,7 @@ __webpack_require__.r(__webpack_exports__);
     loadAsyncData: function loadAsyncData() {
       var _this = this;
 
+      this.data = [];
       var params = ["start=".concat(this.$formatDate(this.search.start_date)), "end=".concat(this.$formatDate(this.search.end_date)), "bykey=".concat(this.search.byKey)].join('&');
       this.loading = true;
       axios.get("/get-report-patient-by-location?".concat(params)).then(function (res) {
@@ -38734,7 +38714,9 @@ var render = function () {
                 { staticStyle: { "font-weight": "bold", "font-size": "1em" } },
                 [
                   _vm._v(
-                    "\n                    NO. OF APPOINTMENT IN PROVINCE \n                "
+                    "\n                    NO. OF APPOINTMENT IN " +
+                      _vm._s(_vm.search.byKey.toUpperCase()) +
+                      " \n                "
                   ),
                 ]
               ),
@@ -38747,68 +38729,14 @@ var render = function () {
                   _vm._v(" "),
                   _vm._l(_vm.data, function (i, ix) {
                     return _c("tr", { key: ix }, [
-                      _c("td", [_vm._v(_vm._s(i.appointment_id))]),
+                      _c("td", [_vm._v(_vm._s(i.keyplace))]),
                       _vm._v(" "),
-                      _c("td", [_vm._v(_vm._s(i.appointment_date))]),
-                      _vm._v(" "),
-                      _c("td", [
-                        i.user.lname
-                          ? _c("span", [
-                              _vm._v(
-                                "\n                                " +
-                                  _vm._s(i.user.lname) +
-                                  ", " +
-                                  _vm._s(i.user.fname) +
-                                  "\n                            "
-                              ),
-                            ])
-                          : _vm._e(),
-                      ]),
-                      _vm._v(" "),
-                      _c("td", { staticStyle: { width: "130px" } }, [
-                        i.schedule.time_from
-                          ? _c("span", [
-                              _vm._v(
-                                "\n                                " +
-                                  _vm._s(
-                                    _vm._f("formatTime")(i.schedule.time_from)
-                                  ) +
-                                  " - " +
-                                  _vm._s(
-                                    _vm._f("formatTime")(i.schedule.time_end)
-                                  ) +
-                                  "\n                            "
-                              ),
-                            ])
-                          : _vm._e(),
-                      ]),
-                      _vm._v(" "),
-                      _c("td", [
-                        i.is_served
-                          ? _c("span", { staticClass: "status approved" }, [
-                              _vm._v("SERVED"),
-                            ])
-                          : _c("span", [_vm._v("UNSERVED")]),
-                      ]),
+                      _c("td", [_vm._v(_vm._s(i.no_patient))]),
                     ])
                   }),
                 ],
                 2
               ),
-              _vm._v(" "),
-              _c("div", [
-                _vm._v(
-                  "No. of Appointment Served: " + _vm._s(_vm.countServed) + " "
-                ),
-              ]),
-              _vm._v(" "),
-              _c("div", [
-                _vm._v(
-                  "No. of Appointment Unserved: " +
-                    _vm._s(_vm.countUnserved) +
-                    " "
-                ),
-              ]),
             ])
           : _vm._e(),
       ]),
@@ -38836,17 +38764,9 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("tr", [
-      _c("th", [_vm._v("ID")]),
+      _c("th", { staticStyle: { width: "250px" } }, [_vm._v("Place")]),
       _vm._v(" "),
-      _c("th", { staticStyle: { "font-size": ".8em" } }, [
-        _vm._v("Appointment Date"),
-      ]),
-      _vm._v(" "),
-      _c("th", [_vm._v("Account")]),
-      _vm._v(" "),
-      _c("th", [_vm._v("Schedule")]),
-      _vm._v(" "),
-      _c("th", [_vm._v("Status")]),
+      _c("th", [_vm._v("No of. Patient")]),
     ])
   },
 ]

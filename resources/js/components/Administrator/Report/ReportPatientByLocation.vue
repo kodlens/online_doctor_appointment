@@ -59,40 +59,20 @@
                 <!--if there is province -->
                 <div v-if="search.province !== ''">
                     <div style="font-weight: bold; font-size: 1em;">
-                        NO. OF APPOINTMENT IN PROVINCE 
+                        NO. OF APPOINTMENT IN {{ search.byKey.toUpperCase() }} 
                     </div>
 
                     <!-- if province only selected-->
                     <table class="report-table">
                         <tr>
-                            <th>ID</th>
-                            <th style="font-size: .8em;">Appointment Date</th>
-                            <th>Account</th>
-                            <th>Schedule</th>
-                            <th>Status</th>
+                            <th style="width: 250px;">Place</th>
+                            <th>No of. Patient</th>
                         </tr>
                         <tr v-for="(i, ix) in data" :key="ix">
-                            <td>{{ i.appointment_id }}</td>
-                            <td>{{ i.appointment_date }}</td>
-                            <td>
-                                <span v-if="i.user.lname">
-                                    {{ i.user.lname }}, {{ i.user.fname }}
-                                </span>
-                            </td>
-                            <td style="width: 130px;">
-                                <span v-if="i.schedule.time_from">
-                                    {{ i.schedule.time_from | formatTime}} - {{ i.schedule.time_end | formatTime}}
-                                </span>
-                            </td>
-                            <td>
-                                <span class="status approved" v-if="i.is_served">SERVED</span>
-                                <span v-else>UNSERVED</span>
-                            </td>
+                            <td>{{ i.keyplace }}</td>
+                            <td>{{ i.no_patient }}</td>
                         </tr>
                     </table>
-
-                    <div>No. of Appointment Served: {{ countServed }} </div>
-                    <div>No. of Appointment Unserved: {{ countUnserved }} </div>
                 </div>
                 <!-- if there is province-->
 
@@ -117,10 +97,9 @@ export default{
 
 
             search: {
-                lname: '',
                 start_date: new Date(new Date().getFullYear(), new Date().getMonth(), 1),
                 end_date: new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0),
-                byKey: '',
+                byKey: 'province',
             },
 
            
@@ -141,11 +120,11 @@ export default{
         * Load async data
         */
         loadAsyncData() {
+            this.data = [];
             const params = [
                 `start=${this.$formatDate(this.search.start_date)}`,
                 `end=${this.$formatDate(this.search.end_date)}`,
                 `bykey=${this.search.byKey}`,
-
             ].join('&')
 
             this.loading = true
