@@ -9,7 +9,9 @@
                             TODAY'S APPOINTMENT
                         </div>
                         <div class="panel-body">
-
+                            <div class="today-appointment">
+                                {{  this.appointment }}
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -23,7 +25,7 @@
 export default {
     data(){
         return{
-
+            appointment: 0
         }
     },
     methods: {
@@ -36,6 +38,19 @@ export default {
             })
         }
         
+    },
+
+    mounted() {
+        this.loadTodayAppointments()
     }
 }
 </script>
+
+<style scoped>
+.today-appointment{
+    font-weight: bold;
+    font-size: 3em;
+    text-align: center;
+    padding: 20px;
+}
+</style>

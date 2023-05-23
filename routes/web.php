@@ -77,6 +77,7 @@ Route::middleware(['auth'])->group(function(){
 Route::middleware(['auth', 'staff'])->group(function(){
 
     Route::resource('/dashboard', App\Http\Controllers\Administrator\DashboardController::class);
+    Route::get('/load-today-appointments', [App\Http\Controllers\Administrator\DashboardController::class, 'loadTodaysAppointment']);
 
     Route::resource('/appointments', App\Http\Controllers\Administrator\AppointmentController::class);
     Route::get('/get-appointments', [App\Http\Controllers\Administrator\AppointmentController::class, 'getAppointments']);
