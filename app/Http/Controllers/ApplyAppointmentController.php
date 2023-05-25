@@ -96,10 +96,9 @@ class ApplyAppointmentController extends Controller
                 $msgDate = 'Schedule date changed!';
             }
 
-            
             return response()->json([
                 'errors' => [
-                    'max' => ['Sorry. The schedule reach the maximum number of reservation.', 
+                    'max' => ['Sorry. The schedule reach the maximum number of reservations.', 
                         $availableSched, 
                         $currentDate,
                         $msgDate

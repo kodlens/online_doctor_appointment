@@ -1,11 +1,23 @@
 <template>
     <div>
-        <carousel-images></carousel-images>
+        <!-- <carousel-images></carousel-images> -->
         <div class="section">
+
+
+            <div class="columns">
+                <div class="column">
+                    <div style="font-weight: bolder; font-size: 5em;">
+                        DR. TILAO's APPOINTMENT SYSTEM
+                    </div>
+                </div>
+                <div class="column">
+                    
+                </div>
+            </div>
             <div class="columns">
                 <div class="column">
                     <div class="welcome-title">
-                        Book your Appointment Online
+                        Book your clinic appointment with Dr. Tilao.
                     </div>
 
                     <div class="welcome-subtitle">
@@ -160,7 +172,7 @@
                                     @click="applyAppointment"
                                     :disabled="schedule_id < 1"
                                     class="mt-3"
-                                    label="Apply for appointment"
+                                    label="Make An Appointment"
                                     icon-left="calendar"
                                     type="is-primary is-outlined"></b-button>
                             </div>
@@ -230,49 +242,95 @@
                     </div>
                 </div>
             </div>
+            <div class="columns is-centered">
+                <div class="column">
+
+                    <div class="card">
+                        <div class="card-image">
+                            <figure class="image is-3by2">
+                            <img src="/img/1280x960.png" alt="Placeholder image">
+                            </figure>
+                        </div>
+                        <div class="card-content">
+                            <div class="title is-4">
+                                Diagnostic Services
+                            </div>
+                            <div class="content">
+                                Diagnostic services are medical tests and procedures that help doctors and healthcare providers diagnose health conditions and diseases.
+                     
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="column">
+                    <div class="card">
+                        <div class="card-image">
+                            <figure class="image is-3by2">
+                            <img src="/img/1280x960.png" alt="Placeholder image">
+                            </figure>
+                        </div>
+                        <div class="card-content">
+                            <div class="title is-4">
+                                Preventive Care
+                            </div>
+                            <div class="content">
+                                This includes services aimed at preventing health conditions, such as screenings, lifestyle counseling, and immunizations.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="column">
+                    <div class="card">
+                        <div class="card-image">
+                            <figure class="image is-3by2">
+                            <img src="/img/1280x960.png" alt="Placeholder image">
+                            </figure>
+                        </div>
+                        <div class="card-content">
+                            <div class="title is-4">
+                                Pediatric Care
+                            </div>
+                            <div class="content">
+                                This includes care for children, such as well-child checkups, vaccinations, and treatment for common childhood illnesses.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="column">
+                    <div class="card">
+                        <div class="card-image">
+                            <figure class="image is-3by2">
+                            <img src="/img/1280x960.png" alt="Placeholder image">
+                            </figure>
+                        </div>
+                        <div class="card-content">
+                            <div class="title is-4">
+                                General Health Check-ups
+                            </div>
+                            <div class="content has-text-justified is-clipped">
+                                Doctors in clinics provide general health check-ups to assess and maintain a patient's overall health. During a check-up, the doctor may take the patient's medical history, perform a physical examination, and order diagnostic tests such as blood work and urinalysis. 
+                                These check-ups are typically recommended on an annual basis for adults.
+                            </div>
+                        </div>
+                    </div>
+                </div>   
+            </div>
+         </div>
+
+
+         <div class="section">
             <div class="columns">
-                <div class="column">
-                    <div class="welcome-subtitle">
-                        Diagnostic Services
+                <div class="column has-text-centered">
+                    <div style="font-weight: bold; font-size: 1.8em; margin: auto;
+                        border-bottom: 2px solid blue; display: inline-block;">
+                        ABOUT DR. TILAO
                     </div>
-                    <p>
-                        Diagnostic services are medical tests and procedures that help doctors and healthcare providers diagnose health conditions and diseases.
-                    </p>
                 </div>
-
-                <div class="column">
-                    <div class="welcome-subtitle">
-                        Preventive Care
-                    </div>
-                    <p>
-                        This includes services aimed at preventing health conditions, such as screenings, lifestyle counseling, and immunizations.
-                    </p>
-                </div>
-
-                <div class="column">
-                    <div class="welcome-subtitle">
-                        Pediatric Care
-                    </div>
-                    <p>
-                        This includes care for children, such as well-child checkups, vaccinations, and treatment for common childhood illnesses.
-                    </p>
-                </div>
-
-                <div class="column">
-                    <div class="welcome-subtitle">
-                        General Health Check-ups
-                    </div>
-                    <p>
-                        Doctors in clinics provide general health check-ups to assess and maintain a patient's overall health. During a check-up, the doctor may take the patient's medical history, perform a physical examination, and order diagnostic tests such as blood work and urinalysis. 
-                        These check-ups are typically recommended on an annual basis for adults.
-                    </p>
-                </div>
-                        
             </div>
 
-            
-
-                
          </div>
 
     </div>
@@ -400,7 +458,7 @@ export default {
 
                         //save the new schedule found
                         let msg = this.errors.max[0] + ' Do you want to move schedule to <b>' + this.errors.max[2] + ', ' 
-                            + this.$formatTime(this.errors.max[1].time_from) + ' - ' + this.$formatTime(this.errors.max[1].time_end) + '.</b><br>';
+                            + this.$formatTime(this.errors.max[1].time_from) + ' - ' + this.$formatTime(this.errors.max[1].time_end) + '?</b><br>';
                         
                         if(this.errors.max[3]){
                             msg  +=  '<br><span style="font-weight:bold;color:red;">Are you willing to accept the schedule? The date was change from the original.</span>';
@@ -568,6 +626,21 @@ export default {
     .login-header-text{
         font-weight: bold; 
         font-size: 1.2em;
+    }
+
+    .height-150{
+        height: 150px;
+    }
+
+    .height-200{
+        height: 200px;
+    }
+
+    .height-300{
+        height: 300px;
+    }
+    .height-500{
+        height: 300px;
     }
 
 </style>

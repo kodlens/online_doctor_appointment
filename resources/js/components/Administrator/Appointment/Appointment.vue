@@ -144,6 +144,7 @@
                                                 <b-dropdown-item @click="confirmApprove(props.row.appointment_id)" 
                                                     aria-role="listitem">Approve</b-dropdown-item>
                                                 <b-dropdown-item 
+                                                    v-if="props.row.is_served !== 1 && props.row.is_arrived !== 1"
                                                     @click="confirmCancel(props.row.appointment_id)" 
                                                     aria-role="listitem">Cancel Appointment</b-dropdown-item>
                                                 <b-dropdown-item

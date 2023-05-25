@@ -15,6 +15,8 @@ class ArchiveAppointmentController extends Controller
     }
 
     public function getArchiveAppointments(Request $req){
+        //return $req;
+
         $sort = explode('.', $req->sort_by);
 
         $date = $req->appdate;
@@ -29,6 +31,9 @@ class ArchiveAppointmentController extends Controller
 
         $data = Appointment::with(['user', 'schedule', 'patients'])
             ->where('appointment_date', 'like',  $ndate . '%')
+            ->whereHas('user', function($q) use ($req){
+                $q->where('lname', 'like', '%'. $req->name . '%');
+            })
             ->where('is_archived', 1)
             ->orderBy($sort[0], $sort[1])
             ->paginate($req->perpage);
@@ -44,6 +49,8 @@ class ArchiveAppointmentController extends Controller
     public function store(Request $req){
 
         $appointment = Appointment::whereBetween('created_at', [$req->start_date, $req->end_date])
+            ->where('is_served', 1)
+            ->orWhere('is_arrived', 0)
             ->update([
                 'is_archived' => 1
             ]);

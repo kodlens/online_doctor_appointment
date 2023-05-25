@@ -186,7 +186,7 @@ export default{
 
 
             search: {
-                lname: '',
+                name: '',
                 start_date: new Date(new Date().getFullYear(), new Date().getMonth(), 1),
                 end_date: new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0)
             },
@@ -219,6 +219,7 @@ export default{
                 `sort_by=${this.sortField}.${this.sortOrder}`,
                 `start=${this.$formatDate(this.search.start_date)}`,
                 `end=${this.$formatDate(this.search.end_date)}`,
+                `name=${this.search.name}`,
                 `perpage=${this.perPage}`,
                 `page=${this.page}`
             ].join('&')
