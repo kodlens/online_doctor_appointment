@@ -80,6 +80,9 @@
                         {{-- <b-navbar-item href="#">
                             Contact
                         </b-navbar-item> --}}
+                        <b-navbar-item href="/vacations">
+                            Vacation
+                        </b-navbar-item>
                     </b-navbar-dropdown>
                 @endif
 

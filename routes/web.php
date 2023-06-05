@@ -109,6 +109,9 @@ Route::middleware(['auth', 'admin'])->group(function(){
     Route::resource('/schedules', App\Http\Controllers\Administrator\ScheduleController::class);
     Route::get('/get-schedules', [App\Http\Controllers\Administrator\ScheduleController::class, 'getSchedules']);
 
+    Route::resource('/vacations', App\Http\Controllers\Administrator\VacationController::class);
+    Route::get('/get-vacations', [App\Http\Controllers\Administrator\VacationController::class, 'getVacations']);
+
 
     Route::resource('/users', App\Http\Controllers\Administrator\UserController::class);
     Route::get('/get-users', [App\Http\Controllers\Administrator\UserController::class, 'getUsers']);
