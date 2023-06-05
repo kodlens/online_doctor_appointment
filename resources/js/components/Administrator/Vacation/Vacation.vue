@@ -79,9 +79,6 @@
                                     {{ props.row.vacation_date }}
                                 </b-table-column>
     
-                                
-    
-    
                                 <b-table-column label="ACTION" v-slot="props">
                                     <div class="is-flex">
                                         <b-tooltip label="Edit" type="is-primary">

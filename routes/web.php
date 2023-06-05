@@ -50,6 +50,7 @@ Route::get('/load-provinces', [App\Http\Controllers\AddressController::class, 'l
 Route::get('/load-cities', [App\Http\Controllers\AddressController::class, 'loadCities']);
 Route::get('/load-barangays', [App\Http\Controllers\AddressController::class, 'loadBarangays']);
 Route::get('/load-open-schedules', [App\Http\Controllers\OpenDataController::class, 'loadOpenScehdules']);
+Route::get('/load-vacations', [App\Http\Controllers\OpenDataController::class, 'loadVacations']);
 
 //open
 Route::get('/load-max-no', [App\Http\Controllers\OpenDataController::class, 'loadMaxNo']);

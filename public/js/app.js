@@ -10842,9 +10842,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -13221,6 +13218,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
@@ -13239,6 +13237,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       },
       errors: {},
       appointment_date: new Date(),
+      vacations: [],
       max: 0,
       schedules: [],
       schedule_id: 0,
@@ -13255,11 +13254,21 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var _this = this;
 
       this.schedule_id = 0;
+      this.vacations = [];
       var appdate = this.appointment_date.getFullYear() + '-' + (this.appointment_date.getMonth() + 1).toString().padStart(2, "0") + '-' + this.appointment_date.getDate().toString().padStart(2, '0'); //yyyy-MM-dd
 
       var params = ["appdate=".concat(appdate)].join('&');
       axios.get("/load-open-schedules?".concat(params)).then(function (res) {
         _this.schedules = res.data;
+      });
+      axios.get("/load-vacations?".concat(params)).then(function (res) {
+        //this.vacations = res.data
+        res.data.forEach(function (element) {
+          var d = new Date(element.vacation_date).getDate();
+
+          _this.vacations.push(d);
+        }); //console.log(this.vacations);
+        //tiwasonun and ma deact ang date..
       });
     },
     submit: function submit() {
@@ -44564,6 +44573,7 @@ var render = function () {
                       },
                       [
                         _c("b-datepicker", {
+                          attrs: { "unselectable-dates": _vm.vacations },
                           on: { input: _vm.loadOpenSchedules },
                           model: {
                             value: _vm.appointment_date,
