@@ -10842,6 +10842,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -10990,7 +10991,7 @@ __webpack_require__.r(__webpack_exports__);
     deleteSubmit: function deleteSubmit(delete_id) {
       var _this4 = this;
 
-      axios["delete"]('/schedules/' + delete_id).then(function (res) {
+      axios["delete"]('/vacations/' + delete_id).then(function (res) {
         _this4.loadAsyncData();
       })["catch"](function (err) {
         if (err.response.status === 422) {
@@ -11001,30 +11002,28 @@ __webpack_require__.r(__webpack_exports__);
     clearFields: function clearFields() {
       this.fields.vacations = [];
       this.errors = {};
-    },
-    //update code here
-    getData: function getData(data_id) {
-      var _this5 = this;
+    } //update code here
+    // getData: function(data_id){
+    //     this.clearFields();
+    //     this.global_id = data_id;
+    //     //this.isModalCreate = true;
+    //     //nested axios for getting the address 1 by 1 or request by request
+    //     axios.get('/schedules/'+ data_id).then(res=>{
+    //         console.log(res.data);
+    //         this.fields.schedule_id = res.data.schedule_id;
+    //         this.fields.time_from = new Date('2022-01-01 ' + res.data.time_from);
+    //         this.fields.time_end = new Date('2022-01-01 ' + res.data.time_end);
+    //         this.fields.max_no = res.data.max_no;
+    //         this.fields.mon = res.data.mon;
+    //         this.fields.tue = res.data.tue;
+    //         this.fields.wed = res.data.wed;
+    //         this.fields.thu = res.data.thu;
+    //         this.fields.fri = res.data.fri;
+    //         this.fields.sat = res.data.sat;
+    //         this.fields.sun = res.data.sun;
+    //     });
+    // },
 
-      this.clearFields();
-      this.global_id = data_id;
-      this.isModalCreate = true; //nested axios for getting the address 1 by 1 or request by request
-
-      axios.get('/schedules/' + data_id).then(function (res) {
-        console.log(res.data);
-        _this5.fields.schedule_id = res.data.schedule_id;
-        _this5.fields.time_from = new Date('2022-01-01 ' + res.data.time_from);
-        _this5.fields.time_end = new Date('2022-01-01 ' + res.data.time_end);
-        _this5.fields.max_no = res.data.max_no;
-        _this5.fields.mon = res.data.mon;
-        _this5.fields.tue = res.data.tue;
-        _this5.fields.wed = res.data.wed;
-        _this5.fields.thu = res.data.thu;
-        _this5.fields.fri = res.data.fri;
-        _this5.fields.sat = res.data.sat;
-        _this5.fields.sun = res.data.sun;
-      });
-    }
   },
   mounted: function mounted() {
     this.loadAsyncData();
@@ -11096,6 +11095,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
     propId: {
@@ -11103,12 +11105,15 @@ __webpack_require__.r(__webpack_exports__);
       "default": 0
     },
     propData: {
-      type: String,
+      type: Object,
       "default": ''
     }
   },
   data: function data() {
     return {
+      data: {
+        vacation_date: new Date()
+      },
       fields: {
         vacations: []
       },
@@ -11151,19 +11156,17 @@ __webpack_require__.r(__webpack_exports__);
 
       if (this.propId > 0) {
         //logic
-        axios.put('/appointments/' + this.propId, appointment).then(function (res) {
+        this.data.vacation_date = this.$formatDate(this.data.vacation_date);
+        axios.put('/vacations/' + this.propId, this.data).then(function (res) {
           if (res.data.status === 'updated') {
             _this2.$buefy.dialog.alert({
               title: 'Saved!',
               message: 'Reservation successfully saved.',
               type: 'is-success',
               onConfirm: function onConfirm() {
-                window.location = '/appointments';
+                window.location = '/vacations';
               }
             });
-
-            _this2.fields = {};
-            _this2.errors = {};
           }
         })["catch"](function (err) {
           //console.log(err.response.data.errors);
@@ -11219,14 +11222,10 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     getData: function getData() {
-      //console.log(this.propAppointment)
       if (this.propId > 0) {
-        this.appointment = JSON.parse(this.propAppointment);
-        console.log(this.appointment);
-        this.appointment_date = new Date(this.appointment.appointment_date);
-        this.fields.user_id = this.appointment.user_id;
-        this.loadOpenSchedules();
-        this.user_fullname = this.appointment.user.lname + ', ' + this.appointment.user.fname + ' ' + this.appointment.user.mname;
+        var nData = this.propData;
+        this.data.vacation_date = new Date(nData.vacation_date); //this.data.vacation_date = new Date();
+        //console.log(this.data);
       }
     },
     newVacationDate: function newVacationDate() {
@@ -13236,7 +13235,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         patients: []
       },
       errors: {},
-      appointment_date: new Date(),
+      appointment_date: null,
       vacations: [],
       max: 0,
       schedules: [],
@@ -13253,22 +13252,22 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     loadOpenSchedules: function loadOpenSchedules() {
       var _this = this;
 
-      this.schedule_id = 0;
-      this.vacations = [];
+      this.schedule_id = 0; //this.vacations = [];
+
       var appdate = this.appointment_date.getFullYear() + '-' + (this.appointment_date.getMonth() + 1).toString().padStart(2, "0") + '-' + this.appointment_date.getDate().toString().padStart(2, '0'); //yyyy-MM-dd
 
       var params = ["appdate=".concat(appdate)].join('&');
-      axios.get("/load-open-schedules?".concat(params)).then(function (res) {
-        _this.schedules = res.data;
-      });
       axios.get("/load-vacations?".concat(params)).then(function (res) {
         //this.vacations = res.data
         res.data.forEach(function (element) {
-          var d = new Date(element.vacation_date).getDate();
+          var d = new Date(element.vacation_date);
 
           _this.vacations.push(d);
-        }); //console.log(this.vacations);
-        //tiwasonun and ma deact ang date..
+        });
+        console.log(_this.vacations); //tiwasonun and ma deact ang date..
+      });
+      axios.get("/load-open-schedules?".concat(params)).then(function (res) {
+        _this.schedules = res.data;
       });
     },
     submit: function submit() {
@@ -41236,13 +41235,10 @@ var render = function () {
                                         attrs: {
                                           tag: "a",
                                           "icon-right": "pencil",
-                                        },
-                                        on: {
-                                          click: function ($event) {
-                                            return _vm.getData(
-                                              props.row.schedule_id
-                                            )
-                                          },
+                                          href:
+                                            "/vacations/" +
+                                            props.row.vacation_id +
+                                            "/edit",
                                         },
                                       }),
                                     ],
@@ -41265,7 +41261,7 @@ var render = function () {
                                         on: {
                                           click: function ($event) {
                                             return _vm.confirmDelete(
-                                              props.row.schedule_id
+                                              props.row.vacation_id
                                             )
                                           },
                                         },
@@ -41339,94 +41335,102 @@ var render = function () {
           _c("div", { staticClass: "w-panel-card" }, [
             _vm._m(0),
             _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "w-panel-body" },
-              [
-                _c(
-                  "b-tabs",
-                  [
-                    _c(
-                      "b-tab-item",
-                      { attrs: { label: "Pictures", icon: "google-photos" } },
-                      [
-                        _vm._l(_vm.vacations, function (i, ix) {
-                          return _c(
-                            "div",
-                            { key: ix, staticClass: "m-2" },
-                            [
-                              _c(
-                                "b-field",
-                                {
-                                  attrs: {
-                                    label: "Pick date",
-                                    "label-position": "on-border",
-                                  },
-                                },
-                                [
-                                  _c("b-datepicker", {
-                                    model: {
-                                      value: i.vacation_date,
-                                      callback: function ($$v) {
-                                        _vm.$set(i, "vacation_date", $$v)
-                                      },
-                                      expression: "i.vacation_date",
-                                    },
-                                  }),
-                                ],
-                                1
-                              ),
-                            ],
-                            1
-                          )
-                        }),
-                        _vm._v(" "),
-                        _c(
+            _c("div", { staticClass: "w-panel-body" }, [
+              _vm.propId > 0
+                ? _c(
+                    "div",
+                    [
+                      _c(
+                        "b-field",
+                        {
+                          attrs: {
+                            label: "Pick date",
+                            "label-position": "on-border",
+                          },
+                        },
+                        [
+                          _c("b-datepicker", {
+                            model: {
+                              value: _vm.data.vacation_date,
+                              callback: function ($$v) {
+                                _vm.$set(_vm.data, "vacation_date", $$v)
+                              },
+                              expression: "data.vacation_date",
+                            },
+                          }),
+                        ],
+                        1
+                      ),
+                    ],
+                    1
+                  )
+                : _c(
+                    "div",
+                    [
+                      _vm._l(_vm.vacations, function (i, ix) {
+                        return _c(
                           "div",
-                          { staticClass: "buttons" },
+                          { key: ix, staticClass: "m-2" },
                           [
-                            _c("b-button", {
-                              staticClass: "is-small mx-2",
-                              attrs: { type: "is-info", "icon-left": "plus" },
-                              on: { click: _vm.newVacationDate },
-                            }),
+                            _c(
+                              "b-field",
+                              {
+                                attrs: {
+                                  label: "Pick date",
+                                  "label-position": "on-border",
+                                },
+                              },
+                              [
+                                _c("b-datepicker", {
+                                  model: {
+                                    value: i.vacation_date,
+                                    callback: function ($$v) {
+                                      _vm.$set(i, "vacation_date", $$v)
+                                    },
+                                    expression: "i.vacation_date",
+                                  },
+                                }),
+                              ],
+                              1
+                            ),
                           ],
                           1
-                        ),
-                      ],
-                      2
-                    ),
-                    _vm._v(" "),
-                    _c("b-tab-item", {
-                      attrs: { label: "Music", icon: "library-music" },
-                    }),
-                    _vm._v(" "),
-                    _c("b-tab-item", {
-                      attrs: { label: "Videos", icon: "video" },
-                    }),
-                  ],
-                  1
-                ),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  { staticClass: "buttons" },
-                  [
-                    _c("b-button", {
-                      staticClass: "mt-3",
-                      attrs: {
-                        label: "Save Vacation",
-                        "icon-left": "calendar",
-                        type: "is-primary is-outlined",
-                      },
-                      on: { click: _vm.submit },
-                    }),
-                  ],
-                  1
-                ),
-              ],
-              1
-            ),
+                        )
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "buttons" },
+                        [
+                          _c("b-button", {
+                            staticClass: "is-small mx-2",
+                            attrs: { type: "is-info", "icon-left": "plus" },
+                            on: { click: _vm.newVacationDate },
+                          }),
+                        ],
+                        1
+                      ),
+                    ],
+                    2
+                  ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "buttons" },
+                [
+                  _c("b-button", {
+                    staticClass: "mt-3",
+                    attrs: {
+                      label: "Save Vacation",
+                      "icon-left": "calendar",
+                      type: "is-primary is-outlined",
+                    },
+                    on: { click: _vm.submit },
+                  }),
+                ],
+                1
+              ),
+            ]),
           ]),
         ]),
       ]),

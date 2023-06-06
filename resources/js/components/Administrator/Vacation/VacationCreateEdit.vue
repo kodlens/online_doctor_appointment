@@ -11,24 +11,27 @@
                         
                         <div class="w-panel-body">
 
-                            <b-tabs>
-                                <b-tab-item label="Pictures" icon="google-photos">
-                                    <div v-for="(i,ix) in vacations" :key="ix" class="m-2">
-                                        <b-field label="Pick date" label-position="on-border">
-                                            <b-datepicker v-model="i.vacation_date">
-                                            </b-datepicker>
-                                        </b-field>
-                                    </div>
-                                    <div class="buttons">
-                                        <b-button type="is-info" class="is-small mx-2"
-                                            icon-left="plus"
-                                            @click="newVacationDate"></b-button>
-                                    </div>
-                                    
-                                </b-tab-item>
-                                <b-tab-item label="Music" icon="library-music"></b-tab-item>
-                                <b-tab-item label="Videos" icon="video"></b-tab-item>
-                            </b-tabs>
+                            <div v-if="propId > 0">
+                                <b-field label="Pick date" label-position="on-border">
+                                    <b-datepicker v-model="data.vacation_date">
+                                    </b-datepicker>
+                                </b-field>
+                            </div>
+                            <div v-else>
+                                <div v-for="(i,ix) in vacations" :key="ix" class="m-2">
+                                    <b-field label="Pick date" label-position="on-border">
+                                        <b-datepicker v-model="i.vacation_date">
+                                        </b-datepicker>
+                                    </b-field>
+                                </div>
+                                <div class="buttons">
+                                    <b-button type="is-info" class="is-small mx-2"
+                                        icon-left="plus"
+                                        @click="newVacationDate"></b-button>
+                                </div>
+                            </div>
+                            
+                      
                             
                             <div class="buttons">
                                 <b-button
@@ -59,7 +62,7 @@ export default{
             default: 0
         },
         propData: {
-            type: String,
+            type: Object,
             default: '',
         },
     },
@@ -67,6 +70,11 @@ export default{
 
     data() {
         return{
+
+            data: {
+                vacation_date: new Date()
+            },
+            
             fields: {
                 vacations: []
             },
@@ -122,18 +130,19 @@ export default{
             
             if(this.propId > 0){
                 //logic
-                axios.put('/appointments/' + this.propId, appointment).then(res=>{
+
+                this.data.vacation_date = this.$formatDate(this.data.vacation_date);
+
+                axios.put('/vacations/' + this.propId, this.data).then(res=>{
                     if(res.data.status === 'updated'){
                         this.$buefy.dialog.alert({
                             title: 'Saved!',
                             message: 'Reservation successfully saved.',
                             type: 'is-success',
                             onConfirm: ()=>{
-                                window.location = '/appointments'
+                                window.location = '/vacations'
                             }
                         });
-                        this.fields = {};
-                        this.errors = {};
                     }
 
                 }).catch(err=>{
@@ -173,7 +182,6 @@ export default{
                         this.fields = [];
                         this.errors = {};
                     }
-
                 }).catch(err=>{
                     //console.log(err.response.data.errors);
                     if(err.response.status === 422){
@@ -188,26 +196,17 @@ export default{
                     }
                 })
             }
-            
         },
 
 
         getData(){
-            //console.log(this.propAppointment)
-
             if(this.propId > 0){
-                this.appointment = JSON.parse(this.propAppointment);
-                console.log(this.appointment)
-
-                this.appointment_date = new Date(this.appointment.appointment_date)
-                this.fields.user_id = this.appointment.user_id;
-                this.loadOpenSchedules()
-                this.user_fullname = this.appointment.user.lname + ', ' + this.appointment.user.fname + ' ' + this.appointment.user.mname;
+                const nData = this.propData
+                this.data.vacation_date = new Date(nData.vacation_date)
+                //this.data.vacation_date = new Date();
+                //console.log(this.data);
             }
-
-            
         },
-
 
         newVacationDate(){
             this.vacations.push({
@@ -215,9 +214,6 @@ export default{
                 vacation_date: new Date()
             });
         }
-
-
-
     },
 
     mounted() {

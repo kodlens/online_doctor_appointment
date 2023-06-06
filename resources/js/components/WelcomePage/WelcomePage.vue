@@ -358,7 +358,7 @@ export default {
            
             errors: {},
 
-            appointment_date: new Date(),
+            appointment_date: null,
             vacations: [],
             max: 0,
 
@@ -380,7 +380,7 @@ export default {
         
         loadOpenSchedules(){
             this.schedule_id = 0;
-            this.vacations = [];
+            //this.vacations = [];
 
             const appdate = this.appointment_date.getFullYear() + '-' 
                 + (this.appointment_date.getMonth() + 1).toString().padStart(2, "0") + '-' 
@@ -392,19 +392,21 @@ export default {
                 `appdate=${appdate}`,
             ].join('&')
 
+            axios.get(`/load-vacations?${params}`).then(res=>{
+                //this.vacations = res.data
+                res.data.forEach(element => {
+                    const d = new Date(element.vacation_date)
+                    this.vacations.push(d)
+                });
+                console.log(this.vacations);
+                //tiwasonun and ma deact ang date..
+            })
+
             axios.get(`/load-open-schedules?${params}`).then(res=>{
                 this.schedules = res.data
             })
 
-            axios.get(`/load-vacations?${params}`).then(res=>{
-                //this.vacations = res.data
-                res.data.forEach(element => {
-                    const d = new Date(element.vacation_date).getDate()
-                    this.vacations.push(d)
-                });
-                //console.log(this.vacations);
-                //tiwasonun and ma deact ang date..
-            })
+            
 
         },
 

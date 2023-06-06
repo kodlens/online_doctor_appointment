@@ -29,7 +29,9 @@ class VacationController extends Controller
 
     public function create(){
         return view('administrator.vacation-create-edit')
-            ->with('id', 0);
+            ->with('id', 0)
+            ->with('data', '');
+
     }
 
 
@@ -66,9 +68,19 @@ class VacationController extends Controller
             ->with('id', $id)
             ->with('data', $data);
     }
+
     public function update(Request $req, $id){
+        //return $req;
 
+        $req->validate([
+            'vacation_date' => ['required', 'unique:vacations,' .$id. 'vacation_id'],
+        ]);
 
+        $vDate = date('Y-m-d', strtotime($req->vacation_date));
+
+        $data = Vacation::find($id);
+        $data->vacation_date = $vDate;
+        $data->saved();
 
         return response()->json([
             'status' => 'updated'
@@ -77,6 +89,10 @@ class VacationController extends Controller
 
 
     public function destroy($id){
+        Vacation::destroy($id);
 
+        return response()->json([
+            'status' => 'deleted'
+        ], 200);
     }
 }

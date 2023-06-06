@@ -85,15 +85,16 @@
                                             <b-button class="button is-small is-primary mr-1 is-outlined" 
                                                 tag="a" 
                                                 icon-right="pencil" 
-                                                @click="getData(props.row.schedule_id)"></b-button>
+                                                :href="`/vacations/${props.row.vacation_id}/edit`"></b-button>
                                         </b-tooltip>
                                         <b-tooltip label="Delete" type="is-danger">
                                             <b-button class="button is-small is-danger mr-1 is-outlined" 
                                                 icon-right="delete" 
-                                                @click="confirmDelete(props.row.schedule_id)"></b-button>
+                                                @click="confirmDelete(props.row.vacation_id)"></b-button>
                                         </b-tooltip>
                                     </div>
                                 </b-table-column>
+
                             </b-table>
     
                             
@@ -269,7 +270,7 @@ export default{
         },
         //execute delete after confirming
         deleteSubmit(delete_id) {
-            axios.delete('/schedules/' + delete_id).then(res => {
+            axios.delete('/vacations/' + delete_id).then(res => {
                 this.loadAsyncData();
             }).catch(err => {
                 if (err.response.status === 422) {
@@ -285,28 +286,28 @@ export default{
 
 
         //update code here
-        getData: function(data_id){
-            this.clearFields();
-            this.global_id = data_id;
-            this.isModalCreate = true;
+        // getData: function(data_id){
+        //     this.clearFields();
+        //     this.global_id = data_id;
+        //     //this.isModalCreate = true;
 
-            //nested axios for getting the address 1 by 1 or request by request
-            axios.get('/schedules/'+ data_id).then(res=>{
-                console.log(res.data);
-                this.fields.schedule_id = res.data.schedule_id;
-                this.fields.time_from = new Date('2022-01-01 ' + res.data.time_from);
-                this.fields.time_end = new Date('2022-01-01 ' + res.data.time_end);
+        //     //nested axios for getting the address 1 by 1 or request by request
+        //     axios.get('/schedules/'+ data_id).then(res=>{
+        //         console.log(res.data);
+        //         this.fields.schedule_id = res.data.schedule_id;
+        //         this.fields.time_from = new Date('2022-01-01 ' + res.data.time_from);
+        //         this.fields.time_end = new Date('2022-01-01 ' + res.data.time_end);
 
-                this.fields.max_no = res.data.max_no;
-                this.fields.mon = res.data.mon;
-                this.fields.tue = res.data.tue;
-                this.fields.wed = res.data.wed;
-                this.fields.thu = res.data.thu;
-                this.fields.fri = res.data.fri;
-                this.fields.sat = res.data.sat;
-                this.fields.sun = res.data.sun;
-            });
-        },
+        //         this.fields.max_no = res.data.max_no;
+        //         this.fields.mon = res.data.mon;
+        //         this.fields.tue = res.data.tue;
+        //         this.fields.wed = res.data.wed;
+        //         this.fields.thu = res.data.thu;
+        //         this.fields.fri = res.data.fri;
+        //         this.fields.sat = res.data.sat;
+        //         this.fields.sun = res.data.sun;
+        //     });
+        // },
 
 
     },
