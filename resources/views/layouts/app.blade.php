@@ -57,7 +57,12 @@
 </head>
 <body>
     <div id="app">
-        
+        <div style="padding: 10px 0 10px 0; color:white; background-color:rgb(25, 95, 175);">
+            <div style="margin-left: 20px;">
+                <span>Contact No.: 09291385267</span> | 
+                <span>Email: polyclinic.tilao@gmail.com</span>
+            </div>
+        </div>
         <b-navbar>
             <template #brand>
                 <b-navbar-item class="has-text-weight-bold">

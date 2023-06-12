@@ -11,10 +11,17 @@
                     </div>
                 </div>
                 <div class="column">
-                    
+                    <img src="/img/logo.webp" alt="Logo" srcset="">
                 </div>
             </div>
-            <div class="columns">
+            <div style="height: 10px; background-color: rgb(74, 74, 155);"></div>
+
+
+            <b-notification class="is-info mt-5">
+                Appointment beyond clinic hours is case-to-case basis.
+            </b-notification>
+
+            <div class="columns mt-5">
                 <div class="column">
                     <div class="welcome-title">
                         Book your clinic appointment with Dr. Tilao.
@@ -249,7 +256,7 @@
                     <div class="card">
                         <div class="card-image">
                             <figure class="image is-3by2">
-                            <img src="/img/1280x960.png" alt="Placeholder image">
+                            <img src="/img/service_offered_1.jpg" alt="Placeholder image">
                             </figure>
                         </div>
                         <div class="card-content">
@@ -322,7 +329,7 @@
          </div>
 
 
-         <div class="section">
+        <!-- <div class="section">
             <div class="columns">
                 <div class="column has-text-centered">
                     <div style="font-weight: bold; font-size: 1.8em; margin: auto;
@@ -332,7 +339,24 @@
                 </div>
             </div>
 
-         </div>
+
+
+            <div class="columns mt-5 is-centered">
+                <div class="column is-10">
+
+                    <div class="is-flex">
+
+                        <div style="max-width: 300px;">
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut labore neque ex vitae suscipit tempore consequatur voluptatibus aliquam harum eveniet.
+                        </div>
+                        <div>
+                            <img src="/img/achievment.jpg" style="height: 200px; margin: auto; display: block;" alt="About Dr. Tilao" srcset=""></img>
+                        </div>
+                    </div>
+                   
+                </div> 
+            </div>
+         </div> -->
 
     </div>
 </template>
@@ -405,8 +429,6 @@ export default {
             axios.get(`/load-open-schedules?${params}`).then(res=>{
                 this.schedules = res.data
             })
-
-            
 
         },
 
@@ -565,7 +587,7 @@ export default {
     },
 
     mounted(){
-       
+        this.appointment_date = new Date();
         this.loadOpenSchedules()
         this.loadMaxPatient();
     }
@@ -635,6 +657,7 @@ export default {
         max-width: 600px;
         margin: auto;
         padding: 25px;
+        border-top: 2px solid rgb(56, 56, 165);
     }
 
     .login-header{

@@ -17,8 +17,8 @@
                 <div class="column">
                     <div class="columns is-centered">
                         <div class="column is-8" style="color: white; ">
-                            <div>Contact No.: 09124578624</div>
-                            <div>Email: sample@email.com</div>
+                            <div>Contact No.: 09291385267</div>
+                            <div>Email: polyclinic.tilao@email.com</div>
                             <div>Address: Tangub City, Misamis Occidental</div>
 
                         </div>

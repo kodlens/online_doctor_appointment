@@ -45,6 +45,21 @@ class MyAppointmentController extends Controller
         return $data;
     }
 
+    public function rescheduleView($id){
+
+        $data = Appointment::find($id);
+
+        return view('user.my-appointment-reschedule')
+            ->with('data', $data);
+    }
+
+    public function rescheduleSubmit($id){
+        $data = Appointment::find($id);
+        
+        return response()->json([
+            'status' => 'updated'
+        ], 200);
+    }
 
     public function upcomingAppointment(){
         $data = DB::table('appointments as a')

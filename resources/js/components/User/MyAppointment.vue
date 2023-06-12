@@ -67,7 +67,7 @@
                                     {{ props.row.schedule.time_from | formatTime }} -  {{ props.row.schedule.time_end | formatTime }}
                                 </b-table-column>
 
-                                <b-table-column field="illness_history" label="ILLNESS/HISTORY" v-slot="props">
+                                <!-- <b-table-column field="illness_history" label="ILLNESS/HISTORY" v-slot="props">
                                     <div v-if="props.row.illness_history">
                                         <div  class="text-container">
                                             <p class="long-text">
@@ -80,7 +80,7 @@
                                             @click="seeMore(props.row.illness_history)"
                                             label="see more..."></b-button>
                                     </div>
-                                </b-table-column>
+                                </b-table-column> -->
                                 <b-table-column field="status" label="STATUS" v-slot="props">
                                     <span class="status pending" v-if="props.row.status === 0">PENDING</span>
                                     <span class="status approved" v-if="props.row.status === 1">APPROVED</span>
@@ -93,6 +93,12 @@
                                             <b-button class="button is-small is-info is-outlined mr-1" 
                                             icon-right="cancel" 
                                             @click="cancelAppointment(props.row.appointment_id)"></b-button>
+                                        </b-tooltip>
+
+                                        <b-tooltip v-if="props.row.status === 0" label="Reschedule Appointment" type="is-info">
+                                            <b-button class="button is-small is-info is-outlined mr-1" 
+                                            icon-right="calendar" 
+                                            @click="rescheduleModal(props.row.appointment_id)"></b-button>
                                         </b-tooltip>
                                         
                                     </div>
@@ -311,6 +317,10 @@ export default{
             }
         },
 
+
+        rescheduleModal(appId){
+            window.location = '/my-appointment-reschedule/' + appId
+        },
 
         //alert box ask for deletion
         cancelAppointment(appId) {

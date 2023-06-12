@@ -12207,6 +12207,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -12354,6 +12360,9 @@ __webpack_require__.r(__webpack_exports__);
         });
       }
     },
+    rescheduleModal: function rescheduleModal(appId) {
+      window.location = '/my-appointment-reschedule/' + appId;
+    },
     //alert box ask for deletion
     cancelAppointment: function cancelAppointment(appId) {
       var _this3 = this;
@@ -12451,6 +12460,189 @@ __webpack_require__.r(__webpack_exports__);
   },
   mounted: function mounted() {
     this.loadAsyncData();
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/User/MyAppointmentReschedule.vue?vue&type=script&lang=js&":
+/*!***********************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/User/MyAppointmentReschedule.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  data: function data() {
+    return {
+      appointment_date: null,
+      vacations: [],
+      max: 0,
+      schedules: [],
+      schedule_id: 0,
+      btnClass: {
+        'is-primary': true,
+        'is-outlined': true,
+        'is-loading': false,
+        'button': true
+      }
+    };
+  },
+  methods: {
+    loadOpenSchedules: function loadOpenSchedules() {
+      var _this = this;
+
+      this.schedule_id = 0; //this.vacations = [];
+
+      var appdate = this.appointment_date.getFullYear() + '-' + (this.appointment_date.getMonth() + 1).toString().padStart(2, "0") + '-' + this.appointment_date.getDate().toString().padStart(2, '0'); //yyyy-MM-dd
+
+      var params = ["appdate=".concat(appdate)].join('&');
+      axios.get("/load-vacations?".concat(params)).then(function (res) {
+        //this.vacations = res.data
+        res.data.forEach(function (element) {
+          var d = new Date(element.vacation_date);
+
+          _this.vacations.push(d);
+        });
+        console.log(_this.vacations); //tiwasonun and ma deact ang date..
+      });
+      axios.get("/load-open-schedules?".concat(params)).then(function (res) {
+        _this.schedules = res.data;
+      });
+    },
+    applyAppointment: function applyAppointment() {
+      var _this2 = this;
+
+      var appdate = this.appointment_date.getFullYear() + '-' + (this.appointment_date.getMonth() + 1).toString().padStart(2, "0") + '-' + this.appointment_date.getDate().toString().padStart(2, '0'); //yyyy-MM-dd
+
+      var appointment = {
+        appointment_date: appdate,
+        schedule_id: this.schedule_id,
+        patients: this.fields.patients
+      };
+      axios.post('/apply-appointment', appointment).then(function (res) {
+        if (res.data.status === 'saved') {
+          _this2.$buefy.dialog.alert({
+            title: 'Saved!',
+            message: 'Reservation successfully saved.',
+            type: 'is-success'
+          });
+
+          _this2.fields = {
+            patients: []
+          };
+          _this2.errors = {};
+        }
+      })["catch"](function (err) {
+        //console.log(err.response.data.errors);
+        if (err.response.status === 422) {
+          _this2.errors = err.response.data.errors;
+
+          if (_this2.errors.patients) {
+            _this2.errors.patients[0] = 'Please add patient.';
+          }
+
+          if (_this2.errors.max) {
+            //save the new schedule found
+            var msg = _this2.errors.max[0] + ' Do you want to move schedule to <b>' + _this2.errors.max[2] + ', ' + _this2.$formatTime(_this2.errors.max[1].time_from) + ' - ' + _this2.$formatTime(_this2.errors.max[1].time_end) + '?</b><br>';
+
+            if (_this2.errors.max[3]) {
+              msg += '<br><span style="font-weight:bold;color:red;">Are you willing to accept the schedule? The date was change from the original.</span>';
+            }
+
+            _this2.$buefy.dialog.confirm({
+              title: 'Limit!',
+              message: msg,
+              type: 'is-info',
+              confirmText: 'Proceed schedule',
+              onConfirm: function onConfirm() {
+                _this2.appointment_date = new Date(_this2.errors.max[2]);
+                var newData = _this2.errors.max[1];
+                _this2.schedule_id = newData.schedule_id;
+
+                _this2.applyAppointment(); //recursive
+
+              }
+            });
+          }
+
+          if (_this2.errors.exists) {
+            _this2.$buefy.dialog.alert({
+              title: 'Exist!',
+              message: _this2.errors.exists[0],
+              type: 'is-danger'
+            });
+          }
+        }
+      });
+    },
+    loadMaxPatient: function loadMaxPatient() {
+      var _this3 = this;
+
+      axios.get('/load-max-no').then(function (res) {
+        _this3.max = res.data.max;
+      });
+    }
+  },
+  mounted: function mounted() {
+    this.loadOpenSchedules();
+    this.loadMaxPatient();
   }
 });
 
@@ -13218,6 +13410,30 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
@@ -13413,6 +13629,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }
   },
   mounted: function mounted() {
+    this.appointment_date = new Date();
     this.loadOpenSchedules();
     this.loadMaxPatient();
   }
@@ -32135,6 +32352,30 @@ ___CSS_LOADER_EXPORT___.push([module.id, "\n.text-container[data-v-08e6ed1a] {\n
 
 /***/ }),
 
+/***/ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/User/MyAppointmentReschedule.vue?vue&type=style&index=0&id=6962c784&scoped=true&lang=css&":
+/*!*******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/User/MyAppointmentReschedule.vue?vue&type=style&index=0&id=6962c784&scoped=true&lang=css& ***!
+  \*******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__);
+// Imports
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, "\n.panel[data-v-6962c784]{\n    margin: 30px;\n}\n.panel-body[data-v-6962c784]{\n    padding: 15px;\n}\n", ""]);
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
 /***/ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/WelcomePage/CarouselImages.vue?vue&type=style&index=0&id=642fe6fe&scoped=true&lang=css&":
 /*!*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/WelcomePage/CarouselImages.vue?vue&type=style&index=0&id=642fe6fe&scoped=true&lang=css& ***!
@@ -32176,7 +32417,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.welcome-title[data-v-0e3912d8]{\n    font-size: 3em;\n    font-weight: bolder;\n}\n.welcome-subtitle[data-v-0e3912d8]{\n    font-size: 1.5em;\n    font-weight: bold;\n}\n.welcome-content[data-v-0e3912d8]{\n    margin: 50px 0;\n    font-size: 1.4em;\n    text-align: justify;\n}\n.schedule-box[data-v-0e3912d8]{\n    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;\n    max-width: 600px;\n    margin: auto;\n    padding: 25px;\n}\n.doctor-schedule[data-v-0e3912d8]{\n    max-width: 500px;\n    margin: 15px auto;\n}\n.doctor-schedule-header[data-v-0e3912d8]{\n    font-weight: bold;\n    font-size: 1.2em;\n    margin: 15px 0;\n}\n.schedule-item[data-v-0e3912d8]{\n    display: flex;\n    padding: 15px;\n    margin: 5px;\n    border: 1px solid lightgray;\n    border-radius: 10px;\n    transition: all 0.5s;\n}\n.schedule-item[data-v-0e3912d8]:hover{\n    border: 1.5px solid rgb(58, 176, 223);\n}\n.schedule-item-radio[data-v-0e3912d8]{\n    margin-left: auto;\n}\n.login-box[data-v-0e3912d8]{\n    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;\n    max-width: 600px;\n    margin: auto;\n    padding: 25px;\n}\n.login-header[data-v-0e3912d8]{\n    border-bottom: 1px solid blue;\n    padding: 0 0 15px 0;\n    margin: 0 0 10px 0;\n}\n.login-header-text[data-v-0e3912d8]{\n    font-weight: bold; \n    font-size: 1.2em;\n}\n.height-150[data-v-0e3912d8]{\n    height: 150px;\n}\n.height-200[data-v-0e3912d8]{\n    height: 200px;\n}\n.height-300[data-v-0e3912d8]{\n    height: 300px;\n}\n.height-500[data-v-0e3912d8]{\n    height: 300px;\n}\n\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.welcome-title[data-v-0e3912d8]{\n    font-size: 3em;\n    font-weight: bolder;\n}\n.welcome-subtitle[data-v-0e3912d8]{\n    font-size: 1.5em;\n    font-weight: bold;\n}\n.welcome-content[data-v-0e3912d8]{\n    margin: 50px 0;\n    font-size: 1.4em;\n    text-align: justify;\n}\n.schedule-box[data-v-0e3912d8]{\n    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;\n    max-width: 600px;\n    margin: auto;\n    padding: 25px;\n}\n.doctor-schedule[data-v-0e3912d8]{\n    max-width: 500px;\n    margin: 15px auto;\n}\n.doctor-schedule-header[data-v-0e3912d8]{\n    font-weight: bold;\n    font-size: 1.2em;\n    margin: 15px 0;\n}\n.schedule-item[data-v-0e3912d8]{\n    display: flex;\n    padding: 15px;\n    margin: 5px;\n    border: 1px solid lightgray;\n    border-radius: 10px;\n    transition: all 0.5s;\n}\n.schedule-item[data-v-0e3912d8]:hover{\n    border: 1.5px solid rgb(58, 176, 223);\n}\n.schedule-item-radio[data-v-0e3912d8]{\n    margin-left: auto;\n}\n.login-box[data-v-0e3912d8]{\n    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;\n    max-width: 600px;\n    margin: auto;\n    padding: 25px;\n    border-top: 2px solid rgb(56, 56, 165);\n}\n.login-header[data-v-0e3912d8]{\n    border-bottom: 1px solid blue;\n    padding: 0 0 15px 0;\n    margin: 0 0 10px 0;\n}\n.login-header-text[data-v-0e3912d8]{\n    font-weight: bold; \n    font-size: 1.2em;\n}\n.height-150[data-v-0e3912d8]{\n    height: 150px;\n}\n.height-200[data-v-0e3912d8]{\n    height: 200px;\n}\n.height-300[data-v-0e3912d8]{\n    height: 300px;\n}\n.height-500[data-v-0e3912d8]{\n    height: 300px;\n}\n\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -33710,6 +33951,36 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 
 /***/ }),
 
+/***/ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/User/MyAppointmentReschedule.vue?vue&type=style&index=0&id=6962c784&scoped=true&lang=css&":
+/*!***********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/User/MyAppointmentReschedule.vue?vue&type=style&index=0&id=6962c784&scoped=true&lang=css& ***!
+  \***********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_MyAppointmentReschedule_vue_vue_type_style_index_0_id_6962c784_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !!../../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./MyAppointmentReschedule.vue?vue&type=style&index=0&id=6962c784&scoped=true&lang=css& */ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/User/MyAppointmentReschedule.vue?vue&type=style&index=0&id=6962c784&scoped=true&lang=css&");
+
+            
+
+var options = {};
+
+options.insert = "head";
+options.singleton = false;
+
+var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_MyAppointmentReschedule_vue_vue_type_style_index_0_id_6962c784_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_1__["default"], options);
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_MyAppointmentReschedule_vue_vue_type_style_index_0_id_6962c784_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_1__["default"].locals || {});
+
+/***/ }),
+
 /***/ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/WelcomePage/CarouselImages.vue?vue&type=style&index=0&id=642fe6fe&scoped=true&lang=css&":
 /*!*********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/WelcomePage/CarouselImages.vue?vue&type=style&index=0&id=642fe6fe&scoped=true&lang=css& ***!
@@ -34978,6 +35249,47 @@ component.options.__file = "resources/js/components/User/MyAppointment.vue"
 
 /***/ }),
 
+/***/ "./resources/js/components/User/MyAppointmentReschedule.vue":
+/*!******************************************************************!*\
+  !*** ./resources/js/components/User/MyAppointmentReschedule.vue ***!
+  \******************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _MyAppointmentReschedule_vue_vue_type_template_id_6962c784_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./MyAppointmentReschedule.vue?vue&type=template&id=6962c784&scoped=true& */ "./resources/js/components/User/MyAppointmentReschedule.vue?vue&type=template&id=6962c784&scoped=true&");
+/* harmony import */ var _MyAppointmentReschedule_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./MyAppointmentReschedule.vue?vue&type=script&lang=js& */ "./resources/js/components/User/MyAppointmentReschedule.vue?vue&type=script&lang=js&");
+/* harmony import */ var _MyAppointmentReschedule_vue_vue_type_style_index_0_id_6962c784_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./MyAppointmentReschedule.vue?vue&type=style&index=0&id=6962c784&scoped=true&lang=css& */ "./resources/js/components/User/MyAppointmentReschedule.vue?vue&type=style&index=0&id=6962c784&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+;
+
+
+/* normalize component */
+
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+  _MyAppointmentReschedule_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _MyAppointmentReschedule_vue_vue_type_template_id_6962c784_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render,
+  _MyAppointmentReschedule_vue_vue_type_template_id_6962c784_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  "6962c784",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/User/MyAppointmentReschedule.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/components/User/MyProfile.vue":
 /*!****************************************************!*\
   !*** ./resources/js/components/User/MyProfile.vue ***!
@@ -35506,6 +35818,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/User/MyAppointmentReschedule.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************************!*\
+  !*** ./resources/js/components/User/MyAppointmentReschedule.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_MyAppointmentReschedule_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./MyAppointmentReschedule.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/User/MyAppointmentReschedule.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_MyAppointmentReschedule_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
 /***/ "./resources/js/components/User/MyProfile.vue?vue&type=script&lang=js&":
 /*!*****************************************************************************!*\
   !*** ./resources/js/components/User/MyProfile.vue?vue&type=script&lang=js& ***!
@@ -35774,6 +36102,19 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_MyAppointment_vue_vue_type_style_index_0_id_08e6ed1a_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/style-loader/dist/cjs.js!../../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./MyAppointment.vue?vue&type=style&index=0&id=08e6ed1a&scoped=true&lang=css& */ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/User/MyAppointment.vue?vue&type=style&index=0&id=08e6ed1a&scoped=true&lang=css&");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/User/MyAppointmentReschedule.vue?vue&type=style&index=0&id=6962c784&scoped=true&lang=css&":
+/*!***************************************************************************************************************************!*\
+  !*** ./resources/js/components/User/MyAppointmentReschedule.vue?vue&type=style&index=0&id=6962c784&scoped=true&lang=css& ***!
+  \***************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_MyAppointmentReschedule_vue_vue_type_style_index_0_id_6962c784_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/style-loader/dist/cjs.js!../../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./MyAppointmentReschedule.vue?vue&type=style&index=0&id=6962c784&scoped=true&lang=css& */ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/User/MyAppointmentReschedule.vue?vue&type=style&index=0&id=6962c784&scoped=true&lang=css&");
 
 
 /***/ }),
@@ -36191,6 +36532,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_MyAppointment_vue_vue_type_template_id_08e6ed1a_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
 /* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_MyAppointment_vue_vue_type_template_id_08e6ed1a_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./MyAppointment.vue?vue&type=template&id=08e6ed1a&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/User/MyAppointment.vue?vue&type=template&id=08e6ed1a&scoped=true&");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/User/MyAppointmentReschedule.vue?vue&type=template&id=6962c784&scoped=true&":
+/*!*************************************************************************************************************!*\
+  !*** ./resources/js/components/User/MyAppointmentReschedule.vue?vue&type=template&id=6962c784&scoped=true& ***!
+  \*************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_MyAppointmentReschedule_vue_vue_type_template_id_6962c784_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_MyAppointmentReschedule_vue_vue_type_template_id_6962c784_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_MyAppointmentReschedule_vue_vue_type_template_id_6962c784_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./MyAppointmentReschedule.vue?vue&type=template&id=6962c784&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/User/MyAppointmentReschedule.vue?vue&type=template&id=6962c784&scoped=true&");
 
 
 /***/ }),
@@ -41515,9 +41873,9 @@ var staticRenderFns = [
                 "div",
                 { staticClass: "column is-8", staticStyle: { color: "white" } },
                 [
-                  _c("div", [_vm._v("Contact No.: 09124578624")]),
+                  _c("div", [_vm._v("Contact No.: 09291385267")]),
                   _vm._v(" "),
-                  _c("div", [_vm._v("Email: sample@email.com")]),
+                  _c("div", [_vm._v("Email: polyclinic.tilao@email.com")]),
                   _vm._v(" "),
                   _c("div", [
                     _vm._v("Address: Tangub City, Misamis Occidental"),
@@ -43108,64 +43466,6 @@ var render = function () {
                     }),
                     _vm._v(" "),
                     _c("b-table-column", {
-                      attrs: {
-                        field: "illness_history",
-                        label: "ILLNESS/HISTORY",
-                      },
-                      scopedSlots: _vm._u([
-                        {
-                          key: "default",
-                          fn: function (props) {
-                            return [
-                              props.row.illness_history
-                                ? _c(
-                                    "div",
-                                    [
-                                      _c(
-                                        "div",
-                                        { staticClass: "text-container" },
-                                        [
-                                          _c(
-                                            "p",
-                                            { staticClass: "long-text" },
-                                            [
-                                              _vm._v(
-                                                "\n                                            " +
-                                                  _vm._s(
-                                                    props.row.illness_history
-                                                  ) +
-                                                  "\n                                        "
-                                              ),
-                                            ]
-                                          ),
-                                        ]
-                                      ),
-                                      _vm._v(" "),
-                                      props.row.illness_history.length > 100
-                                        ? _c("b-button", {
-                                            staticClass:
-                                              "is-small is-outlined is-info",
-                                            attrs: { label: "see more..." },
-                                            on: {
-                                              click: function ($event) {
-                                                return _vm.seeMore(
-                                                  props.row.illness_history
-                                                )
-                                              },
-                                            },
-                                          })
-                                        : _vm._e(),
-                                    ],
-                                    1
-                                  )
-                                : _vm._e(),
-                            ]
-                          },
-                        },
-                      ]),
-                    }),
-                    _vm._v(" "),
-                    _c("b-table-column", {
                       attrs: { field: "status", label: "STATUS" },
                       scopedSlots: _vm._u([
                         {
@@ -43229,6 +43529,33 @@ var render = function () {
                                             on: {
                                               click: function ($event) {
                                                 return _vm.cancelAppointment(
+                                                  props.row.appointment_id
+                                                )
+                                              },
+                                            },
+                                          }),
+                                        ],
+                                        1
+                                      )
+                                    : _vm._e(),
+                                  _vm._v(" "),
+                                  props.row.status === 0
+                                    ? _c(
+                                        "b-tooltip",
+                                        {
+                                          attrs: {
+                                            label: "Reschedule Appointment",
+                                            type: "is-info",
+                                          },
+                                        },
+                                        [
+                                          _c("b-button", {
+                                            staticClass:
+                                              "button is-small is-info is-outlined mr-1",
+                                            attrs: { "icon-right": "calendar" },
+                                            on: {
+                                              click: function ($event) {
+                                                return _vm.rescheduleModal(
                                                   props.row.appointment_id
                                                 )
                                               },
@@ -43344,6 +43671,120 @@ var staticRenderFns = [
     ])
   },
 ]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/User/MyAppointmentReschedule.vue?vue&type=template&id=6962c784&scoped=true&":
+/*!****************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/User/MyAppointmentReschedule.vue?vue&type=template&id=6962c784&scoped=true& ***!
+  \****************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function () {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c("div", { staticClass: "columns is-centered" }, [
+      _c("div", { staticClass: "column is-8" }, [
+        _c("div", { staticClass: "panel" }, [
+          _c("div", { staticClass: "panel-heading" }, [
+            _vm._v("\n                    Reschedule\n                "),
+          ]),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "panel-body" },
+            [
+              _c(
+                "b-field",
+                {
+                  attrs: { label: "Pick date", "label-position": "on-border" },
+                },
+                [
+                  _c("b-datepicker", {
+                    attrs: { "unselectable-dates": _vm.vacations },
+                    on: { input: _vm.loadOpenSchedules },
+                    model: {
+                      value: _vm.appointment_date,
+                      callback: function ($$v) {
+                        _vm.appointment_date = $$v
+                      },
+                      expression: "appointment_date",
+                    },
+                  }),
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _vm._l(_vm.schedules, function (item, index) {
+                return _c("div", { key: index, staticClass: "schedule-item" }, [
+                  _c("div", { staticClass: "schedule-item-time" }, [
+                    _vm._v(
+                      _vm._s(_vm._f("formatTime")(item.time_from)) +
+                        " - " +
+                        _vm._s(_vm._f("formatTime")(item.time_end))
+                    ),
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "schedule-item-radio" },
+                    [
+                      _c("b-radio", {
+                        attrs: {
+                          name: "name",
+                          "native-value": item.schedule_id,
+                        },
+                        model: {
+                          value: _vm.schedule_id,
+                          callback: function ($$v) {
+                            _vm.schedule_id = $$v
+                          },
+                          expression: "schedule_id",
+                        },
+                      }),
+                    ],
+                    1
+                  ),
+                ])
+              }),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "buttons" },
+                [
+                  _c("b-button", {
+                    staticClass: "mt-3",
+                    attrs: {
+                      disabled: _vm.schedule_id < 1,
+                      label: "Make An Appointment",
+                      "icon-left": "calendar",
+                      type: "is-primary is-outlined",
+                    },
+                    on: { click: _vm.applyAppointment },
+                  }),
+                ],
+                1
+              ),
+            ],
+            2
+          ),
+        ]),
+      ]),
+    ]),
+  ])
+}
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -44064,693 +44505,713 @@ var render = function () {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("div", { staticClass: "section" }, [
-      _vm._m(0),
-      _vm._v(" "),
-      _c("div", { staticClass: "columns" }, [
-        _vm._m(1),
+    _c(
+      "div",
+      { staticClass: "section" },
+      [
+        _vm._m(0),
         _vm._v(" "),
-        _c("div", { staticClass: "column" }, [
-          _vm.isLogin
-            ? _c("div", { staticClass: "schedule-box" }, [
-                _c(
-                  "div",
-                  { staticClass: "doctor-schedule" },
-                  [
-                    _c("div", { staticClass: "doctor-schedule-header" }, [
-                      _vm._v(
-                        "\n                            Patient Information\n                        "
-                      ),
-                    ]),
-                    _vm._v(" "),
-                    _c("b-field", {
-                      attrs: {
-                        type: this.errors.patients ? "is-danger" : "",
-                        message: this.errors.patients
-                          ? this.errors.patients[0]
-                          : "",
-                      },
-                    }),
-                    _vm._v(" "),
-                    _vm._l(_vm.fields.patients, function (patient, pIndex) {
-                      return _c("div", { key: "patient" + pIndex }, [
-                        _c("div", { staticClass: "columns" }, [
-                          _c(
-                            "div",
-                            { staticClass: "column" },
-                            [
-                              _c(
-                                "b-field",
-                                {
-                                  attrs: {
-                                    label: "Patient Last Name",
-                                    "label-position": "on-border",
-                                  },
-                                },
-                                [
-                                  _c("b-input", {
-                                    attrs: {
-                                      type: "text",
-                                      placeholder: "Patient Last Name",
-                                    },
-                                    model: {
-                                      value: patient.lname,
-                                      callback: function ($$v) {
-                                        _vm.$set(patient, "lname", $$v)
-                                      },
-                                      expression: "patient.lname",
-                                    },
-                                  }),
-                                ],
-                                1
-                              ),
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "div",
-                            { staticClass: "column" },
-                            [
-                              _c(
-                                "b-field",
-                                {
-                                  attrs: {
-                                    label: "Patient First Name",
-                                    "label-position": "on-border",
-                                  },
-                                },
-                                [
-                                  _c("b-input", {
-                                    attrs: {
-                                      type: "text",
-                                      placeholder: "Patient First Name",
-                                    },
-                                    model: {
-                                      value: patient.fname,
-                                      callback: function ($$v) {
-                                        _vm.$set(patient, "fname", $$v)
-                                      },
-                                      expression: "patient.fname",
-                                    },
-                                  }),
-                                ],
-                                1
-                              ),
-                            ],
-                            1
-                          ),
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "columns" }, [
-                          _c(
-                            "div",
-                            { staticClass: "column" },
-                            [
-                              _c(
-                                "b-field",
-                                {
-                                  attrs: {
-                                    label: "Patient Middle Name",
-                                    "label-position": "on-border",
-                                  },
-                                },
-                                [
-                                  _c("b-input", {
-                                    attrs: {
-                                      type: "text",
-                                      placeholder: "Patient Middle Name",
-                                    },
-                                    model: {
-                                      value: patient.mname,
-                                      callback: function ($$v) {
-                                        _vm.$set(patient, "mname", $$v)
-                                      },
-                                      expression: "patient.mname",
-                                    },
-                                  }),
-                                ],
-                                1
-                              ),
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "div",
-                            { staticClass: "column" },
-                            [
-                              _c(
-                                "b-field",
-                                {
-                                  attrs: {
-                                    label: "Sex",
-                                    "label-position": "on-border",
-                                  },
-                                },
-                                [
-                                  _c(
-                                    "b-select",
-                                    {
-                                      attrs: { placeholder: "Sex" },
-                                      model: {
-                                        value: patient.sex,
-                                        callback: function ($$v) {
-                                          _vm.$set(patient, "sex", $$v)
-                                        },
-                                        expression: "patient.sex",
-                                      },
-                                    },
-                                    [
-                                      _c(
-                                        "option",
-                                        { attrs: { value: "MALE" } },
-                                        [_vm._v("MALE")]
-                                      ),
-                                      _vm._v(" "),
-                                      _c(
-                                        "option",
-                                        { attrs: { value: "FEMALE" } },
-                                        [_vm._v("FEMALE")]
-                                      ),
-                                    ]
-                                  ),
-                                ],
-                                1
-                              ),
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "div",
-                            { staticClass: "column" },
-                            [
-                              _c(
-                                "b-field",
-                                {
-                                  attrs: {
-                                    label: "Age",
-                                    "label-position": "on-border",
-                                  },
-                                },
-                                [
-                                  _c("b-numberinput", {
-                                    attrs: {
-                                      type: "text",
-                                      placeholder: "Age",
-                                      controls: false,
-                                    },
-                                    model: {
-                                      value: patient.age,
-                                      callback: function ($$v) {
-                                        _vm.$set(patient, "age", $$v)
-                                      },
-                                      expression: "patient.age",
-                                    },
-                                  }),
-                                ],
-                                1
-                              ),
-                            ],
-                            1
-                          ),
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "columns" }, [
-                          _c(
-                            "div",
-                            { staticClass: "column" },
-                            [
-                              _c(
-                                "b-field",
-                                {
-                                  staticClass: "mt-3",
-                                  attrs: {
-                                    label:
-                                      "Illness Description/History (Optional)",
-                                    "label-position": "on-border",
-                                  },
-                                },
-                                [
-                                  _c("b-input", {
-                                    attrs: {
-                                      type: "textarea",
-                                      placeholder:
-                                        "Illness Description/History (Optional)",
-                                    },
-                                    model: {
-                                      value: patient.illness,
-                                      callback: function ($$v) {
-                                        _vm.$set(patient, "illness", $$v)
-                                      },
-                                      expression: "patient.illness",
-                                    },
-                                  }),
-                                ],
-                                1
-                              ),
-                            ],
-                            1
-                          ),
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "columns" }, [
-                          _c(
-                            "div",
-                            { staticClass: "column" },
-                            [
-                              _c(
-                                "b-field",
-                                {
-                                  attrs: {
-                                    label: "Province",
-                                    "label-position": "on-border",
-                                    expanded: "",
-                                  },
-                                },
-                                [
-                                  _c(
-                                    "b-select",
-                                    {
-                                      attrs: { expanded: "" },
-                                      on: {
-                                        focus: function ($event) {
-                                          return _vm.loadProvince(pIndex)
-                                        },
-                                      },
-                                      model: {
-                                        value: patient.province,
-                                        callback: function ($$v) {
-                                          _vm.$set(patient, "province", $$v)
-                                        },
-                                        expression: "patient.province",
-                                      },
-                                    },
-                                    _vm._l(
-                                      patient.provinces,
-                                      function (item, index) {
-                                        return _c(
-                                          "option",
-                                          {
-                                            key: index,
-                                            domProps: { value: item.provCode },
-                                          },
-                                          [_vm._v(_vm._s(item.provDesc))]
-                                        )
-                                      }
-                                    ),
-                                    0
-                                  ),
-                                ],
-                                1
-                              ),
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "div",
-                            { staticClass: "column" },
-                            [
-                              _c(
-                                "b-field",
-                                {
-                                  attrs: {
-                                    label: "City",
-                                    "label-position": "on-border",
-                                    expanded: "",
-                                  },
-                                },
-                                [
-                                  _c(
-                                    "b-select",
-                                    {
-                                      attrs: { expanded: "" },
-                                      on: {
-                                        focus: function ($event) {
-                                          return _vm.loadCities(
-                                            pIndex,
-                                            patient.province
-                                          )
-                                        },
-                                      },
-                                      model: {
-                                        value: patient.city,
-                                        callback: function ($$v) {
-                                          _vm.$set(patient, "city", $$v)
-                                        },
-                                        expression: "patient.city",
-                                      },
-                                    },
-                                    _vm._l(
-                                      patient.cities,
-                                      function (item, index) {
-                                        return _c(
-                                          "option",
-                                          {
-                                            key: index,
-                                            domProps: {
-                                              value: item.citymunCode,
-                                            },
-                                          },
-                                          [_vm._v(_vm._s(item.citymunDesc))]
-                                        )
-                                      }
-                                    ),
-                                    0
-                                  ),
-                                ],
-                                1
-                              ),
-                            ],
-                            1
-                          ),
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "columns" }, [
-                          _c(
-                            "div",
-                            { staticClass: "column" },
-                            [
-                              _c(
-                                "b-field",
-                                {
-                                  attrs: {
-                                    label: "Barangay",
-                                    "label-position": "on-border",
-                                    expanded: "",
-                                  },
-                                },
-                                [
-                                  _c(
-                                    "b-select",
-                                    {
-                                      attrs: { expanded: "" },
-                                      on: {
-                                        focus: function ($event) {
-                                          return _vm.loadBarangays(
-                                            pIndex,
-                                            patient.province,
-                                            patient.city
-                                          )
-                                        },
-                                      },
-                                      model: {
-                                        value: patient.barangay,
-                                        callback: function ($$v) {
-                                          _vm.$set(patient, "barangay", $$v)
-                                        },
-                                        expression: "patient.barangay",
-                                      },
-                                    },
-                                    _vm._l(
-                                      patient.barangays,
-                                      function (item, index) {
-                                        return _c(
-                                          "option",
-                                          {
-                                            key: index,
-                                            domProps: { value: item.brgyCode },
-                                          },
-                                          [_vm._v(_vm._s(item.brgyDesc))]
-                                        )
-                                      }
-                                    ),
-                                    0
-                                  ),
-                                ],
-                                1
-                              ),
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "div",
-                            { staticClass: "column" },
-                            [
-                              _c(
-                                "b-field",
-                                {
-                                  attrs: {
-                                    label: "Street",
-                                    "label-position": "on-border",
-                                  },
-                                },
-                                [
-                                  _c("b-input", {
-                                    attrs: { placeholder: "Street" },
-                                    model: {
-                                      value: patient.street,
-                                      callback: function ($$v) {
-                                        _vm.$set(patient, "street", $$v)
-                                      },
-                                      expression: "patient.street",
-                                    },
-                                  }),
-                                ],
-                                1
-                              ),
-                            ],
-                            1
-                          ),
-                        ]),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          { staticClass: "buttons" },
-                          [
-                            _c("b-button", {
-                              staticClass: "is-small",
-                              attrs: {
-                                label: "",
-                                "icon-left": "delete",
-                                type: "is-danger",
-                              },
-                              on: {
-                                click: function ($event) {
-                                  return _vm.removePatient(pIndex)
-                                },
-                              },
-                            }),
-                          ],
-                          1
+        _c("div", {
+          staticStyle: {
+            height: "10px",
+            "background-color": "rgb(74, 74, 155)",
+          },
+        }),
+        _vm._v(" "),
+        _c("b-notification", { staticClass: "is-info mt-5" }, [
+          _vm._v(
+            "\n            Appointment beyond clinic hours is case-to-case basis.\n        "
+          ),
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "columns mt-5" }, [
+          _vm._m(1),
+          _vm._v(" "),
+          _c("div", { staticClass: "column" }, [
+            _vm.isLogin
+              ? _c("div", { staticClass: "schedule-box" }, [
+                  _c(
+                    "div",
+                    { staticClass: "doctor-schedule" },
+                    [
+                      _c("div", { staticClass: "doctor-schedule-header" }, [
+                        _vm._v(
+                          "\n                            Patient Information\n                        "
                         ),
-                        _vm._v(" "),
-                        _c("hr"),
-                      ])
-                    }),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      { staticClass: "buttons mt-5" },
-                      [
-                        _c(
-                          "b-button",
-                          {
-                            staticClass: "button is-small is-info",
-                            attrs: {
-                              disabled: _vm.fields.patients.length >= _vm.max,
-                            },
-                            on: { click: _vm.addPatient },
-                          },
-                          [_vm._v("Add")]
-                        ),
-                      ],
-                      1
-                    ),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "doctor-schedule-header" }, [
-                      _vm._v(
-                        "\n                            Doctor Schedule\n                        "
-                      ),
-                    ]),
-                    _vm._v(" "),
-                    _c(
-                      "b-field",
-                      {
+                      ]),
+                      _vm._v(" "),
+                      _c("b-field", {
                         attrs: {
-                          label: "Pick date",
-                          "label-position": "on-border",
+                          type: this.errors.patients ? "is-danger" : "",
+                          message: this.errors.patients
+                            ? this.errors.patients[0]
+                            : "",
                         },
-                      },
-                      [
-                        _c("b-datepicker", {
-                          attrs: { "unselectable-dates": _vm.vacations },
-                          on: { input: _vm.loadOpenSchedules },
-                          model: {
-                            value: _vm.appointment_date,
-                            callback: function ($$v) {
-                              _vm.appointment_date = $$v
-                            },
-                            expression: "appointment_date",
-                          },
-                        }),
-                      ],
-                      1
-                    ),
-                    _vm._v(" "),
-                    _vm._l(_vm.schedules, function (item, index) {
-                      return _c(
-                        "div",
-                        { key: index, staticClass: "schedule-item" },
-                        [
-                          _c("div", { staticClass: "schedule-item-time" }, [
-                            _vm._v(
-                              _vm._s(_vm._f("formatTime")(item.time_from)) +
-                                " - " +
-                                _vm._s(_vm._f("formatTime")(item.time_end))
+                      }),
+                      _vm._v(" "),
+                      _vm._l(_vm.fields.patients, function (patient, pIndex) {
+                        return _c("div", { key: "patient" + pIndex }, [
+                          _c("div", { staticClass: "columns" }, [
+                            _c(
+                              "div",
+                              { staticClass: "column" },
+                              [
+                                _c(
+                                  "b-field",
+                                  {
+                                    attrs: {
+                                      label: "Patient Last Name",
+                                      "label-position": "on-border",
+                                    },
+                                  },
+                                  [
+                                    _c("b-input", {
+                                      attrs: {
+                                        type: "text",
+                                        placeholder: "Patient Last Name",
+                                      },
+                                      model: {
+                                        value: patient.lname,
+                                        callback: function ($$v) {
+                                          _vm.$set(patient, "lname", $$v)
+                                        },
+                                        expression: "patient.lname",
+                                      },
+                                    }),
+                                  ],
+                                  1
+                                ),
+                              ],
+                              1
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              { staticClass: "column" },
+                              [
+                                _c(
+                                  "b-field",
+                                  {
+                                    attrs: {
+                                      label: "Patient First Name",
+                                      "label-position": "on-border",
+                                    },
+                                  },
+                                  [
+                                    _c("b-input", {
+                                      attrs: {
+                                        type: "text",
+                                        placeholder: "Patient First Name",
+                                      },
+                                      model: {
+                                        value: patient.fname,
+                                        callback: function ($$v) {
+                                          _vm.$set(patient, "fname", $$v)
+                                        },
+                                        expression: "patient.fname",
+                                      },
+                                    }),
+                                  ],
+                                  1
+                                ),
+                              ],
+                              1
+                            ),
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "columns" }, [
+                            _c(
+                              "div",
+                              { staticClass: "column" },
+                              [
+                                _c(
+                                  "b-field",
+                                  {
+                                    attrs: {
+                                      label: "Patient Middle Name",
+                                      "label-position": "on-border",
+                                    },
+                                  },
+                                  [
+                                    _c("b-input", {
+                                      attrs: {
+                                        type: "text",
+                                        placeholder: "Patient Middle Name",
+                                      },
+                                      model: {
+                                        value: patient.mname,
+                                        callback: function ($$v) {
+                                          _vm.$set(patient, "mname", $$v)
+                                        },
+                                        expression: "patient.mname",
+                                      },
+                                    }),
+                                  ],
+                                  1
+                                ),
+                              ],
+                              1
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              { staticClass: "column" },
+                              [
+                                _c(
+                                  "b-field",
+                                  {
+                                    attrs: {
+                                      label: "Sex",
+                                      "label-position": "on-border",
+                                    },
+                                  },
+                                  [
+                                    _c(
+                                      "b-select",
+                                      {
+                                        attrs: { placeholder: "Sex" },
+                                        model: {
+                                          value: patient.sex,
+                                          callback: function ($$v) {
+                                            _vm.$set(patient, "sex", $$v)
+                                          },
+                                          expression: "patient.sex",
+                                        },
+                                      },
+                                      [
+                                        _c(
+                                          "option",
+                                          { attrs: { value: "MALE" } },
+                                          [_vm._v("MALE")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "option",
+                                          { attrs: { value: "FEMALE" } },
+                                          [_vm._v("FEMALE")]
+                                        ),
+                                      ]
+                                    ),
+                                  ],
+                                  1
+                                ),
+                              ],
+                              1
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              { staticClass: "column" },
+                              [
+                                _c(
+                                  "b-field",
+                                  {
+                                    attrs: {
+                                      label: "Age",
+                                      "label-position": "on-border",
+                                    },
+                                  },
+                                  [
+                                    _c("b-numberinput", {
+                                      attrs: {
+                                        type: "text",
+                                        placeholder: "Age",
+                                        controls: false,
+                                      },
+                                      model: {
+                                        value: patient.age,
+                                        callback: function ($$v) {
+                                          _vm.$set(patient, "age", $$v)
+                                        },
+                                        expression: "patient.age",
+                                      },
+                                    }),
+                                  ],
+                                  1
+                                ),
+                              ],
+                              1
+                            ),
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "columns" }, [
+                            _c(
+                              "div",
+                              { staticClass: "column" },
+                              [
+                                _c(
+                                  "b-field",
+                                  {
+                                    staticClass: "mt-3",
+                                    attrs: {
+                                      label:
+                                        "Illness Description/History (Optional)",
+                                      "label-position": "on-border",
+                                    },
+                                  },
+                                  [
+                                    _c("b-input", {
+                                      attrs: {
+                                        type: "textarea",
+                                        placeholder:
+                                          "Illness Description/History (Optional)",
+                                      },
+                                      model: {
+                                        value: patient.illness,
+                                        callback: function ($$v) {
+                                          _vm.$set(patient, "illness", $$v)
+                                        },
+                                        expression: "patient.illness",
+                                      },
+                                    }),
+                                  ],
+                                  1
+                                ),
+                              ],
+                              1
+                            ),
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "columns" }, [
+                            _c(
+                              "div",
+                              { staticClass: "column" },
+                              [
+                                _c(
+                                  "b-field",
+                                  {
+                                    attrs: {
+                                      label: "Province",
+                                      "label-position": "on-border",
+                                      expanded: "",
+                                    },
+                                  },
+                                  [
+                                    _c(
+                                      "b-select",
+                                      {
+                                        attrs: { expanded: "" },
+                                        on: {
+                                          focus: function ($event) {
+                                            return _vm.loadProvince(pIndex)
+                                          },
+                                        },
+                                        model: {
+                                          value: patient.province,
+                                          callback: function ($$v) {
+                                            _vm.$set(patient, "province", $$v)
+                                          },
+                                          expression: "patient.province",
+                                        },
+                                      },
+                                      _vm._l(
+                                        patient.provinces,
+                                        function (item, index) {
+                                          return _c(
+                                            "option",
+                                            {
+                                              key: index,
+                                              domProps: {
+                                                value: item.provCode,
+                                              },
+                                            },
+                                            [_vm._v(_vm._s(item.provDesc))]
+                                          )
+                                        }
+                                      ),
+                                      0
+                                    ),
+                                  ],
+                                  1
+                                ),
+                              ],
+                              1
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              { staticClass: "column" },
+                              [
+                                _c(
+                                  "b-field",
+                                  {
+                                    attrs: {
+                                      label: "City",
+                                      "label-position": "on-border",
+                                      expanded: "",
+                                    },
+                                  },
+                                  [
+                                    _c(
+                                      "b-select",
+                                      {
+                                        attrs: { expanded: "" },
+                                        on: {
+                                          focus: function ($event) {
+                                            return _vm.loadCities(
+                                              pIndex,
+                                              patient.province
+                                            )
+                                          },
+                                        },
+                                        model: {
+                                          value: patient.city,
+                                          callback: function ($$v) {
+                                            _vm.$set(patient, "city", $$v)
+                                          },
+                                          expression: "patient.city",
+                                        },
+                                      },
+                                      _vm._l(
+                                        patient.cities,
+                                        function (item, index) {
+                                          return _c(
+                                            "option",
+                                            {
+                                              key: index,
+                                              domProps: {
+                                                value: item.citymunCode,
+                                              },
+                                            },
+                                            [_vm._v(_vm._s(item.citymunDesc))]
+                                          )
+                                        }
+                                      ),
+                                      0
+                                    ),
+                                  ],
+                                  1
+                                ),
+                              ],
+                              1
+                            ),
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "columns" }, [
+                            _c(
+                              "div",
+                              { staticClass: "column" },
+                              [
+                                _c(
+                                  "b-field",
+                                  {
+                                    attrs: {
+                                      label: "Barangay",
+                                      "label-position": "on-border",
+                                      expanded: "",
+                                    },
+                                  },
+                                  [
+                                    _c(
+                                      "b-select",
+                                      {
+                                        attrs: { expanded: "" },
+                                        on: {
+                                          focus: function ($event) {
+                                            return _vm.loadBarangays(
+                                              pIndex,
+                                              patient.province,
+                                              patient.city
+                                            )
+                                          },
+                                        },
+                                        model: {
+                                          value: patient.barangay,
+                                          callback: function ($$v) {
+                                            _vm.$set(patient, "barangay", $$v)
+                                          },
+                                          expression: "patient.barangay",
+                                        },
+                                      },
+                                      _vm._l(
+                                        patient.barangays,
+                                        function (item, index) {
+                                          return _c(
+                                            "option",
+                                            {
+                                              key: index,
+                                              domProps: {
+                                                value: item.brgyCode,
+                                              },
+                                            },
+                                            [_vm._v(_vm._s(item.brgyDesc))]
+                                          )
+                                        }
+                                      ),
+                                      0
+                                    ),
+                                  ],
+                                  1
+                                ),
+                              ],
+                              1
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              { staticClass: "column" },
+                              [
+                                _c(
+                                  "b-field",
+                                  {
+                                    attrs: {
+                                      label: "Street",
+                                      "label-position": "on-border",
+                                    },
+                                  },
+                                  [
+                                    _c("b-input", {
+                                      attrs: { placeholder: "Street" },
+                                      model: {
+                                        value: patient.street,
+                                        callback: function ($$v) {
+                                          _vm.$set(patient, "street", $$v)
+                                        },
+                                        expression: "patient.street",
+                                      },
+                                    }),
+                                  ],
+                                  1
+                                ),
+                              ],
+                              1
                             ),
                           ]),
                           _vm._v(" "),
                           _c(
                             "div",
-                            { staticClass: "schedule-item-radio" },
+                            { staticClass: "buttons" },
                             [
-                              _c("b-radio", {
+                              _c("b-button", {
+                                staticClass: "is-small",
                                 attrs: {
-                                  name: "name",
-                                  "native-value": item.schedule_id,
+                                  label: "",
+                                  "icon-left": "delete",
+                                  type: "is-danger",
                                 },
-                                model: {
-                                  value: _vm.schedule_id,
-                                  callback: function ($$v) {
-                                    _vm.schedule_id = $$v
+                                on: {
+                                  click: function ($event) {
+                                    return _vm.removePatient(pIndex)
                                   },
-                                  expression: "schedule_id",
                                 },
                               }),
                             ],
                             1
                           ),
-                        ]
-                      )
-                    }),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      { staticClass: "buttons" },
-                      [
-                        _c("b-button", {
-                          staticClass: "mt-3",
-                          attrs: {
-                            disabled: _vm.schedule_id < 1,
-                            label: "Make An Appointment",
-                            "icon-left": "calendar",
-                            type: "is-primary is-outlined",
-                          },
-                          on: { click: _vm.applyAppointment },
-                        }),
-                      ],
-                      1
-                    ),
-                  ],
-                  2
-                ),
-              ])
-            : _c("div", { staticClass: "login-box" }, [
-                _vm._m(2),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  [
-                    _c(
-                      "b-field",
-                      {
-                        attrs: {
-                          label: "Username",
-                          type: this.errors.username ? "is-danger" : "",
-                          message: this.errors.username
-                            ? this.errors.username[0]
-                            : "",
-                        },
-                      },
-                      [
-                        _c("b-input", {
-                          attrs: {
-                            type: "text",
-                            required: "",
-                            placeholder: "Username",
-                          },
-                          model: {
-                            value: _vm.fields.username,
-                            callback: function ($$v) {
-                              _vm.$set(_vm.fields, "username", $$v)
+                          _vm._v(" "),
+                          _c("hr"),
+                        ])
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "buttons mt-5" },
+                        [
+                          _c(
+                            "b-button",
+                            {
+                              staticClass: "button is-small is-info",
+                              attrs: {
+                                disabled: _vm.fields.patients.length >= _vm.max,
+                              },
+                              on: { click: _vm.addPatient },
                             },
-                            expression: "fields.username",
+                            [_vm._v("Add")]
+                          ),
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "doctor-schedule-header" }, [
+                        _vm._v(
+                          "\n                            Doctor Schedule\n                        "
+                        ),
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "b-field",
+                        {
+                          attrs: {
+                            label: "Pick date",
+                            "label-position": "on-border",
                           },
-                        }),
-                      ],
-                      1
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "b-field",
-                      {
-                        attrs: {
-                          label: "Password",
-                          type: this.errors.password ? "is-danger" : "",
-                          message: this.errors.password
-                            ? this.errors.password[0]
-                            : "",
                         },
-                      },
-                      [
-                        _c("b-input", {
-                          attrs: {
-                            type: "password",
-                            "password-reveal": "",
-                            required: "",
-                            placeholder: "Password",
-                          },
-                          model: {
-                            value: _vm.fields.password,
-                            callback: function ($$v) {
-                              _vm.$set(_vm.fields, "password", $$v)
+                        [
+                          _c("b-datepicker", {
+                            attrs: { "unselectable-dates": _vm.vacations },
+                            on: { input: _vm.loadOpenSchedules },
+                            model: {
+                              value: _vm.appointment_date,
+                              callback: function ($$v) {
+                                _vm.appointment_date = $$v
+                              },
+                              expression: "appointment_date",
                             },
-                            expression: "fields.password",
-                          },
-                        }),
-                      ],
-                      1
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      { staticClass: "buttons" },
-                      [
-                        _c("b-button", {
-                          class: _vm.btnClass,
-                          attrs: { label: "Login", "icon-left": "login" },
-                          on: { click: _vm.submit },
-                        }),
-                        _vm._v(" "),
-                        _c("b-button", {
+                          }),
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _vm._l(_vm.schedules, function (item, index) {
+                        return _c(
+                          "div",
+                          { key: index, staticClass: "schedule-item" },
+                          [
+                            _c("div", { staticClass: "schedule-item-time" }, [
+                              _vm._v(
+                                _vm._s(_vm._f("formatTime")(item.time_from)) +
+                                  " - " +
+                                  _vm._s(_vm._f("formatTime")(item.time_end))
+                              ),
+                            ]),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              { staticClass: "schedule-item-radio" },
+                              [
+                                _c("b-radio", {
+                                  attrs: {
+                                    name: "name",
+                                    "native-value": item.schedule_id,
+                                  },
+                                  model: {
+                                    value: _vm.schedule_id,
+                                    callback: function ($$v) {
+                                      _vm.schedule_id = $$v
+                                    },
+                                    expression: "schedule_id",
+                                  },
+                                }),
+                              ],
+                              1
+                            ),
+                          ]
+                        )
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "buttons" },
+                        [
+                          _c("b-button", {
+                            staticClass: "mt-3",
+                            attrs: {
+                              disabled: _vm.schedule_id < 1,
+                              label: "Make An Appointment",
+                              "icon-left": "calendar",
+                              type: "is-primary is-outlined",
+                            },
+                            on: { click: _vm.applyAppointment },
+                          }),
+                        ],
+                        1
+                      ),
+                    ],
+                    2
+                  ),
+                ])
+              : _c("div", { staticClass: "login-box" }, [
+                  _vm._m(2),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    [
+                      _c(
+                        "b-field",
+                        {
                           attrs: {
-                            tag: "a",
-                            type: "is-info is-outlined",
-                            label: "Register here...",
-                            href: "/register-page",
-                            "icon-left": "account",
+                            label: "Username",
+                            type: this.errors.username ? "is-danger" : "",
+                            message: this.errors.username
+                              ? this.errors.username[0]
+                              : "",
                           },
-                        }),
-                      ],
-                      1
-                    ),
-                    _vm._v(" "),
-                    _vm._m(3),
-                  ],
-                  1
-                ),
-              ]),
+                        },
+                        [
+                          _c("b-input", {
+                            attrs: {
+                              type: "text",
+                              required: "",
+                              placeholder: "Username",
+                            },
+                            model: {
+                              value: _vm.fields.username,
+                              callback: function ($$v) {
+                                _vm.$set(_vm.fields, "username", $$v)
+                              },
+                              expression: "fields.username",
+                            },
+                          }),
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "b-field",
+                        {
+                          attrs: {
+                            label: "Password",
+                            type: this.errors.password ? "is-danger" : "",
+                            message: this.errors.password
+                              ? this.errors.password[0]
+                              : "",
+                          },
+                        },
+                        [
+                          _c("b-input", {
+                            attrs: {
+                              type: "password",
+                              "password-reveal": "",
+                              required: "",
+                              placeholder: "Password",
+                            },
+                            model: {
+                              value: _vm.fields.password,
+                              callback: function ($$v) {
+                                _vm.$set(_vm.fields, "password", $$v)
+                              },
+                              expression: "fields.password",
+                            },
+                          }),
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "buttons" },
+                        [
+                          _c("b-button", {
+                            class: _vm.btnClass,
+                            attrs: { label: "Login", "icon-left": "login" },
+                            on: { click: _vm.submit },
+                          }),
+                          _vm._v(" "),
+                          _c("b-button", {
+                            attrs: {
+                              tag: "a",
+                              type: "is-info is-outlined",
+                              label: "Register here...",
+                              href: "/register-page",
+                              "icon-left": "account",
+                            },
+                          }),
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _vm._m(3),
+                    ],
+                    1
+                  ),
+                ]),
+          ]),
         ]),
-      ]),
-    ]),
+      ],
+      1
+    ),
     _vm._v(" "),
     _vm._m(4),
-    _vm._v(" "),
-    _vm._m(5),
   ])
 }
 var staticRenderFns = [
@@ -44771,7 +45232,11 @@ var staticRenderFns = [
         ),
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "column" }),
+      _c("div", { staticClass: "column" }, [
+        _c("img", {
+          attrs: { src: "/img/logo.webp", alt: "Logo", srcset: "" },
+        }),
+      ]),
     ])
   },
   function () {
@@ -44857,7 +45322,10 @@ var staticRenderFns = [
             _c("div", { staticClass: "card-image" }, [
               _c("figure", { staticClass: "image is-3by2" }, [
                 _c("img", {
-                  attrs: { src: "/img/1280x960.png", alt: "Placeholder image" },
+                  attrs: {
+                    src: "/img/service_offered_1.jpg",
+                    alt: "Placeholder image",
+                  },
                 }),
               ]),
             ]),
@@ -44958,30 +45426,6 @@ var staticRenderFns = [
               ),
             ]),
           ]),
-        ]),
-      ]),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "section" }, [
-      _c("div", { staticClass: "columns" }, [
-        _c("div", { staticClass: "column has-text-centered" }, [
-          _c(
-            "div",
-            {
-              staticStyle: {
-                "font-weight": "bold",
-                "font-size": "1.8em",
-                margin: "auto",
-                "border-bottom": "2px solid blue",
-                display: "inline-block",
-              },
-            },
-            [_vm._v("\n                    ABOUT DR. TILAO\n                ")]
-          ),
         ]),
       ]),
     ])
@@ -68545,6 +68989,7 @@ var map = {
 	"./components/OtpEntry.vue": "./resources/js/components/OtpEntry.vue",
 	"./components/RegisterPage.vue": "./resources/js/components/RegisterPage.vue",
 	"./components/User/MyAppointment.vue": "./resources/js/components/User/MyAppointment.vue",
+	"./components/User/MyAppointmentReschedule.vue": "./resources/js/components/User/MyAppointmentReschedule.vue",
 	"./components/User/MyProfile.vue": "./resources/js/components/User/MyProfile.vue",
 	"./components/User/UserChangePassword.vue": "./resources/js/components/User/UserChangePassword.vue",
 	"./components/WelcomePage/CarouselImages.vue": "./resources/js/components/WelcomePage/CarouselImages.vue",
