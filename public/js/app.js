@@ -12526,16 +12526,22 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: {
+    propData: {
+      type: Object,
+      "default": {}
+    }
+  },
   data: function data() {
     return {
+      data: [],
       appointment_date: null,
       vacations: [],
       max: 0,
       schedules: [],
       schedule_id: 0,
+      fields: {},
       btnClass: {
         'is-primary': true,
         'is-outlined': true,
@@ -12548,9 +12554,9 @@ __webpack_require__.r(__webpack_exports__);
     loadOpenSchedules: function loadOpenSchedules() {
       var _this = this;
 
-      this.schedule_id = 0; //this.vacations = [];
-
-      var appdate = this.appointment_date.getFullYear() + '-' + (this.appointment_date.getMonth() + 1).toString().padStart(2, "0") + '-' + this.appointment_date.getDate().toString().padStart(2, '0'); //yyyy-MM-dd
+      //this.schedule_id = 0;
+      //this.vacations = [];
+      var appdate = this.$formatDate(this.fields.appointment_date); //yyyy-MM-dd
 
       var params = ["appdate=".concat(appdate)].join('&');
       axios.get("/load-vacations?".concat(params)).then(function (res) {
@@ -12564,19 +12570,19 @@ __webpack_require__.r(__webpack_exports__);
       });
       axios.get("/load-open-schedules?".concat(params)).then(function (res) {
         _this.schedules = res.data;
+        _this.schedule_id = _this.data.schedule_id;
       });
     },
-    applyAppointment: function applyAppointment() {
+    rescheduleAppointment: function rescheduleAppointment() {
       var _this2 = this;
 
-      var appdate = this.appointment_date.getFullYear() + '-' + (this.appointment_date.getMonth() + 1).toString().padStart(2, "0") + '-' + this.appointment_date.getDate().toString().padStart(2, '0'); //yyyy-MM-dd
+      var appdate = this.$formatDate(this.fields.appointment_date); //yyyy-MM-dd
 
       var appointment = {
         appointment_date: appdate,
-        schedule_id: this.schedule_id,
-        patients: this.fields.patients
+        schedule_id: this.schedule_id
       };
-      axios.post('/apply-appointment', appointment).then(function (res) {
+      axios.post('/my-appointment-reschedule/' + this.fields.appointment_id, appointment).then(function (res) {
         if (res.data.status === 'saved') {
           _this2.$buefy.dialog.alert({
             title: 'Saved!',
@@ -12638,10 +12644,17 @@ __webpack_require__.r(__webpack_exports__);
       axios.get('/load-max-no').then(function (res) {
         _this3.max = res.data.max;
       });
+    },
+    getData: function getData() {
+      this.data = this.propData; //console.log(data.appointment_date);
+      //appointment_date
+
+      this.fields.appointment_date = new Date(this.data.appointment_date);
+      this.loadOpenSchedules();
     }
   },
   mounted: function mounted() {
-    this.loadOpenSchedules();
+    this.getData();
     this.loadMaxPatient();
   }
 });
@@ -13071,6 +13084,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _CarouselImages_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CarouselImages.vue */ "./resources/js/components/WelcomePage/CarouselImages.vue");
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+//
 //
 //
 //
@@ -32369,7 +32383,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.panel[data-v-6962c784]{\n    margin: 30px;\n}\n.panel-body[data-v-6962c784]{\n    padding: 15px;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.panel[data-v-6962c784]{\n    margin: 30px;\n}\n.panel-body[data-v-6962c784]{\n    padding: 15px;\n}\n.schedule-item[data-v-6962c784]{\n    display: flex;\n    padding: 15px;\n    margin: 5px;\n    border: 1px solid lightgray;\n    border-radius: 10px;\n    transition: all 0.5s;\n}\n.schedule-item[data-v-6962c784]:hover{\n    border: 1.5px solid rgb(58, 176, 223);\n}\n.schedule-item-radio[data-v-6962c784]{\n    margin-left: auto;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -43695,7 +43709,7 @@ var render = function () {
   var _c = _vm._self._c || _h
   return _c("div", [
     _c("div", { staticClass: "columns is-centered" }, [
-      _c("div", { staticClass: "column is-8" }, [
+      _c("div", { staticClass: "column is-4" }, [
         _c("div", { staticClass: "panel" }, [
           _c("div", { staticClass: "panel-heading" }, [
             _vm._v("\n                    Reschedule\n                "),
@@ -43715,11 +43729,11 @@ var render = function () {
                     attrs: { "unselectable-dates": _vm.vacations },
                     on: { input: _vm.loadOpenSchedules },
                     model: {
-                      value: _vm.appointment_date,
+                      value: _vm.fields.appointment_date,
                       callback: function ($$v) {
-                        _vm.appointment_date = $$v
+                        _vm.$set(_vm.fields, "appointment_date", $$v)
                       },
-                      expression: "appointment_date",
+                      expression: "fields.appointment_date",
                     },
                   }),
                 ],
@@ -43767,11 +43781,11 @@ var render = function () {
                     staticClass: "mt-3",
                     attrs: {
                       disabled: _vm.schedule_id < 1,
-                      label: "Make An Appointment",
+                      label: "Reschedule",
                       "icon-left": "calendar",
                       type: "is-primary is-outlined",
                     },
-                    on: { click: _vm.applyAppointment },
+                    on: { click: _vm.rescheduleAppointment },
                   }),
                 ],
                 1
@@ -45351,7 +45365,10 @@ var staticRenderFns = [
             _c("div", { staticClass: "card-image" }, [
               _c("figure", { staticClass: "image is-3by2" }, [
                 _c("img", {
-                  attrs: { src: "/img/1280x960.png", alt: "Placeholder image" },
+                  attrs: {
+                    src: "/img/preventive.jpg",
+                    alt: "Preventive image here",
+                  },
                 }),
               ]),
             ]),
@@ -45377,7 +45394,10 @@ var staticRenderFns = [
             _c("div", { staticClass: "card-image" }, [
               _c("figure", { staticClass: "image is-3by2" }, [
                 _c("img", {
-                  attrs: { src: "/img/1280x960.png", alt: "Placeholder image" },
+                  attrs: {
+                    src: "/img/pediatric_care.jpg",
+                    alt: "Pediatric image",
+                  },
                 }),
               ]),
             ]),
@@ -45403,7 +45423,10 @@ var staticRenderFns = [
             _c("div", { staticClass: "card-image" }, [
               _c("figure", { staticClass: "image is-3by2" }, [
                 _c("img", {
-                  attrs: { src: "/img/1280x960.png", alt: "Placeholder image" },
+                  attrs: {
+                    src: "/img/general_checkup.jpg",
+                    alt: "Placeholder image",
+                  },
                 }),
               ]),
             ]),

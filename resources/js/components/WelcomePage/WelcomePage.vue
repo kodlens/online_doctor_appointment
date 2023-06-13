@@ -20,6 +20,7 @@
             <b-notification class="is-info mt-5">
                 Appointment beyond clinic hours is case-to-case basis.
             </b-notification>
+            
 
             <div class="columns mt-5">
                 <div class="column">
@@ -275,7 +276,7 @@
                     <div class="card">
                         <div class="card-image">
                             <figure class="image is-3by2">
-                            <img src="/img/1280x960.png" alt="Placeholder image">
+                            <img src="/img/preventive.jpg" alt="Preventive image here">
                             </figure>
                         </div>
                         <div class="card-content">
@@ -293,7 +294,7 @@
                     <div class="card">
                         <div class="card-image">
                             <figure class="image is-3by2">
-                            <img src="/img/1280x960.png" alt="Placeholder image">
+                            <img src="/img/pediatric_care.jpg" alt="Pediatric image">
                             </figure>
                         </div>
                         <div class="card-content">
@@ -311,7 +312,7 @@
                     <div class="card">
                         <div class="card-image">
                             <figure class="image is-3by2">
-                            <img src="/img/1280x960.png" alt="Placeholder image">
+                            <img src="/img/general_checkup.jpg" alt="Placeholder image">
                             </figure>
                         </div>
                         <div class="card-content">

@@ -79,7 +79,7 @@
                 </b-navbar-item>
                 
                 @auth
-                    <b-navbar-item href="my-appointment">
+                    <b-navbar-item href="/my-appointment">
                         My Appointments
                     </b-navbar-item>
                     <b-navbar-dropdown label="{{ Auth::user()->lname }}">

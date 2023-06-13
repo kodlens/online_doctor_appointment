@@ -2,7 +2,7 @@
     <div>
 
         <div class="columns is-centered">
-            <div class="column is-8">
+            <div class="column is-4">
                 <div class="panel">
                     <div class="panel-heading">
                         Reschedule
@@ -11,7 +11,7 @@
                     <div class="panel-body">  
 
                         <b-field label="Pick date" label-position="on-border">
-                            <b-datepicker v-model="appointment_date"
+                            <b-datepicker v-model="fields.appointment_date"
                                 :unselectable-dates="vacations"
                                 @input="loadOpenSchedules">
                             </b-datepicker>
@@ -20,6 +20,7 @@
                         <div class="schedule-item" v-for="(item, index) in schedules"
                             :key="index">
                             <div class="schedule-item-time">{{ item.time_from | formatTime }} - {{ item.time_end | formatTime }}</div>
+                            
                             <div class="schedule-item-radio">
                                 <b-radio v-model="schedule_id"
                                     name="name"
@@ -30,10 +31,10 @@
 
                         <div class="buttons">
                             <b-button
-                                @click="applyAppointment"
+                                @click="rescheduleAppointment"
                                 :disabled="schedule_id < 1"
                                 class="mt-3"
-                                label="Make An Appointment"
+                                label="Reschedule"
                                 icon-left="calendar"
                                 type="is-primary is-outlined"></b-button>
                         </div>
@@ -42,9 +43,6 @@
                 </div> <!--panel-->
             </div> <!--col-->
         </div><!--cols-->
-
-        
-        
     </div><!--root div-->
 
 
@@ -52,9 +50,16 @@
 
 <script>
 export default {
-
+    props: {
+        propData: {
+            type: Object,
+            default: {}
+        }
+    },
     data(){
         return{
+
+            data: [],
             appointment_date: null,
             vacations: [],
             max: 0,
@@ -62,6 +67,8 @@ export default {
             schedules: [],
             schedule_id: 0,
 
+
+            fields: {},
 
             btnClass: {
                 'is-primary': true,
@@ -75,14 +82,12 @@ export default {
     methods: {
 
         loadOpenSchedules(){
-            this.schedule_id = 0;
+
+            //this.schedule_id = 0;
             //this.vacations = [];
 
-            const appdate = this.appointment_date.getFullYear() + '-' 
-                + (this.appointment_date.getMonth() + 1).toString().padStart(2, "0") + '-' 
-                + (this.appointment_date.getDate()).toString().padStart(2,'0')
-
-                //yyyy-MM-dd
+            const appdate = this.$formatDate(this.fields.appointment_date);
+            //yyyy-MM-dd
 
             const params = [
                 `appdate=${appdate}`,
@@ -97,28 +102,23 @@ export default {
                 console.log(this.vacations);
                 //tiwasonun and ma deact ang date..
             })
-
             axios.get(`/load-open-schedules?${params}`).then(res=>{
                 this.schedules = res.data
+                this.schedule_id = this.data.schedule_id
             })
-
         },
 
-        applyAppointment(){
+        rescheduleAppointment(){
 
-             const appdate = this.appointment_date.getFullYear() + '-' 
-                + (this.appointment_date.getMonth() + 1).toString().padStart(2, "0") + '-' 
-                + (this.appointment_date.getDate()).toString().padStart(2,'0')
-
-                //yyyy-MM-dd
+             const appdate = this.$formatDate(this.fields.appointment_date);
+            //yyyy-MM-dd
 
              let appointment = {
                 appointment_date: appdate,
                 schedule_id: this.schedule_id,
-                patients: this.fields.patients
              };
 
-            axios.post('/apply-appointment', appointment).then(res=>{
+            axios.post('/my-appointment-reschedule/' + this.fields.appointment_id, appointment).then(res=>{
                 if(res.data.status === 'saved'){
                     this.$buefy.dialog.alert({
                         title: 'Saved!',
@@ -182,12 +182,25 @@ export default {
             axios.get('/load-max-no').then(res=>{
                 this.max = res.data.max
             })
+        },
+
+        getData(){
+            this.data = this.propData;
+
+            //console.log(data.appointment_date);
+            //appointment_date
+            this.fields.appointment_date = new Date(this.data.appointment_date);
+            
+            this.loadOpenSchedules()
         }
 
     },
 
     mounted(){
-        this.loadOpenSchedules()
+
+        this.getData();
+
+       
         this.loadMaxPatient();
     }
 
@@ -205,5 +218,22 @@ export default {
 
     .panel-body{
         padding: 15px;
+    }
+
+    .schedule-item{
+        display: flex;
+        padding: 15px;
+        margin: 5px;
+        border: 1px solid lightgray;
+        border-radius: 10px;
+        transition: all 0.5s;
+    }
+
+    .schedule-item:hover{
+        border: 1.5px solid rgb(58, 176, 223);
+    }
+
+    .schedule-item-radio{
+        margin-left: auto;
     }
 </style>
