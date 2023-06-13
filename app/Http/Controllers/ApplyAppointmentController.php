@@ -79,14 +79,13 @@ class ApplyAppointmentController extends Controller
                     $appointment = Appointment::where('schedule_id', $schedule_id)
                         ->whereDate('appointment_date', $currentDate);
 
-                    
                     if($appointment->count() < $schedMax){
                         //logic
-                        // wala bakante sa nakuha nga schdules, move 1 day
+                        //wala bakante sa nakuha nga schdules, move 1 day
                         $availableSched = $sched;
                         break;
                     }
-                    // wala bakante sa nakuha nga schdules, move 1 day
+                    //wala bakante sa nakuha nga schdules, move 1 day
                 }
 
                 if($availableSched){

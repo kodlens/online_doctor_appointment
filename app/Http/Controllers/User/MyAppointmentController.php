@@ -57,6 +57,82 @@ class MyAppointmentController extends Controller
         $data = Appointment::find($id);
         
         return $req;
+
+        $appdate = date("Y-m-d", strtotime($req->appointment_date));
+        $user = Auth::user();
+
+
+        $schedule = Schedule::find($req->schedule_id);
+        $max_no = $schedule->max_no;
+
+        //get the max no of the schedule
+        $appMax = Appointment::where('schedule_id', $req->schedule_id)
+            ->where('appointment_date', $appdate)
+            ->count();
+
+        //para sure dili mulapas sa na set up nga max sa schedule
+        if($appMax >= $max_no){
+
+            //$startDate = '2023-05-01'; // start date
+           $endDate = date('Y-m-d', strtotime($appdate . ' +15 day'));
+
+           $currentDate = $appdate; // set the current date to the start date
+
+           $msgDate = '';
+
+           for ($i = 0; strtotime($appdate) <= strtotime($endDate); $i++) {
+               $currentDate = date('Y-m-d', strtotime($appdate . ' +'. $i .' day')); // increment the current date by one day
+               $day = date('D', strtotime($currentDate));
+               $availableSched = [];
+               
+               //get the schedules by day using the date picked from user
+               $schedules = Schedule::where($day, 1)->get();
+
+               foreach($schedules as $sched){
+                   $schedule_id = $sched['schedule_id']; //get ID
+                   $schedMax = $sched['max_no'];
+
+                   $appointment = Appointment::where('schedule_id', $schedule_id)
+                       ->whereDate('appointment_date', $currentDate);
+
+                   if($appointment->count() < $schedMax){
+                       //logic
+                       //wala bakante sa nakuha nga schdules, move 1 day
+                       $availableSched = $sched;
+                       break;
+                   }
+                   //wala bakante sa nakuha nga schdules, move 1 day
+               }
+
+               if($availableSched){
+                   break;
+               }
+
+               $msgDate = 'Schedule date changed!';
+               
+           }
+
+           return response()->json([
+            'errors' => [
+                'max' => ['Sorry. The schedule reach the maximum number of reservations.', 
+                    $availableSched, 
+                    $currentDate,
+                    $msgDate
+                ],
+            ],'message' => "Thie given data was invalid."], 422);
+
+           return response()->json([
+               'errors' => [
+                   'max' => ['Sorry. The schedule reach the maximum number of reservations.', 
+                       $availableSched, 
+                       $currentDate,
+                       $msgDate
+                   ],
+               ],
+               'message' => "Thie given data was invalid."
+           ], 422);
+       }
+
         
         return response()->json([
             'status' => 'updated'
