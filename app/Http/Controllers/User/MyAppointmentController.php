@@ -53,8 +53,10 @@ class MyAppointmentController extends Controller
             ->with('data', $data);
     }
 
-    public function rescheduleSubmit($id){
+    public function rescheduleSubmit(Request $req, $id){
         $data = Appointment::find($id);
+        
+        return $req;
         
         return response()->json([
             'status' => 'updated'

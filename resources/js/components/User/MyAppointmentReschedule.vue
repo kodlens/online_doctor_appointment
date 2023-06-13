@@ -118,7 +118,7 @@ export default {
                 schedule_id: this.schedule_id,
              };
 
-            axios.post('/my-appointment-reschedule/' + this.fields.appointment_id, appointment).then(res=>{
+            axios.put('/my-appointment-reschedule/' + this.data.appointment_id, appointment).then(res=>{
                 if(res.data.status === 'saved'){
                     this.$buefy.dialog.alert({
                         title: 'Saved!',

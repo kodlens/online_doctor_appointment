@@ -12582,7 +12582,7 @@ __webpack_require__.r(__webpack_exports__);
         appointment_date: appdate,
         schedule_id: this.schedule_id
       };
-      axios.post('/my-appointment-reschedule/' + this.fields.appointment_id, appointment).then(function (res) {
+      axios.put('/my-appointment-reschedule/' + this.data.appointment_id, appointment).then(function (res) {
         if (res.data.status === 'saved') {
           _this2.$buefy.dialog.alert({
             title: 'Saved!',
