@@ -41871,7 +41871,9 @@ var staticRenderFns = [
                   _c("div", [_vm._v("Email: polyclinic.tilao@email.com")]),
                   _vm._v(" "),
                   _c("div", [
-                    _vm._v("Address: Tangub City, Misamis Occidental"),
+                    _vm._v(
+                      "Address: Corner Osmeña & 2nd South St., Tangub City, Misamis Occidental"
+                    ),
                   ]),
                 ]
               ),
@@ -41890,9 +41892,7 @@ var staticRenderFns = [
                   _vm._v(" "),
                   _c("div", [_vm._v("Internal Medicine")]),
                   _vm._v(" "),
-                  _c("div", [
-                    _vm._v("Doña Maria, Medina Hosp and Faith Hospital"),
-                  ]),
+                  _c("div", [_vm._v("Doña Maria, Medina and Faith Hospital")]),
                 ]
               ),
             ]),

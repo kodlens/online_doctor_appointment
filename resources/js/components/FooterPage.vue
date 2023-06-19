@@ -19,7 +19,7 @@
                         <div class="column is-8" style="color: white; ">
                             <div>Contact No.: 09291385267</div>
                             <div>Email: polyclinic.tilao@email.com</div>
-                            <div>Address: Tangub City, Misamis Occidental</div>
+                            <div>Address: Corner Osmeña & 2nd South St., Tangub City, Misamis Occidental</div>
 
                         </div>
                     </div>
@@ -31,7 +31,7 @@
                             <div>Dr. Max Beth B. Tilao Jr.</div>
                             <div>09291385267</div>
                             <div>Internal Medicine</div>
-                            <div>Doña Maria, Medina Hosp and Faith Hospital</div>
+                            <div>Doña Maria, Medina and Faith Hospital</div>
                         </div>
                     </div>
                     
