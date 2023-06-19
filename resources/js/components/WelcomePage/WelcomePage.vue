@@ -262,11 +262,10 @@
                         </div>
                         <div class="card-content">
                             <div class="title is-4">
-                                Diagnostic Services
+                                Medical Consultation
                             </div>
                             <div class="content">
-                                Diagnostic services are medical tests and procedures that help doctors and healthcare providers diagnose health conditions and diseases.
-                     
+                                Medical consultation are medical tests and procedures that help doctors and healthcare providers diagnose health conditions and diseases.
                             </div>
                         </div>
                     </div>
@@ -281,51 +280,19 @@
                         </div>
                         <div class="card-content">
                             <div class="title is-4">
-                                Preventive Care
+                                Minor Surgery
                             </div>
                             <div class="content">
-                                This includes services aimed at preventing health conditions, such as screenings, lifestyle counseling, and immunizations.
+                                Our minor surgery services encompass a wide array of procedures designed to address various conditions and concerns. 
+                                Whether you require an incision and drainage to treat an abscess, 
+                                an excision biopsy for diagnostic purposes, or the removal of 
+                                skin tags or warts, Dr. Tilao is here to provide 
+                                personalized and effective solutions.
                             </div>
                         </div>
                     </div>
                 </div>
-
-                <div class="column">
-                    <div class="card">
-                        <div class="card-image">
-                            <figure class="image is-3by2">
-                            <img src="/img/pediatric_care.jpg" alt="Pediatric image">
-                            </figure>
-                        </div>
-                        <div class="card-content">
-                            <div class="title is-4">
-                                Pediatric Care
-                            </div>
-                            <div class="content">
-                                This includes care for children, such as well-child checkups, vaccinations, and treatment for common childhood illnesses.
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="column">
-                    <div class="card">
-                        <div class="card-image">
-                            <figure class="image is-3by2">
-                            <img src="/img/general_checkup.jpg" alt="Placeholder image">
-                            </figure>
-                        </div>
-                        <div class="card-content">
-                            <div class="title is-4">
-                                General Health Check-ups
-                            </div>
-                            <div class="content has-text-justified is-clipped">
-                                Doctors in clinics provide general health check-ups to assess and maintain a patient's overall health. During a check-up, the doctor may take the patient's medical history, perform a physical examination, and order diagnostic tests such as blood work and urinalysis. 
-                                These check-ups are typically recommended on an annual basis for adults.
-                            </div>
-                        </div>
-                    </div>
-                </div>   
+ 
             </div>
          </div>
 

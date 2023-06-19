@@ -13427,39 +13427,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
@@ -45379,13 +45346,13 @@ var staticRenderFns = [
             _c("div", { staticClass: "card-content" }, [
               _c("div", { staticClass: "title is-4" }, [
                 _vm._v(
-                  "\n                            Diagnostic Services\n                        "
+                  "\n                            Medical Consultation\n                        "
                 ),
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "content" }, [
                 _vm._v(
-                  "\n                            Diagnostic services are medical tests and procedures that help doctors and healthcare providers diagnose health conditions and diseases.\n                 \n                        "
+                  "\n                            Medical consultation are medical tests and procedures that help doctors and healthcare providers diagnose health conditions and diseases.\n                        "
                 ),
               ]),
             ]),
@@ -45408,77 +45375,15 @@ var staticRenderFns = [
             _c("div", { staticClass: "card-content" }, [
               _c("div", { staticClass: "title is-4" }, [
                 _vm._v(
-                  "\n                            Preventive Care\n                        "
+                  "\n                            Minor Surgery\n                        "
                 ),
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "content" }, [
                 _vm._v(
-                  "\n                            This includes services aimed at preventing health conditions, such as screenings, lifestyle counseling, and immunizations.\n                        "
+                  "\n                            Our minor surgery services encompass a wide array of procedures designed to address various conditions and concerns. \n                            Whether you require an incision and drainage to treat an abscess, \n                            an excision biopsy for diagnostic purposes, or the removal of \n                            skin tags or warts, Dr. Tilao is here to provide \n                            personalized and effective solutions.\n                        "
                 ),
               ]),
-            ]),
-          ]),
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "column" }, [
-          _c("div", { staticClass: "card" }, [
-            _c("div", { staticClass: "card-image" }, [
-              _c("figure", { staticClass: "image is-3by2" }, [
-                _c("img", {
-                  attrs: {
-                    src: "/img/pediatric_care.jpg",
-                    alt: "Pediatric image",
-                  },
-                }),
-              ]),
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "card-content" }, [
-              _c("div", { staticClass: "title is-4" }, [
-                _vm._v(
-                  "\n                            Pediatric Care\n                        "
-                ),
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "content" }, [
-                _vm._v(
-                  "\n                            This includes care for children, such as well-child checkups, vaccinations, and treatment for common childhood illnesses.\n                        "
-                ),
-              ]),
-            ]),
-          ]),
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "column" }, [
-          _c("div", { staticClass: "card" }, [
-            _c("div", { staticClass: "card-image" }, [
-              _c("figure", { staticClass: "image is-3by2" }, [
-                _c("img", {
-                  attrs: {
-                    src: "/img/general_checkup.jpg",
-                    alt: "Placeholder image",
-                  },
-                }),
-              ]),
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "card-content" }, [
-              _c("div", { staticClass: "title is-4" }, [
-                _vm._v(
-                  "\n                            General Health Check-ups\n                        "
-                ),
-              ]),
-              _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "content has-text-justified is-clipped" },
-                [
-                  _vm._v(
-                    "\n                            Doctors in clinics provide general health check-ups to assess and maintain a patient's overall health. During a check-up, the doctor may take the patient's medical history, perform a physical examination, and order diagnostic tests such as blood work and urinalysis. \n                            These check-ups are typically recommended on an annual basis for adults.\n                        "
-                  ),
-                ]
-              ),
             ]),
           ]),
         ]),
