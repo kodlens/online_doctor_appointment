@@ -12523,9 +12523,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
     propData: {
@@ -12582,12 +12579,15 @@ __webpack_require__.r(__webpack_exports__);
         appointment_date: appdate,
         schedule_id: this.schedule_id
       };
-      axios.put('/my-appointment-reschedule/' + this.data.appointment_id, appointment).then(function (res) {
-        if (res.data.status === 'saved') {
+      axios.post('/my-appointment-reschedule/' + this.data.appointment_id, appointment).then(function (res) {
+        if (res.data.status === 'updated') {
           _this2.$buefy.dialog.alert({
             title: 'Saved!',
-            message: 'Reservation successfully saved.',
-            type: 'is-success'
+            message: 'Reservation successfully rescheduled.',
+            type: 'is-success',
+            onConfirm: function onConfirm() {
+              window.location = '/my-appointment';
+            }
           });
 
           _this2.fields = {

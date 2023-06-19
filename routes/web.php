@@ -60,7 +60,7 @@ Route::middleware(['auth'])->group(function(){
 
     Route::resource('/my-appointment', App\Http\Controllers\User\MyAppointmentController::class);
     Route::get('/my-appointment-reschedule/{id}', [App\Http\Controllers\User\MyAppointmentController::class, 'rescheduleView']);
-    Route::put('/my-appointment-reschedule/{id}', [App\Http\Controllers\User\MyAppointmentController::class, 'rescheduleSubmit']);
+    Route::post('/my-appointment-reschedule/{id}', [App\Http\Controllers\User\MyAppointmentController::class, 'rescheduleSubmit']);
 
     Route::get('/get-my-appointments', [App\Http\Controllers\User\MyAppointmentController::class, 'getMyAppointments']);
     Route::post('/cancel-my-appointment/{id}', [App\Http\Controllers\User\MyAppointmentController::class, 'cancelAppointment']);

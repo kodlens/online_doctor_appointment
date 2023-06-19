@@ -8,6 +8,7 @@ use App\Models\Appointment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use App\Models\Schedule;
 
 
 class MyAppointmentController extends Controller
@@ -56,8 +57,6 @@ class MyAppointmentController extends Controller
     public function rescheduleSubmit(Request $req, $id){
         $data = Appointment::find($id);
         
-        return $req;
-
         $appdate = date("Y-m-d", strtotime($req->appointment_date));
         $user = Auth::user();
 
@@ -132,6 +131,11 @@ class MyAppointmentController extends Controller
                'message' => "Thie given data was invalid."
            ], 422);
        }
+
+
+       $data->schedule_id = $req->schedule_id;
+       $data->appointment_date = $req->appointment_date;
+       $data->save();
 
         
         return response()->json([

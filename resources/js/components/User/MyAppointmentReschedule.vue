@@ -7,9 +7,7 @@
                     <div class="panel-heading">
                         Reschedule
                     </div>
-
                     <div class="panel-body">  
-
                         <b-field label="Pick date" label-position="on-border">
                             <b-datepicker v-model="fields.appointment_date"
                                 :unselectable-dates="vacations"
@@ -20,7 +18,6 @@
                         <div class="schedule-item" v-for="(item, index) in schedules"
                             :key="index">
                             <div class="schedule-item-time">{{ item.time_from | formatTime }} - {{ item.time_end | formatTime }}</div>
-                            
                             <div class="schedule-item-radio">
                                 <b-radio v-model="schedule_id"
                                     name="name"
@@ -118,12 +115,15 @@ export default {
                 schedule_id: this.schedule_id,
              };
 
-            axios.put('/my-appointment-reschedule/' + this.data.appointment_id, appointment).then(res=>{
-                if(res.data.status === 'saved'){
+            axios.post('/my-appointment-reschedule/' + this.data.appointment_id, appointment).then(res=>{
+                if(res.data.status === 'updated'){
                     this.$buefy.dialog.alert({
                         title: 'Saved!',
-                        message: 'Reservation successfully saved.',
-                        type: 'is-success'
+                        message: 'Reservation successfully rescheduled.',
+                        type: 'is-success',
+                        onConfirm: ()=>{
+                            window.location = '/my-appointment'
+                        }
                     });
                     
                     this.fields = {
