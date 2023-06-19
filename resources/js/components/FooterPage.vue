@@ -23,8 +23,20 @@
 
                         </div>
                     </div>
+                </div>
+
+                <div class="column">
+                    <div class="columns is-centered">
+                        <div class="column is-8" style="color: white; ">
+                            <div>Dr. Max Beth B. Tilao Jr.</div>
+                            <div>09291385267</div>
+                            <div>Internal Medicine</div>
+                            <div>Doña Maria, Medina Hosp and Faith Hospital</div>
+                        </div>
+                    </div>
                     
                 </div>
+
                 <div class="column">
                     <div class="columns is-centered">
                         <div class="column is-6" style="color: white;">

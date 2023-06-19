@@ -11300,6 +11300,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({});
 
 /***/ }),
@@ -41893,6 +41905,26 @@ var staticRenderFns = [
                   _vm._v(" "),
                   _c("div", [
                     _vm._v("Address: Tangub City, Misamis Occidental"),
+                  ]),
+                ]
+              ),
+            ]),
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "column" }, [
+            _c("div", { staticClass: "columns is-centered" }, [
+              _c(
+                "div",
+                { staticClass: "column is-8", staticStyle: { color: "white" } },
+                [
+                  _c("div", [_vm._v("Dr. Max Beth B. Tilao Jr.")]),
+                  _vm._v(" "),
+                  _c("div", [_vm._v("09291385267")]),
+                  _vm._v(" "),
+                  _c("div", [_vm._v("Internal Medicine")]),
+                  _vm._v(" "),
+                  _c("div", [
+                    _vm._v("Doña Maria, Medina Hosp and Faith Hospital"),
                   ]),
                 ]
               ),
