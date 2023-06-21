@@ -58,7 +58,7 @@
             </template>
     
             <template #end>
-                <b-navbar-item href="#">
+                <b-navbar-item href="/dashboard">
                     Home
                 </b-navbar-item>
                 <b-navbar-item href="/appointments"
@@ -99,9 +99,7 @@
                         Patient By Location
                     </b-navbar-item>
                     <b-navbar-item href="/report-appointment-no-show">
-                        Appointment No @section('')
-                            
-                        @show
+                        Appointment No Show
                     </b-navbar-item>
                     {{-- <b-navbar-item href="#">
                         Contact

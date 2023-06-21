@@ -140,7 +140,6 @@ export default{
             let count = 0;
             this.data.forEach(el=>{
                 count+=1;
-               
             });
             return count;
         },
