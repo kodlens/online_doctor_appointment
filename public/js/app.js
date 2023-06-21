@@ -9572,6 +9572,152 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Administrator/Report/ReportAppointmentNoShow.vue?vue&type=script&lang=js&":
+/*!***************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Administrator/Report/ReportAppointmentNoShow.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  data: function data() {
+    return {
+      global_id: 0,
+      modalResetPassword: false,
+      search: {
+        lname: '',
+        start_date: new Date(new Date().getFullYear(), new Date().getMonth(), 1),
+        end_date: new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0)
+      },
+      btnClass: {
+        'is-success': true,
+        'button': true,
+        'is-loading': false
+      },
+      data: []
+    };
+  },
+  methods: {
+    /*
+    * Load async data
+    */
+    loadAsyncData: function loadAsyncData() {
+      var _this = this;
+
+      var params = ["start=".concat(this.$formatDate(this.search.start_date)), "end=".concat(this.$formatDate(this.search.end_date))].join('&');
+      this.loading = true;
+      axios.get("/get-report-appointment-no-show?".concat(params)).then(function (res) {
+        _this.data = res.data;
+      })["catch"](function (err) {});
+    },
+    printWindow: function printWindow() {
+      window.print();
+    },
+    goBackToAppointment: function goBackToAppointment() {
+      window.location = '/appointments';
+    }
+  },
+  computed: {
+    countServed: function countServed() {
+      var count = 0;
+      this.data.forEach(function (el) {
+        count += 1;
+      });
+      return count;
+    }
+  },
+  mounted: function mounted() {
+    this.loadAsyncData();
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Administrator/Report/ReportNoServeUnserve.vue?vue&type=script&lang=js&":
 /*!************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Administrator/Report/ReportNoServeUnserve.vue?vue&type=script&lang=js& ***!
@@ -32232,6 +32378,30 @@ ___CSS_LOADER_EXPORT___.push([module.id, "\n.validation-success[data-v-2d7d15ee]
 
 /***/ }),
 
+/***/ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Administrator/Report/ReportAppointmentNoShow.vue?vue&type=style&index=0&id=1f1e719b&scoped=true&lang=css&":
+/*!***********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Administrator/Report/ReportAppointmentNoShow.vue?vue&type=style&index=0&id=1f1e719b&scoped=true&lang=css& ***!
+  \***********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__);
+// Imports
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, "\n.text-container[data-v-1f1e719b] {\n    max-width: 200px; /* Set the width of the container to limit the text length */\n    overflow: hidden; /* Hide overflowing text */\n    white-space: nowrap; /* Prevent text from wrapping to new lines */\n    text-overflow: ellipsis; /* Show ellipsis (...) when text overflows */\n}\n.long-text[data-v-1f1e719b] {\n    max-height: 3em; /* Set the maximum height of the text to limit the number of lines */\n    margin: 0; /* Reset margin */\n    padding: 0; /* Reset padding */\n}\n\n", ""]);
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
 /***/ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Administrator/Report/ReportNoServeUnserve.vue?vue&type=style&index=0&id=9c2ca3cc&scoped=true&lang=css&":
 /*!********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Administrator/Report/ReportNoServeUnserve.vue?vue&type=style&index=0&id=9c2ca3cc&scoped=true&lang=css& ***!
@@ -33795,6 +33965,36 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 
 /***/ }),
 
+/***/ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Administrator/Report/ReportAppointmentNoShow.vue?vue&type=style&index=0&id=1f1e719b&scoped=true&lang=css&":
+/*!***************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Administrator/Report/ReportAppointmentNoShow.vue?vue&type=style&index=0&id=1f1e719b&scoped=true&lang=css& ***!
+  \***************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ReportAppointmentNoShow_vue_vue_type_style_index_0_id_1f1e719b_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !!../../../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./ReportAppointmentNoShow.vue?vue&type=style&index=0&id=1f1e719b&scoped=true&lang=css& */ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Administrator/Report/ReportAppointmentNoShow.vue?vue&type=style&index=0&id=1f1e719b&scoped=true&lang=css&");
+
+            
+
+var options = {};
+
+options.insert = "head";
+options.singleton = false;
+
+var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ReportAppointmentNoShow_vue_vue_type_style_index_0_id_1f1e719b_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_1__["default"], options);
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ReportAppointmentNoShow_vue_vue_type_style_index_0_id_1f1e719b_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_1__["default"].locals || {});
+
+/***/ }),
+
 /***/ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Administrator/Report/ReportNoServeUnserve.vue?vue&type=style&index=0&id=9c2ca3cc&scoped=true&lang=css&":
 /*!************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Administrator/Report/ReportNoServeUnserve.vue?vue&type=style&index=0&id=9c2ca3cc&scoped=true&lang=css& ***!
@@ -34896,6 +35096,47 @@ component.options.__file = "resources/js/components/Administrator/QRScanner/QrSc
 
 /***/ }),
 
+/***/ "./resources/js/components/Administrator/Report/ReportAppointmentNoShow.vue":
+/*!**********************************************************************************!*\
+  !*** ./resources/js/components/Administrator/Report/ReportAppointmentNoShow.vue ***!
+  \**********************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _ReportAppointmentNoShow_vue_vue_type_template_id_1f1e719b_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ReportAppointmentNoShow.vue?vue&type=template&id=1f1e719b&scoped=true& */ "./resources/js/components/Administrator/Report/ReportAppointmentNoShow.vue?vue&type=template&id=1f1e719b&scoped=true&");
+/* harmony import */ var _ReportAppointmentNoShow_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ReportAppointmentNoShow.vue?vue&type=script&lang=js& */ "./resources/js/components/Administrator/Report/ReportAppointmentNoShow.vue?vue&type=script&lang=js&");
+/* harmony import */ var _ReportAppointmentNoShow_vue_vue_type_style_index_0_id_1f1e719b_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ReportAppointmentNoShow.vue?vue&type=style&index=0&id=1f1e719b&scoped=true&lang=css& */ "./resources/js/components/Administrator/Report/ReportAppointmentNoShow.vue?vue&type=style&index=0&id=1f1e719b&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! !../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+;
+
+
+/* normalize component */
+
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+  _ReportAppointmentNoShow_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _ReportAppointmentNoShow_vue_vue_type_template_id_1f1e719b_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render,
+  _ReportAppointmentNoShow_vue_vue_type_template_id_1f1e719b_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  "1f1e719b",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/Administrator/Report/ReportAppointmentNoShow.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/components/Administrator/Report/ReportNoServeUnserve.vue":
 /*!*******************************************************************************!*\
   !*** ./resources/js/components/Administrator/Report/ReportNoServeUnserve.vue ***!
@@ -35825,6 +36066,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/Administrator/Report/ReportAppointmentNoShow.vue?vue&type=script&lang=js&":
+/*!***********************************************************************************************************!*\
+  !*** ./resources/js/components/Administrator/Report/ReportAppointmentNoShow.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ReportAppointmentNoShow_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./ReportAppointmentNoShow.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Administrator/Report/ReportAppointmentNoShow.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ReportAppointmentNoShow_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
 /***/ "./resources/js/components/Administrator/Report/ReportNoServeUnserve.vue?vue&type=script&lang=js&":
 /*!********************************************************************************************************!*\
   !*** ./resources/js/components/Administrator/Report/ReportNoServeUnserve.vue?vue&type=script&lang=js& ***!
@@ -36207,6 +36464,19 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/Administrator/Report/ReportAppointmentNoShow.vue?vue&type=style&index=0&id=1f1e719b&scoped=true&lang=css&":
+/*!*******************************************************************************************************************************************!*\
+  !*** ./resources/js/components/Administrator/Report/ReportAppointmentNoShow.vue?vue&type=style&index=0&id=1f1e719b&scoped=true&lang=css& ***!
+  \*******************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ReportAppointmentNoShow_vue_vue_type_style_index_0_id_1f1e719b_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/style-loader/dist/cjs.js!../../../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./ReportAppointmentNoShow.vue?vue&type=style&index=0&id=1f1e719b&scoped=true&lang=css& */ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Administrator/Report/ReportAppointmentNoShow.vue?vue&type=style&index=0&id=1f1e719b&scoped=true&lang=css&");
+
+
+/***/ }),
+
 /***/ "./resources/js/components/Administrator/Report/ReportNoServeUnserve.vue?vue&type=style&index=0&id=9c2ca3cc&scoped=true&lang=css&":
 /*!****************************************************************************************************************************************!*\
   !*** ./resources/js/components/Administrator/Report/ReportNoServeUnserve.vue?vue&type=style&index=0&id=9c2ca3cc&scoped=true&lang=css& ***!
@@ -36555,6 +36825,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_QrScanner_vue_vue_type_template_id_2d7d15ee_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
 /* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_QrScanner_vue_vue_type_template_id_2d7d15ee_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./QrScanner.vue?vue&type=template&id=2d7d15ee&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Administrator/QRScanner/QrScanner.vue?vue&type=template&id=2d7d15ee&scoped=true&");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/Administrator/Report/ReportAppointmentNoShow.vue?vue&type=template&id=1f1e719b&scoped=true&":
+/*!*****************************************************************************************************************************!*\
+  !*** ./resources/js/components/Administrator/Report/ReportAppointmentNoShow.vue?vue&type=template&id=1f1e719b&scoped=true& ***!
+  \*****************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ReportAppointmentNoShow_vue_vue_type_template_id_1f1e719b_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ReportAppointmentNoShow_vue_vue_type_template_id_1f1e719b_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ReportAppointmentNoShow_vue_vue_type_template_id_1f1e719b_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./ReportAppointmentNoShow.vue?vue&type=template&id=1f1e719b&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Administrator/Report/ReportAppointmentNoShow.vue?vue&type=template&id=1f1e719b&scoped=true&");
 
 
 /***/ }),
@@ -38231,7 +38518,7 @@ var render = function () {
                                 ? _c(
                                     "span",
                                     { staticClass: "status approved" },
-                                    [_vm._v("YES")]
+                                    [_vm._v("ARRIVED")]
                                   )
                                 : _vm._e(),
                               _vm._v(" "),
@@ -38259,7 +38546,7 @@ var render = function () {
                                 ? _c(
                                     "span",
                                     { staticClass: "status approved" },
-                                    [_vm._v("YES")]
+                                    [_vm._v("SERVED")]
                                   )
                                 : _vm._e(),
                               _vm._v(" "),
@@ -39605,6 +39892,230 @@ var staticRenderFns = [
           _c("b", [_vm._v(" Scan QR here! ")]),
         ]),
       ]),
+    ])
+  },
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Administrator/Report/ReportAppointmentNoShow.vue?vue&type=template&id=1f1e719b&scoped=true&":
+/*!********************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Administrator/Report/ReportAppointmentNoShow.vue?vue&type=template&id=1f1e719b&scoped=true& ***!
+  \********************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function () {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c("div", { staticClass: "columns is-centered" }, [
+      _c("div", { staticClass: "column is-8-desktop is-12-tablet" }, [
+        _c("div", { staticClass: "w-panel-card nprint" }, [
+          _vm._m(0),
+          _vm._v(" "),
+          _c("div", { staticClass: "w-panel-body" }, [
+            _c("div", { staticClass: "columns" }, [
+              _c(
+                "div",
+                { staticClass: "column" },
+                [
+                  _c(
+                    "b-field",
+                    {
+                      attrs: {
+                        label: "Date Filter",
+                        "label-position": "on-border",
+                      },
+                    },
+                    [
+                      _c("b-datepicker", {
+                        attrs: { placeholder: "Start date" },
+                        model: {
+                          value: _vm.search.start_date,
+                          callback: function ($$v) {
+                            _vm.$set(_vm.search, "start_date", $$v)
+                          },
+                          expression: "search.start_date",
+                        },
+                      }),
+                      _vm._v(" "),
+                      _c("b-datepicker", {
+                        attrs: { placeholder: "End date" },
+                        model: {
+                          value: _vm.search.end_date,
+                          callback: function ($$v) {
+                            _vm.$set(_vm.search, "end_date", $$v)
+                          },
+                          expression: "search.end_date",
+                        },
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "p",
+                        { staticClass: "control" },
+                        [
+                          _c("b-button", {
+                            attrs: {
+                              type: "is-primary",
+                              "icon-right": "magnify",
+                            },
+                            on: { click: _vm.loadAsyncData },
+                          }),
+                        ],
+                        1
+                      ),
+                    ],
+                    1
+                  ),
+                ],
+                1
+              ),
+            ]),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "buttons" },
+              [
+                _c("b-button", {
+                  staticClass: "is-outlined",
+                  attrs: {
+                    label: "Print",
+                    "icon-left": "printer",
+                    type: "is-info",
+                  },
+                  on: { click: _vm.printWindow },
+                }),
+                _vm._v(" "),
+                _c("b-button", {
+                  staticClass: "is-outlined",
+                  attrs: {
+                    label: "Back",
+                    "icon-left": "arrow-left",
+                    type: "is-info",
+                  },
+                  on: { click: _vm.goBackToAppointment },
+                }),
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c("hr"),
+          ]),
+        ]),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticStyle: { "font-weight": "bold", "font-size": "1em" } },
+          [
+            _vm._v(
+              "DATE FILTER: " +
+                _vm._s(new Date(_vm.search.start_date).toLocaleDateString()) +
+                " \n                - \n                " +
+                _vm._s(new Date(_vm.search.end_date).toLocaleDateString())
+            ),
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticStyle: { "font-weight": "bold", "font-size": "1em" } },
+          [_vm._v("NO. OF NO SHOW IN APPOINTMENT \n            ")]
+        ),
+        _vm._v(" "),
+        _c(
+          "table",
+          { staticClass: "report-table" },
+          [
+            _vm._m(1),
+            _vm._v(" "),
+            _vm._l(_vm.data, function (i, ix) {
+              return _c("tr", { key: ix }, [
+                _c("td", [_vm._v(_vm._s(i.appointment_id))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(i.appointment_date))]),
+                _vm._v(" "),
+                _c("td", [
+                  i.user.lname
+                    ? _c("span", [
+                        _vm._v(
+                          "\n                            " +
+                            _vm._s(i.user.lname) +
+                            ", " +
+                            _vm._s(i.user.fname) +
+                            "\n                        "
+                        ),
+                      ])
+                    : _vm._e(),
+                ]),
+                _vm._v(" "),
+                _c("td", { staticStyle: { width: "130px" } }, [
+                  i.schedule.time_from
+                    ? _c("span", [
+                        _vm._v(
+                          "\n                            " +
+                            _vm._s(_vm._f("formatTime")(i.schedule.time_from)) +
+                            " - " +
+                            _vm._s(_vm._f("formatTime")(i.schedule.time_end)) +
+                            "\n                        "
+                        ),
+                      ])
+                    : _vm._e(),
+                ]),
+              ])
+            }),
+          ],
+          2
+        ),
+        _vm._v(" "),
+        _c("div", [
+          _vm._v(
+            "No. of No Show Appointment: " + _vm._s(_vm.countServed) + " "
+          ),
+        ]),
+      ]),
+    ]),
+  ])
+}
+var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "w-panel-heading" }, [
+      _c(
+        "div",
+        {
+          staticClass: "mb-2",
+          staticStyle: { "font-size": "20px", "font-weight": "bold" },
+        },
+        [_vm._v("REPORT FILTER")]
+      ),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("tr", [
+      _c("th", [_vm._v("ID")]),
+      _vm._v(" "),
+      _c("th", { staticStyle: { "font-size": ".8em" } }, [
+        _vm._v("Appointment Date"),
+      ]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Account")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Schedule")]),
     ])
   },
 ]
@@ -69464,6 +69975,7 @@ var map = {
 	"./components/Administrator/Doctor/Schedule/Schedules.vue": "./resources/js/components/Administrator/Doctor/Schedule/Schedules.vue",
 	"./components/Administrator/MaxPatients.vue": "./resources/js/components/Administrator/MaxPatients.vue",
 	"./components/Administrator/QRScanner/QrScanner.vue": "./resources/js/components/Administrator/QRScanner/QrScanner.vue",
+	"./components/Administrator/Report/ReportAppointmentNoShow.vue": "./resources/js/components/Administrator/Report/ReportAppointmentNoShow.vue",
 	"./components/Administrator/Report/ReportNoServeUnserve.vue": "./resources/js/components/Administrator/Report/ReportNoServeUnserve.vue",
 	"./components/Administrator/Report/ReportPatientAppointment.vue": "./resources/js/components/Administrator/Report/ReportPatientAppointment.vue",
 	"./components/Administrator/Report/ReportPatientByLocation.vue": "./resources/js/components/Administrator/Report/ReportPatientByLocation.vue",

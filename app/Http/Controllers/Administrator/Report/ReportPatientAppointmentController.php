@@ -117,4 +117,24 @@ class ReportPatientAppointmentController extends Controller
         return $data;
     }
 
+
+
+
+    //print no show
+    public function indexAppointmentNoShow(){
+        return view('administrator.report.report-appointment-no-show');
+    }
+    public function getDataAppointmentNoShow(Request $req){
+        $date_start = date('Y-m-d', strtotime($req->start));
+        $date_end = date('Y-m-d', strtotime($req->end));
+
+        $data = Appointment::with(['user', 'schedule'])
+            ->where('status', 1)
+            ->where('is_arrived', 0)
+            ->where('is_served', 0)
+            ->where('is_archived', 0)
+            ->get();
+
+        return $data;
+    }
 }

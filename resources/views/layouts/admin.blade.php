@@ -98,6 +98,11 @@
                     <b-navbar-item href="/report-patient-by-location">
                         Patient By Location
                     </b-navbar-item>
+                    <b-navbar-item href="/report-appointment-no-show">
+                        Appointment No @section('')
+                            
+                        @show
+                    </b-navbar-item>
                     {{-- <b-navbar-item href="#">
                         Contact
                     </b-navbar-item> --}}

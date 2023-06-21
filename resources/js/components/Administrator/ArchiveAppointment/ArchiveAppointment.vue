@@ -108,14 +108,14 @@
                                 </b-table-column>
 
                                 <b-table-column field="is_served" label="Arrive" v-slot="props">
-                                    <span class="status approved" v-if="props.row.is_arrived === 1">YES</span>
+                                    <span class="status approved" v-if="props.row.is_arrived === 1">ARRIVED</span>
                                     <span class="status cancelled" v-if="props.row.is_arrived === 0">NO</span>
                                 </b-table-column>
 
-                                
+
 
                                 <b-table-column field="is_served" label="Serve" v-slot="props">
-                                    <span class="status approved" v-if="props.row.is_served === 1">YES</span>
+                                    <span class="status approved" v-if="props.row.is_served === 1">SERVED</span>
                                     <span class="status cancelled" v-if="props.row.is_served === 0">NO</span>
                                 </b-table-column>
 

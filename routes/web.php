@@ -105,7 +105,8 @@ Route::middleware(['auth', 'staff'])->group(function(){
     Route::get('/report-patient-by-location', [App\Http\Controllers\Administrator\Report\ReportPatientAppointmentController::class, 'indexReportPatientByLocation']);
     Route::get('/get-report-patient-by-location', [App\Http\Controllers\Administrator\Report\ReportPatientAppointmentController::class, 'getDataReportPatientByLocation']);
 
-    
+    Route::get('/report-appointment-no-show', [App\Http\Controllers\Administrator\Report\ReportPatientAppointmentController::class, 'indexAppointmentNoShow']);
+    Route::get('/get-report-appointment-no-show', [App\Http\Controllers\Administrator\Report\ReportPatientAppointmentController::class, 'getDataAppointmentNoShow']);
 });
 
 Route::middleware(['auth', 'admin'])->group(function(){
