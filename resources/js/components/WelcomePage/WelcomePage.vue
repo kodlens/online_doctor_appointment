@@ -160,6 +160,7 @@
 
                             <b-field label="Pick date" label-position="on-border">
                                 <b-datepicker v-model="appointment_date"
+                                    inline
                                     :unselectable-dates="vacations"
                                     @input="loadOpenSchedules">
                                 </b-datepicker>
@@ -459,12 +460,32 @@ export default {
         loadOpenSchedules(){
             this.schedule_id = 0;
             //this.vacations = [];
+            
+          
 
             const appdate = this.appointment_date.getFullYear() + '-' 
                 + (this.appointment_date.getMonth() + 1).toString().padStart(2, "0") + '-' 
                 + (this.appointment_date.getDate()).toString().padStart(2,'0')
 
                 //yyyy-MM-dd
+            
+
+            const params = [
+                `appdate=${appdate}`,
+            ].join('&')
+
+
+            axios.get(`/load-open-schedules?${params}`).then(res=>{
+                this.schedules = res.data
+            })
+        },
+
+        loadVacations(){
+
+            const dDate = new Date();
+            const appdate = dDate.getFullYear() + '-' 
+                + (dDate.getMonth() + 1).toString().padStart(2, "0") + '-' 
+                + (dDate.getDate()).toString().padStart(2,'0')
 
             const params = [
                 `appdate=${appdate}`,
@@ -479,12 +500,7 @@ export default {
                 console.log(this.vacations);
                 //tiwasonun and ma deact ang date..
             })
-
-            axios.get(`/load-open-schedules?${params}`).then(res=>{
-                this.schedules = res.data
-            })
         },
-
        
 
         submit(){
@@ -640,8 +656,8 @@ export default {
     },
 
     mounted(){
-        this.appointment_date = new Date();
-        this.loadOpenSchedules()
+        //this.appointment_date = new Date();
+        this.loadVacations()
         this.loadMaxPatient();
     }
 

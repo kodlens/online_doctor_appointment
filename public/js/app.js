@@ -13547,6 +13547,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
@@ -13586,25 +13587,32 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var appdate = this.appointment_date.getFullYear() + '-' + (this.appointment_date.getMonth() + 1).toString().padStart(2, "0") + '-' + this.appointment_date.getDate().toString().padStart(2, '0'); //yyyy-MM-dd
 
       var params = ["appdate=".concat(appdate)].join('&');
+      axios.get("/load-open-schedules?".concat(params)).then(function (res) {
+        _this.schedules = res.data;
+      });
+    },
+    loadVacations: function loadVacations() {
+      var _this2 = this;
+
+      var dDate = new Date();
+      var appdate = dDate.getFullYear() + '-' + (dDate.getMonth() + 1).toString().padStart(2, "0") + '-' + dDate.getDate().toString().padStart(2, '0');
+      var params = ["appdate=".concat(appdate)].join('&');
       axios.get("/load-vacations?".concat(params)).then(function (res) {
         //this.vacations = res.data
         res.data.forEach(function (element) {
           var d = new Date(element.vacation_date);
 
-          _this.vacations.push(d);
+          _this2.vacations.push(d);
         });
-        console.log(_this.vacations); //tiwasonun and ma deact ang date..
-      });
-      axios.get("/load-open-schedules?".concat(params)).then(function (res) {
-        _this.schedules = res.data;
+        console.log(_this2.vacations); //tiwasonun and ma deact ang date..
       });
     },
     submit: function submit() {
-      var _this2 = this;
+      var _this3 = this;
 
       this.btnClass['is-loading'] = true;
       axios.post('/login', this.fields).then(function (res) {
-        _this2.btnClass['is-loading'] = false;
+        _this3.btnClass['is-loading'] = false;
 
         if (res.data.role === 'ADMINISTRATOR' || res.data.role === 'STAFF') {
           window.location = '/dashboard';
@@ -13614,12 +13622,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           window.location = '/';
         }
       })["catch"](function (err) {
-        _this2.btnClass['is-loading'] = false;
-        _this2.errors = err.response.data.errors;
+        _this3.btnClass['is-loading'] = false;
+        _this3.errors = err.response.data.errors;
       });
     },
     applyAppointment: function applyAppointment() {
-      var _this3 = this;
+      var _this4 = this;
 
       var appdate = this.appointment_date.getFullYear() + '-' + (this.appointment_date.getMonth() + 1).toString().padStart(2, "0") + '-' + this.appointment_date.getDate().toString().padStart(2, '0'); //yyyy-MM-dd
 
@@ -13630,54 +13638,54 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       };
       axios.post('/apply-appointment', appointment).then(function (res) {
         if (res.data.status === 'saved') {
-          _this3.$buefy.dialog.alert({
+          _this4.$buefy.dialog.alert({
             title: 'Saved!',
             message: 'Reservation successfully saved.',
             type: 'is-success'
           });
 
-          _this3.fields = {
+          _this4.fields = {
             patients: []
           };
-          _this3.errors = {};
+          _this4.errors = {};
         }
       })["catch"](function (err) {
         //console.log(err.response.data.errors);
         if (err.response.status === 422) {
-          _this3.errors = err.response.data.errors;
+          _this4.errors = err.response.data.errors;
 
-          if (_this3.errors.patients) {
-            _this3.errors.patients[0] = 'Please add patient.';
+          if (_this4.errors.patients) {
+            _this4.errors.patients[0] = 'Please add patient.';
           }
 
-          if (_this3.errors.max) {
+          if (_this4.errors.max) {
             //save the new schedule found
-            var msg = _this3.errors.max[0] + ' Do you want to move schedule to <b>' + _this3.errors.max[2] + ', ' + _this3.$formatTime(_this3.errors.max[1].time_from) + ' - ' + _this3.$formatTime(_this3.errors.max[1].time_end) + '?</b><br>';
+            var msg = _this4.errors.max[0] + ' Do you want to move schedule to <b>' + _this4.errors.max[2] + ', ' + _this4.$formatTime(_this4.errors.max[1].time_from) + ' - ' + _this4.$formatTime(_this4.errors.max[1].time_end) + '?</b><br>';
 
-            if (_this3.errors.max[3]) {
+            if (_this4.errors.max[3]) {
               msg += '<br><span style="font-weight:bold;color:red;">Are you willing to accept the schedule? The date was change from the original.</span>';
             }
 
-            _this3.$buefy.dialog.confirm({
+            _this4.$buefy.dialog.confirm({
               title: 'Limit!',
               message: msg,
               type: 'is-info',
               confirmText: 'Proceed schedule',
               onConfirm: function onConfirm() {
-                _this3.appointment_date = new Date(_this3.errors.max[2]);
-                var newData = _this3.errors.max[1];
-                _this3.schedule_id = newData.schedule_id;
+                _this4.appointment_date = new Date(_this4.errors.max[2]);
+                var newData = _this4.errors.max[1];
+                _this4.schedule_id = newData.schedule_id;
 
-                _this3.applyAppointment(); //recursive
+                _this4.applyAppointment(); //recursive
 
               }
             });
           }
 
-          if (_this3.errors.exists) {
-            _this3.$buefy.dialog.alert({
+          if (_this4.errors.exists) {
+            _this4.$buefy.dialog.alert({
               title: 'Exist!',
-              message: _this3.errors.exists[0],
+              message: _this4.errors.exists[0],
               type: 'is-danger'
             });
           }
@@ -13702,48 +13710,48 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }, "street", ''));
     },
     removePatient: function removePatient(index) {
-      var _this4 = this;
+      var _this5 = this;
 
       this.$buefy.dialog.confirm({
         title: 'DELETE?',
         message: 'Are you sure you want to remove this?',
         onConfirm: function onConfirm() {
-          _this4.fields.patients.splice(index, 1);
+          _this5.fields.patients.splice(index, 1);
         }
       });
     },
     loadProvince: function loadProvince(index) {
-      var _this5 = this;
+      var _this6 = this;
 
       axios.get('/load-provinces').then(function (res) {
-        _this5.fields.patients[index].provinces = res.data;
+        _this6.fields.patients[index].provinces = res.data;
       });
     },
     loadCities: function loadCities(index, prov) {
-      var _this6 = this;
+      var _this7 = this;
 
       axios.get('/load-cities?prov=' + prov).then(function (res) {
-        _this6.fields.patients[index].cities = res.data;
+        _this7.fields.patients[index].cities = res.data;
       });
     },
     loadBarangays: function loadBarangays(index, prov, city) {
-      var _this7 = this;
+      var _this8 = this;
 
       axios.get('/load-barangays?prov=' + prov + '&city_code=' + city).then(function (res) {
-        _this7.fields.patients[index].barangays = res.data;
+        _this8.fields.patients[index].barangays = res.data;
       });
     },
     loadMaxPatient: function loadMaxPatient() {
-      var _this8 = this;
+      var _this9 = this;
 
       axios.get('/load-max-no').then(function (res) {
-        _this8.max = res.data.max;
+        _this9.max = res.data.max;
       });
     }
   },
   mounted: function mounted() {
-    this.appointment_date = new Date();
-    this.loadOpenSchedules();
+    //this.appointment_date = new Date();
+    this.loadVacations();
     this.loadMaxPatient();
   }
 });
@@ -45351,7 +45359,10 @@ var render = function () {
                         },
                         [
                           _c("b-datepicker", {
-                            attrs: { "unselectable-dates": _vm.vacations },
+                            attrs: {
+                              inline: "",
+                              "unselectable-dates": _vm.vacations,
+                            },
                             on: { input: _vm.loadOpenSchedules },
                             model: {
                               value: _vm.appointment_date,

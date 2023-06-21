@@ -26,12 +26,9 @@ class OpenDataController extends Controller
     }
 
     public function loadVacations(Request $req){
-
-
-        $date = date("m", strtotime($req->appdate));
+        $date = date("Y-m-d", strtotime($req->appdate));
         //return $date;
-
-        return Vacation::whereMonth('vacation_date', $date)
+        return Vacation::where('vacation_date','>=', $date)
             ->get();
     }
 }
