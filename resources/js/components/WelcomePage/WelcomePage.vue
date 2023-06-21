@@ -276,7 +276,7 @@
                     <div class="card">
                         <div class="card-image">
                             <figure class="image is-3by2">
-                            <img src="/img/preventive.jpg" alt="Preventive image here">
+                            <img src="/img/minor_surgery.jpg" alt="Preventive image here">
                             </figure>
                         </div>
                         <div class="card-content">

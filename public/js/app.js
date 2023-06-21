@@ -45696,7 +45696,7 @@ var staticRenderFns = [
               _c("figure", { staticClass: "image is-3by2" }, [
                 _c("img", {
                   attrs: {
-                    src: "/img/preventive.jpg",
+                    src: "/img/minor_surgery.jpg",
                     alt: "Preventive image here",
                   },
                 }),
