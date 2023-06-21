@@ -13485,6 +13485,68 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
@@ -32492,7 +32554,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.welcome-title[data-v-0e3912d8]{\n    font-size: 3em;\n    font-weight: bolder;\n}\n.welcome-subtitle[data-v-0e3912d8]{\n    font-size: 1.5em;\n    font-weight: bold;\n}\n.welcome-content[data-v-0e3912d8]{\n    margin: 50px 0;\n    font-size: 1.4em;\n    text-align: justify;\n}\n.schedule-box[data-v-0e3912d8]{\n    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;\n    max-width: 600px;\n    margin: auto;\n    padding: 25px;\n}\n.doctor-schedule[data-v-0e3912d8]{\n    max-width: 500px;\n    margin: 15px auto;\n}\n.doctor-schedule-header[data-v-0e3912d8]{\n    font-weight: bold;\n    font-size: 1.2em;\n    margin: 15px 0;\n}\n.schedule-item[data-v-0e3912d8]{\n    display: flex;\n    padding: 15px;\n    margin: 5px;\n    border: 1px solid lightgray;\n    border-radius: 10px;\n    transition: all 0.5s;\n}\n.schedule-item[data-v-0e3912d8]:hover{\n    border: 1.5px solid rgb(58, 176, 223);\n}\n.schedule-item-radio[data-v-0e3912d8]{\n    margin-left: auto;\n}\n.login-box[data-v-0e3912d8]{\n    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;\n    max-width: 600px;\n    margin: auto;\n    padding: 25px;\n    border-top: 2px solid rgb(56, 56, 165);\n}\n.login-header[data-v-0e3912d8]{\n    border-bottom: 1px solid blue;\n    padding: 0 0 15px 0;\n    margin: 0 0 10px 0;\n}\n.login-header-text[data-v-0e3912d8]{\n    font-weight: bold; \n    font-size: 1.2em;\n}\n.height-150[data-v-0e3912d8]{\n    height: 150px;\n}\n.height-200[data-v-0e3912d8]{\n    height: 200px;\n}\n.height-300[data-v-0e3912d8]{\n    height: 300px;\n}\n.height-500[data-v-0e3912d8]{\n    height: 300px;\n}\n\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.welcome-title[data-v-0e3912d8]{\n    font-size: 3em;\n    font-weight: bolder;\n}\n.welcome-subtitle[data-v-0e3912d8]{\n    font-size: 1.5em;\n    font-weight: bold;\n}\n.welcome-content[data-v-0e3912d8]{\n    margin: 50px 0;\n    font-size: 1.4em;\n    text-align: justify;\n}\n.schedule-box[data-v-0e3912d8]{\n    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;\n    max-width: 600px;\n    margin: auto;\n    padding: 25px;\n}\n.doctor-schedule[data-v-0e3912d8]{\n    max-width: 500px;\n    margin: 15px auto;\n}\n.doctor-schedule-header[data-v-0e3912d8]{\n    font-weight: bold;\n    font-size: 1.2em;\n    margin: 15px 0;\n}\n.schedule-item[data-v-0e3912d8]{\n    display: flex;\n    padding: 15px;\n    margin: 5px;\n    border: 1px solid lightgray;\n    border-radius: 10px;\n    transition: all 0.5s;\n}\n.schedule-item[data-v-0e3912d8]:hover{\n    border: 1.5px solid rgb(58, 176, 223);\n}\n.schedule-item-radio[data-v-0e3912d8]{\n    margin-left: auto;\n}\n.login-box[data-v-0e3912d8]{\n    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;\n    max-width: 600px;\n    margin: auto;\n    padding: 25px;\n    border-top: 2px solid rgb(56, 56, 165);\n}\n.login-header[data-v-0e3912d8]{\n    border-bottom: 1px solid blue;\n    padding: 0 0 15px 0;\n    margin: 0 0 10px 0;\n}\n.login-header-text[data-v-0e3912d8]{\n    font-weight: bold; \n    font-size: 1.2em;\n}\n.height-150[data-v-0e3912d8]{\n    height: 150px;\n}\n.height-200[data-v-0e3912d8]{\n    height: 200px;\n}\n.height-300[data-v-0e3912d8]{\n    height: 300px;\n}\n.height-500[data-v-0e3912d8]{\n    height: 300px;\n}\n.drtilao[data-v-0e3912d8]{\n    height: 400px;\n    background: url(/img/drtilao.jpg) no-repeat;\n    background-position: center;\n    background-size: cover;\n}\n\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -45464,10 +45526,12 @@ var render = function () {
     _vm._v(" "),
     _vm._m(4),
     _vm._v(" "),
+    _vm._m(5),
+    _vm._v(" "),
     _c("div", { staticClass: "section" }, [
       _c("div", { staticClass: "columns" }, [
         _c("div", { staticClass: "column" }, [
-          _vm._m(5),
+          _vm._m(6),
           _vm._v(" "),
           _c("div", { staticClass: "columns is-centered" }, [
             _c(
@@ -45639,6 +45703,121 @@ var staticRenderFns = [
                 _vm._v(
                   "\n                            Our minor surgery services encompass a wide array of procedures designed to address various conditions and concerns. \n                            Whether you require an incision and drainage to treat an abscess, \n                            an excision biopsy for diagnostic purposes, or the removal of \n                            skin tags or warts, Dr. Tilao is here to provide \n                            personalized and effective solutions.\n                        "
                 ),
+              ]),
+            ]),
+          ]),
+        ]),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "columns" }, [
+      _c("div", { staticClass: "column" }, [
+        _c("div", { staticClass: "columns" }, [
+          _c("div", { staticClass: "column has-text-centered" }, [
+            _c(
+              "div",
+              {
+                staticStyle: {
+                  "font-weight": "bold",
+                  "font-size": "1.8em",
+                  margin: "auto",
+                  "border-bottom": "2px solid blue",
+                  display: "inline-block",
+                },
+              },
+              [
+                _vm._v(
+                  "\n                        ABOUT DR. TILAO\n                    "
+                ),
+              ]
+            ),
+          ]),
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "columns is-centered" }, [
+          _c("div", { staticClass: "column is-8" }, [
+            _c("div", { staticClass: "columns" }, [
+              _c("div", { staticClass: "column" }, [
+                _c("div", { staticClass: "drtilao" }),
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "column" }, [
+                _c("p", [
+                  _c("b", [_vm._v("Dr. Max Beth B. Tilao, Jr.")]),
+                  _vm._v(
+                    "\n                                Internal Medicine\n                                General Internist who treats conditions that affect the internal organs- condition such as heart disease, hypertension, diabetes, obesity and pulmonary disease.\n\n                            "
+                  ),
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "content" }, [
+                  _c(
+                    "div",
+                    {
+                      staticStyle: {
+                        "font-weight": "bold",
+                        "margin-top": "10px",
+                      },
+                    },
+                    [_vm._v("EDUCATION")]
+                  ),
+                  _vm._v(" "),
+                  _c("ul", [
+                    _c("li", [
+                      _vm._v(
+                        "Southwestern University, Cebu - Graduated Bachelor of Science in Medical Technology, 1984"
+                      ),
+                    ]),
+                    _vm._v(" "),
+                    _c("li", [
+                      _vm._v(
+                        "Southwestern University, Cebu - Graduated Bachelor of Science in Medicine, 1988"
+                      ),
+                    ]),
+                  ]),
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "content" }, [
+                  _c(
+                    "div",
+                    {
+                      staticStyle: {
+                        "font-weight": "bold",
+                        "margin-top": "10px",
+                      },
+                    },
+                    [_vm._v("ACHIEVEMENTS")]
+                  ),
+                  _vm._v(" "),
+                  _c("ul", [
+                    _c("li", [
+                      _vm._v(
+                        "Dr. Tilao completed his Residency Training Program in Internal Medicine on  August 16, 1994 to August 15, 1998 in Vicente Sotto Memorial Hospital Center, Cebu."
+                      ),
+                    ]),
+                    _vm._v(" "),
+                    _c("li", [
+                      _vm._v(
+                        "Dr. Tilao has completed VALUES CLARIFICATION WORKSHOP on AUGUST 15-19, 1994 in Vicente Sotto Memorial Hospital Center, Cebu."
+                      ),
+                    ]),
+                    _vm._v(" "),
+                    _c("li", [
+                      _vm._v(
+                        'Dr. Tilao completed the "Orientation and Seminar Workshop on Woman and Child friendly Center" (WCFC) on April 21-22, 1997 in Vicente Sotto Memorial Hospital Center, Cebu.'
+                      ),
+                    ]),
+                    _vm._v(" "),
+                    _c("li", [
+                      _vm._v(
+                        'Dr. Tilao completed "Cardio Pulmonary Resuscitation Seminar" on August 22-26, 1994 in Vicente Sotto Memorial Hospital Center, Cebu.'
+                      ),
+                    ]),
+                  ]),
+                ]),
               ]),
             ]),
           ]),
