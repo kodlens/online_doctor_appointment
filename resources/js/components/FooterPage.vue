@@ -34,21 +34,18 @@
                             <div>Doña Maria, Medina and Faith Hospital</div>
                         </div>
                     </div>
-                    
                 </div>
 
-                <div class="column">
+                <!-- <div class="column">
                     <div class="columns is-centered">
                         <div class="column is-6" style="color: white;">
                             <div>LENSEY ONG</div>
                             <div>RICHALLE MAE PLAZA</div>
                             <div>JESSA MAE SARAGINA</div>
                             <div>JOHN RIVIN BARINAN</div>
-
-
                         </div>
                     </div>
-                </div>
+                </div> -->
             </div>
 
         </div>

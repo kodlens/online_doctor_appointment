@@ -11,7 +11,7 @@
                     </div>
                 </div>
                 <div class="column">
-                    <img src="/img/logo.webp" alt="Logo" srcset="">
+                    <img src="/img/logo.png" alt="Logo" srcset="" style="height: 400px">
                 </div>
             </div>
             <div style="height: 10px; background-color: rgb(74, 74, 155);"></div>
@@ -294,7 +294,31 @@
                 </div>
  
             </div>
-         </div>
+        </div>
+
+
+        <div class="section">
+            <div class="columns">
+                <div class="column">
+                    
+                    <div class="columns">
+                        <div class="column has-text-centered">
+                            <div style="font-weight: bold; font-size: 1.8em; margin: auto;
+                                border-bottom: 2px solid blue; display: inline-block;">
+                                DR. TILAO MILESTONE
+                            </div>
+                        </div>
+                    </div>
+                    <div class="columns is-centered">
+                        <div class="column is-8">
+                            <certificates-carousel></certificates-carousel>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
 
 
         <!-- <div class="section">
@@ -322,11 +346,11 @@
                         </div>
                     </div>
                    
-                </div> 
+                </div> ``
             </div>
          </div> -->
 
-    </div>
+    </div> <!-- root div -->
 </template>
 
 <script>
@@ -397,7 +421,6 @@ export default {
             axios.get(`/load-open-schedules?${params}`).then(res=>{
                 this.schedules = res.data
             })
-
         },
 
        
