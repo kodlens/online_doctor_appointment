@@ -13548,6 +13548,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
@@ -45361,6 +45362,7 @@ var render = function () {
                           _c("b-datepicker", {
                             attrs: {
                               inline: "",
+                              "min-date": new Date(),
                               "unselectable-dates": _vm.vacations,
                             },
                             on: { input: _vm.loadOpenSchedules },

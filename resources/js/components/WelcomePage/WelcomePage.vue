@@ -161,6 +161,7 @@
                             <b-field label="Pick date" label-position="on-border">
                                 <b-datepicker v-model="appointment_date"
                                     inline
+                                    :min-date="new Date()"
                                     :unselectable-dates="vacations"
                                     @input="loadOpenSchedules">
                                 </b-datepicker>
