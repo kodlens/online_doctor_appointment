@@ -99,26 +99,24 @@
                                     {{ props.row.user.contact_no }}
                                 </b-table-column>
 
-                                <!-- <b-table-column field="illness_history" label="Illness/History" v-slot="props">
-                                    <div class="text-container">
-                                        <p class="long-text">
-                                            {{ props.row.illness_history }}
-                                        </p>
-                                    </div>
-                                    <div v-if="props.row.illness_history">
-                                        <b-button
-                                            class="is-small is-outlined is-info" 
-                                            v-if="props.row.illness_history.length > 100" 
-                                            @click="seeMore(props.row.illness_history)"
-                                            label="see more..."></b-button>
-                                    </div>
-                                    
-                                </b-table-column> -->
+                               
 
-                                <b-table-column field="status" label="STATUS" v-slot="props">
+                                <b-table-column field="status" label="Status" v-slot="props">
                                     <span class="status pending" v-if="props.row.status === 0">PENDING</span>
                                     <span class="status approved" v-if="props.row.status === 1">APPROVED</span>
                                     <span class="status cancelled" v-if="props.row.status === 2">CANCELLED</span>
+                                </b-table-column>
+
+                                <b-table-column field="is_served" label="Arrive" v-slot="props">
+                                    <span class="status approved" v-if="props.row.is_arrived === 1">YES</span>
+                                    <span class="status cancelled" v-if="props.row.is_arrived === 0">NO</span>
+                                </b-table-column>
+
+                                
+
+                                <b-table-column field="is_served" label="Serve" v-slot="props">
+                                    <span class="status approved" v-if="props.row.is_served === 1">YES</span>
+                                    <span class="status cancelled" v-if="props.row.is_served === 0">NO</span>
                                 </b-table-column>
 
                                 <b-table-column label="Action" v-slot="props">

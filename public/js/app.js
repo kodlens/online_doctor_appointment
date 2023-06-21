@@ -8441,8 +8441,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -38187,7 +38185,7 @@ var render = function () {
                     }),
                     _vm._v(" "),
                     _c("b-table-column", {
-                      attrs: { field: "status", label: "STATUS" },
+                      attrs: { field: "status", label: "Status" },
                       scopedSlots: _vm._u([
                         {
                           key: "default",
@@ -38214,6 +38212,62 @@ var render = function () {
                                     "span",
                                     { staticClass: "status cancelled" },
                                     [_vm._v("CANCELLED")]
+                                  )
+                                : _vm._e(),
+                            ]
+                          },
+                        },
+                      ]),
+                    }),
+                    _vm._v(" "),
+                    _c("b-table-column", {
+                      attrs: { field: "is_served", label: "Arrive" },
+                      scopedSlots: _vm._u([
+                        {
+                          key: "default",
+                          fn: function (props) {
+                            return [
+                              props.row.is_arrived === 1
+                                ? _c(
+                                    "span",
+                                    { staticClass: "status approved" },
+                                    [_vm._v("YES")]
+                                  )
+                                : _vm._e(),
+                              _vm._v(" "),
+                              props.row.is_arrived === 0
+                                ? _c(
+                                    "span",
+                                    { staticClass: "status cancelled" },
+                                    [_vm._v("NO")]
+                                  )
+                                : _vm._e(),
+                            ]
+                          },
+                        },
+                      ]),
+                    }),
+                    _vm._v(" "),
+                    _c("b-table-column", {
+                      attrs: { field: "is_served", label: "Serve" },
+                      scopedSlots: _vm._u([
+                        {
+                          key: "default",
+                          fn: function (props) {
+                            return [
+                              props.row.is_served === 1
+                                ? _c(
+                                    "span",
+                                    { staticClass: "status approved" },
+                                    [_vm._v("YES")]
+                                  )
+                                : _vm._e(),
+                              _vm._v(" "),
+                              props.row.is_served === 0
+                                ? _c(
+                                    "span",
+                                    { staticClass: "status cancelled" },
+                                    [_vm._v("NO")]
                                   )
                                 : _vm._e(),
                             ]

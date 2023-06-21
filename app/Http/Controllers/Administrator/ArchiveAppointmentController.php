@@ -34,7 +34,8 @@ class ArchiveAppointmentController extends Controller
             ->whereHas('user', function($q) use ($req){
                 $q->where('lname', 'like', '%'. $req->name . '%');
             })
-            ->where('is_archived', 1)
+            ->where('is_archived', 0)
+            ->where('status', 1)
             ->orderBy($sort[0], $sort[1])
             ->paginate($req->perpage);
 
