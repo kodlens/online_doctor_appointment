@@ -28,6 +28,8 @@ class RegisterController extends Controller
             'barangay' => ['required', 'string'],
         ],[
             'contact_no.regex' => 'Please enter a valid Philippines mobile phone number.',
+            'lname.required' => 'Last Name is required.',
+            'fname.required' => 'Firstname Name is required.',
         ]);
 
         User::create([
