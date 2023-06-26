@@ -29,7 +29,7 @@ class RegisterController extends Controller
         ],[
             'contact_no.regex' => 'Please enter a valid Philippines mobile phone number.',
             'lname.required' => 'Last Name is required.',
-            'fname.required' => 'Firstname Name is required.',
+            'fname.required' => 'First Name is required.',
         ]);
 
         User::create([
