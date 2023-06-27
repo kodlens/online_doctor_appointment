@@ -13709,6 +13709,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
@@ -13728,6 +13737,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       errors: {},
       appointment_date: null,
       vacations: [],
+      doctorVacations: [],
       max: 0,
       schedules: [],
       schedule_id: 0,
@@ -13764,8 +13774,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           var d = new Date(element.vacation_date);
 
           _this2.vacations.push(d);
-        });
-        console.log(_this2.vacations); //tiwasonun and ma deact ang date..
+        }); //console.log(this.vacations);
+        //tiwasonun and ma deact ang date..
       });
     },
     submit: function submit() {
@@ -13908,10 +13918,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       axios.get('/load-max-no').then(function (res) {
         _this9.max = res.data.max;
       });
+    },
+    loadDoctorVacations: function loadDoctorVacations() {
+      var _this10 = this;
+
+      axios.get("/load-doctor-vacations").then(function (res) {
+        //this.vacations = res.data
+        _this10.doctorVacations = res.data;
+      });
     }
   },
   mounted: function mounted() {
     //this.appointment_date = new Date();
+    this.loadDoctorVacations();
     this.loadVacations();
     this.loadMaxPatient();
   }
@@ -32747,7 +32766,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.welcome-title[data-v-0e3912d8]{\n    font-size: 3em;\n    font-weight: bolder;\n}\n.welcome-subtitle[data-v-0e3912d8]{\n    font-size: 1.5em;\n    font-weight: bold;\n}\n.welcome-content[data-v-0e3912d8]{\n    margin: 50px 0;\n    font-size: 1.4em;\n    text-align: justify;\n}\n.schedule-box[data-v-0e3912d8]{\n    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;\n    max-width: 600px;\n    margin: auto;\n    padding: 25px;\n}\n.doctor-schedule[data-v-0e3912d8]{\n    max-width: 500px;\n    margin: 15px auto;\n}\n.doctor-schedule-header[data-v-0e3912d8]{\n    font-weight: bold;\n    font-size: 1.2em;\n    margin: 15px 0;\n}\n.schedule-item[data-v-0e3912d8]{\n    display: flex;\n    padding: 15px;\n    margin: 5px;\n    border: 1px solid lightgray;\n    border-radius: 10px;\n    transition: all 0.5s;\n}\n.schedule-item[data-v-0e3912d8]:hover{\n    border: 1.5px solid rgb(58, 176, 223);\n}\n.schedule-item-radio[data-v-0e3912d8]{\n    margin-left: auto;\n}\n.login-box[data-v-0e3912d8]{\n    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;\n    max-width: 600px;\n    margin: auto;\n    padding: 25px;\n    border-top: 2px solid rgb(56, 56, 165);\n}\n.login-header[data-v-0e3912d8]{\n    border-bottom: 1px solid blue;\n    padding: 0 0 15px 0;\n    margin: 0 0 10px 0;\n}\n.login-header-text[data-v-0e3912d8]{\n    font-weight: bold; \n    font-size: 1.2em;\n}\n.height-150[data-v-0e3912d8]{\n    height: 150px;\n}\n.height-200[data-v-0e3912d8]{\n    height: 200px;\n}\n.height-300[data-v-0e3912d8]{\n    height: 300px;\n}\n.height-500[data-v-0e3912d8]{\n    height: 300px;\n}\n.drtilao[data-v-0e3912d8]{\n    height: 400px;\n    background: url(/img/drtilao.jpg) no-repeat;\n    background-position: center;\n    background-size: cover;\n}\n.banner-title[data-v-0e3912d8]{\n    font-weight: bolder; \n    font-size: 4em;\n    text-align: center;\n}\n.profile-container[data-v-0e3912d8]{\n    position: relative;\n}\n.profile-picture-container[data-v-0e3912d8]{\n    position: absolute;\n    top: 50%;\n    left: 50%;\n    transform: translate(-50%, -50%);\n    /* border: 1px solid yellow; */\n}\n.profile-picture[data-v-0e3912d8]{\n    background-image: url('/img/logo.jpg');\n    width: 500px;\n    height: 300px;\n    background-size: cover; /* Adjust the background size as needed */\n    background-position: center; /* Adjust the background position as needed */\n    background-repeat: no-repeat; /* Adjust the background repeat as needed */\n}\n\n\n\n/* Styles for screens smaller than 600px */\n@media (max-width: 640px) {\n.banner-title[data-v-0e3912d8]{\n        font-weight: bolder; \n        font-size: 2em;\n        text-align: center;\n}\n.svg-bg[data-v-0e3912d8]{\n        /* border: 1px solid blue; */\n        width: 300px;\n        height: 300px;\n        display: block;\n        margin: auto;\n}\n.profile-picture[data-v-0e3912d8]{\n        width: 300px;\n        height: 200px;\n        /* border: 1px solid red; */\n        margin: auto;\n}\n}\n\n/* Styles for screens between 600px and 900px */\n@media (min-width: 641px) and (max-width: 1007px) {\n.banner-title[data-v-0e3912d8]{\n        font-weight: bolder; \n        font-size: 2em;\n        text-align: center;\n}\n}\n\n/* Styles for screens larger than 1200px */\n@media (min-width: 1008px) {\n.w-hero[data-v-0e3912d8]{\n        max-width: 1366px;\n        /* border: 1px solid red; */\n        margin: auto;\n}\n.svg-bg[data-v-0e3912d8]{\n        width: 500px;\n        height: 500px;\n        /* border: 1px solid rgb(53, 177, 29); */\n        display: block;\n        margin: auto;\n}\n.svg-bg-container[data-v-0e3912d8]{\n        position: relative;\n        /* border: 1px solid blue; */\n}\n}\n\n\n\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.welcome-title[data-v-0e3912d8]{\n    font-size: 3em;\n    font-weight: bolder;\n}\n.welcome-subtitle[data-v-0e3912d8]{\n    font-size: 1.5em;\n    font-weight: bold;\n}\n.welcome-content[data-v-0e3912d8]{\n    margin: 50px 0;\n    font-size: 1.4em;\n    text-align: justify;\n}\n.schedule-box[data-v-0e3912d8]{\n    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;\n    max-width: 600px;\n    margin: auto;\n    padding: 25px;\n}\n.doctor-schedule[data-v-0e3912d8]{\n    max-width: 500px;\n    margin: 15px auto;\n}\n.doctor-schedule-header[data-v-0e3912d8]{\n    font-weight: bold;\n    font-size: 1.2em;\n    margin: 15px 0;\n}\n.schedule-item[data-v-0e3912d8]{\n    display: flex;\n    padding: 15px;\n    margin: 5px;\n    border: 1px solid lightgray;\n    border-radius: 10px;\n    transition: all 0.5s;\n}\n.schedule-item[data-v-0e3912d8]:hover{\n    border: 1.5px solid rgb(58, 176, 223);\n}\n.schedule-item-radio[data-v-0e3912d8]{\n    margin-left: auto;\n}\n.login-box[data-v-0e3912d8]{\n    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;\n    max-width: 600px;\n    margin: auto;\n    padding: 25px;\n    border-top: 2px solid rgb(56, 56, 165);\n}\n.login-header[data-v-0e3912d8]{\n    border-bottom: 1px solid blue;\n    padding: 0 0 15px 0;\n    margin: 0 0 10px 0;\n}\n.login-header-text[data-v-0e3912d8]{\n    font-weight: bold; \n    font-size: 1.2em;\n}\n.height-150[data-v-0e3912d8]{\n    height: 150px;\n}\n.height-200[data-v-0e3912d8]{\n    height: 200px;\n}\n.height-300[data-v-0e3912d8]{\n    height: 300px;\n}\n.height-500[data-v-0e3912d8]{\n    height: 300px;\n}\n.drtilao[data-v-0e3912d8]{\n    height: 400px;\n    background: url(/img/drtilao.jpg) no-repeat;\n    background-position: center;\n    background-size: cover;\n}\n.doctor-vacation[data-v-0e3912d8]{\n}\n.banner-title[data-v-0e3912d8]{\n    font-weight: bolder; \n    font-size: 4em;\n    text-align: center;\n}\n.profile-container[data-v-0e3912d8]{\n    position: relative;\n}\n.profile-picture-container[data-v-0e3912d8]{\n    position: absolute;\n    top: 50%;\n    left: 50%;\n    transform: translate(-50%, -50%);\n    /* border: 1px solid yellow; */\n}\n.profile-picture[data-v-0e3912d8]{\n    background-image: url('/img/logo.jpg');\n    width: 500px;\n    height: 300px;\n    background-size: cover; /* Adjust the background size as needed */\n    background-position: center; /* Adjust the background position as needed */\n    background-repeat: no-repeat; /* Adjust the background repeat as needed */\n}\n\n\n\n/* Styles for screens smaller than 600px */\n@media (max-width: 640px) {\n.banner-title[data-v-0e3912d8]{\n        font-weight: bolder; \n        font-size: 2em;\n        text-align: center;\n}\n.svg-bg[data-v-0e3912d8]{\n        /* border: 1px solid blue; */\n        width: 300px;\n        height: 300px;\n        display: block;\n        margin: auto;\n}\n.profile-picture[data-v-0e3912d8]{\n        width: 300px;\n        height: 200px;\n        /* border: 1px solid red; */\n        margin: auto;\n}\n}\n\n/* Styles for screens between 600px and 900px */\n@media (min-width: 641px) and (max-width: 1007px) {\n.banner-title[data-v-0e3912d8]{\n        font-weight: bolder; \n        font-size: 2em;\n        text-align: center;\n}\n}\n\n/* Styles for screens larger than 1200px */\n@media (min-width: 1008px) {\n.w-hero[data-v-0e3912d8]{\n        max-width: 1366px;\n        /* border: 1px solid red; */\n        margin: auto;\n}\n.svg-bg[data-v-0e3912d8]{\n        width: 500px;\n        height: 500px;\n        /* border: 1px solid rgb(53, 177, 29); */\n        display: block;\n        margin: auto;\n}\n.svg-bg-container[data-v-0e3912d8]{\n        position: relative;\n        /* border: 1px solid blue; */\n}\n}\n\n\n\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -45437,6 +45456,20 @@ var render = function () {
                     "div",
                     { staticClass: "doctor-schedule" },
                     [
+                      _c("div", { staticClass: "doctor-schedule-header" }, [
+                        _vm._v(
+                          "\n                            Doctor Vacation Schedule\n                        "
+                        ),
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "doctor-vacation" }, [
+                        _vm._v(
+                          "\n                            " +
+                            _vm._s(this.doctorVacations) +
+                            "\n                        "
+                        ),
+                      ]),
+                      _vm._v(" "),
                       _c("div", { staticClass: "doctor-schedule-header" }, [
                         _vm._v(
                           "\n                            Patient Information\n                        "

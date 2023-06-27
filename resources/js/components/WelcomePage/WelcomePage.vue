@@ -60,6 +60,15 @@
                 <div class="column">
                     <div class="schedule-box" v-if="isLogin">
                         <div class="doctor-schedule">
+
+                             <div class="doctor-schedule-header">
+                                Doctor Vacation Schedule
+                            </div>
+
+                            <div class="doctor-vacation">
+                                {{ this.doctorVacations }}
+                            </div>
+
                             <div class="doctor-schedule-header">
                                 Patient Information
                             </div>
@@ -456,6 +465,7 @@ export default {
 
             appointment_date: null,
             vacations: [],
+            doctorVacations: [],
             max: 0,
 
            
@@ -514,7 +524,7 @@ export default {
                     const d = new Date(element.vacation_date)
                     this.vacations.push(d)
                 });
-                console.log(this.vacations);
+                //console.log(this.vacations);
                 //tiwasonun and ma deact ang date..
             })
         },
@@ -536,8 +546,6 @@ export default {
             }).catch(err=>{
                 this.btnClass['is-loading'] = false;
                 this.errors = err.response.data.errors;
-
-              
             })
         },
 
@@ -669,11 +677,21 @@ export default {
             axios.get('/load-max-no').then(res=>{
                 this.max = res.data.max
             })
+        },
+
+        loadDoctorVacations(){
+            axios.get(`/load-doctor-vacations`).then(res=>{
+                //this.vacations = res.data
+                this.doctorVacations = res.data;
+            })
         }
+
+       
     },
 
     mounted(){
         //this.appointment_date = new Date();
+        this.loadDoctorVacations()
         this.loadVacations()
         this.loadMaxPatient();
     }
@@ -776,6 +794,10 @@ export default {
         background: url(/img/drtilao.jpg) no-repeat;
         background-position: center;
         background-size: cover;
+    }
+
+    .doctor-vacation{
+
     }
 
 
