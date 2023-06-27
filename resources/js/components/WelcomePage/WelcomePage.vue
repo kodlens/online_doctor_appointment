@@ -418,7 +418,7 @@
                         </div>
                     </div>
                    
-                </div> ``
+                </div>
             </div>
          </div> -->
 
@@ -790,9 +790,6 @@ export default {
     }
 
     
-
-
-
 
     .profile-picture-container{
         position: absolute;
