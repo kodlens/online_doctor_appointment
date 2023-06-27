@@ -4,25 +4,27 @@
         <div class="section">
 
             <div class="w-hero">
-                <div class="columns">
+                <div class="columns mb-2">
                     <div class="column">
                         <div class="banner-title">
                             DR. TILAO's APPOINTMENT SYSTEM
                         </div>
                     </div>
                     <div class="column">
+                        <div class="profile-picture"></div>
+                        <!-- <div class="profile-picture-container">
+                            
+                        </div> -->
 
-                        <div class="profile-container">
+                        <!-- <div class="profile-container">
                             <div class="svg-bg-container">
                                 <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" class="svg-bg">
                                     <path fill="#0F62FE" d="M24.1,-49C30.1,-38.3,32.9,-29.5,44,-21.6C55.2,-13.7,74.7,-6.9,80.1,3.1C85.5,13.1,76.8,26.2,67.5,37.3C58.2,48.4,48.4,57.6,37,59.4C25.7,61.2,12.8,55.7,1.3,53.3C-10.1,51,-20.3,51.8,-30.9,49.6C-41.5,47.3,-52.5,42,-57.5,33.2C-62.5,24.5,-61.4,12.2,-64.3,-1.7C-67.3,-15.6,-74.3,-31.3,-68.3,-38.4C-62.4,-45.4,-43.4,-43.9,-29.9,-50.2C-16.3,-56.5,-8.2,-70.6,0.5,-71.4C9.1,-72.2,18.2,-59.7,24.1,-49Z" transform="translate(100 100)" />
                                 </svg>
                             </div>
                             
-                            <div class="profile-picture-container">
-                                <div class="profile-picture"></div>
-                            </div>
-                        </div>
+                            
+                        </div> -->
                     </div>
                 </div>
 
@@ -799,8 +801,8 @@ export default {
         /* border: 1px solid yellow; */
     }
     .profile-picture{
-        background-image: url('/img/logo.png');
-        width: 300px;
+        background-image: url('/img/logo.jpg');
+        width: 500px;
         height: 300px;
         background-size: cover; /* Adjust the background size as needed */
         background-position: center; /* Adjust the background position as needed */
@@ -827,6 +829,7 @@ export default {
         .profile-picture{
             width: 200px;
             height: 200px;
+            margin: auto;
         }
         
     }
@@ -837,6 +840,12 @@ export default {
             font-weight: bolder; 
             font-size: 2em;
             text-align: center;
+        }
+
+        .profile-picture{
+            width: 400px;
+            height: 200px;
+            margin: auto;
         }
     }
 
