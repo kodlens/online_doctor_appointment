@@ -61,8 +61,23 @@
                     <div class="schedule-box" v-if="isLogin">
                         <div class="doctor-schedule">
                             <div class="doctor-schedule-header">
+                                Doctor Vacation Schedule
+                            </div>
+
+                            <div class="doctor-vacation-schedule content">
+                                <ul>
+                                    <li v-for="(ii, iix) in doctorVacations" :key="iix">
+                                        {{ new Date(ii.vacation_date).toDateString() }}
+                                    </li>
+                                </ul>
+                               
+                            </div>
+
+
+                            <div class="doctor-schedule-header">
                                 Patient Information
                             </div>
+                            
                             <b-field
                                 :type="this.errors.patients ? 'is-danger':''"
                                 :message="this.errors.patients ? this.errors.patients[0] : ''"></b-field>
@@ -676,6 +691,7 @@ export default {
     mounted(){
         //this.appointment_date = new Date();
         this.loadVacations()
+        this.loadDoctorVacations()
         this.loadMaxPatient();
     }
 
@@ -809,6 +825,10 @@ export default {
         background-repeat: no-repeat; /* Adjust the background repeat as needed */
     }
 
+
+    .doctor-vacation-schedule{
+
+    }
 
 
     /* Styles for screens smaller than 600px */
