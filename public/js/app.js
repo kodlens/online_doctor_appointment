@@ -7583,6 +7583,116 @@ module.exports = {
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/ActivateAccount.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/ActivateAccount.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  data: function data() {
+    return {
+      fields: {
+        otp: ''
+      },
+      errors: {}
+    };
+  },
+  methods: {
+    askForOTP: function askForOTP() {
+      var _this = this;
+
+      axios.post('/ask-for-otp').then(function (res) {
+        if (res.data.status === 'otp') {
+          _this.$buefy.dialog.alert({
+            title: 'OTP SENT.',
+            type: 'is-success',
+            message: 'OTP successfully sent to your mobile number.',
+            confirmText: 'OK',
+            onConfirm: function onConfirm() {
+              _this.errors = {};
+              _this.fields.otp = '';
+            }
+          });
+        }
+      })["catch"](function (err) {});
+    },
+    activateAccount: function activateAccount() {
+      var _this2 = this;
+
+      axios.post('/verify-otp-activate-account', this.fields).then(function (res) {
+        if (res.data.status === 'activated') {
+          _this2.$buefy.dialog.alert({
+            title: 'ACTIVATED.',
+            type: 'is-success',
+            message: 'Account successfully activated.',
+            confirmText: 'OK',
+            onConfirm: function onConfirm() {
+              window.location = '/';
+            }
+          });
+        }
+      })["catch"](function (err) {
+        console.log(err.response);
+
+        if (err.response.status === 422) {
+          if (err.response.data.status === 'denied') {
+            _this2.$buefy.dialog.alert({
+              title: 'Invalid OTP.',
+              type: 'is-danger',
+              message: 'OTP denied.',
+              confirmText: 'OK'
+            });
+          }
+        }
+      });
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Administrator/Appointment/Appointment.vue?vue&type=script&lang=js&":
 /*!********************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Administrator/Appointment/Appointment.vue?vue&type=script&lang=js& ***!
@@ -34728,6 +34838,45 @@ module.exports = function (list, options) {
 
 /***/ }),
 
+/***/ "./resources/js/components/ActivateAccount.vue":
+/*!*****************************************************!*\
+  !*** ./resources/js/components/ActivateAccount.vue ***!
+  \*****************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _ActivateAccount_vue_vue_type_template_id_66e6051f___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ActivateAccount.vue?vue&type=template&id=66e6051f& */ "./resources/js/components/ActivateAccount.vue?vue&type=template&id=66e6051f&");
+/* harmony import */ var _ActivateAccount_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ActivateAccount.vue?vue&type=script&lang=js& */ "./resources/js/components/ActivateAccount.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _ActivateAccount_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _ActivateAccount_vue_vue_type_template_id_66e6051f___WEBPACK_IMPORTED_MODULE_0__.render,
+  _ActivateAccount_vue_vue_type_template_id_66e6051f___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/ActivateAccount.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/components/Administrator/Appointment/Appointment.vue":
 /*!***************************************************************************!*\
   !*** ./resources/js/components/Administrator/Appointment/Appointment.vue ***!
@@ -35940,6 +36089,22 @@ component.options.__file = "resources/js/components/WelcomePage/WelcomePage.vue"
 
 /***/ }),
 
+/***/ "./resources/js/components/ActivateAccount.vue?vue&type=script&lang=js&":
+/*!******************************************************************************!*\
+  !*** ./resources/js/components/ActivateAccount.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ActivateAccount_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./ActivateAccount.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/ActivateAccount.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ActivateAccount_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
 /***/ "./resources/js/components/Administrator/Appointment/Appointment.vue?vue&type=script&lang=js&":
 /*!****************************************************************************************************!*\
   !*** ./resources/js/components/Administrator/Appointment/Appointment.vue?vue&type=script&lang=js& ***!
@@ -36693,6 +36858,23 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/ActivateAccount.vue?vue&type=template&id=66e6051f&":
+/*!************************************************************************************!*\
+  !*** ./resources/js/components/ActivateAccount.vue?vue&type=template&id=66e6051f& ***!
+  \************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ActivateAccount_vue_vue_type_template_id_66e6051f___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ActivateAccount_vue_vue_type_template_id_66e6051f___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ActivateAccount_vue_vue_type_template_id_66e6051f___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./ActivateAccount.vue?vue&type=template&id=66e6051f& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/ActivateAccount.vue?vue&type=template&id=66e6051f&");
+
+
+/***/ }),
+
 /***/ "./resources/js/components/Administrator/Appointment/Appointment.vue?vue&type=template&id=e131ac5c&scoped=true&":
 /*!**********************************************************************************************************************!*\
   !*** ./resources/js/components/Administrator/Appointment/Appointment.vue?vue&type=template&id=e131ac5c&scoped=true& ***!
@@ -37199,6 +37381,123 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_WelcomePage_vue_vue_type_template_id_0e3912d8_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
 /* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_WelcomePage_vue_vue_type_template_id_0e3912d8_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./WelcomePage.vue?vue&type=template&id=0e3912d8&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/WelcomePage/WelcomePage.vue?vue&type=template&id=0e3912d8&scoped=true&");
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/ActivateAccount.vue?vue&type=template&id=66e6051f&":
+/*!***************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/ActivateAccount.vue?vue&type=template&id=66e6051f& ***!
+  \***************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function () {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c("div", { staticClass: "section" }, [
+      _c("div", { staticClass: "columns is-centered" }, [
+        _c("div", { staticClass: "column is-4" }, [
+          _c("div", { staticClass: "box" }, [
+            _vm._m(0),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "box-body" },
+              [
+                _vm._m(1),
+                _vm._v(" "),
+                _c(
+                  "b-field",
+                  {
+                    attrs: {
+                      label: "OTP",
+                      type: this.errors.otp ? "is-danger" : "",
+                      message: this.errors.otp ? this.errors.otp[0] : "",
+                    },
+                  },
+                  [
+                    _c("b-input", {
+                      attrs: {
+                        type: "text",
+                        placeholder: "OTP",
+                        icon: "cellphone",
+                      },
+                      model: {
+                        value: _vm.fields.otp,
+                        callback: function ($$v) {
+                          _vm.$set(_vm.fields, "otp", $$v)
+                        },
+                        expression: "fields.otp",
+                      },
+                    }),
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c("div", { staticClass: "buttons" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "button is-outline",
+                      on: { click: _vm.askForOTP },
+                    },
+                    [_vm._v("ASK FOR OTP")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "button is-primary",
+                      on: { click: _vm.activateAccount },
+                    },
+                    [_vm._v("ACTIVATE")]
+                  ),
+                ]),
+              ],
+              1
+            ),
+          ]),
+        ]),
+      ]),
+    ]),
+  ])
+}
+var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "box-heading" }, [
+      _c("div", { staticClass: "has-text-weight-bold" }, [
+        _vm._v(
+          "\n                            ACTIVATE ACCOUNT\n                        "
+        ),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("p", [
+      _vm._v("To activate account, click "),
+      _c("i", [_vm._v("ASK FOR OTP")]),
+      _vm._v(
+        " button. An OTP will be sent to your mobile no and kindly provide OTP in the field."
+      ),
+    ])
+  },
+]
+render._withStripped = true
+
 
 
 /***/ }),
@@ -70022,6 +70321,7 @@ Vue.compile = compileToFunctions;
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var map = {
+	"./components/ActivateAccount.vue": "./resources/js/components/ActivateAccount.vue",
 	"./components/Administrator/Appointment/Appointment.vue": "./resources/js/components/Administrator/Appointment/Appointment.vue",
 	"./components/Administrator/Appointment/AppointmentCreate.vue": "./resources/js/components/Administrator/Appointment/AppointmentCreate.vue",
 	"./components/Administrator/ArchiveAppointment/ArchiveAppointment.vue": "./resources/js/components/Administrator/ArchiveAppointment/ArchiveAppointment.vue",

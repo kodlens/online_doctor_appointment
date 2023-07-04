@@ -26,7 +26,15 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/activate-account', [App\Http\Controllers\ActivateAccountController::class, 'index']);
+
+Route::middleware(['auth'])->group(function(){
+
+    Route::get('/activate-account', [App\Http\Controllers\ActivateAccountController::class, 'index']);
+    Route::post('/ask-for-otp', [App\Http\Controllers\ActivateAccountController::class, 'askForOTP']);
+    Route::post('/verify-otp-activate-account', [App\Http\Controllers\ActivateAccountController::class, 'verifyOTPActivation']);
+
+});
+
 
 Auth::routes([
     'login' => false,

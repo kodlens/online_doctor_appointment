@@ -1,5 +1,5 @@
 @extends('layouts.activate')
 
 @section('content')
-    Activate Account
+    <activate-account></activate-account>
 @endsection
