@@ -12185,7 +12185,7 @@ __webpack_require__.r(__webpack_exports__);
         if (res.data.status === 'saved') {
           _this4.$buefy.dialog.alert({
             title: 'Saved!',
-            message: 'Account successfully register. You can login using the account.',
+            message: 'Account successfully register. To activate your account, please login and follow the instruction.',
             type: 'is-success'
           });
         }

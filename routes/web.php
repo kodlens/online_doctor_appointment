@@ -17,8 +17,16 @@ use Illuminate\Support\Facades\Session;
 */
 
 Route::get('/', function () {
+    if(Auth::check()){
+        if(Auth::user()->is_activate < 1){
+            return redirect('/activate-account');
+        }
+    }
+    
     return view('welcome');
 });
+
+Route::get('/activate-account', [App\Http\Controllers\ActivateAccountController::class, 'index']);
 
 Auth::routes([
     'login' => false,
@@ -57,7 +65,7 @@ Route::get('/load-doctor-vacations', [App\Http\Controllers\OpenDataController::c
 Route::get('/load-max-no', [App\Http\Controllers\OpenDataController::class, 'loadMaxNo']);
 
 
-Route::middleware(['auth'])->group(function(){
+Route::middleware(['auth', 'activated'])->group(function(){
 
     Route::resource('/my-appointment', App\Http\Controllers\User\MyAppointmentController::class);
     Route::get('/my-appointment-reschedule/{id}', [App\Http\Controllers\User\MyAppointmentController::class, 'rescheduleView']);

@@ -35,6 +35,8 @@ class CreateUsersTable extends Migration
             $table->string('otp')->nullable();
             $table->dateTime('otp_expiry')->nullable();
             
+            $table->tinyInteger('is_activate')->default(0);
+
             $table->rememberToken();
             $table->timestamps();
         });

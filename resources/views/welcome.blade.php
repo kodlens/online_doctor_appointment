@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-
+    
     @auth
         <welcome-page :is-login="true"></welcome-page>
     @else

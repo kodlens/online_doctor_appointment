@@ -4,9 +4,10 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+
 use Auth;
 
-class DoctorMiddleware
+class ActivateAccountMiddleware
 {
     /**
      * Handle an incoming request.
@@ -17,13 +18,16 @@ class DoctorMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        $role = Auth::user()->role;
-        if($role === 'DOCTOR'){
+
+        $is_activate = Auth::user()->is_activate;
+
+        if($is_activate > 0){
             return $next($request);
         }
 
-        abort(403);
-    }
+        return redirect('/activate-account');
 
-    
+
+        //return $next($request);
+    }
 }

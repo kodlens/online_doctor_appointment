@@ -209,7 +209,7 @@ export default {
                 if(res.data.status === 'saved'){
                     this.$buefy.dialog.alert({
                         title: 'Saved!',
-                        message: 'Account successfully register. You can login using the account.',
+                        message: 'Account successfully register. To activate your account, please login and follow the instruction.',
                         type: 'is-success'
                     })
                 }
