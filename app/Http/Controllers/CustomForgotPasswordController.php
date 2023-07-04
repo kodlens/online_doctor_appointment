@@ -83,6 +83,7 @@ class CustomForgotPasswordController extends Controller
         //return $req;
 
         $req->validate([
+            'otp' => ['required'],
             'password' => ['required', 'confirmed']
         ]);
 
