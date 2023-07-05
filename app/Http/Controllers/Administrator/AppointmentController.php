@@ -214,7 +214,7 @@ class AppointmentController extends Controller
             $timeStart = date('h:i A', strtotime($schedule->time_from));
             $timeEnd = date('h:i A', strtotime($schedule->time_end));
 
-            $msg = 'Appointment confirmation: '. $nameTitle . $user->lname . ', ' . $user->fname . ', your appointment with Dr. Tilao on '. date('M-d-Y', strtotime($data->appointment_date)) .', ' . $timeStart. ') has been confirmed/approved.';
+            $msg = 'Appointment confirmation: '. $nameTitle . $user->lname . ', ' . $user->fname . ', your appointment with Dr. Tilao on '. date('M-d-Y', strtotime($data->appointment_date)) .', ' . $timeStart. ') has been approved.';
             
             try{
                 Http::withHeaders([
