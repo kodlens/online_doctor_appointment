@@ -285,7 +285,7 @@
                 </div>
             </div>
             <div class="columns is-centered">
-                <div class="column">
+                <div class="column is-4">
 
                     <div class="card">
                         <div class="card-image">
@@ -304,7 +304,7 @@
                     </div>
                 </div>
 
-                <div class="column">
+                <div class="column is-4">
                     <div class="card">
                         <div class="card-image">
                             <figure class="image is-3by2">
@@ -389,8 +389,8 @@
 
 
         <div class="section">
-            <div class="columns">
-                <div class="column">
+            <div class="columns is-centered">
+                <div class="column is-8">
                     
                     <div class="columns">
                         <div class="column has-text-centered">

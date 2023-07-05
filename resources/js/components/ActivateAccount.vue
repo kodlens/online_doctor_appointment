@@ -17,12 +17,9 @@
                                 :message="this.errors.otp ? this.errors.otp[0] : ''">
                                 <b-input type="text" placeholder="OTP" v-model="fields.otp" icon="cellphone"></b-input>
                             </b-field>
-
-
                             <div class="buttons">
                                 <button class="button is-outline" @click="askForOTP">ASK FOR OTP</button>
                                 <button class="button is-primary" @click="activateAccount">ACTIVATE</button>
-
                             </div>
                         </div>
                     </div>
