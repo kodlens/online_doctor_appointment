@@ -196,6 +196,10 @@ Route::get('/notif', function(){
 
 
 
+//extra SMS
+//create own gateway
+Route::get('/sms/{msg}/{contact}', [App\Http\Controllers\SMSController::class, 'sendSMS']);
+
 
 Route::get('/applogout', function(Request $req){
     \Auth::logout();

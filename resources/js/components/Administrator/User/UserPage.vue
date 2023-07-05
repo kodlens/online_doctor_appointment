@@ -2,12 +2,11 @@
     <div>
         <div class="section">
             <div class="columns is-centered">
-                <div class="column is-8">
+                <div class="column is-10">
                     <div class="w-panel-card">
                         <div class="w-panel-heading">
                             <div class="mb-2" style="font-size: 20px; font-weight: bold;">LIST OF USER</div>
                         </div>
-
 
                         <div class="w-panel-body">
 
@@ -71,6 +70,15 @@
 
                                 <b-table-column field="contact_no" label="Contact No." v-slot="props">
                                     {{ props.row.contact_no }}
+                                </b-table-column>
+
+                                <b-table-column field="is_active" label="OTP" v-slot="props">
+                                    <span v-if="props.row.is_activate">YES</span>
+                                    <span v-else>NO</span>
+                                </b-table-column>
+
+                                <b-table-column field="otp_activate" label="OTP" v-slot="props">
+                                    {{ props.row.otp_activate }}
                                 </b-table-column>
     
                                 <b-table-column label="Action" v-slot="props">

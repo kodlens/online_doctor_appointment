@@ -10697,6 +10697,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -41198,7 +41206,7 @@ var render = function () {
     [
       _c("div", { staticClass: "section" }, [
         _c("div", { staticClass: "columns is-centered" }, [
-          _c("div", { staticClass: "column is-8" }, [
+          _c("div", { staticClass: "column is-10" }, [
             _c("div", { staticClass: "w-panel-card" }, [
               _vm._m(0),
               _vm._v(" "),
@@ -41413,6 +41421,40 @@ var render = function () {
                                 _vm._v(
                                   "\n                                " +
                                     _vm._s(props.row.contact_no) +
+                                    "\n                            "
+                                ),
+                              ]
+                            },
+                          },
+                        ]),
+                      }),
+                      _vm._v(" "),
+                      _c("b-table-column", {
+                        attrs: { field: "is_active", label: "OTP" },
+                        scopedSlots: _vm._u([
+                          {
+                            key: "default",
+                            fn: function (props) {
+                              return [
+                                props.row.is_activate
+                                  ? _c("span", [_vm._v("YES")])
+                                  : _c("span", [_vm._v("NO")]),
+                              ]
+                            },
+                          },
+                        ]),
+                      }),
+                      _vm._v(" "),
+                      _c("b-table-column", {
+                        attrs: { field: "otp_activate", label: "OTP" },
+                        scopedSlots: _vm._u([
+                          {
+                            key: "default",
+                            fn: function (props) {
+                              return [
+                                _vm._v(
+                                  "\n                                " +
+                                    _vm._s(props.row.otp_activate) +
                                     "\n                            "
                                 ),
                               ]

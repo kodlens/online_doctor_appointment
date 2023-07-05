@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Http;
 
 use Auth;
 use App\Models\User;
+use App\Models\AppSetting;
 
 class ActivateAccountController extends Controller
 {
@@ -29,15 +30,26 @@ class ActivateAccountController extends Controller
         $data = User::find($userId);
         $data->otp_activate = $otp;
         
+        $is_sms_enable = AppSetting::where('dword', 'ENABLE_SMS')->first(); //get ip sms setting
+        //$ip_sms = AppSetting::where('dword', 'IP_SMS_GATEWAY')->first(); //get ip sms setting
+        $proxy = AppSetting::where('dword', 'PROXY_SMS')->first(); //get proxy gateway setting
 
-        if(env('ENABLE_SMS') == 1){
-    
+        
+
+        if($is_sms_enable->value > 0){
+            //return $data->contact_no;
             $msg = 'Your OTP for activation is: '. $otp .'. Please enter this code to activate the account. Thank you!';
             
+            // try{
+            //     Http::withHeaders([
+            //         'Content-Type' => 'text/plain'
+            //     ])->post('http://'. env('IP_SMS_GATEWAY') .'/services/api/messaging?Message='.$msg.'&To='.$data->contact_no.'&Slot=1', []);
+            // }catch(\Exception $e){} //just hide the error
+
             try{
                 Http::withHeaders([
                     'Content-Type' => 'text/plain'
-                ])->post('http://'. env('IP_SMS_GATEWAY') .'/services/api/messaging?Message='.$msg.'&To='.$data->contact_no.'&Slot=1', []);
+                ])->get($proxy->value . '/'.$msg.'/'. $data->contact_no);
             }catch(\Exception $e){} //just hide the error
         }
 

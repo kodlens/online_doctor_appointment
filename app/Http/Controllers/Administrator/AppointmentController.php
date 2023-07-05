@@ -8,6 +8,7 @@ use App\Models\Appointment;
 use App\Models\Schedule;
 use App\Models\User;
 use Illuminate\Support\Facades\Http;
+use App\Models\AppSetting;
 
 
 class AppointmentController extends Controller
@@ -148,23 +149,32 @@ class AppointmentController extends Controller
 
         //return $newSchedule;
 
+        $is_sms_enable = AppSetting::where('dword', 'ENABLE_SMS')->first(); //get ip sms setting
+        $proxy = AppSetting::where('dword', 'PROXY_SMS')->first(); //get proxy gateway setting
 
-        if(env('ENABLE_SMS') == 1){
+        if($is_sms_enable->value > 0){
             $timeStart = date('h:i A', strtotime($newSchedule->schedule->time_from));
             $timeEnd = date('h:i A', strtotime($newSchedule->schedule->time_end));
 
             $msg = 'Reschedule Notice: '. ' Your appointment with Dr. Tilao has been moved to '. date('M-d-Y', strtotime($appdate)) .', ' . $timeStart. '.';
             
+
             try{
                 Http::withHeaders([
                     'Content-Type' => 'text/plain'
-                ])->post('http://'. env('IP_SMS_GATEWAY') .'/services/api/messaging?Message='.$msg.'&To='.$user->contact_no.'&Slot=1', []);
-            }catch(\Exception $e){
-                return response()->json([
-                    'error' => $e->getMessage()
-                ], 422);
+                ])->get($proxy->value . '/'.$msg.'/'. $user->contact_no);
+            }catch(\Exception $e){} //just hide the error
 
-            } //just hide the error
+            // try{
+            //     Http::withHeaders([
+            //         'Content-Type' => 'text/plain'
+            //     ])->post('http://'. env('IP_SMS_GATEWAY') .'/services/api/messaging?Message='.$msg.'&To='.$user->contact_no.'&Slot=1', []);
+            // }catch(\Exception $e){
+            //     return response()->json([
+            //         'error' => $e->getMessage()
+            //     ], 422);
+
+            // } //just hide the error
         }
 
         return response()->json([
@@ -195,7 +205,12 @@ class AppointmentController extends Controller
 
         $nameTitle = $user->sex == 'MALE' ? 'Mr. ' : 'Ms./Mrs. ';
 
-        if(env('ENABLE_SMS') == 1){
+
+        $is_sms_enable = AppSetting::where('dword', 'ENABLE_SMS')->first(); //get ip sms setting
+        $proxy = AppSetting::where('dword', 'PROXY_SMS')->first(); //get proxy gateway setting
+
+
+        if($is_sms_enable->value > 0){
             $timeStart = date('h:i A', strtotime($schedule->time_from));
             $timeEnd = date('h:i A', strtotime($schedule->time_end));
 
@@ -204,8 +219,14 @@ class AppointmentController extends Controller
             try{
                 Http::withHeaders([
                     'Content-Type' => 'text/plain'
-                ])->post('http://'. env('IP_SMS_GATEWAY') .'/services/api/messaging?Message='.$msg.'&To='.$user->contact_no.'&Slot=1', []);
+                ])->get($proxy->value . '/'.$msg.'/'. $user->contact_no);
             }catch(\Exception $e){} //just hide the error
+
+            // try{
+            //     Http::withHeaders([
+            //         'Content-Type' => 'text/plain'
+            //     ])->post('http://'. env('IP_SMS_GATEWAY') .'/services/api/messaging?Message='.$msg.'&To='.$user->contact_no.'&Slot=1', []);
+            // }catch(\Exception $e){} //just hide the error
         }
 
         return response()->json([
@@ -228,15 +249,20 @@ class AppointmentController extends Controller
 
 
         */
-        if(env('ENABLE_SMS') == 1){
+
+        $is_sms_enable = AppSetting::where('dword', 'ENABLE_SMS')->first(); //get ip sms setting
+        $proxy = AppSetting::where('dword', 'PROXY_SMS')->first(); //get proxy gateway setting
+
+        if($is_sms_enable->value > 0){
             $timeStart = date('h:i A', strtotime($schedule->time_from));
             $timeEnd = date('h:i A', strtotime($schedule->time_end));
 
             $msg = 'Cancellation notice: '. $nameTitle . $user->lname . ', ' . $user->fname . ', your appointment with Dr. Tilao on '. date('M-d-Y', strtotime($data->appointment_date)) .', ' . $timeStart. ') has been cancelled.';
+            
             try{
                 Http::withHeaders([
                     'Content-Type' => 'text/plain'
-                ])->post('http://'. env('IP_SMS_GATEWAY') .'/services/api/messaging?Message='.$msg.'&To='.$user->contact_no.'&Slot=1', []);
+                ])->get($proxy->value . '/'.$msg.'/'. $user->contact_no);
             }catch(\Exception $e){} //just hide the error
         }
 

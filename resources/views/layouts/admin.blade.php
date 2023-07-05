@@ -10,15 +10,15 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="/js/app.js" defer></script>
 
     <!-- Fonts -->
 {{--    <link rel="dns-prefetch" href="//fonts.gstatic.com">--}}
 {{--    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">--}}
 
     <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/admin.css') }}" rel="stylesheet">
+    <link href="/css/app.css" rel="stylesheet">
+    <link href="/css/admin.css" rel="stylesheet">
 
 
     {{-- <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -27,16 +27,7 @@
 
     <style>
 
-        @font-face {
-            
-            font-family: 'Signika', sans-serif;
-            src: url('/fonts/vendor/Signika/Signika-VariableFont_wght.ttf') format('truetype'); /* Font file path and format */
-            /* You can add additional src declarations for different font file formats if needed */
-        }
-
-        html body{
-            font-family: 'Signika', sans-serif;
-        }
+        
 
     </style>
 
