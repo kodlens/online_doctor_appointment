@@ -8663,9 +8663,9 @@ __webpack_require__.r(__webpack_exports__);
       var _this2 = this;
 
       this.$buefy.dialog.confirm({
-        title: 'Restore?!',
+        title: 'Restore?',
         type: 'is-info',
-        message: 'Are you sure you want to restore this?',
+        message: 'Are you sure you want to restore the data?',
         confirmText: 'Yes',
         onConfirm: function onConfirm() {
           return _this2.approveRestore(id);
@@ -8995,7 +8995,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-//
 //
 //
 //
@@ -39594,7 +39593,7 @@ var render = function () {
                       }),
                       _vm._v(" "),
                       _c("b-table-column", {
-                        attrs: { field: "max_no", label: "NAME" },
+                        attrs: { field: "max_no", label: "Max No." },
                         scopedSlots: _vm._u([
                           {
                             key: "default",

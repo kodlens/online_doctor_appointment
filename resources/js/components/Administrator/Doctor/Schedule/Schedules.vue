@@ -79,7 +79,7 @@
                                     {{ props.row.time_from | formatTime }} - {{ props.row.time_end | formatTime }}
                                 </b-table-column>
     
-                                <b-table-column field="max_no" label="NAME" v-slot="props">
+                                <b-table-column field="max_no" label="Max No." v-slot="props">
                                     {{ props.row.max_no }}
                                 </b-table-column>
     
@@ -92,7 +92,6 @@
                                     <span v-if="props.row.sat">S</span>
                                     <span v-if="props.row.sun">SU</span>
                                 </b-table-column>
-    
     
                                 <b-table-column label="ACTION" v-slot="props">
                                     <div class="is-flex">

@@ -281,9 +281,9 @@ export default{
         //alert box ask for approve
         restoreArchive(id) {
             this.$buefy.dialog.confirm({
-                title: 'Restore?!',
+                title: 'Restore?',
                 type: 'is-info',
-                message: 'Are you sure you want to restore this?',
+                message: 'Are you sure you want to restore the data?',
                 confirmText: 'Yes',
                 onConfirm: () => this.approveRestore(id)
             });
