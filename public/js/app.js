@@ -7633,13 +7633,19 @@ __webpack_require__.r(__webpack_exports__);
       fields: {
         otp: ''
       },
-      errors: {}
+      errors: {},
+      btnOTP: {
+        'button': true,
+        'is-outlined': true,
+        'is-loading': false
+      }
     };
   },
   methods: {
     askForOTP: function askForOTP() {
       var _this = this;
 
+      this.btnOTP['is-loading'] = true;
       axios.post('/ask-for-otp').then(function (res) {
         if (res.data.status === 'otp') {
           _this.$buefy.dialog.alert({
@@ -7653,7 +7659,20 @@ __webpack_require__.r(__webpack_exports__);
             }
           });
         }
-      })["catch"](function (err) {});
+
+        _this.btnOTP['is-loading'] = false;
+      })["catch"](function (err) {
+        _this.btnOTP['is-loading'] = false;
+
+        if (err.response.data.status === 'sms_error') {
+          _this.$buefy.dialog.alert({
+            title: 'ERROR!',
+            type: 'is-danger',
+            message: 'Error Sending OTP. Please try again.',
+            confirmText: 'OK'
+          });
+        }
+      });
     },
     activateAccount: function activateAccount() {
       var _this2 = this;
@@ -10705,6 +10724,32 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -10969,6 +11014,40 @@ __webpack_require__.r(__webpack_exports__);
         }
       })["catch"](function (err) {
         _this9.errors = err.response.data.errors;
+      });
+    },
+    activateAccount: function activateAccount(userId) {
+      var _this10 = this;
+
+      axios.post('/user-activate-account/' + userId).then(function (res) {
+        if (res.data.status === 'activate') {
+          _this10.$buefy.dialog.alert({
+            title: 'ACTIVATED!',
+            type: 'is-success',
+            message: 'Account successfully activated.',
+            confirmText: 'OK',
+            onConfirm: function onConfirm() {
+              return _this10.loadAsyncData();
+            }
+          });
+        }
+      });
+    },
+    deactivateAccount: function deactivateAccount(userId) {
+      var _this11 = this;
+
+      axios.post('/user-deactivate-account/' + userId).then(function (res) {
+        if (res.data.status === 'deactivate') {
+          _this11.$buefy.dialog.alert({
+            title: 'DEACTIVATED!',
+            type: 'is-warning',
+            message: 'Account deactivated.',
+            confirmText: 'OK',
+            onConfirm: function onConfirm() {
+              return _this11.loadAsyncData();
+            }
+          });
+        }
       });
     }
   },
@@ -37450,10 +37529,7 @@ var render = function () {
                 _c("div", { staticClass: "buttons" }, [
                   _c(
                     "button",
-                    {
-                      staticClass: "button is-outline",
-                      on: { click: _vm.askForOTP },
-                    },
+                    { class: _vm.btnOTP, on: { click: _vm.askForOTP } },
                     [_vm._v("ASK FOR OTP")]
                   ),
                   _vm._v(" "),
@@ -37585,7 +37661,7 @@ var render = function () {
                         {
                           staticClass: "is-pulled-right-desktop",
                           attrs: {
-                            label: "Search Name",
+                            position: "is-right",
                             "label-position": "on-border",
                           },
                         },
@@ -37650,34 +37726,6 @@ var render = function () {
                     ],
                     1
                   ),
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "columns" }, [
-                  _c("div", { staticClass: "column" }, [
-                    _c(
-                      "div",
-                      { staticClass: "buttons" },
-                      [
-                        _c(
-                          "b-button",
-                          {
-                            staticClass: "is-success",
-                            attrs: {
-                              tag: "a",
-                              href: "/appointments/create",
-                              "icon-left": "plus",
-                            },
-                          },
-                          [
-                            _vm._v(
-                              "\n                                        ADD APPOINTMENT\n                                    "
-                            ),
-                          ]
-                        ),
-                      ],
-                      1
-                    ),
-                  ]),
                 ]),
                 _vm._v(" "),
                 _c("hr"),
@@ -37891,7 +37939,7 @@ var render = function () {
                     }),
                     _vm._v(" "),
                     _c("b-table-column", {
-                      attrs: { field: "time", label: "TIME" },
+                      attrs: { field: "time", label: "Time" },
                       scopedSlots: _vm._u([
                         {
                           key: "default",
@@ -41531,23 +41579,96 @@ var render = function () {
                                       "b-tooltip",
                                       {
                                         attrs: {
-                                          label: "Reset Password",
+                                          label: "Options",
                                           type: "is-info",
                                         },
                                       },
                                       [
-                                        _c("b-button", {
-                                          staticClass:
-                                            "button is-small mr-1 is-outlined",
-                                          attrs: { "icon-right": "lock" },
-                                          on: {
-                                            click: function ($event) {
-                                              return _vm.openModalResetPassword(
-                                                props.row.user_id
-                                              )
-                                            },
+                                        _c(
+                                          "b-dropdown",
+                                          {
+                                            attrs: { "aria-role": "list" },
+                                            scopedSlots: _vm._u(
+                                              [
+                                                {
+                                                  key: "trigger",
+                                                  fn: function (ref) {
+                                                    var active = ref.active
+                                                    return [
+                                                      _c("b-button", {
+                                                        staticClass:
+                                                          "is-outliend is-small",
+                                                        attrs: {
+                                                          label: "",
+                                                          type: "is-primary",
+                                                          "icon-right": active
+                                                            ? "menu-up"
+                                                            : "menu-down",
+                                                        },
+                                                      }),
+                                                    ]
+                                                  },
+                                                },
+                                              ],
+                                              null,
+                                              true
+                                            ),
                                           },
-                                        }),
+                                          [
+                                            _vm._v(" "),
+                                            _c(
+                                              "b-dropdown-item",
+                                              {
+                                                attrs: {
+                                                  "aria-role": "listitem",
+                                                },
+                                                on: {
+                                                  click: function ($event) {
+                                                    return _vm.openModalResetPassword(
+                                                      props.row.user_id
+                                                    )
+                                                  },
+                                                },
+                                              },
+                                              [_vm._v("Reset Password")]
+                                            ),
+                                            _vm._v(" "),
+                                            _c(
+                                              "b-dropdown-item",
+                                              {
+                                                attrs: {
+                                                  "aria-role": "listitem",
+                                                },
+                                                on: {
+                                                  click: function ($event) {
+                                                    return _vm.activateAccount(
+                                                      props.row.user_id
+                                                    )
+                                                  },
+                                                },
+                                              },
+                                              [_vm._v("Activate")]
+                                            ),
+                                            _vm._v(" "),
+                                            _c(
+                                              "b-dropdown-item",
+                                              {
+                                                attrs: {
+                                                  "aria-role": "listitem",
+                                                },
+                                                on: {
+                                                  click: function ($event) {
+                                                    return _vm.deactivateAccount(
+                                                      props.row.user_id
+                                                    )
+                                                  },
+                                                },
+                                              },
+                                              [_vm._v("Deactivate")]
+                                            ),
+                                          ],
+                                          1
+                                        ),
                                       ],
                                       1
                                     ),

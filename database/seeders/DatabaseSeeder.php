@@ -19,7 +19,8 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             ScheduleSeeder::class,
             AppointmentSeeder::class,
-            MaxPatientSeeder::class
+            MaxPatientSeeder::class,
+            AppSettingSeeder::class
         ]);
     }
 }

@@ -89,10 +89,36 @@
                                         <b-tooltip label="Delete" type="is-danger">
                                             <b-button class="button is-small is-danger mr-1 is-outlined" icon-right="delete" @click="confirmDelete(props.row.user_id)"></b-button>
                                         </b-tooltip>
-                                        <b-tooltip label="Reset Password" type="is-info">
-                                            <b-button class="button is-small mr-1 is-outlined" icon-right="lock" @click="openModalResetPassword(props.row.user_id)"></b-button>
+                                        
+                                        <b-tooltip label="Options" type="is-info">
+                                            <b-dropdown aria-role="list">
+                                                <template #trigger="{ active }">
+                                                    <b-button
+                                                        label=""
+                                                        type="is-primary"
+                                                        class="is-outliend is-small"
+                                                        :icon-right="active ? 'menu-up' : 'menu-down'" />
+                                                </template>
+
+                                                <b-dropdown-item @click="openModalResetPassword(props.row.user_id)"
+                                                    aria-role="listitem">Reset Password</b-dropdown-item>
+
+                                                <b-dropdown-item 
+                                                    @click="activateAccount(props.row.user_id)" 
+                                                    aria-role="listitem">Activate</b-dropdown-item>
+                                                <b-dropdown-item 
+                                                    @click="deactivateAccount(props.row.user_id)" 
+                                                    aria-role="listitem">Deactivate</b-dropdown-item>
+                                                
+                                            </b-dropdown>
+                                            
                                         </b-tooltip>
+
+
                                     </div>
+
+
+
                                 </b-table-column>
     
                                 <div class="is-flex mb-4">
@@ -647,6 +673,35 @@ export default{
                 this.errors = err.response.data.errors;
             })
         },
+
+        activateAccount(userId){
+            axios.post('/user-activate-account/' + userId).then(res => {
+                if(res.data.status === 'activate'){
+                    this.$buefy.dialog.alert({
+                        title: 'ACTIVATED!',
+                        type: 'is-success',
+                        message: 'Account successfully activated.',
+                        confirmText: 'OK',
+                        onConfirm: () => this.loadAsyncData()
+                        
+                    });
+                }
+            })
+        },
+
+        deactivateAccount(userId){
+            axios.post('/user-deactivate-account/' + userId).then(res => {
+                if(res.data.status === 'deactivate'){
+                    this.$buefy.dialog.alert({
+                        title: 'DEACTIVATED!',
+                        type: 'is-warning',
+                        message: 'Account deactivated.',
+                        confirmText: 'OK',
+                        onConfirm: () => this.loadAsyncData()
+                    });
+                }
+            })
+        }
 
 
     },

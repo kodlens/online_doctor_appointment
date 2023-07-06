@@ -45,19 +45,29 @@ class ActivateAccountController extends Controller
             //         'Content-Type' => 'text/plain'
             //     ])->post('http://'. env('IP_SMS_GATEWAY') .'/services/api/messaging?Message='.$msg.'&To='.$data->contact_no.'&Slot=1', []);
             // }catch(\Exception $e){} //just hide the error
-
+            $is_sent = 0;
             try{
                 Http::withHeaders([
                     'Content-Type' => 'text/plain'
                 ])->get($proxy->value . '/'.$msg.'/'. $data->contact_no);
-            }catch(\Exception $e){} //just hide the error
+                $is_sent = 1;
+            }catch(\Exception $e){
+                $is_sent = 0;
+            } //just hide the error
         }
 
         $data->save();
 
-        return response()->json([
-            'status' => 'otp'
-        ], 200);
+        if($is_sent > 0){
+            return response()->json([
+                'status' => 'otp'
+            ], 200);
+        }else{
+            return response()->json([
+                'status' => 'sms_error'
+            ], 422);
+        }
+        
     }
 
     public function verifyOTPActivation(Request $req){
@@ -88,26 +98,26 @@ class ActivateAccountController extends Controller
 
 
     public function gw_send_sms($user,$pass,$sms_from,$sms_to,$sms_msg)  {           
-                $query_string = "api.aspx?apiusername=".$user."&apipassword=".$pass;
-                $query_string .= "&senderid=".rawurlencode($sms_from)."&mobileno=".rawurlencode($sms_to);
-                $query_string .= "&message=".rawurlencode(stripslashes($sms_msg)) . "&languagetype=1";        
-                $url = "http://gateway.onewaysms.com.au:10001/".$query_string;       
-                $fd = @implode ('', file ($url));      
-                if ($fd)  {                       
-                    if ($fd > 0) {
-                        Print("MT ID : " . $fd);
-                        $ok = "success";
-                    }        
-                    else {
-                        print("Please refer to API on Error : " . $fd);
-                        $ok = "fail";
-                    }
-                }           
-                else {                       
-                    // no contact with gateway                      
-                    $ok = "fail";       
-                }           
-                return $ok;  
+        $query_string = "api.aspx?apiusername=".$user."&apipassword=".$pass;
+        $query_string .= "&senderid=".rawurlencode($sms_from)."&mobileno=".rawurlencode($sms_to);
+        $query_string .= "&message=".rawurlencode(stripslashes($sms_msg)) . "&languagetype=1";        
+        $url = "http://gateway.onewaysms.com.au:10001/".$query_string;       
+        $fd = @implode ('', file ($url));      
+        if ($fd)  {                       
+            if ($fd > 0) {
+                Print("MT ID : " . $fd);
+                $ok = "success";
+            }        
+            else {
+                print("Please refer to API on Error : " . $fd);
+                $ok = "fail";
+            }
+        }           
+        else {                       
+            // no contact with gateway                      
+            $ok = "fail";       
+        }           
+        return $ok;  
     }  
         //Print("Sending to one way sms " . gw_send_sms("apiusername", "apipassword", "senderid", "61412345678", "test message"));
 

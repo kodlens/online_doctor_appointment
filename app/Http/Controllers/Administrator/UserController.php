@@ -148,4 +148,28 @@ class UserController extends Controller
 
         return $users;
     }
+
+
+    public function activateAccount($id){
+        $user = User::find($id);
+
+        $user->is_activate = 1;
+        $user->save();
+
+        return response()->json([
+            'status' => 'activate'
+        ], 200);
+    }
+
+    public function deactivateAccount($id){
+        $user = User::find($id);
+
+        $user->is_activate = 0;
+        $user->save();
+
+        return response()->json([
+            'status' => 'deactivate'
+        ], 200);
+    }
+
 }

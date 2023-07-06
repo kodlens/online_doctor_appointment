@@ -18,7 +18,7 @@
                                 <b-input type="text" placeholder="OTP" v-model="fields.otp" icon="cellphone"></b-input>
                             </b-field>
                             <div class="buttons">
-                                <button class="button is-outline" @click="askForOTP">ASK FOR OTP</button>
+                                <button :class="btnOTP" @click="askForOTP">ASK FOR OTP</button>
                                 <button class="button is-primary" @click="activateAccount">ACTIVATE</button>
                             </div>
                         </div>
@@ -39,11 +39,19 @@ export default {
                 otp: '',
             },
 
-            errors: {}
+            errors: {},
+
+            btnOTP: {
+                'button': true,
+                'is-outlined': true,
+                'is-loading': false
+            }
         }
     },
     methods: {
         askForOTP(){
+            this.btnOTP['is-loading'] = true;
+
             axios.post('/ask-for-otp').then(res=>{
                 if(res.data.status === 'otp'){
                     this.$buefy.dialog.alert({
@@ -57,15 +65,24 @@ export default {
                         }
                     });
                 }
-                
+                this.btnOTP['is-loading'] = false; 
             }).catch(err=>{
-            
+                this.btnOTP['is-loading'] = false;
+
+                if(err.response.data.status === 'sms_error'){
+                    this.$buefy.dialog.alert({
+                        title: 'ERROR!',
+                        type: 'is-danger',
+                        message: 'Error Sending OTP. Please try again.',
+                        confirmText: 'OK',
+                    });
+                }
+                
             })
         },
 
         activateAccount(){
 
-            
             axios.post('/verify-otp-activate-account', this.fields).then(res=>{
                 if(res.data.status === 'activated'){
                     this.$buefy.dialog.alert({
@@ -78,7 +95,6 @@ export default {
                         }
                     });
                 }
-                
             }).catch(err=>{
                 console.log(err.response)
                 if(err.response.status === 422){

@@ -33,7 +33,8 @@ class AppointmentController extends Controller
         }
 
         $data = Appointment::with(['user', 'schedule', 'patients'])
-            ->where('appointment_date', 'like',  $ndate . '%')
+            //->where('appointment_date', 'like',  $ndate . '%')
+            ->whereBetween('appointment_date', [$req->start, $req->end])
             ->where('is_archived', 0)
             ->orderBy($sort[0], $sort[1])
             ->paginate($req->perpage);

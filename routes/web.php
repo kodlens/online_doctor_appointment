@@ -138,6 +138,9 @@ Route::middleware(['auth', 'admin'])->group(function(){
     Route::resource('/users', App\Http\Controllers\Administrator\UserController::class);
     Route::get('/get-users', [App\Http\Controllers\Administrator\UserController::class, 'getUsers']);
     Route::get('/get-browse-users', [App\Http\Controllers\Administrator\UserController::class, 'getBrowseUser']);
+    Route::post('/user-activate-account/{id}', [App\Http\Controllers\Administrator\UserController::class, 'activateAccount']);
+    Route::post('/user-deactivate-account/{id}', [App\Http\Controllers\Administrator\UserController::class, 'deactivateAccount']);
+    
 
     Route::resource('/max-patients', App\Http\Controllers\Administrator\MaxPatientController::class);
     Route::post('/update-max-patient', [App\Http\Controllers\Administrator\MaxPatientController::class, 'updateMaxPatient']);

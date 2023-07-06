@@ -19,7 +19,7 @@
                                     </b-field>
                                 </div>
                                 <div class="column">
-                                    <b-field label="Search Name" 
+                                    <b-field position="is-right"
                                         label-position="on-border"
                                         class="is-pulled-right-desktop">
                                         <b-input type="text"
@@ -35,7 +35,7 @@
                                 </div>  <!-- col -->
                             </div> <!-- cols -->
 
-                            <div class="columns">
+                            <!-- <div class="columns">
                                 <div class="column">
                                     <div class="buttons">
                                         <b-button tag="a"
@@ -46,7 +46,7 @@
                                     </div>
                                 </div>
                                 
-                            </div>
+                            </div> -->
                             
 
 
@@ -94,7 +94,7 @@
                                     {{ new Date(props.row.appointment_date).toDateString() }}
                                 </b-table-column>
     
-                                <b-table-column field="time" label="TIME" v-slot="props">
+                                <b-table-column field="time" label="Time" v-slot="props">
                                     {{ props.row.schedule.time_from | formatTime }} -  {{ props.row.schedule.time_end | formatTime }}
                                 </b-table-column>
 
