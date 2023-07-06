@@ -13441,6 +13441,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {};
@@ -13468,9 +13469,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _CarouselImages_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CarouselImages.vue */ "./resources/js/components/WelcomePage/CarouselImages.vue");
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-//
-//
-//
 //
 //
 //
@@ -46655,7 +46653,7 @@ var staticRenderFns = [
         _c("div", { staticClass: "column" }, [
           _c("div", { staticClass: "banner-title" }, [
             _vm._v(
-              "\n                        DR. TILAO's APPOINTMENT SYSTEM\n                    "
+              "\n                        Online Doctor's Appointment System\n                    "
             ),
           ]),
         ]),
@@ -46738,7 +46736,7 @@ var staticRenderFns = [
                 display: "inline-block",
               },
             },
-            [_vm._v("\n                    SERVICE OFFERED\n                ")]
+            [_vm._v("\n                    SERVICES OFFERED\n                ")]
           ),
         ]),
       ]),
@@ -46883,7 +46881,7 @@ var staticRenderFns = [
                         "margin-top": "10px",
                       },
                     },
-                    [_vm._v("ACHIEVEMENTS")]
+                    [_vm._v("AFFILIATIONS")]
                   ),
                   _vm._v(" "),
                   _c("ul", [
@@ -46938,7 +46936,7 @@ var staticRenderFns = [
           },
           [
             _vm._v(
-              "\n                            DR. TILAO MILESTONE\n                        "
+              "\n                            DR. TILAO AFFILIATIONS \n                        "
             ),
           ]
         ),

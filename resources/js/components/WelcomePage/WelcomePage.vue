@@ -7,22 +7,19 @@
                 <div class="columns mb-2">
                     <div class="column">
                         <div class="banner-title">
-                            DR. TILAO's APPOINTMENT SYSTEM
+                            Online Doctor's Appointment System
                         </div>
                     </div>
                     <div class="column">
                         <div class="profile-picture"></div>
                         <!-- <div class="profile-picture-container">
-                            
                         </div> -->
-
                         <!-- <div class="profile-container">
                             <div class="svg-bg-container">
                                 <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" class="svg-bg">
                                     <path fill="#0F62FE" d="M24.1,-49C30.1,-38.3,32.9,-29.5,44,-21.6C55.2,-13.7,74.7,-6.9,80.1,3.1C85.5,13.1,76.8,26.2,67.5,37.3C58.2,48.4,48.4,57.6,37,59.4C25.7,61.2,12.8,55.7,1.3,53.3C-10.1,51,-20.3,51.8,-30.9,49.6C-41.5,47.3,-52.5,42,-57.5,33.2C-62.5,24.5,-61.4,12.2,-64.3,-1.7C-67.3,-15.6,-74.3,-31.3,-68.3,-38.4C-62.4,-45.4,-43.4,-43.9,-29.9,-50.2C-16.3,-56.5,-8.2,-70.6,0.5,-71.4C9.1,-72.2,18.2,-59.7,24.1,-49Z" transform="translate(100 100)" />
                                 </svg>
                             </div>
-                            
                             
                         </div> -->
                     </div>
@@ -280,7 +277,7 @@
                 <div class="column has-text-centered">
                     <div style="font-weight: bold; font-size: 1.8em; margin: auto;
                         border-bottom: 2px solid blue; display: inline-block;">
-                        SERVICE OFFERED
+                        SERVICES OFFERED
                     </div>
                 </div>
             </div>
@@ -370,7 +367,7 @@
 
 
                                 <div class="content">
-                                    <div style="font-weight: bold; margin-top: 10px;">ACHIEVEMENTS</div>
+                                    <div style="font-weight: bold; margin-top: 10px;">AFFILIATIONS</div>
                                     <ul>
                                         <li>Dr. Tilao completed his Residency Training Program in Internal Medicine on  August 16, 1994 to August 15, 1998 in Vicente Sotto Memorial Hospital Center, Cebu.</li>
                                         <li>Dr. Tilao has completed VALUES CLARIFICATION WORKSHOP on AUGUST 15-19, 1994 in Vicente Sotto Memorial Hospital Center, Cebu.</li>
@@ -396,7 +393,7 @@
                         <div class="column has-text-centered">
                             <div style="font-weight: bold; font-size: 1.8em; margin: auto;
                                 border-bottom: 2px solid blue; display: inline-block;">
-                                DR. TILAO MILESTONE
+                                DR. TILAO AFFILIATIONS 
                             </div>
                         </div>
                     </div>
