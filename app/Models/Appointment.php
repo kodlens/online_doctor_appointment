@@ -16,9 +16,13 @@ class Appointment extends Model
     protected $fillable = ['user_id', 
         'schedule_id', 
         'appointment_date', 
-        'illness_history', 
         'status',
-        'is_notify'
+        'is_notify',
+        'is_archived',
+        'is_arrived',
+        'arrival_datetime',
+        'is_served',
+        'served_datetime'
     ];
 
 
