@@ -11851,9 +11851,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -11861,7 +11858,10 @@ __webpack_require__.r(__webpack_exports__);
         username: '',
         contact_no: ''
       },
-      isActiveNotif: false,
+      notif: {
+        status: false,
+        msg: ''
+      },
       btnClass: {
         'is-primary': true,
         'is-loading': false,
@@ -11890,14 +11890,11 @@ __webpack_require__.r(__webpack_exports__);
         }
       })["catch"](function (err) {
         _this.btnClass['is-loading'] = false;
+        console.log(err.response.data);
 
         if (err.response.status === 422) {
           //console.log('test');
           _this.errors = err.response.data.errors;
-
-          if (_this.errors.otp) {
-            _this.isActiveNotif = true;
-          }
         }
       });
     }
@@ -43769,14 +43766,7 @@ var render = function () {
                 _c(
                   "b-field",
                   {
-                    attrs: {
-                      label: "Username",
-                      "label-position": "on-border",
-                      type: this.errors.username ? "is-danger" : "",
-                      message: this.errors.username
-                        ? this.errors.username[0]
-                        : "",
-                    },
+                    attrs: { label: "Username", "label-position": "on-border" },
                   },
                   [
                     _c("b-input", {
@@ -43803,10 +43793,6 @@ var render = function () {
                     attrs: {
                       label: "Mobile No.",
                       "label-position": "on-border",
-                      type: this.errors.contact_no ? "is-danger" : "",
-                      message: this.errors.contact_no
-                        ? this.errors.contact_no[0]
-                        : "",
                     },
                   },
                   [
@@ -43828,27 +43814,20 @@ var render = function () {
                   1
                 ),
                 _vm._v(" "),
-                this.errors.otp
+                _vm.errors.otp
                   ? _c(
                       "b-notification",
-                      {
-                        attrs: {
-                          type: "is-danger",
-                          "auto-close": false,
-                          active: _vm.isActiveNotif,
-                        },
-                        on: {
-                          "update:active": function ($event) {
-                            _vm.isActiveNotif = $event
-                          },
-                        },
-                      },
+                      { attrs: { type: "is-danger", "auto-close": false } },
                       [
-                        _vm._v(
-                          "\n                        " +
-                            _vm._s(_vm.errors.otp.unknown[0]) +
-                            "\n                    "
-                        ),
+                        _vm.errors.otp.unknown
+                          ? _c("span", [
+                              _vm._v(_vm._s(_vm.errors.otp.unknown[0])),
+                            ])
+                          : _vm._e(),
+                        _vm._v(" "),
+                        _vm.errors.otp.sms
+                          ? _c("span", [_vm._v(_vm._s(_vm.errors.otp.sms[0]))])
+                          : _vm._e(),
                       ]
                     )
                   : _vm._e(),

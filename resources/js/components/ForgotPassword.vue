@@ -12,24 +12,21 @@
                         <!-- <div class="img-container">
                             <img class="img" src="/img/qrlogo.png" />
                         </div> -->
-                        <b-field label="Username" label-position="on-border"
-                            :type="this.errors.username ? 'is-danger':''"
-                            :message="this.errors.username ? this.errors.username[0] : ''">
+                        <b-field label="Username" label-position="on-border">
                             <b-input type="text" v-model="fields.username" placeholder="Username" required />
                         </b-field>
 
-                        <b-field label="Mobile No." label-position="on-border"
-                            :type="this.errors.contact_no ? 'is-danger':''"
-                            :message="this.errors.contact_no ? this.errors.contact_no[0] : ''"
-                            >
+                        <b-field label="Mobile No." label-position="on-border">
                             <b-input type="text" v-model="fields.contact_no"  placeholder="Mobile No." required/>
                         </b-field>
 
                         <b-notification type="is-danger" 
                             :auto-close="false"
-                            :active.sync="isActiveNotif"
-                            v-if="this.errors.otp">
-                            {{ errors.otp.unknown[0] }}
+                            v-if="errors.otp">
+
+                            <span v-if="errors.otp.unknown">{{ errors.otp.unknown[0] }}</span>
+                            <span v-if="errors.otp.sms">{{ errors.otp.sms[0] }}</span>
+                           
                         </b-notification>
 
                         <div class="buttons">
@@ -53,7 +50,10 @@ export default {
                 contact_no: '',
             },
 
-            isActiveNotif: false,
+            notif: {
+                status: false,
+                msg: ''
+            },
 
             btnClass: {
                 'is-primary': true,
@@ -71,7 +71,8 @@ export default {
             this.btnClass['is-loading'] = true;
 
             axios.post('/request-otp', this.fields).then(res=>{
-            this.btnClass['is-loading'] = false;
+                this.btnClass['is-loading'] = false;
+
                 if(res.data.status === 'otp_success'){
                     this.$buefy.dialog.alert({
                         title: 'Sent!',
@@ -84,13 +85,11 @@ export default {
                 }
             }).catch(err=>{
                 this.btnClass['is-loading'] = false;
+
+                console.log(err.response.data)
                 if(err.response.status === 422){
                     //console.log('test');
                     this.errors = err.response.data.errors;
-
-                    if(this.errors.otp){
-                        this.isActiveNotif = true;
-                    }
                 }
 
             })

@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\AppSetting;
+
+
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Http;
 
@@ -33,18 +36,37 @@ class CustomForgotPasswordController extends Controller
         $user = User::where('username', $req->username)
             ->where('contact_no', $req->contact_no);
 
+        $is_sms_enable = AppSetting::where('dword', 'ENABLE_SMS')->first(); //get ip sms setting
+        $proxy = AppSetting::where('dword', 'PROXY_SMS')->first(); //get proxy gateway setting
+
+
         if($user->exists()){
             $user = $user->first();
 
-            if(env('ENABLE_SMS') == 1){
+            if($is_sms_enable->value > 0){
     
-                $msg = 'Your OTP for verification is: '. $otp .'. Please enter this code to proceed. Do not share this code with anyone. Thank you!';
-                
+                $msg = 'Your OTP is: '. $otp .'. Do not share this code with anyone. Thank you.';
+                $is_sent = 0;
+                $sms_error_msg = '';
+
+                $url = $proxy->value . '/'.$msg.'/'. $user->contact_no;
+                //return $url;
+
                 try{
                     Http::withHeaders([
                         'Content-Type' => 'text/plain'
-                    ])->post('http://'. env('IP_SMS_GATEWAY') .'/services/api/messaging?Message='.$msg.'&To='.$user->contact_no.'&Slot=1', []);
-                }catch(\Exception $e){} //just hide the error
+                    ])->get($url);
+                    $is_sent = 1;
+                }catch(\Exception $e){
+                    $is_sent = 0;
+                    $sms_error_msg = $e->getMessage();
+                } //just hide the error
+               
+                // try{
+                //     Http::withHeaders([
+                //         'Content-Type' => 'text/plain'
+                //     ])->post($ip_sms .'/services/api/messaging?Message='.$msg.'&To='.$user->contact_no.'&Slot=1', []);
+                // }catch(\Exception $e){} //just hide the error
             }
 
             $user->otp = $otp;
@@ -67,9 +89,21 @@ class CustomForgotPasswordController extends Controller
             ], 422);
         }
 
-        return response()->json([
-            'status' => 'otp_success' 
-        ], 200);;
+
+        if($is_sent > 0){
+            return response()->json([
+                'status' => 'otp_success' 
+            ], 200);
+        }else{
+            return response()->json([
+                'errors' => [
+                    'otp' => [
+                        'sms' => ['Error sending OTP. Please try again. ' . $sms_error_msg]
+                    ]
+                ]
+            ], 422);
+        }
+        
     }
 
 
