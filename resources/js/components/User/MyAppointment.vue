@@ -3,13 +3,15 @@
         <div class="section">
             <div class="columns is-centered">
                 <div class="column is-8">
-                    <div class="w-panel-card">
-                        <div class="w-panel-heading">
+
+                    <div class="box">
+                        <div class="box-heading">
                             <div class="mb-2" style="font-size: 20px; font-weight: bold;">MY APPOINTMENTS</div>
                         </div>
+                        <hr>
 
 
-                        <div class="w-panel-body">
+                        <div class="box-body">
 
                             <div class="level">
                                 <div class="level-left">
@@ -24,7 +26,7 @@
                                                     @keyup.native.enter="loadAsyncData"/>
                                             <p class="control">
                                                 <b-tooltip label="Clear" type="is-primary">
-                                                    <b-button class="is-primary is-outlined" icon-right="brush" @click="search.app_date = null"/>
+                                                    <b-button class="is-danger is-outlined" icon-right="brush" @click="search.app_date = null"/>
                                                  </b-tooltip>
                                             </p>
                                             <p class="control">
@@ -55,15 +57,15 @@
                                 :default-sort-direction="defaultSortDirection"
                                 @sort="onSort">
     
-                                <b-table-column field="appointment_id" label="Reference No." v-slot="props">
+                                <b-table-column field="appointment_id" label="Ref No." v-slot="props">
                                     {{ props.row.appointment_id }}
                                 </b-table-column>
 
-                                <b-table-column field="appointment_date" label="APPOINTMENT DATE" v-slot="props">
+                                <b-table-column field="appointment_date" label="Appointment Date" v-slot="props">
                                     {{ new Date(props.row.appointment_date).toDateString() }}
                                 </b-table-column>
     
-                                <b-table-column field="time" label="TIME" v-slot="props">
+                                <b-table-column field="time" label="Time" v-slot="props">
                                     {{ props.row.schedule.time_from | formatTime }} -  {{ props.row.schedule.time_end | formatTime }}
                                 </b-table-column>
 
@@ -81,13 +83,13 @@
                                             label="see more..."></b-button>
                                     </div>
                                 </b-table-column> -->
-                                <b-table-column field="status" label="STATUS" v-slot="props">
+                                <b-table-column field="status" label="Status" v-slot="props">
                                     <span class="status pending" v-if="props.row.status === 0">PENDING</span>
                                     <span class="status approved" v-if="props.row.status === 1">APPROVED</span>
                                     <span class="status cancelled" v-if="props.row.status === 2">CANCELLED</span>
                                 </b-table-column>
 
-                                <b-table-column label="ACTION" v-slot="props">
+                                <b-table-column label="Action" v-slot="props">
                                     <div class="is-flex">
                                         <b-tooltip v-if="props.row.status === 0" label="Cancel Appointment" type="is-info">
                                             <b-button class="button is-small is-info is-outlined mr-1" 
@@ -100,7 +102,6 @@
                                             icon-right="calendar" 
                                             @click="rescheduleModal(props.row.appointment_id)"></b-button>
                                         </b-tooltip>
-                                        
                                     </div>
                                 </b-table-column>
     
@@ -134,7 +135,6 @@
                                     </div>
                                 </template>
 
-                                
                             </b-table>
                         </div> <!--panel body-->
 

@@ -7,10 +7,17 @@
                     <div class="panel-heading">
                         Reschedule
                     </div>
-                    <div class="panel-body">  
+                    <div class="panel-body"> 
+                        <div class="content">
+                            <p>Doctor's Vacation Schedules</p>
+                            <ul>
+                                <li v-for="(vDate, ix) in vacations" :key="ix"> {{ new Date(vDate).toDateString() }}</li>
+                            </ul>
+                        </div>
                         <b-field label="Pick date" label-position="on-border">
                             <b-datepicker v-model="fields.appointment_date"
                                 :unselectable-dates="vacations"
+                                :min-date="new Date()"
                                 @input="loadOpenSchedules">
                             </b-datepicker>
                         </b-field>
@@ -64,7 +71,6 @@ export default {
             schedules: [],
             schedule_id: 0,
 
-
             fields: {},
 
             btnClass: {
@@ -91,7 +97,8 @@ export default {
             ].join('&')
 
             axios.get(`/load-vacations?${params}`).then(res=>{
-                //this.vacations = res.data
+                //console.log(res.data);
+                
                 res.data.forEach(element => {
                     const d = new Date(element.vacation_date)
                     this.vacations.push(d)
@@ -99,6 +106,8 @@ export default {
                 console.log(this.vacations);
                 //tiwasonun and ma deact ang date..
             })
+
+
             axios.get(`/load-open-schedules?${params}`).then(res=>{
                 this.schedules = res.data
                 this.schedule_id = this.data.schedule_id
@@ -197,7 +206,7 @@ export default {
     },
 
     mounted(){
-
+        // this.loadVacations();
         this.getData();
 
        

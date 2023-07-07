@@ -408,7 +408,17 @@ export default{
         },
         submitArrive(id) {
             axios.post('/appointment-set-arrived/' + id).then(res => {
-                this.loadAsyncData();
+                if(res.data.status === 'arrived'){
+                    this.$buefy.dialog.alert({
+                        title: 'Arrived.',
+                        type: 'is-success',
+                        message: 'Successfully set to arrived.',
+                        confirmText: 'Ok',
+                        onConfirm: () => {
+                            this.loadAsyncData();
+                        }
+                    });
+                }
             }).catch(err => {
                 if (err.response.status === 422) {
                     this.errors = err.response.data.errors;

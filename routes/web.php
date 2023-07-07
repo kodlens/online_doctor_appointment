@@ -124,6 +124,11 @@ Route::middleware(['auth', 'staff'])->group(function(){
 
     Route::get('/report-appointment-no-show', [App\Http\Controllers\Administrator\Report\ReportPatientAppointmentController::class, 'indexAppointmentNoShow']);
     Route::get('/get-report-appointment-no-show', [App\Http\Controllers\Administrator\Report\ReportPatientAppointmentController::class, 'getDataAppointmentNoShow']);
+
+    Route::get('/report-appointment-indian', [App\Http\Controllers\Administrator\Report\ReportPatientAppointmentController::class, 'indexAppointmentIndian']);
+    Route::get('/get-report-appointment-indian', [App\Http\Controllers\Administrator\Report\ReportPatientAppointmentController::class, 'getAppointmentIndian']);
+
+    
 });
 
 Route::middleware(['auth', 'admin'])->group(function(){

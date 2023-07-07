@@ -21,7 +21,7 @@ class AppointmentController extends Controller
 
     public function getAppointments(Request $req){
         $sort = explode('.', $req->sort_by);
-
+        
         $date = $req->appdate;
 
        // $ndate = date('Y-m-d',strtotime($date)); //convert to format time UNIX

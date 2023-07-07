@@ -70,9 +70,7 @@
                                         {{ new Date(ii.vacation_date).toDateString() }}
                                     </li>
                                 </ul>
-                               
                             </div>
-
 
                             <div class="doctor-schedule-header">
                                 Patient Information

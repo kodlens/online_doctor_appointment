@@ -15,8 +15,6 @@
                                     @browseUser="emitBrowseUser($event)">
                                 </modal-browse-user>
                             </b-field>
-                            
-
 
                             <b-field label="Pick date" label-position="on-border">
                                 <b-datepicker v-model="appointment_date"
@@ -79,13 +77,10 @@ export default{
 
             appointment_date: new Date(),
 
-
             schedules: [],
             schedule_id: 0,
 
             user_fullname: '',
-
-
 
             btnClass: {
                 'is-primary': true,

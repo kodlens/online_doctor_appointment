@@ -92,6 +92,10 @@
                     <b-navbar-item href="/report-appointment-no-show">
                         Appointment No Show
                     </b-navbar-item>
+                    <b-navbar-item href="/report-appointment-indian">
+                        Missed Appointments
+                    </b-navbar-item>
+
                     {{-- <b-navbar-item href="#">
                         Contact
                     </b-navbar-item> --}}
