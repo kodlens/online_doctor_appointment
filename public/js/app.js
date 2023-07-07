@@ -8671,9 +8671,9 @@ __webpack_require__.r(__webpack_exports__);
       var _this2 = this;
 
       this.$buefy.dialog.confirm({
-        title: 'Restore?!',
+        title: 'Restore?',
         type: 'is-info',
-        message: 'Are you sure you want to restore this?',
+        message: 'Are you sure you want to restore the data?',
         confirmText: 'Yes',
         onConfirm: function onConfirm() {
           return _this2.approveRestore(id);
@@ -9003,7 +9003,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-//
 //
 //
 //
@@ -13597,6 +13596,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {};
@@ -13624,9 +13624,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _CarouselImages_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CarouselImages.vue */ "./resources/js/components/WelcomePage/CarouselImages.vue");
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-//
-//
-//
 //
 //
 //
@@ -39888,7 +39885,7 @@ var render = function () {
                       }),
                       _vm._v(" "),
                       _c("b-table-column", {
-                        attrs: { field: "max_no", label: "NAME" },
+                        attrs: { field: "max_no", label: "Max No." },
                         scopedSlots: _vm._u([
                           {
                             key: "default",
@@ -47166,7 +47163,7 @@ var staticRenderFns = [
         _c("div", { staticClass: "column" }, [
           _c("div", { staticClass: "banner-title" }, [
             _vm._v(
-              "\n                        DR. TILAO's APPOINTMENT SYSTEM\n                    "
+              "\n                        Online Doctor's Appointment System\n                    "
             ),
           ]),
         ]),
@@ -47249,7 +47246,7 @@ var staticRenderFns = [
                 display: "inline-block",
               },
             },
-            [_vm._v("\n                    SERVICE OFFERED\n                ")]
+            [_vm._v("\n                    SERVICES OFFERED\n                ")]
           ),
         ]),
       ]),
@@ -47394,7 +47391,7 @@ var staticRenderFns = [
                         "margin-top": "10px",
                       },
                     },
-                    [_vm._v("ACHIEVEMENTS")]
+                    [_vm._v("AFFILIATIONS")]
                   ),
                   _vm._v(" "),
                   _c("ul", [
@@ -47449,7 +47446,7 @@ var staticRenderFns = [
           },
           [
             _vm._v(
-              "\n                            DR. TILAO MILESTONE\n                        "
+              "\n                            DR. TILAO AFFILIATIONS \n                        "
             ),
           ]
         ),
