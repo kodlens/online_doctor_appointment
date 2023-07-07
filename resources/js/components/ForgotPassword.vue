@@ -91,7 +91,6 @@ export default {
                     //console.log('test');
                     this.errors = err.response.data.errors;
                 }
-
             })
         }
     }
