@@ -112,8 +112,6 @@
                                     <span v-else>NO</span>
                                 </b-table-column>
 
-
-
                                 <b-table-column field="status" label="Status" v-slot="props">
                                     <span class="status pending" v-if="props.row.status === 0">PENDING</span>
                                     <span class="status approved" v-if="props.row.status === 1">APPROVED</span>

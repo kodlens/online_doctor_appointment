@@ -5,7 +5,7 @@
                 <div class="column is-4">
                     <div class="w-panel-card">
                         <div class="w-panel-heading">
-                            <div class="mb-2" style="font-size: 20px; font-weight: bold;">CREATE NEW APPOINTMENT</div>
+                            <div class="mb-2" style="font-size: 20px; font-weight: bold;">ARCHIVE APPOINTMENTS</div>
                         </div>
 
                         <div class="w-panel-body">

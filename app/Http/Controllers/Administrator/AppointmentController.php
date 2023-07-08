@@ -207,8 +207,7 @@ class AppointmentController extends Controller
         $user = User::where('user_id', $data->user_id)->first();
         $schedule = Schedule::where('schedule_id', $data->schedule_id)->first();
 
-        $nameTitle = $user->sex == 'MALE' ? 'Mr. ' : 'Ms./Mrs. ';
-
+        //$nameTitle = $user->sex == 'MALE' ? 'Mr. ' : 'Ms./Mrs. ';
 
         $is_sms_enable = AppSetting::where('dword', 'ENABLE_SMS')->first(); //get ip sms setting
         $proxy = AppSetting::where('dword', 'PROXY_SMS')->first(); //get proxy gateway setting
@@ -218,7 +217,7 @@ class AppointmentController extends Controller
             $timeStart = date('h:i A', strtotime($schedule->time_from));
             $timeEnd = date('h:i A', strtotime($schedule->time_end));
 
-            $msg = 'Appointment confirmation: '. $nameTitle . $user->lname . ', ' . $user->fname . ', your appointment with Dr. Tilao on '. date('M-d-Y', strtotime($data->appointment_date)) .', ' . $timeStart. ') has been approved.';
+            $msg = 'Appointment confirmation: '. $user->lname . ', ' . $user->fname . ', your appointment with Dr. Tilao on '. date('M-d-Y', strtotime($data->appointment_date)) .', ' . $timeStart. ') has been approved.';
             
             try{
                 Http::withHeaders([
@@ -246,7 +245,7 @@ class AppointmentController extends Controller
 
         $user = User::where('user_id', $data->user_id)->first();
         $schedule = Schedule::where('schedule_id', $data->schedule_id)->first();
-        $nameTitle = $user->sex == 'MALE' ? 'Mr. ' : 'Ms./Mrs. ';
+        //$nameTitle = $user->sex == 'MALE' ? 'Mr. ' : 'Ms./Mrs. ';
         /*
             Appointment confirmation:
             Ms/Mr/Miss/Mrs Ong, Lensey your appointment with Dr. Tilao on May 15 at 3 pm has been confirmed/Approved.
@@ -261,7 +260,7 @@ class AppointmentController extends Controller
             $timeStart = date('h:i A', strtotime($schedule->time_from));
             $timeEnd = date('h:i A', strtotime($schedule->time_end));
 
-            $msg = 'Cancellation notice: '. $nameTitle . $user->lname . ', ' . $user->fname . ', your appointment with Dr. Tilao on '. date('M-d-Y', strtotime($data->appointment_date)) .', ' . $timeStart. ') has been cancelled.';
+            $msg = 'Cancellation notice: '. $user->lname . ', ' . $user->fname . ', your appointment with Dr. Tilao on '. date('M-d-Y', strtotime($data->appointment_date)) .', ' . $timeStart. ') has been cancelled.';
             
             try{
                 Http::withHeaders([

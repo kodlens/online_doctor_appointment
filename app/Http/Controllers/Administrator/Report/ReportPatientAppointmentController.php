@@ -165,5 +165,29 @@ class ReportPatientAppointmentController extends Controller
 
         return $data;
     }
+
+
+    public function indexLoyalCustomers(){
+        return view('administrator.report.report-loyal-customers');
+    }
+    public function getLoyalCustomers(Request $req){
+        $date_start = date('Y-m-d', strtotime($req->start));
+        $date_end = date('Y-m-d', strtotime($req->end));
+
+        // $data = DB::select('SELECT * FROM (SELECT b.lname, b.fname, b.mname,a.user_id, COUNT(*) AS count_app 
+        //     FROM appointments a
+        //     JOIN users b ON a.user_id = b.user_id
+        //     WHERE a.appointment_date BETWEEN ? AND ?
+        //     AND a.is_arrived = 0 AND a.status = 1
+        //     GROUP BY a.user_id) AS tbl1 WHERE tbl1.count_app > 3', [$date_start, $date_end]);
+        
+        $data = DB::select('select * from (select b.lname, b.fname, b.mname,
+            a.user_id, count(*) as count_app from appointments a
+            join users b on a.user_id = b.user_id
+            where a.appointment_date between ? and ? and a.is_served = 1 and a.status = 1 group by a.user_id) as tbl1
+            where tbl1.count_app > 5', [$date_start, $date_end]);
+
+        return $data;
+    }
 }
 

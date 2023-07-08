@@ -49,9 +49,11 @@ class ArchiveAppointmentController extends Controller
 
     public function store(Request $req){
 
-        $appointment = Appointment::whereBetween('created_at', [$req->start_date, $req->end_date])
-            ->where('is_served', 1)
-            ->orWhere('is_arrived', 0)
+        $appointment = Appointment::whereBetween('appointment_date', [$req->start_date, $req->end_date])
+            ->orWhere(function ($q){
+                $q->where('is_arrived', 0)
+                    ->where('is_served', 1); 
+            })
             ->update([
                 'is_archived' => 1
             ]);
@@ -63,7 +65,9 @@ class ArchiveAppointmentController extends Controller
 
     public function restoreArchivesAppointments(Request $req){
 
-        $appointment = Appointment::whereBetween('created_at', [$req->start_date, $req->end_date])
+       // return $req;
+
+        $appointment = Appointment::whereBetween('appointment_date', [$req->start_date, $req->end_date])
             ->update([
                 'is_archived' => 0
             ]);

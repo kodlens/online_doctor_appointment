@@ -95,6 +95,9 @@
                     <b-navbar-item href="/report-appointment-indian">
                         Missed Appointments
                     </b-navbar-item>
+                    <b-navbar-item href="/report-loyal-customers">
+                        Regular Patient
+                    </b-navbar-item>
 
                     {{-- <b-navbar-item href="#">
                         Contact

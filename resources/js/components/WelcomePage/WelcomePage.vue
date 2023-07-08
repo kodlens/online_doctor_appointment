@@ -58,7 +58,7 @@
                     <div class="schedule-box" v-if="isLogin">
                         <div class="doctor-schedule">
                             <div class="doctor-schedule-header">
-                                Doctor Vacation Schedule
+                                Doctor's Vacation Schedule
                             </div>
 
                             <div class="doctor-vacation-schedule content">
@@ -181,7 +181,7 @@
                             </div>
 
                             <div class="doctor-schedule-header">
-                                Doctor Schedule
+                                Doctor's Schedules
                             </div>
 
                             <b-field label="Pick date" label-position="on-border">
