@@ -134,6 +134,7 @@ class ReportPatientAppointmentController extends Controller
             ->where('is_arrived', 0)
             ->where('is_served', 0)
             ->where('is_archived', 0)
+            ->whereBetween('appointment_date', [$date_start, $date_end])
             ->get();
 
         return $data;
