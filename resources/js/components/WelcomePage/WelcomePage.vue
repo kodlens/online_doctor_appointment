@@ -617,6 +617,16 @@ export default {
                             type: 'is-danger'
                         });
                     }
+
+                    /**MISSED APPOINTMENT ERROR */
+                    if(this.errors.multiple_missed_appointment){
+                        this.$buefy.dialog.alert({
+                            title: 'Missed Appointment.',
+                            message: this.errors.multiple_missed_appointment[0],
+                            type: 'is-danger'
+                        });
+                    }
+                    
                 }
             })
         },

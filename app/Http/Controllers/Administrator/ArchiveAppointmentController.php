@@ -30,12 +30,12 @@ class ArchiveAppointmentController extends Controller
         }
 
         $data = Appointment::with(['user', 'schedule', 'patients'])
-            ->where('appointment_date', 'like',  $ndate . '%')
+            ->whereBetween('appointment_date', [$req->start, $req->end])
             ->whereHas('user', function($q) use ($req){
                 $q->where('lname', 'like', '%'. $req->name . '%');
             })
-            ->where('is_archived', 0)
-            ->where('status', 1)
+            ->where('is_archived', 1)
+            //->where('status', 1)
             ->orderBy($sort[0], $sort[1])
             ->paginate($req->perpage);
 
@@ -48,6 +48,7 @@ class ArchiveAppointmentController extends Controller
 
 
     public function store(Request $req){
+        //return 'test';
 
         $appointment = Appointment::whereBetween('appointment_date', [$req->start_date, $req->end_date])
             ->orWhere(function ($q){
@@ -65,7 +66,7 @@ class ArchiveAppointmentController extends Controller
 
     public function restoreArchivesAppointments(Request $req){
 
-       // return $req;
+        //return $req;
 
         $appointment = Appointment::whereBetween('appointment_date', [$req->start_date, $req->end_date])
             ->update([

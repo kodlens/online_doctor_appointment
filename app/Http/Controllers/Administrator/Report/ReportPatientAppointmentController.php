@@ -142,11 +142,9 @@ class ReportPatientAppointmentController extends Controller
 
 
     public function indexAppointmentIndian(Request $req){
-
         return view('administrator.report.report-appointment-indian');
-
-        
     }
+    
     public function getAppointmentIndian(Request $req){
         $date_start = date('Y-m-d', strtotime($req->start));
         $date_end = date('Y-m-d', strtotime($req->end));

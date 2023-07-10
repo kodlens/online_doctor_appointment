@@ -14,8 +14,8 @@ class ApplyAppointmentController extends Controller
     //
     public function applyAppointment(Request $req){
 
-        //return $req;
-
+        /*VALIDATION
+        *****************************/
         $req->validate([
             'patients' => ['required'],
             'patients.*.lname' => ['required'],
@@ -26,10 +26,46 @@ class ApplyAppointmentController extends Controller
             'patients.*.city' => ['required'],
             'patients.*.barangay' => ['required']
         ]);
+
+        /*****************************
+        VALIDATION*/
+        
  
         $appdate = date("Y-m-d", strtotime($req->appointment_date));
         $user = Auth::user();
 
+
+        /* check if have multiple/more than 3 missed appointment
+        in specific date range
+        ***************************************/
+       // First day of the month
+        $month = date('m', strtotime($appdate));
+
+        $firstDay = date('Y-m-01', strtotime($appdate)); // Format: YYYY-MM-01
+        $lastDay = date('Y-m-t', strtotime($appdate)); // Format: YYYY-MM-01
+
+        $countAppointment = Appointment::whereBetween('appointment_date', [$firstDay, $lastDay])
+            ->where('user_id', $user->user_id)
+            ->where('status', 1)
+            ->count();
+
+        if($countAppointment > 2){
+            return response()->json([
+                'errors' => [
+                    'multiple_missed_appointment' => ['We detect multiple missed appointment from us and 
+                        we regret to inform you that we cannot accomodate new appointment request this time.,', 
+                    ],
+                ],
+                'message' => "Thie given data was invalid."
+            ], 422);
+        }
+        //MISSED APPOINTMENT DETECTION
+        /***************************************
+        */
+        return 'go';
+
+
+        
         //get Max no per schedule
         $schedule = Schedule::find($req->schedule_id);
         $max_no = $schedule->max_no;
