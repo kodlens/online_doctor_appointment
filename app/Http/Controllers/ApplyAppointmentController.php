@@ -62,7 +62,7 @@ class ApplyAppointmentController extends Controller
         //MISSED APPOINTMENT DETECTION
         /***************************************
         */
-        return 'go';
+        //return 'go';
 
 
         
