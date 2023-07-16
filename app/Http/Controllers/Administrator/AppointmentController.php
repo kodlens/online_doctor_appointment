@@ -305,6 +305,7 @@ class AppointmentController extends Controller
         $appDateFrom = date('Y-m-d H:i:s', strtotime($data->appointment_date . ' ' .$data->schedule->time_from));
         $appDateEnd = date('Y-m-d H:i:s', strtotime($data->appointment_date . ' ' .$data->schedule->time_end));
 
+        //e contnue pa ugma.
         if($dateTimeNow <= $appDateFrom || $dateTimeNow > $appDateEnd){ //continue tomorrow
             return response()->json([
                 'errors' => [
