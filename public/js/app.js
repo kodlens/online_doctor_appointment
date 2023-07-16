@@ -14236,6 +14236,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
               type: 'is-danger'
             });
           }
+          /**MISSED APPOINTMENT ERROR */
+
+
+          if (_this4.errors.multiple_missed_appointment) {
+            _this4.$buefy.dialog.alert({
+              title: 'Missed Appointment.',
+              message: _this4.errors.multiple_missed_appointment[0],
+              type: 'is-danger'
+            });
+          }
         }
       });
     },
