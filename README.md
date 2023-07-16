@@ -1,46 +1,49 @@
 # online_doctor_appointment
-online_doctor_appointment
+
+Revisions
+
+CLIENT
 
 
 
+Bug: otp # (registration) fix otp
+Breakdown the time slot (15 minutes) instead of 1 hour. 1 person per 15 minutes.
+For example 
+2:00- 2:15pm (1 patient)
+2:15- 2:30pm 1 patient
+2:30-2:45 pm 1 patient
+2:45- 3:00 pm 1 patient
+3:00-3:15 pm 1 patient
+3:15- 3:30 pm
+3:30- 3:45pm
+3:45- 4:00 pm
+4:00-4:15 pm
+4:15- 4:30 pm
+4:30- 4:45 pm
+4:45- 5:00pm
+5:00-5:15pm
+5:15-5:30pm
+5:30-5:45 pm
+5:45- 6:00 pm
+Walaon ang set max patient
 
 
+Separate page for filtered schedule records  
+Lahi ang schedule tanan sa daily og sa tanang appointments.
+Dli dapat maka mark as arrived kung dli pa time, ASTA sa future naka appointment. Ug previous apt. 
+Appointments
+
+REMOVE APPROVE- Should not approve and serve sched not today (present)
+Separate page for the approved or na appoint anang adlawa ug sa tanang list of appointments.
+Add mark as No show appointment I insert sa button(kauban sa cancel, etc)
+Add close/end day button
+Automatically no show (within anang adlawa) kung dili jud maabot.
+Automate user blocking after # of no show  pero pwede pod ma unblock
 
 
-1. Dapat sa UI sa kinaunhan naay Title dak-on (Dr Tilao's Appointment System) didto ni siya ibutang sa tunga sa background picture.
+REPORTS
+Separate list for served and unserved list.
+Revised the report with proper statistics. (count sa appointment report, no show, served ug unserved pwede pud I graph, no need list sa reports)
 
-2. Naa sab naka butang sa kinaunhan ug Appointments of Dr tilao's Clinic (bisan aha ibutang sa front page)
-
-3. Ang background nga picture kay nawong ni dr. tas iyang mga  Certificate pwede sab ang dagway sa clinic if madala kay chaka man to .
-4. Katong sa front page Book your appointment online ilisan ug Book your clinic appointment with Dr Tilao online
-5. Ibutang sab ug apil sa front page ang full name ni Doctor
-Contact Number Niya/ landline
-Location niya ug location pud aha siya nag duty nga hosp.
-6. Sa front page pud  naay naka butang nga Appointment beyond clinic hours is case-to-case basis .
-
-7. If vacation pud si doctor dapat black ang calendar dili maka book ug appointment si patient.
-
-Admin usa ka mo notif si doc naay note under sa home if naay vacation or conference 
-
-
-8. Corrections sa notif if napuno na ang slot ana nga oras.
- (Sorry, the schedule reached the maximum number of reservations. ) Dayun naa may pangutana do you want to blaaah blaaah sumpay ato dapat butngan question mark.
-
-
-9. Dapat buhi ang calendar dapat ang sample ang oras kung alas 4 na gapa appoint  tas mo set ug alas 2 dili pwede na. (Dapat dynamic)
-
-10. Magpa resched sya nga puno na dapat mubalibad.
-11. Dapat si user naa pud syay resched. 
-
-(Patient appointments )correction 
-
-12. Kung ma mark at served dli na sya ma cancelled. 
-
-13. Naka set na if na serve na dapat mo yes sab ang arrive 
-14. Ang ma archive ra kay ang no show ug na serve 
-If archive di na siya pwede hilabtan
-15.Dapat mo search ug name ang archive (parihas sa mag control f ta nga kana ra nga ngalan mugawas)
-
-
-Didto sa cancellation nga sms 
-Cancellation notice: Ang ibutang dili confirmation.
+Add walk in appointment/clients (dli na need ug account, lista ra sa ila name, age, illness, address.)
+Implementation of archive. Nga dapat ma keep jud ug dli na mahilabtan,, previous record ra ang ma archive.

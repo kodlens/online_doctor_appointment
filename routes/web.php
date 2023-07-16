@@ -79,6 +79,9 @@ Route::middleware(['auth', 'activated'])->group(function(){
     Route::get('/my-appointment-reschedule/{id}', [App\Http\Controllers\User\MyAppointmentController::class, 'rescheduleView']);
     Route::post('/my-appointment-reschedule/{id}', [App\Http\Controllers\User\MyAppointmentController::class, 'rescheduleSubmit']);
 
+    Route::get('/upcoming-appointment', [App\Http\Controllers\User\MyAppointmentController::class, 'upcomingAppointment']);
+
+
     Route::get('/get-my-appointments', [App\Http\Controllers\User\MyAppointmentController::class, 'getMyAppointments']);
     Route::post('/cancel-my-appointment/{id}', [App\Http\Controllers\User\MyAppointmentController::class, 'cancelAppointment']);
 

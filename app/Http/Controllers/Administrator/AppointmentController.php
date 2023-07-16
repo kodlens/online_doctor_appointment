@@ -296,7 +296,23 @@ class AppointmentController extends Controller
 
 
     public function setArrived($id){
-        $data = Appointment::find($id);
+
+        $dateTimeNow = date('Y-m-d H:i:s');
+        $data = Appointment::with(['schedule'])->find($id);
+
+        //return $data;
+
+        $appDateFrom = date('Y-m-d H:i:s', strtotime($data->appointment_date . ' ' .$data->schedule->time_from));
+        $appDateEnd = date('Y-m-d H:i:s', strtotime($data->appointment_date . ' ' .$data->schedule->time_end));
+
+        if($dateTimeNow <= $appDateFrom || $dateTimeNow > $appDateEnd){ //continue tomorrow
+            return response()->json([
+                'errors' => [
+                    'early' => ['Sorry, it\'s not on the schedule yet.']
+                ]
+            ], 422);
+        }
+
         $data->is_arrived = 1;
         $data->arrival_datetime = date('Y-m-d H:s:i');
         $data->save();

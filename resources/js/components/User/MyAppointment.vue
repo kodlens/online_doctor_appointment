@@ -10,133 +10,169 @@
                         </div>
                         <hr>
 
-
                         <div class="box-body">
 
-                            <div class="level">
-                                <div class="level-left">
-                                    
-                                </div>
-    
-                                <div class="level-right">
-                                    <div class="level-item">
-                                        <b-field label="Search" label-position="on-border">
-                                            <b-datepicker
-                                                    v-model="search.app_date" placeholder="Search date"
-                                                    @keyup.native.enter="loadAsyncData"/>
-                                            <p class="control">
-                                                <b-tooltip label="Clear" type="is-primary">
-                                                    <b-button class="is-danger is-outlined" icon-right="brush" @click="search.app_date = null"/>
-                                                 </b-tooltip>
-                                            </p>
-                                            <p class="control">
-                                                 <b-tooltip label="Search" type="is-primary">
-                                                <b-button type="is-primary" icon-right="magnify" @click="loadAsyncData"/>
-                                                 </b-tooltip>
-                                            </p>
-                                        </b-field>
-                                    </div>
-                                </div>
-                            </div>
-    
-                            <b-table class="user-tables"
-                                :data="data"
-                                :loading="loading"
-                                paginated
-                                backend-pagination
-                                pagination-rounded
-                                :total="total"
-                                detailed
-                                :per-page="perPage"
-                                @page-change="onPageChange"
-                                aria-next-label="Next page"
-                                aria-previous-label="Previous page"
-                                aria-page-label="Page"
-                                aria-current-label="Current page"
-                                backend-sorting
-                                :default-sort-direction="defaultSortDirection"
-                                @sort="onSort">
-    
-                                <b-table-column field="appointment_id" label="Ref No." v-slot="props">
-                                    {{ props.row.appointment_id }}
-                                </b-table-column>
-
-                                <b-table-column field="appointment_date" label="Appointment Date" v-slot="props">
-                                    {{ new Date(props.row.appointment_date).toDateString() }}
-                                </b-table-column>
-    
-                                <b-table-column field="time" label="Time" v-slot="props">
-                                    {{ props.row.schedule.time_from | formatTime }} -  {{ props.row.schedule.time_end | formatTime }}
-                                </b-table-column>
-
-                                <!-- <b-table-column field="illness_history" label="ILLNESS/HISTORY" v-slot="props">
-                                    <div v-if="props.row.illness_history">
-                                        <div  class="text-container">
-                                            <p class="long-text">
-                                                {{ props.row.illness_history }}
-                                            </p>
+                            <b-tabs v-model="activeTab">
+                                <b-tab-item label="Upcoming Appointment">
+                                    <div class="upcoming-appointment-container">
+                                        
+                                        <div v-if="upcomingAppointment">
+                                            <div class="mb-2">
+                                                <span class="has-text-weight-bold">Schedule: </span>
+                                                <span> {{ new Date(upcomingAppointment.appointment_date + ' ' + upcomingAppointment.schedule.time_from).toLocaleString() }}</span>
+                                            </div>
+                                            
+                                            <div>
+                                                <b-notification
+                                                    type="is-info"
+                                                    has-icon
+                                                    aria-close-label="Close notification">
+                                                    Please be there 10 minutes earlier on your schedule so the staff can assist you with your schedule.
+                                                </b-notification>
+                                            </div>
+                                           
                                         </div>
-                                        <b-button
-                                             class="is-small is-outlined is-info" 
-                                            v-if="props.row.illness_history.length > 100" 
-                                            @click="seeMore(props.row.illness_history)"
-                                            label="see more..."></b-button>
+                                        
+                                        <div v-else>
+                                            No Upcoming Appointment
+                                        </div>
                                     </div>
-                                </b-table-column> -->
-                                <b-table-column field="status" label="Status" v-slot="props">
-                                    <span class="status pending" v-if="props.row.status === 0">PENDING</span>
-                                    <span class="status approved" v-if="props.row.status === 1">APPROVED</span>
-                                    <span class="status cancelled" v-if="props.row.status === 2">CANCELLED</span>
-                                </b-table-column>
+                                </b-tab-item>
 
-                                <b-table-column label="Action" v-slot="props">
-                                    <div class="is-flex">
-                                        <b-tooltip v-if="props.row.status === 0" label="Cancel Appointment" type="is-info">
-                                            <b-button class="button is-small is-info is-outlined mr-1" 
-                                            icon-right="cancel" 
-                                            @click="cancelAppointment(props.row.appointment_id)"></b-button>
-                                        </b-tooltip>
-
-                                        <b-tooltip v-if="props.row.status === 0" label="Reschedule Appointment" type="is-info">
-                                            <b-button class="button is-small is-info is-outlined mr-1" 
-                                            icon-right="calendar" 
-                                            @click="rescheduleModal(props.row.appointment_id)"></b-button>
-                                        </b-tooltip>
+                                <b-tab-item label="Appointments">
+                                    <div class="level">
+                                        <div class="level-left">
+                                            
+                                        </div>
+            
+                                        <div class="level-right">
+                                            <div class="level-item">
+                                                <b-field label="Search" label-position="on-border">
+                                                    <b-datepicker
+                                                            v-model="search.app_date" placeholder="Search date"
+                                                            @keyup.native.enter="loadAsyncData"/>
+                                                    <p class="control">
+                                                        <b-tooltip label="Clear" type="is-primary">
+                                                            <b-button class="is-danger is-outlined" icon-right="brush" @click="search.app_date = null"/>
+                                                        </b-tooltip>
+                                                    </p>
+                                                    <p class="control">
+                                                        <b-tooltip label="Search" type="is-primary">
+                                                        <b-button type="is-primary" icon-right="magnify" @click="loadAsyncData"/>
+                                                        </b-tooltip>
+                                                    </p>
+                                                </b-field>
+                                            </div>
+                                        </div>
                                     </div>
-                                </b-table-column>
-    
-                                <div class="is-flex mb-4">
-                                    <b-field label="Page" label-position="on-border">
-                                        <b-select v-model="perPage" @input="setPerPage">
-                                            <option value="10">10 per page</option>
-                                            <option value="20">20 per page</option>
-                                            <option value="30">30 per page</option>
-                                        </b-select>
-                                        <b-select v-model="sortOrder" @input="loadAsyncData">
-                                            <option value="asc">ASC</option>
-                                            <option value="desc">DESC</option>
-                                        </b-select>
-                                    </b-field>
-                                </div>
-                                
-                                <template #detail="props">
-                                    
-                                    <div v-if="props.row.patients">
-                                        <tr>
-                                            <th>Name</th>
-                                            <th>Age</th>
-                                            <th>Illness</th>
-                                        </tr>
-                                        <tr v-for="(i, ix) in props.row.patients" :key="ix">
-                                            <td>{{ i.lname }}, {{ i.fname }} {{ i.mname }}</td>
-                                            <td>{{ i.age }}</td>
-                                            <td>{{ i.illness }}</td>
-                                        </tr>
-                                    </div>
-                                </template>
+            
+                                    <b-table class="user-tables"
+                                        :data="data"
+                                        :loading="loading"
+                                        paginated
+                                        backend-pagination
+                                        pagination-rounded
+                                        :total="total"
+                                        detailed
+                                        :per-page="perPage"
+                                        @page-change="onPageChange"
+                                        aria-next-label="Next page"
+                                        aria-previous-label="Previous page"
+                                        aria-page-label="Page"
+                                        aria-current-label="Current page"
+                                        backend-sorting
+                                        :default-sort-direction="defaultSortDirection"
+                                        @sort="onSort">
+            
+                                        <b-table-column field="appointment_id" label="Ref No." v-slot="props">
+                                            {{ props.row.appointment_id }}
+                                        </b-table-column>
 
-                            </b-table>
-                        </div> <!--panel body-->
+                                        <b-table-column field="appointment_date" label="Appointment Date" v-slot="props">
+                                            {{ new Date(props.row.appointment_date).toDateString() }}
+                                        </b-table-column>
+            
+                                        <b-table-column field="time" label="Time" v-slot="props">
+                                            {{ props.row.schedule.time_from | formatTime }} -  {{ props.row.schedule.time_end | formatTime }}
+                                        </b-table-column>
+
+                                        <!-- <b-table-column field="illness_history" label="ILLNESS/HISTORY" v-slot="props">
+                                            <div v-if="props.row.illness_history">
+                                                <div  class="text-container">
+                                                    <p class="long-text">
+                                                        {{ props.row.illness_history }}
+                                                    </p>
+                                                </div>
+                                                <b-button
+                                                    class="is-small is-outlined is-info" 
+                                                    v-if="props.row.illness_history.length > 100" 
+                                                    @click="seeMore(props.row.illness_history)"
+                                                    label="see more..."></b-button>
+                                            </div>
+                                        </b-table-column> -->
+                                        <!-- <b-table-column field="status" label="Status" v-slot="props">
+                                            <span class="status pending" v-if="props.row.status === 0">PENDING</span>
+                                            <span class="status approved" v-if="props.row.status === 1">APPROVED</span>
+                                            <span class="status cancelled" v-if="props.row.status === 2">CANCELLED</span>
+                                        </b-table-column> -->
+
+                                        <b-table-column label="Action" v-slot="props">
+                                            <div class="is-flex" v-if="props.row.is_arrived === 0">
+                                                <b-tooltip label="Cancel Appointment" type="is-info">
+                                                    <b-button class="button is-small is-info is-outlined mr-1" 
+                                                    icon-right="cancel" 
+                                                    @click="cancelAppointment(props.row.appointment_id)"></b-button>
+                                                </b-tooltip>
+
+                                                <b-tooltip label="Reschedule Appointment" type="is-info">
+                                                    <b-button class="button is-small is-info is-outlined mr-1" 
+                                                    icon-right="calendar" 
+                                                    @click="rescheduleModal(props.row.appointment_id)"></b-button>
+                                                </b-tooltip>
+                                            </div>
+                                        </b-table-column>
+            
+                                        <div class="is-flex mb-4">
+                                            <b-field label="Page" label-position="on-border">
+                                                <b-select v-model="perPage" @input="setPerPage">
+                                                    <option value="10">10 per page</option>
+                                                    <option value="20">20 per page</option>
+                                                    <option value="30">30 per page</option>
+                                                </b-select>
+                                                <b-select v-model="sortOrder" @input="loadAsyncData">
+                                                    <option value="asc">ASC</option>
+                                                    <option value="desc">DESC</option>
+                                                </b-select>
+                                            </b-field>
+                                        </div>
+                                        
+                                        <template #detail="props">
+                                            
+                                            <div v-if="props.row.patients">
+                                                <tr>
+                                                    <th>Name</th>
+                                                    <th>Age</th>
+                                                    <th>Illness</th>
+                                                </tr>
+                                                <tr v-for="(i, ix) in props.row.patients" :key="ix">
+                                                    <td>{{ i.lname }}, {{ i.fname }} {{ i.mname }}</td>
+                                                    <td>{{ i.age }}</td>
+                                                    <td>{{ i.illness }}</td>
+                                                </tr>
+                                            </div>
+                                        </template>
+
+                                    </b-table>
+                                </b-tab-item>
+
+                  
+
+                 
+                            </b-tabs>
+                            
+
+                            
+                        </div> <!--box body-->
 
                     </div>
                 </div><!--col -->
@@ -163,6 +199,9 @@ export default{
             page: 1,
             perPage: 10,
             defaultSortDirection: 'asc',
+
+            activeTab: 0,
+            upcomingAppointment: {},
 
             global_id : 0,
 
@@ -386,31 +425,10 @@ export default{
             });
         },
 
-        openModalResetPassword(dataId){
-            this.modalResetPassword = true;
-            this.fields = {};
-            this.errors = {};
-            this.global_id = dataId;
-        },
-
-        resetPassword(){
-            axios.post('/reset-password/' + this.global_id, this.fields).then(res=>{
-
-                if(res.data.status === 'changed'){
-                    this.$buefy.dialog.alert({
-                        title: 'PASSWORD CHANGED',
-                        type: 'is-success',
-                        message: 'Password changed successfully.',
-                        confirmText: 'OK',
-                        onConfirm: () => {
-                            this.modalResetPassword = false;
-                            this.fields = {};
-                            this.errors = {};
-                            this.loadAsyncData()
-                        }
-                    });
-                }
-
+        loadUpcomingAppointment(){
+            axios.get('/upcoming-appointment').then(res=>{
+                this.upcomingAppointment = res.data;
+                console.log(res.data);
             }).catch(err=>{
                 this.errors = err.response.data.errors;
             })
@@ -421,6 +439,7 @@ export default{
 
     mounted() {
         this.loadAsyncData();
+        this.loadUpcomingAppointment()
     }
 }
 </script>
@@ -438,6 +457,11 @@ export default{
         max-height: 3em; /* Set the maximum height of the text to limit the number of lines */
         margin: 0; /* Reset margin */
         padding: 0; /* Reset padding */
+    }
+
+
+    .upcoming-appointment-container{
+        padding: 15px;
     }
 
 
