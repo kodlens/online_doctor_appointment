@@ -249,8 +249,6 @@ class AppointmentController extends Controller
         /*
             Appointment confirmation:
             Ms/Mr/Miss/Mrs Ong, Lensey your appointment with Dr. Tilao on May 15 at 3 pm has been confirmed/Approved.
-
-
         */
 
         $is_sms_enable = AppSetting::where('dword', 'ENABLE_SMS')->first(); //get ip sms setting
@@ -296,7 +294,24 @@ class AppointmentController extends Controller
 
 
     public function setArrived($id){
-        $data = Appointment::find($id);
+
+        $dateTimeNow = date('Y-m-d H:i:s');
+        $data = Appointment::with(['schedule'])->find($id);
+
+        //return $data;
+
+        $appDateFrom = date('Y-m-d H:i:s', strtotime($data->appointment_date . ' ' .$data->schedule->time_from));
+        $appDateEnd = date('Y-m-d H:i:s', strtotime($data->appointment_date . ' ' .$data->schedule->time_end));
+
+        //e contnue pa ugma.
+        if($dateTimeNow <= $appDateFrom || $dateTimeNow > $appDateEnd){ //continue tomorrow
+            return response()->json([
+                'errors' => [
+                    'early' => ['Sorry, it\'s not on the schedule yet.']
+                ]
+            ], 422);
+        }
+
         $data->is_arrived = 1;
         $data->arrival_datetime = date('Y-m-d H:s:i');
         $data->save();

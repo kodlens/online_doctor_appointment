@@ -14,21 +14,31 @@ class ApplyAppointmentController extends Controller
     //
     public function applyAppointment(Request $req){
 
-        /*VALIDATION
-        *****************************/
-        $req->validate([
-            'patients' => ['required'],
-            'patients.*.lname' => ['required'],
-            'patients.*.fname' => ['required'],
-            'patients.*.age' => ['required'],
-            'patients.*.sex' => ['required'],
-            'patients.*.province' => ['required'],
-            'patients.*.city' => ['required'],
-            'patients.*.barangay' => ['required']
-        ]);
+        //return $req;
 
-        /*****************************
-        VALIDATION*/
+        if($req->iamPatient > 0){
+            $req->validate([
+                'iamPatientFields.age' => ['required'],
+            ]);
+
+        }else{
+            /*VALIDATION
+            *****************************/
+            $req->validate([
+                'patients' => ['required'],
+                'patients.*.lname' => ['required'],
+                'patients.*.fname' => ['required'],
+                'patients.*.age' => ['required'],
+                'patients.*.sex' => ['required'],
+                'patients.*.province' => ['required'],
+                'patients.*.city' => ['required'],
+                'patients.*.barangay' => ['required']
+            ]);
+
+            /*****************************
+            VALIDATION*/
+        }
+
         
  
         $appdate = date("Y-m-d", strtotime($req->appointment_date));
@@ -65,7 +75,6 @@ class ApplyAppointmentController extends Controller
         //return 'go';
 
 
-        
         //get Max no per schedule
         $schedule = Schedule::find($req->schedule_id);
         $max_no = $schedule->max_no;
@@ -150,24 +159,47 @@ class ApplyAppointmentController extends Controller
             'appointment_date' => $appdate,
         ]);
 
-        $patient = [];
-        foreach($req->patients as $item){
-            array_push($patient, [
-                'appointment_id' => $appointment->appointment_id,
-                'lname' => strtoupper($item['lname']),
-                'fname' => strtoupper($item['fname']),
-                'mname' => strtoupper($item['mname']),
-                'sex' => strtoupper($item['sex']),
-                'age' => $item['age'],
-                'illness' => $item['illness'],
-                'province' => $item['province'],
-                'city' => $item['city'],
-                'barangay' => $item['barangay'],
-                'street' => $item['street'],
-            ]);
-        }
+        /*******************************
+         * ADD IF I AM PATIENT MODULE
+         ********************************/
 
-        Patient::insert($patient);
+         if($req->iamPatient > 0){
+
+            Patient::create([
+                'appointment_id' => $appointment->appointment_id,
+                'lname' => $user->lname,
+                'fname' => $user->fname,
+                'mname' => $user->mname,
+                'sex' => $user->sex,
+                'age' => $req->iamPatientFields['age'],
+                'illness' => $req->iamPatientFields['illness'],
+                'province' => $user->province,
+                'city' => $user->city,
+                'barangay' => $user->barangay,
+                'street' => $user->street,
+            ]);
+            
+         }else{
+            $patient = [];
+            foreach($req->patients as $item){
+                array_push($patient, [
+                    'appointment_id' => $appointment->appointment_id,
+                    'lname' => strtoupper($item['lname']),
+                    'fname' => strtoupper($item['fname']),
+                    'mname' => strtoupper($item['mname']),
+                    'sex' => strtoupper($item['sex']),
+                    'age' => $item['age'],
+                    'illness' => $item['illness'],
+                    'province' => $item['province'],
+                    'city' => $item['city'],
+                    'barangay' => $item['barangay'],
+                    'street' => $item['street'],
+                ]);
+            }
+
+            Patient::insert($patient);
+         }
+        
 
         return response()->json([
             'status' => 'saved'

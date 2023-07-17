@@ -112,11 +112,11 @@
                                     <span v-else>NO</span>
                                 </b-table-column>
 
-                                <b-table-column field="status" label="Status" v-slot="props">
+                                <!-- <b-table-column field="status" label="Status" v-slot="props">
                                     <span class="status pending" v-if="props.row.status === 0">PENDING</span>
                                     <span class="status approved" v-if="props.row.status === 1">APPROVED</span>
                                     <span class="status cancelled" v-if="props.row.status === 2">CANCELLED</span>
-                                </b-table-column>
+                                </b-table-column> -->
 
                                 <b-table-column label="Action" v-slot="props">
                                     <div class="is-flex">
@@ -139,18 +139,8 @@
                                                         :icon-right="active ? 'menu-up' : 'menu-down'" />
                                                 </template>
 
-                                                <b-dropdown-item @click="confirmApprove(props.row.appointment_id)" 
-                                                    aria-role="listitem">Approve</b-dropdown-item>
-                                                <b-dropdown-item 
-                                                    v-if="props.row.is_served !== 1 && props.row.is_arrived !== 1"
-                                                    @click="confirmCancel(props.row.appointment_id)" 
-                                                    aria-role="listitem">Cancel Appointment</b-dropdown-item>
-                                                <b-dropdown-item
-                                                    @click="confirmPending(props.row.appointment_id)" 
-                                                    aria-role="listitem">Set to Pending</b-dropdown-item>
-                                                <b-dropdown-item
-                                                    @click="confirmArchive(props.row.appointment_id)" 
-                                                    aria-role="listitem">Archive</b-dropdown-item>
+                                                <!-- <b-dropdown-item @click="confirmApprove(props.row.appointment_id)" 
+                                                    aria-role="listitem">Approve</b-dropdown-item> -->
 
                                                 <b-dropdown-item
                                                     @click="confirmArrive(props.row.appointment_id)" 
@@ -158,6 +148,19 @@
                                                 <b-dropdown-item
                                                     @click="confirmServe(props.row.appointment_id)" 
                                                     aria-role="listitem">Mark Served</b-dropdown-item>
+
+                                                <b-dropdown-item 
+                                                    v-if="props.row.is_served !== 1 && props.row.is_arrived !== 1"
+                                                    @click="confirmCancel(props.row.appointment_id)" 
+                                                    aria-role="listitem">Cancel Appointment</b-dropdown-item>
+                                                <!-- <b-dropdown-item
+                                                    @click="confirmPending(props.row.appointment_id)" 
+                                                    aria-role="listitem">Set to Pending</b-dropdown-item> -->
+                                                <b-dropdown-item
+                                                    @click="confirmArchive(props.row.appointment_id)" 
+                                                    aria-role="listitem">Archive</b-dropdown-item>
+
+                                               
                                             </b-dropdown>
                                             
                                         </b-tooltip>
@@ -420,6 +423,15 @@ export default{
             }).catch(err => {
                 if (err.response.status === 422) {
                     this.errors = err.response.data.errors;
+
+                    if(this.errors.early){
+                        this.$buefy.dialog.alert({
+                            title: 'Not Allowed.',
+                            type: 'is-danger',
+                            message: this.errors.early[0],
+                            confirmText: 'Ok',
+                        });
+                    }
                 }
             });
         },

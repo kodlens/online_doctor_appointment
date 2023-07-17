@@ -146,7 +146,6 @@
                                     </div>
                                 </div>
                                  
-
                                 <div class="columns">
                                     <div class="column">
                                         <b-field label="Barangay" label-position="on-border" expanded>
@@ -164,7 +163,6 @@
                                     </div>
                                 </div>
                                
-
                                 <div class="buttons">
                                     <b-button label="" icon-left="delete" type="is-danger"
                                         class="is-small"
@@ -173,8 +171,27 @@
                                 
                                 <hr>
                             </div> <!--loop-->
+                            <b-checkbox v-model="iamPatient"
+                                @input="clearPatientForm"
+                                :true-value="1"
+                                :false-value="0">I am the Patient</b-checkbox>
 
-                            <div class="buttons mt-5">
+                            <div v-if="iamPatient">
+                                <b-field class="mt-3" label="Age" label-position="on-border"
+                                    :type="this.errors.iamPatientFields ? 'is-danger':''"
+                                    :mes="this.errors.iamPatientFields ? this.errors.iamPatientFields.age[0] : ''">
+                                    <b-numberinput type="text" v-model="iamPatientFields.age" 
+                                        placeholder="Age"
+                                        :controls="false">
+                                    </b-numberinput>
+                                </b-field>
+                                <b-field class="mt-3" label="Illness Description/History (Optional)" label-position="on-border">
+                                    <b-input type="textarea" placeholder="Illness Description/History (Optional)"
+                                        v-model="iamPatientFields.illness"></b-input>
+                                </b-field>
+                            </div>
+
+                            <div class="buttons mt-5" v-if="!iamPatient">
                                 <b-button class="button is-small is-info" 
                                     @click="addPatient"
                                     :disabled="fields.patients.length >= max">Add</b-button>
@@ -192,7 +209,6 @@
                                     @input="loadOpenSchedules">
                                 </b-datepicker>
                             </b-field>
-
                             <div class="schedule-item" v-for="(item, index) in schedules"
                                 :key="index">
                                 <div class="schedule-item-time">{{ item.time_from | formatTime }} - {{ item.time_end | formatTime }}</div>
@@ -270,169 +286,11 @@
             </div> <!--cols --->
         </div>
 
-        <div class="section">
-            <div class="columns">
-                <div class="column has-text-centered">
-                    <div style="font-weight: bold; font-size: 1.8em; margin: auto;
-                        border-bottom: 2px solid blue; display: inline-block;">
-                        SERVICES OFFERED
-                    </div>
-                </div>
-            </div>
-            <div class="columns is-centered">
-                <div class="column is-4">
+        <services-offered></services-offered>
 
-                    <div class="card">
-                        <div class="card-image">
-                            <figure class="image is-3by2">
-                            <img src="/img/service_offered_1.jpg" alt="Placeholder image">
-                            </figure>
-                        </div>
-                        <div class="card-content">
-                            <div class="title is-4">
-                                Medical Consultation
-                            </div>
-                            <div class="content">
-                                Medical consultation are medical tests and procedures that help doctors and healthcare providers diagnose health conditions and diseases.
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        <about></about>
 
-                <div class="column is-4">
-                    <div class="card">
-                        <div class="card-image">
-                            <figure class="image is-3by2">
-                            <img src="/img/minor_surgery.jpg" alt="Preventive image here">
-                            </figure>
-                        </div>
-                        <div class="card-content">
-                            <div class="title is-4">
-                                Minor Surgery
-                            </div>
-                            <div class="content">
-                                Our minor surgery services encompass a wide array of procedures designed to address various conditions and concerns. 
-                                Whether you require an incision and drainage to treat an abscess, 
-                                an excision biopsy for diagnostic purposes, or the removal of 
-                                skin tags or warts, Dr. Tilao is here to provide 
-                                personalized and effective solutions.
-                            </div>
-                        </div>
-                    </div>
-                </div>
- 
-            </div>
-        </div>
-
-
-
-        <div class="columns">
-            <div class="column">
-
-                <div class="columns">
-                    <div class="column has-text-centered">
-                        <div style="font-weight: bold; font-size: 1.8em; margin: auto;
-                            border-bottom: 2px solid blue; display: inline-block;">
-                            ABOUT DR. TILAO
-                        </div>
-                    </div>
-                </div>
-
-                <div class="columns is-centered">
-                    <div class="column is-8">
-                        
-                        <div class="columns">
-                            <div class="column">
-                                <div class="drtilao">
-
-                                </div>
-                            </div>
-                            <div class="column">
-                                <p>
-                                    <b>Dr. Max Beth B. Tilao, Jr.</b>
-                                    Internal Medicine
-                                    General Internist who treats conditions that affect the internal organs- condition such as heart disease, hypertension, diabetes, obesity and pulmonary disease.
-                                </p>
-
-
-                                <div class="content">
-                                    <div style="font-weight: bold; margin-top: 10px;">EDUCATION</div>
-                                    <ul>
-                                        <li>Southwestern University, Cebu - Graduated Bachelor of Science in Medical Technology, 1984</li>
-                                        <li>Southwestern University, Cebu - Graduated Bachelor of Science in Medicine, 1988</li>
-                                    </ul>
-                                </div>
-
-
-                                <div class="content">
-                                    <div style="font-weight: bold; margin-top: 10px;">AFFILIATIONS</div>
-                                    <ul>
-                                        <li>Dr. Tilao completed his Residency Training Program in Internal Medicine on  August 16, 1994 to August 15, 1998 in Vicente Sotto Memorial Hospital Center, Cebu.</li>
-                                        <li>Dr. Tilao has completed VALUES CLARIFICATION WORKSHOP on AUGUST 15-19, 1994 in Vicente Sotto Memorial Hospital Center, Cebu.</li>
-                                        <li>Dr. Tilao completed the "Orientation and Seminar Workshop on Woman and Child friendly Center" (WCFC) on April 21-22, 1997 in Vicente Sotto Memorial Hospital Center, Cebu.</li>
-                                        <li>Dr. Tilao completed "Cardio Pulmonary Resuscitation Seminar" on August 22-26, 1994 in Vicente Sotto Memorial Hospital Center, Cebu.</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                
-            </div>
-        </div>
-
-
-        <div class="section">
-            <div class="columns is-centered">
-                <div class="column is-8">
-                    
-                    <div class="columns">
-                        <div class="column has-text-centered">
-                            <div style="font-weight: bold; font-size: 1.8em; margin: auto;
-                                border-bottom: 2px solid blue; display: inline-block;">
-                                DR. TILAO AFFILIATIONS 
-                            </div>
-                        </div>
-                    </div>
-                    <div class="columns is-centered">
-                        <div class="column is-8">
-                            <certificates-carousel></certificates-carousel>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
-        <!-- <div class="section">
-            <div class="columns">
-                <div class="column has-text-centered">
-                    <div style="font-weight: bold; font-size: 1.8em; margin: auto;
-                        border-bottom: 2px solid blue; display: inline-block;">
-                        ABOUT DR. TILAO
-                    </div>
-                </div>
-            </div>
-
-
-
-            <div class="columns mt-5 is-centered">
-                <div class="column is-10">
-
-                    <div class="is-flex">
-
-                        <div style="max-width: 300px;">
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut labore neque ex vitae suscipit tempore consequatur voluptatibus aliquam harum eveniet.
-                        </div>
-                        <div>
-                            <img src="/img/achievment.jpg" style="height: 200px; margin: auto; display: block;" alt="About Dr. Tilao" srcset=""></img>
-                        </div>
-                    </div>
-                   
-                </div>
-            </div>
-         </div> -->
+        <affiliation></affiliation>
 
     </div> <!-- root div -->
 </template>
@@ -455,6 +313,14 @@ export default {
             fields: {
                 patients: [],
             },
+
+            iamPatient: 0,
+
+            iamPatientFields: {
+                illness: '',
+                age: 0,
+            },
+            
            
             errors: {},
 
@@ -558,7 +424,9 @@ export default {
              let appointment = {
                 appointment_date: appdate,
                 schedule_id: this.schedule_id,
-                patients: this.fields.patients
+                patients: this.fields.patients,
+                iamPatientFields: this.iamPatientFields,
+                iamPatient: this.iamPatient,
              };
 
             axios.post('/apply-appointment', appointment).then(res=>{
@@ -574,6 +442,8 @@ export default {
                     };
 
                     this.errors = {};
+
+                    window.location = '/my-appointment';
                 }
 
             }).catch(err=>{
@@ -657,9 +527,17 @@ export default {
                 title: 'DELETE?',
                 message: 'Are you sure you want to remove this?',
                 onConfirm: ()=>{
-                    this.fields.patients.splice(index, 1);
+                    
                 }
             });
+        },
+        clearPatientForm(){
+            //alert('fire')
+            this.fields.patients = [];
+            // this.fields.partients.forEach(element, ix => {
+            //     this.fields.patients.splice(index, ix);
+            // });
+            
         },
 
         loadProvince: function(index){
@@ -792,14 +670,6 @@ export default {
     .height-500{
         height: 300px;
     }
-
-    .drtilao{
-        height: 400px;
-        background: url(/img/drtilao.jpg) no-repeat;
-        background-position: center;
-        background-size: cover;
-    }
-
 
 
     .banner-title{
