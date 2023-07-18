@@ -68,9 +68,6 @@
                         <b-navbar-item href="/archive-appointments">
                             Archive Appointment
                         </b-navbar-item>
-                        {{-- <b-navbar-item href="#">
-                            Contact
-                        </b-navbar-item> --}}
                         <b-navbar-item href="/vacations">
                             Vacation
                         </b-navbar-item>
@@ -98,10 +95,9 @@
                     <b-navbar-item href="/report-loyal-customers">
                         Regular Patient
                     </b-navbar-item>
-
-                    {{-- <b-navbar-item href="#">
-                        Contact
-                    </b-navbar-item> --}}
+                    <b-navbar-item href="/report-statistic-page">
+                        Statistic
+                    </b-navbar-item>
                 </b-navbar-dropdown>
                 @if($role == 'ADMINISTRATOR')
                     <b-navbar-item href="/users"

@@ -21,7 +21,7 @@ class DashboardController extends Controller
         $now = date('Y-m-d');
 
         return Appointment::where('appointment_date', $now)
-            ->where('status', 1)
+            //->where('status', 1)
             ->count();
     }
 

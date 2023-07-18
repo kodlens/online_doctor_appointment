@@ -52,13 +52,23 @@ class ReportPatientAppointmentController extends Controller
     }
 
     public function getDataReportServeUnserve(Request $req){
+        $select = $req->select;
+        
         $date_start = date('Y-m-d', strtotime($req->start));
         $date_end = date('Y-m-d', strtotime($req->end));
 
-        $data = Appointment::with(['user', 'schedule'])
-            ->whereBetween('appointment_date', [$date_start, $date_end])
-            ->where('is_archived', 0)
-            ->get();
+        if($select == 'ALL'){
+            $data = Appointment::with(['user', 'schedule'])
+                ->whereBetween('appointment_date', [$date_start, $date_end])
+                ->where('is_archived', 0)
+                ->get();
+        }else{
+            $data = Appointment::with(['user', 'schedule'])
+                ->where('is_served', $select)
+                ->whereBetween('appointment_date', [$date_start, $date_end])
+                ->where('is_archived', 0)
+                ->get();
+        }
 
         return $data;
     }
@@ -187,6 +197,37 @@ class ReportPatientAppointmentController extends Controller
             where tbl1.count_app > 5', [$date_start, $date_end]);
 
         return $data;
+    }
+
+
+
+
+
+
+
+
+    public function indexStatisticPage(){
+        return view('administrator.report.report-statistic-page');
+    }
+
+    public function getStatistics(Request $req){
+        $date_start = date('Y-m-d', strtotime($req->start));
+        $date_end = date('Y-m-d', strtotime($req->end));
+
+
+        $data = DB::select('select appointment_date, 
+            (select count(*) from appointments where appointment_date = a.appointment_date) as no_app, 
+            (select count(*) from appointments where appointment_date = a.appointment_date and is_noshow = 1 and is_arrived = 0) as no_show,
+            (select count(*) from appointments where appointment_date = a.appointment_date and is_served = 1) as served,
+            (select count(*) from appointments where appointment_date = a.appointment_date and is_served = 0 and is_arrived = 1) as unserved
+            from appointments as a
+            where a.appointment_date between ? and ? group by a.appointment_date', [$date_start, $date_end]);
+
+
+
+        return response()->json([
+            'data' => $data
+        ], 200);
     }
 }
 

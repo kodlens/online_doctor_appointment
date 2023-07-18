@@ -15,6 +15,19 @@
                                 <b-field label="Date Filter" label-position="on-border">
                                     <b-datepicker v-model="search.start_date" placeholder="Start date"></b-datepicker>
                                     <b-datepicker v-model="search.end_date" placeholder="End date"></b-datepicker>
+                                   
+                                </b-field>
+                            </div>
+                        </div> <!-- cols -->
+
+                        <div class="columns">
+                            <div class="column">
+                                <b-field label="Select" label-position="on-border">
+                                    <b-select v-model="search.select" placeholder="Option">
+                                        <option value="ALL">ALL</option>
+                                        <option value="1">SERVED</option>
+                                        <option value="0">UNSERVED</option>
+                                    </b-select>
                                     <p class="control">
                                         <b-button type="is-primary" icon-right="magnify" @click="loadAsyncData"/>
                                     </p>
@@ -94,7 +107,8 @@ export default{
             search: {
                 lname: '',
                 start_date: new Date(new Date().getFullYear(), new Date().getMonth(), 1),
-                end_date: new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0)
+                end_date: new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0),
+                select: '',
             },
 
             btnClass: {
@@ -116,6 +130,7 @@ export default{
             const params = [
                 `start=${this.$formatDate(this.search.start_date)}`,
                 `end=${this.$formatDate(this.search.end_date)}`,
+                `select=${this.search.select}`,
             ].join('&')
 
             this.loading = true

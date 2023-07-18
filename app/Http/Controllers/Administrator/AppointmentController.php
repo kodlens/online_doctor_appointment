@@ -45,6 +45,27 @@ class AppointmentController extends Controller
         return $data;
     }
 
+    public function getDailyAppointments(Request $req){
+        $sort = explode('.', $req->sort_by);
+        
+        $date = $req->appdate;
+        $todayDate = date('Y-m-d');
+       // $ndate = date('Y-m-d',strtotime($date)); //convert to format time UNIX
+
+        $data = Appointment::with(['user', 'schedule', 'patients'])
+            ->where('appointment_date', $todayDate)
+            ->whereHas('user', function($q) use ($req){
+                $q->where('lname', 'like', '%'. $req->name . '%');
+            })
+            ->where('is_archived', 0)
+            ->orderBy($sort[0], $sort[1])
+            ->paginate($req->perpage);
+
+        return $data;
+    }
+
+    
+
     public function create(){
         return view('administrator.appointment-create')
             ->with('id', 0);
@@ -337,5 +358,19 @@ class AppointmentController extends Controller
     }
 
 
+    public function setClose(){
+        $dateNow = date('Y-m-d');
+
+        $app = Appointment::where('appointment_date', $dateNow)
+            ->where('is_arrived', 0)
+            ->update([
+                'is_noshow' => 1,
+                'no_show_datetime' => date('Y-m-d H:i:s')
+            ]);
+
+        return response()->json([
+            'status' => 'closed'
+        ], 200);
+    }
 
 }

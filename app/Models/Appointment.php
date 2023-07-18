@@ -22,7 +22,9 @@ class Appointment extends Model
         'is_arrived',
         'arrival_datetime',
         'is_served',
-        'served_datetime'
+        'served_datetime',
+        'is_noshow',
+        'no_show_datetime'
     ];
 
 

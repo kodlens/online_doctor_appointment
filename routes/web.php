@@ -105,15 +105,18 @@ Route::middleware(['auth', 'staff'])->group(function(){
 
     Route::resource('/appointments', App\Http\Controllers\Administrator\AppointmentController::class);
     Route::get('/get-appointments', [App\Http\Controllers\Administrator\AppointmentController::class, 'getAppointments']);
+    Route::get('/get-daily-appointments', [App\Http\Controllers\Administrator\AppointmentController::class, 'getDailyAppointments']);
+
     Route::post('/appointment-approve/{id}', [App\Http\Controllers\Administrator\AppointmentController::class, 'approveAppointment']);
     Route::post('/appointment-cancel/{id}', [App\Http\Controllers\Administrator\AppointmentController::class, 'cancelAppointment']);
     Route::post('/appointment-pending/{id}', [App\Http\Controllers\Administrator\AppointmentController::class, 'pendingAppointment']);
     Route::post('/appointment-archive/{id}', [App\Http\Controllers\Administrator\AppointmentController::class, 'archiveAppointment']);
     Route::post('/appointment-set-arrived/{id}', [App\Http\Controllers\Administrator\AppointmentController::class, 'setArrived']);
     Route::post('/appointment-set-served/{id}', [App\Http\Controllers\Administrator\AppointmentController::class, 'setServed']);
+    Route::post('/appointment-set-close', [App\Http\Controllers\Administrator\AppointmentController::class, 'setClose']);
 
 
-    
+  
     //REPORT
     Route::get('/report-appointments', [App\Http\Controllers\Administrator\Report\ReportPatientAppointmentController::class, 'index']);
     Route::get('/get-report-patients-appointments', [App\Http\Controllers\Administrator\Report\ReportPatientAppointmentController::class, 'getDataReportPatientAppointment']);
@@ -134,7 +137,9 @@ Route::middleware(['auth', 'staff'])->group(function(){
     Route::get('/report-loyal-customers', [App\Http\Controllers\Administrator\Report\ReportPatientAppointmentController::class, 'indexLoyalCustomers']);
     Route::get('/get-report-loyal-customers', [App\Http\Controllers\Administrator\Report\ReportPatientAppointmentController::class, 'getLoyalCustomers']);
 
-        
+    Route::get('/report-statistic-page', [App\Http\Controllers\Administrator\Report\ReportPatientAppointmentController::class, 'indexStatisticPage']);
+    Route::get('/get-statistics', [App\Http\Controllers\Administrator\Report\ReportPatientAppointmentController::class, 'getStatistics']);
+
 
 });
 
