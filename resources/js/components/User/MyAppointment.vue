@@ -27,7 +27,8 @@
                                                     type="is-info"
                                                     has-icon
                                                     aria-close-label="Close notification">
-                                                    Please be there 10 minutes earlier on your schedule so the staff can assist you with your schedule.
+                                                    Upon arrival at the clinic please look for the secretary so she can assist you 
+                                                    with your schedule. Thankyou!
                                                 </b-notification>
                                             </div>
                                            

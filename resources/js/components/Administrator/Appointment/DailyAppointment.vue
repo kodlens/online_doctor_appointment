@@ -162,6 +162,11 @@
                 @click="closeAppointments" 
                 label="Close Appointments">
             </b-button>
+
+            <b-button type="is-success is-outlined"
+                @click="archiveAsPDF" 
+                label="Archive Appointments">
+            </b-button>
         </div>
 
     </div>
@@ -447,7 +452,9 @@ export default{
         },
 
 
-
+        archiveAsPDF(){
+            window.location = '/generate-appointment-pdf';
+        }
 
     },
 

@@ -2865,6 +2865,9 @@ __webpack_require__.r(__webpack_exports__);
           _this15.errors = err.response.data.errors;
         }
       });
+    },
+    archiveAsPDF: function archiveAsPDF() {
+      window.location = '/generate-appointment-pdf';
     }
   },
   mounted: function mounted() {
@@ -6853,6 +6856,14 @@ var render = function render() {
     },
     on: {
       click: _vm.closeAppointments
+    }
+  }), _vm._v(" "), _c("b-button", {
+    attrs: {
+      type: "is-success is-outlined",
+      label: "Archive Appointments"
+    },
+    on: {
+      click: _vm.archiveAsPDF
     }
   })], 1)], 1);
 };
@@ -11149,7 +11160,7 @@ var render = function render() {
       "has-icon": "",
       "aria-close-label": "Close notification"
     }
-  }, [_vm._v("\n                                                Please be there 10 minutes earlier on your schedule so the staff can assist you with your schedule.\n                                            ")])], 1)]) : _c("div", [_vm._v("\n                                        No Upcoming Appointment\n                                    ")])])]), _vm._v(" "), _c("b-tab-item", {
+  }, [_vm._v("\n                                                Upon arrival at the clinic please look for the secretary so she can assist you \n                                                with your schedule. Thankyou!\n                                            ")])], 1)]) : _c("div", [_vm._v("\n                                        No Upcoming Appointment\n                                    ")])])]), _vm._v(" "), _c("b-tab-item", {
     attrs: {
       label: "Appointments"
     }

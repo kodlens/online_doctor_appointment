@@ -140,9 +140,13 @@ Route::middleware(['auth', 'staff'])->group(function(){
     Route::get('/report-statistic-page', [App\Http\Controllers\Administrator\Report\ReportPatientAppointmentController::class, 'indexStatisticPage']);
     Route::get('/get-statistics', [App\Http\Controllers\Administrator\Report\ReportPatientAppointmentController::class, 'getStatistics']);
 
-
+   
 });
 
+ //PDF
+ Route::get('/generate-appointment-pdf', [App\Http\Controllers\Administrator\PDFController::class, 'appointmentPDF']);
+
+ 
 Route::middleware(['auth', 'admin'])->group(function(){
 
     Route::resource('/schedules', App\Http\Controllers\Administrator\ScheduleController::class);
