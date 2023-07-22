@@ -1,0 +1,295 @@
+<template>
+    <div>
+        <div class="section">
+            <div class="columns is-centered">
+                <div class="column is-10-desktop is-8-tablet">
+                    <div class="w-panel-card">
+                        <div class="w-panel-heading">
+                            <div class="mb-2" style="font-size: 20px; font-weight: bold;">LIST OF WALK-IN APPOINTMENTS</div>
+                        </div>
+
+                        <div class="w-panel-body">
+
+                            <b-table class="admin-tables"
+                                :data="data"
+                                :loading="loading"
+                                paginated
+                                detailed
+                                backend-pagination
+                                pagination-rounded
+                                :total="total"
+                                :per-page="perPage"
+                                @page-change="onPageChange"
+                                aria-next-label="Next page"
+                                aria-previous-label="Previous page"
+                                aria-page-label="Page"
+                                aria-current-label="Current page"
+                                backend-sorting
+                                :default-sort-direction="defaultSortDirection"
+                                @sort="onSort">
+
+                                <b-field label="Page" label-position="on-border">
+                                    <b-select v-model="perPage" @input="setPerPage">
+                                        <option value="10">10 per page</option>
+                                        <option value="20">20 per page</option>
+                                        <option value="30">30 per page</option>
+                                    </b-select>
+                                    <b-select v-model="sortOrder" @input="loadAsyncData">
+                                        <option value="asc">ASC</option>
+                                        <option value="desc">DESC</option>
+                                    </b-select>
+                                </b-field>
+
+                                <b-table-column field="appointment_id" label="ID" v-slot="props">
+                                    {{ props.row.appointment_id }}
+                                </b-table-column>
+
+                                <b-table-column field="lname" label="Name" v-slot="props">
+                                    {{ props.row.user.lname }}, {{ props.row.user.fname }} {{ props.row.user.mname }}
+                                </b-table-column>
+
+                                <b-table-column field="appointment_date" label="Appointment Date" v-slot="props">
+                                    {{ new Date(props.row.appointment_date).toDateString() }}
+                                </b-table-column>
+
+                                <b-table-column field="time" label="Time" v-slot="props">
+                                    {{ props.row.schedule.time_from | formatTime }} -  {{ props.row.schedule.time_end | formatTime }}
+                                </b-table-column>
+
+                                <b-table-column field="contact_no" label="Contact No." v-slot="props">
+                                    {{ props.row.user.contact_no }}
+                                </b-table-column>
+
+                                <b-table-column field="is_arrived" label="Arrived" v-slot="props">
+                                    <span class="status approved" v-if="props.row.is_arrived">YES</span>
+                                    <span v-else>NO</span>
+                                </b-table-column>
+
+                                <b-table-column field="is_served" label="Served" v-slot="props">
+                                    <span class="status approved" v-if="props.row.is_served">YES</span>
+                                    <span v-else>NO</span>
+                                </b-table-column>
+
+
+                                <!-- <b-table-column field="status" label="Status" v-slot="props">
+                                    <span class="status pending" v-if="props.row.status === 0">PENDING</span>
+                                    <span class="status approved" v-if="props.row.status === 1">APPROVED</span>
+                                    <span class="status cancelled" v-if="props.row.status === 2">CANCELLED</span>
+                                </b-table-column> -->
+
+                                <b-table-column label="Action" v-slot="props">
+                                    <div class="is-flex">
+                                        <b-tooltip label="Reschedule" type="is-info">
+                                            <b-button class="button is-small is-info is-outlined mr-1" 
+                                                tag="a" 
+                                                icon-right="calendar"
+                                                :href="`/appointments/${props.row.appointment_id}/edit`"></b-button>
+                                        </b-tooltip>
+                                        <!-- <b-tooltip label="Delete" type="is-danger">
+                                            <b-button class="button is-small is-danger mr-1 is-outlined" icon-right="delete" @click="confirmDelete(props.row.user_id)"></b-button>
+                                        </b-tooltip> -->
+                                        <b-tooltip label="Options" type="is-info">
+                                            <b-dropdown aria-role="list">
+                                                <template #trigger="{ active }">
+                                                    <b-button
+                                                        label=""
+                                                        type="is-primary"
+                                                        class="is-outliend is-small"
+                                                        :icon-right="active ? 'menu-up' : 'menu-down'" />
+                                                </template>
+
+                                                <!-- <b-dropdown-item @click="confirmApprove(props.row.appointment_id)" 
+                                                    aria-role="listitem">Approve</b-dropdown-item> -->
+
+                                                <b-dropdown-item
+                                                    @click="confirmArrive(props.row.appointment_id)" 
+                                                    aria-role="listitem">Mark Arrived</b-dropdown-item>
+                                                <b-dropdown-item
+                                                    @click="confirmServe(props.row.appointment_id)" 
+                                                    aria-role="listitem">Mark Served</b-dropdown-item>
+
+                                                <b-dropdown-item 
+                                                    v-if="props.row.is_served !== 1 && props.row.is_arrived !== 1"
+                                                    @click="confirmCancel(props.row.appointment_id)" 
+                                                    aria-role="listitem">Cancel Appointment</b-dropdown-item>
+                                                <!-- <b-dropdown-item
+                                                    @click="confirmPending(props.row.appointment_id)" 
+                                                    aria-role="listitem">Set to Pending</b-dropdown-item> -->
+                                                <b-dropdown-item
+                                                    @click="confirmArchive(props.row.appointment_id)" 
+                                                    aria-role="listitem">Archive</b-dropdown-item>
+
+                                                
+                                            </b-dropdown>
+                                            
+                                        </b-tooltip>
+                                    </div>
+                                </b-table-column>
+
+                                <template #detail="props">
+                                    <div v-if="props.row.patients">
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Age</th>
+                                            <th>Address</th>
+                                            <th>Illness</th>
+                                        </tr>
+                                        <tr v-for="(i,ix) in props.row.patients" :key="ix">
+                                            <td>{{ i.lname }}, {{ i.fname }} {{ i.mname }}</td>
+                                            <td>{{ i.age }}</td>
+                                            <td>
+                                                {{ i.provDesc }}, {{ i.citymunDesc }}, {{ i.brgyDesc }} {{ i.street }}
+                                            </td>
+                                            <td>{{ i.illness }}</td>
+                                        </tr>
+                                    </div>
+                                    
+                                </template>
+
+                            </b-table>
+
+                            <div class="buttons">
+                                <b-button tag="a" label="New Appointment"
+                                    href="/walkin/create" class="is-info is-outlined">
+
+                                </b-button>
+                            </div>
+
+
+                        </div> <!--panel body-->
+
+                    </div>
+                </div><!--col -->
+            </div><!-- cols -->
+        </div><!--section div-->
+
+
+
+    </div>
+</template>
+
+<script>
+
+export default{
+    data() {
+        return{
+            data: [],
+            total: 0,
+            loading: false,
+            sortField: 'appointment_id',
+            sortOrder: 'desc',
+            page: 1,
+            perPage: 10,
+            defaultSortDirection: 'asc',
+
+
+            global_id : 0,
+
+            modalResetPassword: false,
+
+
+            search: {
+                name:'',
+                lname: '',
+                //start_date: new Date(new Date().getFullYear(), new Date().getMonth(), 1),
+                //end_date: new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0)
+            },
+
+            isModalCreate: false,
+
+            fields: {},
+            errors: {},
+         
+
+            btnClass: {
+                'is-success': true,
+                'button': true,
+                'is-loading':false,
+            },
+
+            provinces: [],
+            cities: [],
+            barangays: [],
+            
+        }
+
+    },
+
+    methods: {
+        /*
+        * Load async data
+        */
+        loadAsyncData() {
+            const params = [
+                `sort_by=${this.sortField}.${this.sortOrder}`,
+                //`start=${this.$formatDate(this.search.start_date)}`,
+                //`end=${this.$formatDate(this.search.end_date)}`,
+                `name=${this.search.name}`,
+                `perpage=${this.perPage}`,
+                `page=${this.page}`
+            ].join('&')
+
+            this.loading = true
+            axios.get(`/get-walkins?${params}`)
+                .then(({ data }) => {
+                    this.data = [];
+                    let currentTotal = data.total
+                    if (data.total / this.perPage > 1000) {
+                        currentTotal = this.perPage * 1000
+                    }
+
+                    this.total = currentTotal
+                    data.data.forEach((item) => {
+                        //item.release_date = item.release_date ? item.release_date.replace(/-/g, '/') : null
+                        this.data.push(item)
+                    })
+                    this.loading = false
+                })
+                .catch((error) => {
+                    this.data = []
+                    this.total = 0
+                    this.loading = false
+                    throw error
+                })
+        },
+        /*
+        * Handle page-change event
+        */
+        onPageChange(page) {
+            this.page = page
+            this.loadAsyncData()
+        },
+
+        onSort(field, order) {
+            this.sortField = field
+            this.sortOrder = order
+            this.loadAsyncData()
+        },
+
+        setPerPage(){
+            this.loadAsyncData()
+        },
+    },
+
+    mounted() {
+        this.loadAsyncData()
+    }
+}
+</script>
+
+
+    <style scoped>
+    .text-container {
+        max-width: 200px; /* Set the width of the container to limit the text length */
+        overflow: hidden; /* Hide overflowing text */
+        white-space: nowrap; /* Prevent text from wrapping to new lines */
+        text-overflow: ellipsis; /* Show ellipsis (...) when text overflows */
+    }
+
+    .long-text {
+        max-height: 3em; /* Set the maximum height of the text to limit the number of lines */
+        margin: 0; /* Reset margin */
+        padding: 0; /* Reset padding */
+    }
+
+</style>

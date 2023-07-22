@@ -38,6 +38,8 @@ class CreateAppointmentsTable extends Migration
             $table->tinyInteger('is_noshow')->default(0);
             $table->dateTime('now_show_datetime')->nullable();
 
+            $table->tinyInteger('is_walkin')->default(0);
+            
             $table->timestamps();
         });
     }

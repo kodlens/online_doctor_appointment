@@ -115,7 +115,9 @@ Route::middleware(['auth', 'staff'])->group(function(){
     Route::post('/appointment-set-served/{id}', [App\Http\Controllers\Administrator\AppointmentController::class, 'setServed']);
     Route::post('/appointment-set-close', [App\Http\Controllers\Administrator\AppointmentController::class, 'setClose']);
 
-
+    //WALKIN CUSTOMER
+    Route::resource('/walkin', App\Http\Controllers\Administrator\WalkinController::class);
+    Route::get('/get-walkins', [App\Http\Controllers\Administrator\WalkinController::class, 'getWalkins']);
   
     //REPORT
     Route::get('/report-appointments', [App\Http\Controllers\Administrator\Report\ReportPatientAppointmentController::class, 'index']);

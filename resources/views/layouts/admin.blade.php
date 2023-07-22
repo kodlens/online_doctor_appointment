@@ -56,6 +56,10 @@
                     class="{{ (request()->is('appointments*')) ? 'active' : '' }}">
                     Appointments
                 </b-navbar-item>
+                <b-navbar-item href="/walkin"
+                    class="{{ (request()->is('walkin*')) ? 'active' : '' }}">
+                    Walk-in
+                </b-navbar-item>
                 @if($role == 'ADMINISTRATOR')
                     <b-navbar-dropdown label="Setting"
                         class="{{ (request()->is('schedules*')) ? 'active' : '' }}">

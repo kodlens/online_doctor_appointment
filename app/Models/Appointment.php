@@ -24,7 +24,8 @@ class Appointment extends Model
         'is_served',
         'served_datetime',
         'is_noshow',
-        'no_show_datetime'
+        'no_show_datetime',
+        'is_walkin'
     ];
 
 
