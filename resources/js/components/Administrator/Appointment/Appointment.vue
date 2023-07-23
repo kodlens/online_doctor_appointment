@@ -15,6 +15,10 @@
                                     <daily-appointment></daily-appointment>
                                 </b-tab-item>
 
+                                <b-tab-item label="Walk-in">
+                                    <walkin-page></walkin-page>
+                                </b-tab-item>
+
                                 <b-tab-item label="All Appointment">
                                     <all-appointment></all-appointment>
                                 </b-tab-item>

@@ -189,17 +189,7 @@ class AppointmentController extends Controller
                     'Content-Type' => 'text/plain'
                 ])->get($proxy->value . '/'.$msg.'/'. $user->contact_no);
             }catch(\Exception $e){} //just hide the error
-
-            // try{
-            //     Http::withHeaders([
-            //         'Content-Type' => 'text/plain'
-            //     ])->post('http://'. env('IP_SMS_GATEWAY') .'/services/api/messaging?Message='.$msg.'&To='.$user->contact_no.'&Slot=1', []);
-            // }catch(\Exception $e){
-            //     return response()->json([
-            //         'error' => $e->getMessage()
-            //     ], 422);
-
-            // } //just hide the error
+            
         }
 
         return response()->json([
